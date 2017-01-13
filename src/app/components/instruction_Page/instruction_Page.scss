@@ -1,0 +1,25 @@
+.intro1{
+    width: 950px;
+    height: 500px;
+    background-image: url("../assets/images/instruction_Page/email.png");
+    background-size: 693px 480px;
+    background-position: center -8px;
+    background-repeat: no-repeat;
+    background-color: white;
+}
+.intro2{
+	width: 950px;
+	height: 500px;
+	background-image: url("../assets/images/instruction_Page/ETS_instructions.png");
+	background-size: 905px 430px;
+	background-position: center; 
+	background-repeat: no-repeat;
+	background-color: white;
+	color: red;
+}
+.diffRight{
+	position: relative;
+  left: 819px;
+  top: 452px;
+  z-index: 10;
+}

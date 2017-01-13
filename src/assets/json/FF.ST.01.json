@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"It's like we just saw each other yesterday. Speaking of…have you been keeping up with The Bachelor? ",
+			"NPC_Response": "No, I was busy! How was it? ",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"I know I just started here but I think the IT guy is interested in me!",
+			"NPC_Response": "I think he was just being nice to you.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Since we are both new here, do you want to help me set up a speed dating night with our new coworkers?",
+			"NPC_Response": "I don’t think that would be appropriate at our new job.",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "It was a good one! So much drama.",
+				"NPC_Response": "Oh, that's a shame I missed it!",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "You should really make more of an effort!",
+				"NPC_Response": "Well, I had to finish the homework for the online course I'm taking.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "I can't tell you. You should have watched it!",
+				"NPC_Response": "Well, I had plans last night and I couldn’t.",
+				"animation": "annoyed_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Maybe you're right.",
+				"NPC_Response": "He seems like a friendly guy.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Don't be jealous! I'm sure has a friend for you.",
+				"NPC_Response": "I'm not jealous. You know I am dating someone.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "No way! Have you seen me today?",
+				"NPC_Response": "Uh, yes… you do look nice.",
+				"animation": "surprised_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "I guess not.",
+				"NPC_Response": "Yea, but we can try to get know everyone slowly.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "Give me one good reason!",
+				"NPC_Response": "The company has a policy against office romances!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "When is speed dating not appropriate?",
+				"NPC_Response": "Definitely not on the first day of your new job!",
+				"animation": "annoyed_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "You'll watch it next time!",
+				"NPC_Response":"Yes, I'll definitely try!  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Your loss!",
+				"NPC_Response":"I guess…  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "You should really make the time!",
+				"NPC_Response":"I'll do my best! Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "No excuses!",
+				"NPC_Response":"I guess you're right… Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "Since when is homework more important than TV?",
+				"NPC_Response":"Since always? Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "That course doesn't really matter anyway.",
+				"NPC_Response":"It  matters to me!  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "That's too bad.",
+				"NPC_Response":"I guess… See you later. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Your loss!",
+				"NPC_Response":"I guess so. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "Next time cancel your plans.",
+				"NPC_Response":"Thanks for the advice. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Yea he does.",
+				"NPC_Response":"There are lots of friendly people here. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Maybe he was being more than friendly though!",
+				"NPC_Response":"Sure. You're probably right.  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "Turn your brain on! He is clearly interested in me.",
+				"NPC_Response":"I must have missed that.  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Oh right, how's that going?",
+				"NPC_Response":"Well, everything's going great, actually. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "I totally forgot about him!",
+				"NPC_Response":"He's still around. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Yea but we both know that won't last!",
+				"NPC_Response":"Well, I hope you're wrong about that. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Oh, thank you. I try!",
+				"NPC_Response":"Yes, well we should get back to work. Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "I do, don’t I?",
+				"NPC_Response":"Yes, of course you look nice.  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "surprised_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "Are you saying I don't normally?",
+				"NPC_Response":"Of course you always look nice, Annie.  Well, I should really get back to work and Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "That's true.",
+				"NPC_Response":"We'll arrange something soon.  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "That will take too long!",
+				"NPC_Response":"There's no rush, Annie. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Why would I want to do that?",
+				"NPC_Response":"Why wouldn't you want to get to know your new coworkers? Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "That's a good one!",
+				"NPC_Response":"Let's just focus on getting to know our new coworkers. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "So?",
+				"NPC_Response":"I think that says it all! Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "The rules were made to be broken!",
+				"NPC_Response":"They really weren't. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "That's true.",
+				"NPC_Response":"Let's just focus on getting to know our new coworkers. Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "Do you think the second day would be ok?",
+				"NPC_Response":"I really don’t.  Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "You're no fun at all!",
+				"NPC_Response":"I just don't think it's a good plan, Annie! Anyways, Mike is waiting for us in the conference room. We should head there for our orientation.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

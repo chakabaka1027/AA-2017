@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"What’s up?",
+			"NPC_Response": "How's it going?",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Hey Lassie! I think I'm gonna change my name to Annie O'Malley!",
+			"NPC_Response": "Um, hey…",
+			"animation": "surprised_mild"
+		},
+		{
+			"code":"C",
+			"PC_Text":"Stranger danger!! Stay away!",
+			"NPC_Response": "What are you talking about Annie? It's me, Fran.",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "I'm good! What's new with you?",
+				"NPC_Response": "Not much.  Did you have a nice weekend?",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "I'm good! Wishing it were Friday already.",
+				"NPC_Response": "Well, you've only just started work!",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "I feel like getting a little crazy this  morning! Let's go dancing!",
+				"NPC_Response": "Uh, but it's Monday morning, Annie.",
+				"animation": "surprised_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "So what's new with you?",
+				"NPC_Response": "Not much! I am just planning my vacation this summer.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "I'm really feeling the Irish spirit today!",
+				"NPC_Response": "Well, you should wear a green shirt then.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "So, how's your love life?",
+				"NPC_Response": "Um, I don't know what you mean.",
+				"animation": "annoyed_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Oh right. Sorry I didn't recognize you for a moment. How are you?",
+				"NPC_Response": "Oh that's ok. I'm doing well. How are you doing?",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "How do I know it’s really you?",
+				"NPC_Response": "What are you talking about?",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "I didn't recognize you with that weird haircut! How are you?",
+				"NPC_Response": "I was just trying out a new look... I'm fine. How are you?",
+				"animation": "surprised_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "I did! I went to the mall and bought this new dress.",
+				"NPC_Response":"It looks great on you.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Yes! I went to Harry Potter Wizardry camp and learned a ton of new spells.",
+				"NPC_Response":"Oh, wow, that sounds like... fun.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "I did! I called all of my ex-boyfriends and cried until they offered to get back together with me.",
+				"NPC_Response":"Oh, Annie. That doesn’t sound good…",
+				"animation": "surprised_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "I guess you're right.",
+				"NPC_Response":"You'll see. The week will fly by!",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "You look like you could use a long weekend too!",
+				"NPC_Response":"I guess so!",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "Why do you care if I'm burned out from my first day of work!",
+				"NPC_Response":"I'm sorry, I guess?",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Fine, I'll wait until tonight.",
+				"NPC_Response":"That sounds like a better plan.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Why should that stop us?",
+				"NPC_Response":"We are at work, and it's your first day on the job!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "I'll ask Managing Mike to join me! He looks like he has the right  moves!",
+				"NPC_Response":"I don't think that's a very good idea, Annie!",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Oh fun, where are you going?",
+				"NPC_Response":"I'm thinking of a relaxing beach vacation!",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "I need to take advantage of my corporate discount!",
+				"NPC_Response":"Um, I would give it a little time before you plan a trip, Annie.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "Great. Where are we going? I'll pack my bags!",
+				"NPC_Response":"Oh, sorry Annie. I was planning on going with my family.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "I'm practicing for St. Patrick's day!",
+				"NPC_Response":"Well, you look great.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "My psychic told me I was Irish in my last life.",
+				"NPC_Response":"Oh, that's very interesting.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "I'm thinking of painting my face green like at a football game!",
+				"NPC_Response":"I'd wait until after work for that.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Are you seeing anyone?",
+				"NPC_Response":"Well, I do have a boyfriend.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "How many men are you dating right now?",
+				"NPC_Response":"I have a boyfriend, Annie. You know that.",
+				"animation": "annoyed_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "What's the latest news with Fran's hot and spicy Friday date night?",
+				"NPC_Response":"Annie, I really don't know what you are talking about.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "I'm doing great! Happy to have this job.",
+				"NPC_Response":"That's great. It's good to have you here.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Have you seen me? I'm obviously doing very well for myself.",
+				"NPC_Response":"Ah, yes, you look like you you're doing well.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Are you kidding? My parents just bought me my own pony! I'm living the dream!",
+				"NPC_Response":"Lucky you.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "I'm just joking. How are you doing, Fran?",
+				"NPC_Response":"I'm doing well!",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Prove it! What was the name of our high school math teacher.",
+				"NPC_Response":"I don't remember that. You're being silly, Annie.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "Prove it! What’s your social security number?",
+				"NPC_Response":"I'm not telling you that!!",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Oh, it looks great on you. It's just different.",
+				"NPC_Response":"Oh thanks. It's nice to have a change!",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "You look a little like Peter Pan, but in a good way.",
+				"NPC_Response":"Um, how is that a good thing?",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "Oh, I mistook you for 1970's rock and roll legend Mick Jagger.",
+				"NPC_Response":"I don't even know how to respond to that.",
+				"animation": "surprised_bold"
+			}
+		]
+	}
+}

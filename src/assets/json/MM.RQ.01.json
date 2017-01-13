@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Good afternoon Mike. May I have a moment of your time please?",
+			"NPC_Response": "Sure, what can I do for you Annie?",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Hey Mike. Can I have a second? I need a favor.",
+			"NPC_Response": "What can I do for you?",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Hey boss man, answer me this question.",
+			"NPC_Response": "Please don't call me that.",
+			"animation": "annoyed_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "Could you show me how to do my timesheet?",
+				"NPC_Response": "You should talk to Fran. She can help you with that better than I can.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "Can I have a new stapler?",
+				"NPC_Response": "Is there something wrong with the one you have?",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "You need to get me a new chair. One of those ergonomic ones, preferably. This medieval torture device of a chair is killing my back.",
+				"NPC_Response": "You can submit a request to Human Resources.",
+				"animation": "annoyed_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Would you mind if we push the Thursday meeting back 30 minutes?",
+				"NPC_Response": "For what reason?",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Could you accept my Facebook friend invite? I sent it last night.",
+				"NPC_Response": "I don't use Facebook.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Can you help me move this weekend?",
+				"NPC_Response": "I'm busy this weekend.",
+				"animation": ""
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Sorry. Might you be able to recommend a good sushi place in the area?",
+				"NPC_Response": "There's a place on 4th and Union called Sushi Sushi that's pretty good.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "Can you get me tickets to a broadway show? I've never been to one before!",
+				"NPC_Response": "No but why don't you buy tickets on your own.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "You seriously need to read this screenplay I wrote. Could you get me feedback by next week?",
+				"NPC_Response": "I'm sorry but that's really not my area of expertise.",
+				"animation": "confused_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Great, thank you.",
+				"NPC_Response":"You're welcome.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Fran's been in the bathroom for like, 20 minutes. I'll just wait here until she comes back.",
+				"NPC_Response":"You do that.",
+				"animation": ""
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Gotcha chief. Boss man delegating work to his minions. Like a boss.",
+				"NPC_Response":"No, really. Fran is a better resource for this.",
+				"animation": "annoyed_mild"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "I think it's broken.",
+				"NPC_Response":"I'll see what I can do.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "It's black. My last stapler was purple and I really liked that.",
+				"NPC_Response":"Uh, well I am not sure we have any purple staplers.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "It's black. What's the point of having an office job if you don't get a red Swingline stapler?",
+				"NPC_Response":"You're kidding, right?",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Will do, thanks!",
+				"NPC_Response":"No problem…",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Ok, but my bad back is on you until the new chair arrives.",
+				"NPC_Response":"It really isn't.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "You have an ergonomic chair, can I just have that?",
+				"NPC_Response":"No.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "I have an appointment right before and I don't want to be late to our meeting.",
+				"NPC_Response":"It can probably be rescheduled.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "That way it starts on the hour, not the half hour.",
+				"NPC_Response":"And why does that matter?",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "It's really early in the morning and my brain might not be firing on all cylinders just then.",
+				"NPC_Response":"It sounds like you need to manage your sleep better.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Oh okay, nevermind.",
+				"NPC_Response":"Ok.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "But you have a profile, I found it!",
+				"NPC_Response":"Must be another Mike at Acme Tech.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "But I want to invite you to a party this weekend and need to send you the details!",
+				"NPC_Response":"I don't think so.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Oh, ok. It was worth a shot.",
+				"NPC_Response":"Sorry, maybe next time.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "No worries. I'll just take a sick day Friday so I can start packing.",
+				"NPC_Response":"That's not how sick days work.",
+				"animation": "annoyed_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "What if I just borrowed your car instead?",
+				"NPC_Response":"No way.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "That sounds great, thank you.",
+				"NPC_Response":"You're welcome.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Sushi Sushi? Wonder what they serve there... Ha!",
+				"NPC_Response":"It’s a mystery.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Great. Pull out your calendar and we can schedule a time after work to meet up and chat!",
+				"NPC_Response":"I did not agree to this…",
+				"animation": "confused_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "Oh well, no harm in asking!",
+				"NPC_Response":"I guess.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "But they would be more special coming from you.",
+				"NPC_Response":"That's sweet, but the answer is still no.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "I've seen your Porsche How about if you buy tickets for the both of us and we can go together?  *wink wink nudge nudge*",
+				"NPC_Response":"I don’t think my wife would be happy about that.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Nothing major, just let me know what you think.",
+				"NPC_Response":"I don't think so.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "It's only 190 pages, shouldn't take too long to get through.",
+				"NPC_Response":"I don't think so.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "It's the story of an up-and-coming career woman finding her way through the male-dominated business-acquisitions scene. Don't steal the idea!",
+				"NPC_Response":"I wouldn't dream of it.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

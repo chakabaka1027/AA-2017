@@ -1,0 +1,43 @@
+.endScreen{
+	width: 100%;
+	height: 100%;
+	background-image: url("../assets/images/endGame_Page/Conclusion-page-bg.jpg");
+	background-repeat: no-repeat;
+	background-color: white;
+
+	.endScreenContainer{
+		position: relative;
+		padding-top: 25px;
+		width: 607px;
+		width: 366px;
+	}
+	span{ //stats color
+		color: #007629;
+	}
+	div{
+		margin:0 auto;
+		font-size: 24pt;
+		width: 100%;
+		text-align: center;
+	}
+	.gameStats{
+		padding: 40px 0 106px 0;
+		.score{
+		padding-bottom: 10px;
+		}
+		.convosCompleted{
+		}
+	}
+	.id{
+		padding-top: 20px;
+	}
+	.quit{
+		width: 118px;
+		height: 41px;
+		margin-top: 50px;
+		background-image: url("../assets/images/endGame_Page/btn-quit-up.png");
+	  &:hover{
+	    background-image: url("../assets/images/endGame_Page/btn-quit-dn.png");
+	  }
+	}
+}

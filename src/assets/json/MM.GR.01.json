@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Good morning!",
+			"NPC_Response": "Good morning.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Hey, it's Mikey the Muscle! How are you this morning?",
+			"NPC_Response": "I'm sorry, what's that?",
+			"animation": "confused_mild"
+		},
+		{
+			"code":"C",
+			"PC_Text":"There he is! The one who puts the 'man' in \"manager\" ... ",
+			"NPC_Response": "What’s that?",
+			"animation": "confused_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "I'm Annie, the new hire.",
+				"NPC_Response": "Nice to meet you. Are you settling in ok?",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "So you're the boss man.  The head honcho. The big cheese.",
+				"NPC_Response": "Um yes. I am the manager.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "You must be Mike. I've heard so much about you! Is it true you have a tattoo of a koala in a hard hat on your chest?",
+				"NPC_Response": "What? No!",
+				"animation": "surprised_bold"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "I'm Annie. I just started this week.",
+				"NPC_Response": "Oh. Nice to meet you Annie. Please, just call me Mike.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "I'm Annie. You must work out a lot.",
+				"NPC_Response": "You must be new here.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "I'm Annie. Rumor around the office is that you can benchpress a car.",
+				"NPC_Response": "What are you talking about?",
+				"animation": "confused_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Sorry, I'm just really excited to talk with you.",
+				"NPC_Response": "Why is that?",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "What? No one's ever said that to you before?",
+				"NPC_Response": "No, and I'd prefer no one ever did again.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "The middleweight champion of middle management, the master of the margins …",
+				"NPC_Response": "Really, that's enough.",
+				"animation": "annoyed_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Very well, thank you.",
+				"NPC_Response":"Happy to hear it.I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Aye aye, captain. I'm full steam ahead!",
+				"NPC_Response":"Oh, that's great. Glad to hear it.  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Yep! I haven't had a welcome this warm since my trip to the Bahamas!",
+				"NPC_Response":"Oh, great. Glad to hear it. I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "confused_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "It's lovely to meet you!",
+				"NPC_Response":"Um, thanks? Anyway, I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "How about I call you \"the big kahuna?\"",
+				"NPC_Response":"You can call me Mike.  I hope you settle in OK and have a chance to get to know your coworkers?",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "The grande enchilada. The burger king. The manwich! Wow I'm hungry.",
+				"NPC_Response":"That really is not necessary. I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Oh, my bad. I must be thinking of someone else.",
+				"NPC_Response":"I should think so. I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Come on, don't be shy!",
+				"NPC_Response":"I don't know what you're talking about.  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "Aw, you're just being modest. Open your shirt and let me see!",
+				"NPC_Response":"Absolutely not. I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Will do. Good to meet you Mike.",
+				"NPC_Response":"You too. I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "You got it, Mikinater!",
+				"NPC_Response":"Just Mike, please.  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "What about Mike the Mountain? Or maybe His Majesty Mike of the Manly Arms?",
+				"NPC_Response":"Please just stop.  Anyway, I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "How did you know?!",
+				"NPC_Response":"Lucky guess. I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "How fast can you run a mile?",
+				"NPC_Response":"I don't think that's any of your business. Anyway, I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "I used to work out a lot. They used to call me All-American Ankle Annie on account of my massive ankles.",
+				"NPC_Response":"hat's quite a nickname. Anyway, I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "You know, a car. Oh, did you mean me? I'm the new hire.",
+				"NPC_Response":"I see. Welcome. I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "Oooh, you look so tense. Are you stretching after lifting? You need to relax or you'll pull something!",
+				"NPC_Response":"This really is none of your business. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "Can I touch your bicep? Or tricep? Oh! How about the deltoid?",
+				"NPC_Response":"I should think not!  I hope you settle in OK and get to know your coworkers.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Because I'm Annie and I am going to be your new analyst!",
+				"NPC_Response":"Welcome to the team.  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "I'm Annie.",
+				"NPC_Response":"Yes, I know. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "I'm  just excited to work with you. I dreamed of becoming a professional lion tamer but the market is just really saturated right now.",
+				"NPC_Response":"I don't even know what to say to that. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "confused_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "Understood.",
+				"NPC_Response":"I hope so. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Sorry, sometimes I can't resist a good alliteration.",
+				"NPC_Response":"Try. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "Understood. Don't worry, your secret is safe with me.",
+				"NPC_Response":"What secret? Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "confused_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Oh, sorry. Sometimes I get carried away.",
+				"NPC_Response":"Apparently. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "Are you sure? I didn't even get to the best part yet.",
+				"NPC_Response":"Yes, I'm sure. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "IT'S THE ONE, THE ONLY, MONETARY MEASUREMENT MIKE!",
+				"NPC_Response":"That's enough. Anyway,  I hope you settle in OK and have a chance to get to know your coworkers.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

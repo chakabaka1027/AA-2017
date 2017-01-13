@@ -1,0 +1,54 @@
+game-map .game-map-room{
+	width: 110px;
+	text-align: center;
+	line-height: 90px;
+	border: 3px solid #73AD21;
+}
+
+.game-room {
+	position: absolute;
+	width: 110px;
+    height: 90px;
+}
+
+.lobby {
+    top: 50%;
+    right: 50%;
+}
+.conferenceRoom {
+    top: 35%;
+    right: 44%;
+}
+.anniesOffice {
+    top: 50%;
+    right: 39%;
+}
+.mikesOffice {
+    top: 35%;
+    right: 56%;
+}
+.fransOffice {
+    top: 50%;
+    right: 61%;
+}
+.breakRoom {
+    top: 65%;
+    right: 50%;
+}
+
+.vertical-line {
+   height: 30px;
+   border-left: 3px solid green;
+   position: absolute;
+   top: 46.5%;
+   left: 53%;
+}
+
+.horizontal-line {
+   width: 100px;
+   border-top: 3px solid green;
+   position: absolute;
+   top: 100px;
+   left: 300px;
+}
+

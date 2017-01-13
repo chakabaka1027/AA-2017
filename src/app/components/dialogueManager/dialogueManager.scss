@@ -1,0 +1,30 @@
+.playerChoices{
+	background-color: #a7c8e7;
+	width: 250px;
+	height: 450px;
+	padding: 10px;
+	font-family: marker-felt;
+	line-height: 1.3em;
+}
+
+// white buttons
+.choices input[type="button"]{
+	font-family: 'Lato', sans-serif;
+	font-size: 12pt;
+	width: 100%;
+	box-shadow: 5px 5px 15px #607c92;
+	min-height: 70px;
+	padding: 10px;
+	background-color: #fff;
+	color: black;
+	word-wrap: break-word;
+	white-space: normal;
+	&:hover{
+		background-color: #66a4bd;
+		box-shadow: 10px 10px 20px #607c92;
+	}
+}
+
+.choices input[type="button"]:focus{
+	background-color: #004d4d;
+}

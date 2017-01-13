@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Hello.",
+			"NPC_Response": "Hi there.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Hi, what's up?",
+			"NPC_Response": "Oh, hello. How are you?",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Long time no see, boss man!",
+			"NPC_Response": "Hello again, Annie. I just saw you.",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "How's it going?",
+				"NPC_Response": "I'm doing well, thanks.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "I've been hoping to have more one-on-one time to get to know you.",
+				"NPC_Response": "Uhh… sure that would be nice.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "So... how YOU doing?",
+				"NPC_Response": "I'm fine... uh, fine.",
+				"animation": "surprised_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "I'm doing well! It's beautiful weather today!",
+				"NPC_Response": "It is nice outside.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "I'm feeling good! I just caught up on all of my favorite tv shows this weekend.",
+				"NPC_Response": "That sounds relaxing.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Not so good. My boyfriend dumped me this weekend.",
+				"NPC_Response": "Oh, I am sorry to hear that.",
+				"animation": "surprised_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Yes, of course! I'm just joking around.",
+				"NPC_Response": "Yes, well nice to see you again. How are you settling in?",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "That's true. So where are you off to? Can I come?",
+				"NPC_Response": "Just grabbing a coffee from the kitchen.",
+				"animation": ""
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "Even ten minutes is too long.",
+				"NPC_Response": "You're a funny one!",
+				"animation": "surprised_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "I'm so excited to be here.",
+				"NPC_Response":"That's great. We are happy to have you here.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "I hear this is a pretty easy going place to work! You can come in any time you like!",
+				"NPC_Response":"Well, I think we try to be flexible.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "I hear you can get away with anything here! I'm going to start coming in at 12:00!",
+				"NPC_Response":"I don’t know where you heard that but I don’t think it’s true.",
+				"animation": "annoyed_mild"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "Maybe we can have a team lunch this week!",
+				"NPC_Response":"That sounds like a good idea.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "I've been watching you from across the room.",
+				"NPC_Response":"Uh… well I am right here. Next time just come say hello.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "I've been checking your Facebook status and Linked In profiles everyday to learn more about you.",
+				"NPC_Response":"That's… flattering, I guess but I prefer if you wouldn't do that.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "That's good to hear.",
+				"NPC_Response":"Well, I should get back to work.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "No, really... how YOU doing?",
+				"NPC_Response":"I said I am fine.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "Come on, Mike.  How YOU doing? You know...  Want to get a drink after work?",
+				"NPC_Response":"Uh, no thanks, though.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "I might take a walk at lunch and enjoy some fresh air.",
+				"NPC_Response":"That sounds like a nice idea.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Do you want to take a walk with me outside?",
+				"NPC_Response":"I have to do some work actually.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "Let's go for a walk together outside and get to know each other's darkest secrets!",
+				"NPC_Response":"I'm very busy. I need to get back to work, actually.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Yes, it was great!",
+				"NPC_Response":"I'm glad you had a nice weekend.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "I needed it! Work has really been cramping my TV style…",
+				"NPC_Response":"Well, sorry to hear that.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "I'm trying to watch tv while I'm at work so I can stay caught up!",
+				"NPC_Response":"I don’t think that's allowed.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "It's ok. We weren't together long.",
+				"NPC_Response":"I'm sure you will meet someone else.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "Yea, it was on my birthday too. He sang \"Happy birthday to you…  I think we are through!\"",
+				"NPC_Response":"Oh, that sounds awful. I, uh, don’t know what to say.",
+				"animation": "surprised_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "It's ok. I already have eyes for my new manager. Hint, hint.",
+				"NPC_Response":"I, uh... I am married, Annie.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "I'm doing great! Everyone is so friendly.",
+				"NPC_Response":"That's good to hear.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "It's great. All those terrible rumors I heard don't seem to be true.",
+				"NPC_Response":"What rumors? I should hope not!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "I am loving it here. I am even sleeping here at night.",
+				"NPC_Response":"Uh, I don’t think you’re allowed to do that.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "The coffee machine we have is amazing.",
+				"NPC_Response":"It is. I chose it myself.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Oh, good. I need a cup of coffee too. I'll join you.",
+				"NPC_Response":"Uh, sure… ",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "And you didn’t tell me? You know I am trying to follow your routine exactly.",
+				"NPC_Response":"I definitely didn’t know that. Why would you do that?",
+				"animation": "surprised_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Haha, yes I try!",
+				"NPC_Response":"Well, I will see you around then.",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "I'm not jokng.",
+				"NPC_Response":"Haha, I hope you are…",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "What do you think about sharing an office ? This way we can really spend all day together.",
+				"NPC_Response":"I think you are fine where you are.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Hi there, I'm Annie.",
+			"NPC_Response": "Hi Annie. I'm Luna.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Hi there little lady. My name is Annie. And you are?",
+			"NPC_Response": "Hi Annie. I'm Luna.",
+			"animation": "surprised_mild"
+		},
+		{
+			"code":"C",
+			"PC_Text":"Hi there pretty woman! I'm Annie. Who are you?",
+			"NPC_Response": "Huh? Oh, hi. I'm Luna.",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "Great to meet you, Luna. I love your outfit!",
+				"NPC_Response": "Thank you! I got a great deal on it when my dad's store was foreclosed.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AB",
+				"PC_Text": "What do you do around here?",
+				"NPC_Response": "I work in research and development.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "Luna? What a cool name! I bet they call you Luna the Lunatic!",
+				"NPC_Response": "Actually, my parents named me Luna because I was born under a full moon. It's supposed to be good luck!",
+				"animation": "surprised_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Nice to meet you, Luna. How do you like working here?",
+				"NPC_Response": "It's a good place to work. Everyone is really nice. Plus, every Friday is ice cream day.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "You look super fit. Do you play sports?",
+				"NPC_Response": "I used to do archery. I was going to the Olympics until I took an arrow to the knee.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Doesn't Luna mean \"moon\" in Latin? … ! Have you ever been to the moon?",
+				"NPC_Response": "No, but I dreamed I traveled there!",
+				"animation": ""
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Nice to meet you Luna. I love your belt. It looks super retro.",
+				"NPC_Response": "Thank you. It was my mother's.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "That's a lovely blue dress. Are you a democrat?",
+				"NPC_Response": "I'm an independent, actually. I've never voted for a winning candidate in my life.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "You look so lovely. Are you dating anyone?",
+				"NPC_Response": "No. I don't have a great track record with relationships. ",
+				"animation": "annoyed_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "I'm sorry to hear your dad lost his store.",
+				"NPC_Response":"Well, when life hands you lemons you make lemonade.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "It suits you. You look fierce as a flamingo.",
+				"NPC_Response":"A blue flamingo, perhaps.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Your dad's store was foreclosed? What happened? Was it gambling debt? Insider trading gone wrong?",
+				"NPC_Response":"Just the economy, actually.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "How fancy! Any interesting projects in the works?",
+				"NPC_Response":"Yes, actually. We're developing an assessment game!",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "Oooh, something super secretive, no doubt.",
+				"NPC_Response":"Um, something like that.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "Wow, that's like super nerd status! I bet you read statistics books for fun!",
+				"NPC_Response":"An average person might find that comment mean, but yes, I do read stats books for fun.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Well, I feel lucky to have met you, Luna. Have a nice day!",
+				"NPC_Response":"Thanks, you too!",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Under a full moon? That's cool. I was born in a hospital.",
+				"NPC_Response":"Technically I was born in a car on the side of the road, but there was a full moon in the sky.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "You should put that luck to use and go buy some lottery tickets!",
+				"NPC_Response":"I bought a lottery ticket once. Somehow, I ended up owing the lottery company money.",
+				"animation": "confused_mild"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "That sounds wonderful. I hope there's chocolate!",
+				"NPC_Response":"There's chocolate, although it's usually sold out by the time I get there.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "I hope it's the good ice cream, not that generic stuff.",
+				"NPC_Response":"It's very tasty, or so I'm told. I never get there before they sell out.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "I'm lactose intolerant. You wouldn't believe how many bathroom issues I had figuring that out!",
+				"NPC_Response":"That reminds me of the time I figured out I had a severe peanut allergy...",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "What an interesting hobby, but that sucks about your knee.",
+				"NPC_Response":"It's okay. My other knee got hit by two arrows.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "You can't let a little thing like an injury stop you!",
+				"NPC_Response":"The arrowhead is still in there.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Does that mean you have a bionic robotic knee and a cool scar? Can I see it?",
+				"NPC_Response":"There's a scar. It reminds me everyday of that moment.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "I'd love to go!",
+				"NPC_Response":"I won a free telescope when I was a child but it got lost in the mail.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "Me too! My handstands would be amazing in zero gravity.",
+				"NPC_Response":"I went to a zero gravity center once on a school trip.  We ran out of time so all the students got to try except me.",
+				"animation": "annoyed_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "Maybe we can go on the new rocket ships for tourists together? I bet Acme Tech would sponsor us!",
+				"NPC_Response":"Maybe! I won their annual sponsorship last year for the cheese of the month club! But I'm lactose intolerant.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "What a lovely family heirloom!",
+				"NPC_Response":"She sent it to me from Puerto Rico before her cruise ship disappeared in the Bermuda Triangle.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "I wish my mom gave my pretty things like that.",
+				"NPC_Response":"My dad said it's cursed, but I think it's just fine.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Did you get it when she died?",
+				"NPC_Response":"She was running with the bulls in Spain and got trampled. This is all of her I have left.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "At least you vote. That's better than most!",
+				"NPC_Response":"Well, I try. The last time I went to the polls, my car died and I didn't make it in time.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Why would anyone register as an independent?",
+				"NPC_Response":"I tried to register for the Green Party, but I guess I checked the wrong box.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "You actually voted?!  Those elections are all fixed!",
+				"NPC_Response":"I thought I was being a good citizen!",
+				"animation": "confused_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "That doesn't seem possible. You're so nice!",
+				"NPC_Response":"My last boyfriend ran away to the circus.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "You just need to put yourself out there. We should go dancing and find some handsome fellas.",
+				"NPC_Response":"The last time I went out dancing, the dance hall burned down.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "They called me \"Amorous Annie\" in high school for my gift in matchmaking people. Let me hook you up!",
+				"NPC_Response":"No, but thank you. My last relationship ended when my boyfriend got eaten by a shark. I'm not ready for another yet.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

@@ -1,0 +1,85 @@
+.gameContainer {
+  border: 1px ridge black;
+  width: 950px;
+  height: 560px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #000;
+
+  .main-pane{
+    position: relative;
+  }
+
+  .conversationContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(0,0,0,.5);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+
+    p{
+      font-size: 14pt;
+      line-height: 1.1em;
+    }
+
+    .pc-bubble, .npc-bubble{
+      font-family: marker-felt;
+      font-size: 15pt;
+      line-height: 0.3em;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url("../assets/images/conversation_items/thought_bubble.png");
+      box-sizing: border-box;
+      width: 253px;
+      height: 186px;
+      padding: 10px;
+      top: 0px;
+      right: 30px;
+    }
+    .npc-bubble{
+      background-image: url("../assets/images/conversation_items/thought_bubble_reverse.png");
+      top: 0px;
+      right: 325px;
+    }
+  }
+
+  .itemRight{
+    order: 2;
+    border: 1px solid #000;
+    box-shadow: 6px 9px 20px #050700;
+  }
+  // left
+  display-dialogue{
+  //   display: block;
+  //   order: 1;
+  //   background-color: #000;
+    border: 10px solid red;
+  }
+
+  data-collection{
+     width: 800px;
+    height: 200px;
+    overflow-y: scroll;
+    border: 2px solid black;
+  }
+  .transition-in{
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in;
+    opacity: 0;
+  }
+  .transition-out{
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in;
+    opacity: 1;
+  }
+}

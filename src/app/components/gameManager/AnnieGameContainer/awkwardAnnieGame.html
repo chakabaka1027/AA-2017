@@ -1,0 +1,13 @@
+<!-- Called awkwardAnnieGame.html -->
+<div class="gameContainer">
+	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
+	<div class="main-pane">
+		<game-manager main="main" room="main.roomKey"></game-manager>
+
+
+		<div ng-if="!main.hideDialogue" class="conversationContainer">
+			<display-dialouge main="main"></display-dialouge>
+			<pop-up-dialogue-manager main="main"></pop-up-dialogue-manager>
+		</div>
+	</div>
+</div>

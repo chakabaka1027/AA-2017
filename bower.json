@@ -1,0 +1,22 @@
+{
+  "name": "awkawrdAnnie",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular-messages": "~1.5.3",
+    "angular-aria": "~1.5.3",
+    "jquery": "~2.1.4",
+    "angular-ui-router": "~0.2.15",
+    "moment": "~2.10.6",
+    "animate.css": "~3.4.0",
+    "angular": "~1.5.3",
+    "p5.js": "p5js#^0.5.2",
+    "p5.play": "https://github.com/molleindustria/p5.play.git"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.5.3"
+  },
+  "resolutions": {
+    "jquery": "~2.1.4",
+    "angular": "~1.5.3"
+  }
+}

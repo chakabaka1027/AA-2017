@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Hi, I'm Annie.",
+			"NPC_Response": "Hello Annie. What a pleasure to meet you.  I'm Charlie.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Greetings and saluations honorable commrade! My name is Annie.",
+			"NPC_Response": "Hello Annie. What a pleasure to meet you. I'm Charlie.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"What's up party people?! Audacious Annie is here to shake things up!",
+			"NPC_Response": "Hello Annie. What a pleasure to meet you. I'm Charlie.",
+			"animation": ""
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "Great to meet you, Charlie. Today's my first day, I'm a little nervous.",
+				"NPC_Response": "What's a peach like you got to be worried about? I bet you're a natural.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "So how about this weather? Hot. As. Balls.",
+				"NPC_Response": "It's not so bad. Brings out a lovely glow in the skin.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "I had a fish named Charlie once. He died.",
+				"NPC_Response": "That sounds quite tragic.",
+				"animation": "surprised_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Nice to meet you too, Charlie. How long have you worked here?",
+				"NPC_Response": "I just celebrated my 5 year anniversary in the IT deparment last month.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Hi Charlie. You look like a sports fan, what's the office policy on using the TV in the conference room?",
+				"NPC_Response": "It's for business only, I'm afraid. Although sometimes at holiday parties we do play karaoke on it.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Nice to meet you. What's the policy on inter-office dating?",
+				"NPC_Response": "Oh Annie... We just met!",
+				"animation": "surprised_bold"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "I'm so pleased to meet you, Charlie. I'm both excited and nervous to get started.",
+				"NPC_Response": "Welcome and congratulations. It's always nice to have new faces about the office.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "Charlie, great name!  Are you named after your dad?",
+				"NPC_Response": "Actually, my grandfather named me before he passed.",
+				"animation": ""
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "I have an uncle named Charlie. He's in jail for stealing flowers from his neighbor's garden.",
+				"NPC_Response": "I'm sorry to hear that.",
+				"animation": "surprised_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Aw, thank you!",
+				"NPC_Response":"You're welcome.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Peaches are delicious.",
+				"NPC_Response":"That's true.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "What a forward question! But yes, if you must know, my hair color is natural.",
+				"NPC_Response":"That was not my intention, although your hair color really is lovely.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "You have such a positive way of looking at the world!",
+				"NPC_Response":"I do what I can.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "Well aren't you a sweetheart!",
+				"NPC_Response":"Why yes I am...",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "Glow? Sure, if that's what you call the sweating-like-a-sinner-in-church look.",
+				"NPC_Response":"Well you carry it off effortlessly.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Yeah, I'm still not over it.",
+				"NPC_Response":"I'm sorry for your loss.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Rest in peace in fishy heaven, Charlie.",
+				"NPC_Response":"Pets fill a special place in our hearts not easily mended.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "Another fish in the tank bit Charlie's head off. Do you want to see a picture?",
+				"NPC_Response":"Ah yes, the great circle of life can be cruel… no thank you on the picture, though.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Congratulations, that's wonderful.",
+				"NPC_Response":"You're kind to say so.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Five years in IT? Wow, I've bet you've seen some things...",
+				"NPC_Response":"Perhaps, but my lips are sealed.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "I bet you have all sorts of juicy stories about people's browser histories. Share!!",
+				"NPC_Response":"A gentleman never kisses and tells.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "I guess that makes sense. Karaoke sounds fun though.",
+				"NPC_Response":"You can learn a lot about a person based on the songs they choose.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "Guess I'll have to go out during lunch to watch my soap opera shows. You miss one week and you're totally lost.",
+				"NPC_Response":"I suppose that would be true.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "That's a shame, but I won't be deterred! I'll just hide my tablet in my desk drawer so I can stay up to date on the Summer Olympics.",
+				"NPC_Response":"Such fierceness, such determination.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Oh, not me! It's an important question to have answered, and I don't feel comfortable asking Mike.",
+				"NPC_Response":"Of course, that makes perfect sense.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "Well that never stopped me.",
+				"NPC_Response":"My oh my, Annie...",
+				"animation": "surprised_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "Not for me, for Fran! She probably hasn't been in a relationship since her date dumped her at prom.",
+				"NPC_Response":"What a horrible thing to have happen.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Aw, thank you!",
+				"NPC_Response":"You're welcome.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Yep, fresh meat for the grinder. Be gentle.",
+				"NPC_Response":"I wouldn't dream of treating you harshly.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Seriously, I'm so nervous I feel like I need to pee like a racehorse.",
+				"NPC_Response":"You have a gift for simile.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "What a bittersweet story.",
+				"NPC_Response":"Thank you.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Why did he pick Charlie?",
+				"NPC_Response":"I don't know, I never had the chance to ask.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "How did he die?",
+				"NPC_Response":"A broken heart, I'm afraid.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Oh sorry, I just start talking, no filter, when I'm nervous. First day jitters and all that.",
+				"NPC_Response":"Take a deep breath and relax. It's all good.",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "We aren't close or anything. He knew what he was getting in to and, honestly, he's crazy about flowers!",
+				"NPC_Response":"A man who knows what he wants.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "It's OK. My other uncle is in jail for smuggling monkeys into the country. He just can't get enough of those sweet little guys!",
+				"NPC_Response":"Oh my! What an interesting family life you have.",
+				"animation": "surprised_bold"
+			}
+		]
+	}
+}

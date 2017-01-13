@@ -1,0 +1,164 @@
+/* Do not remove the comments below. It's the markers used by wiredep to inject
+   sass dependencies when defined in the bower.json of your dependencies */
+// bower:scss
+// endbower
+@import url(https://fonts.googleapis.com/css?family=Amatic+SC:700);
+@import 'https://fonts.googleapis.com/css?family=Lato';
+// font-family: 'Amatic SC', cursive;
+
+@font-face{
+  font-family: marker-felt;
+  src: url(../assets/fonts/marker-felt-thin.ttf);
+}
+/* =========
+   Resets 
+============*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* =========
+   End of Resets 
+============*/
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+
+.btn {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  color: white;
+  background-color: #00cccc;
+  border-color: #006666;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+
+.blue-continue{
+  width: 120px;
+  height: 38px;
+  background-image: url("../assets/images/UI/blue-continue.png");
+  background-repeat: no-repeat;
+
+  &:hover{
+    box-shadow: 5px 8px 20px #065077;
+  }
+}
+.continue{
+  width: 119px;
+  height: 42px;
+  background-image: url("../assets/images/LogIn_Page/btn-continue-up.png");
+  background-repeat: no-repeat;
+  font-size: 0px;
+
+  &:hover{
+    background-image: url("../assets/images/LogIn_Page/btn-continue-dn.png");
+  }
+}
+
+.right{
+  position: relative;
+  left: 766px;
+  top: 470px;
+  z-index: 10;
+}
+
+.col {
+  float: left;
+  width: 33.33%;
+  position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+
+  .thumbnail {
+    height: 200px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    margin-bottom: 20px;
+
+    .caption {
+      padding: 9px;
+    }
+
+    img.pull-right {
+      width: 50px;
+    }
+  }
+}
+
+hr {
+  clear: both;
+}
+
+.pull-right {
+  float: right;
+}
+
+.hide{
+  display: none;
+}
+
+.conversation-room{
+  background: green;
+}
+
+/* Do not remove the comments below. It's the markers used by gulp-inject to inject
+   all your sass files automatically */
+// injector
+// endinjector

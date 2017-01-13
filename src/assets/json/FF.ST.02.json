@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Oh. Em. Gee. Fran, come look at these adorable puppies I found on the internet!",
+			"NPC_Response": "They are pretty cute.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"So who was that cute guy I saw you sitting with at lunch?",
+			"NPC_Response": "His name is Paolo, he's down in accounting.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Hey there friend! How did your appointment this morning with the dermotologist go?",
+			"NPC_Response": "The appointment was fine.",
+			"animation": ""
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "I wish I could adopt every one of them.",
+				"NPC_Response": "Pet overpopulation is a big problem. Maybe you could volunteer at the animal shelter?",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "My dream is to get rich and open a puppy sanctuary where I can rescue all the puppies.",
+				"NPC_Response": "Pet overpopulation is a big problem.  Maybe you could volunteer, for now?",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "I had a puppy like this one when I was little. She was my only friend in the whole world and I loved her so much I have her ashes on my mantle at home.",
+				"NPC_Response": "Oh, I'm sorry. What happened?",
+				"animation": "surprised_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Looked like you guys were having a great conversation.",
+				"NPC_Response": "We were talking about a project we're collaborating on.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Does he have a friend?",
+				"NPC_Response": "I'm sure he has lots of friends.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Ooh, Paolo. How exotic!",
+				"NPC_Response": "He's from San Francisco…",
+				"animation": ""
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Was he able to figure out what the problem was?",
+				"NPC_Response": "Yes, everything is fine.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "Did the doc examine that... thing on your rear?",
+				"NPC_Response": "Yes, Annie, if you must know! Can you keep your voice down at least?",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "What did the doctor say about that giant rash on your butt?",
+				"NPC_Response": "Can we not talk about this at work?!",
+				"animation": "annoyed_bold"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "What a great idea!",
+				"NPC_Response":"You'd be great at it!",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Maybe I'll win volunteer of the month on my first day!",
+				"NPC_Response":"Uh, sure. That's the spirit.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "I'll sneak all the animals home with me so they can sleep in my bed.",
+				"NPC_Response":"I don't think that's a very good idea.",
+				"animation": "confused_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "What a great idea!",
+				"NPC_Response":"Thanks!",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "But I need to be with all the puppies day and night!",
+				"NPC_Response":"Why don't you start with volunteering and work up to that?",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "You're right. We should start our own shelter together and quit these pointless jobs!",
+				"NPC_Response":"Um, I did not say that.",
+				"animation": "confused_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "She got old and we had to put her down.",
+				"NPC_Response":"I'm sorry to hear that.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "We had to put her down, but I got to push the incinerator button.",
+				"NPC_Response":"You what?",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "We had to put her down. We took her body home and cremated her in the firepit. Ooh, I have a craving for smores!",
+				"NPC_Response":"Wow, Annie. Just wow.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Anything interesting?",
+				"NPC_Response":"Yeah, I think it's going to be really great.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "That's how it starts, you know. First comes collaboration then comes first date...",
+				"NPC_Response":"We're just colleagues.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "I slipped my phone number into phone when he wasn't looking!",
+				"NPC_Response":"Oh, Annie!",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Well, he seems like a nice guy.",
+				"NPC_Response":"Yes, he is.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "No, I meant does he have a friend as cute as him that I can have lunch with!",
+				"NPC_Response":"I know what you meant...",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Could you get me a few of their phone numbers? We could double date!",
+				"NPC_Response":"Annie, really. We're just colleagues.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Oh, I've been there. They have great chocolate.",
+				"NPC_Response":"Yes, they do.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "Nice! That's a great place to raise kids.",
+				"NPC_Response":"Why are you talking about raising kids!?",
+				"animation": "confused_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "No, with that tan… I mean, where is he really from?",
+				"NPC_Response":"… San Francisco.",
+				"animation": "confused_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Oh good, that's a relief.",
+				"NPC_Response":"Yes, I'm quite relieved.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Did he give you some medication?",
+				"NPC_Response":"No, just recommended some over-the-counter cream.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "I had a cousin with something similar. He died.",
+				"NPC_Response":"Why would you even say that?",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "Oh Fran, I'm so relieved!",
+				"NPC_Response":"Me too.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Did he say what it was?",
+				"NPC_Response":"Just some minor irritation…",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "I did some internet image searches to find a match. The closest match I saw was some kind of hives...",
+				"NPC_Response":"It's nothing to concern yourself with. Also Annie, that's really weird.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Sure, of course. I didn't mean to embarrass you.",
+				"NPC_Response":"I just want to keep my personal life personal, you know?",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "I had a rash like that once. It itched like crazy. Some kind of fungus thing.",
+				"NPC_Response":"I do not have a fungal infection, but thanks for the concern.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "What kind of medication did he prescribe? Do you need help applying it?",
+				"NPC_Response":"For goodness sakes Annie, no! I can manage.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

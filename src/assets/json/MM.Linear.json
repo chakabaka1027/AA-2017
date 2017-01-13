@@ -1,0 +1,41 @@
+{
+	"node1": [
+		{
+			"code":"C",
+			"PC_Text":"Wow this is a nice room!",
+			"NPC_Response":"Welcome to Acme Tech. My name is Mike and I'm the manager of this office. I'd like to officially welcome Fran, who started last week, and our newest addition to the team, Annie. We are excited to welcome our newest members.",
+			"animation":"" 
+		}
+	],
+	"node2": {
+		"C": [
+			{
+				
+				"code":"CC",
+				"PC_Text":"Thanks for the shout out, Mike! Excited to be here!",
+				"NPC_Response":"Of course. We are happy to welcome all of our new employees on board and like to acknowledge everyone individually.",
+				"animation":"surprised_mild"
+			}
+		]
+	},
+	"node3": {
+		"CC": [
+			{
+				"code":"CCC",
+				"PC_Text":"That's a classy move, sir. A classy move indeed.",
+				"NPC_Response":"Anyway, here at Acme Tech, we believe in work-life balance and holistic synergy. Take some time to look around and settle in. I'll be available in my office if you have any questions.",
+				"animation":"surprised_mild"
+			}
+		]
+	},
+	"node4": {
+		"CCC": [
+			{
+				"code":"CCCC",
+				"PC_Text":"I've already written down 76 questions for you! Locked and loaded.",
+				"NPC_Response":"Well, that is certainly more than I was expecting but I would be happy to speak with you  if you like after this meeting.",
+				"animation":"surprised_bold"
+			}
+		]
+	}
+}

@@ -1,0 +1,40 @@
+.intro{
+	position: relative;
+	height: 560px;
+	width: 950px;
+	background-image: url("../assets/images/LogIn_Page/intro-page-bg.jpg");
+	background-repeat: no-repeat;
+	background-color: white;
+	
+	.log-in{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 50px;
+		background-image: url("../assets/images/LogIn_Page/intro-page-sign-in.png");
+		input[type="text"]{
+			font-size: 16pt;
+	    position: absolute;
+	    left: 286px;
+			bottom: 2px;
+			width: 400px;
+			height: 28px;
+		}
+		input[type="submit"]{
+			position: absolute;
+			bottom: 3px;
+			right: 84px;
+		}
+	}
+	.bottomRight{
+    position: relative;
+    left: 766px;
+    top: 521px;
+    z-index: 10;
+	}
+	.custom-error{
+		color:#FF0000;
+		position: absolute;
+		right: 416px;
+	}
+}

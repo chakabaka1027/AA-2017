@@ -1,0 +1,40 @@
+{
+	"node1": [
+		{
+			"code":"C",
+			"PC_Text":"Holy guacamole! Fran, is that really you?",
+			"NPC_Response":"… ! Annie? I haven't seen you since-",
+			"animation":"surprised_mild"
+		}
+	],
+	"node2": {
+		"C": [
+			{
+				"code":"CC",
+				"PC_Text":"High school, I know! You look so different… that \"Fran the Man\" nickname would never stick now! ",
+				"NPC_Response":"Thanks. I think.",
+				"animation":""
+			}
+		]
+	},
+	"node3": {
+		"CC": [
+			{
+				"code":"CCC",
+				"PC_Text":"No one would ever believe your other nicknames either, like Bride of \"Fran\"kenstein, Raisin Fran, Fran Fran the Caveman-",
+				"NPC_Response":"Yeah, I got it. I was there. I seem to remember you had your own nickname, \"Awkward Annie.\"",
+				"animation":"annoyed_mild"
+			}
+		]
+	},
+	"node4": {
+		"CCC": [
+			{
+				"code":"CCCC",
+				"PC_Text":"That one never made sense to me…",
+				"NPC_Response":"That's hard to imagine.",
+				"animation":"surprised_bold"
+			}
+		]
+	}
+}

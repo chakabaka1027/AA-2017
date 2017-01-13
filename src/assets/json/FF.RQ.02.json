@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Would you get me some of the chocolate chip cookies from the table?",
+			"NPC_Response": "No problem! I was just going to get some myself.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Could you make me a plate of cookies and milk?",
+			"NPC_Response": "Umm, OK. I can bring you some if they have milk.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Could you watch my plate of cookies? I can see the HR guy eyeing them from here.",
+			"NPC_Response": "I really don’t think he wants your cookies.",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "Thanks! And can you bring me a napkin?",
+				"NPC_Response": "Sure.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "Great. I wouldn’t mind a slice of cake and some M&M's while you're at it.",
+				"NPC_Response": "OK… I'll do my best.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "Actually would you just bring me the whole tray so I can take them home with me?",
+				"NPC_Response": "I think they are for everyone to share, Annie!",
+				"animation": "surprised_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Thanks! And can you bring me a napkin?",
+				"NPC_Response": "Sure.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Great. I wouldn’t mind a slice of cake and some M&M's while you're at it.",
+				"NPC_Response": "Um, OK… I will do my best.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Why wouldn’t they have milk? What kind of lame party is this? Get me some ice too!",
+				"NPC_Response": "You know, Annie, maybe you can just get it yourself. ",
+				"animation": "annoyed_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Yea, maybe you're right. But could you hold them while I get a drink?",
+				"NPC_Response": "I guess so.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "How would you know? Can you just watch these for me?",
+				"NPC_Response": "Alright, Annie. I'll watch them. ",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "Come on- chocolate chip and oatmeal raisin? Of course he wants them! Can you protect these or not?",
+				"NPC_Response": "No I don't think I can Annie! Just watch them yourself.",
+				"animation": "annoyed_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Thanks so much!",
+				"NPC_Response":"You're welcome.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "What kind of word is napkin? Nap-kin? Nap plus kin? It makes no sense.",
+				"NPC_Response":"I don’t know, Annie. It's just a word.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Actually, bring me each cookie on an individual napkin.",
+				"NPC_Response":"I'll do what I can, Annie.",
+				"animation": "annoyed_mild"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "Only if you have a free hand. Thanks!",
+				"NPC_Response":"No problem.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "Why wouldn't you be able to?",
+				"NPC_Response":"I only have two hands, Annie!",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "It's fine. Just make two trips if you can’t carry it all. I don’t mind waiting.",
+				"NPC_Response":"I'll let you get it yourself then.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "OK, I'll wait until the end of the party.",
+				"NPC_Response":"That's a bit better at least.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "No one else needs them here! I'm helping them lose weight.",
+				"NPC_Response":"Oh, Annie…",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "You know I can’t buy my own cookies! My mom is a baker! It’s practically treason.",
+				"NPC_Response":"I don’t think it works that way.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Thanks! You're amazing!",
+				"NPC_Response":"You're welcome.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Thanks! I don’t want to lose my spot next to the cheese plate.",
+				"NPC_Response":"I really don't think you need to worry about that.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "Thank you!I I wouldn't have any if I were you though. You put on a few pounds recently!",
+				"NPC_Response":"How could you say that to me, Annie?",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Only if you have a free hand. Thanks!",
+				"NPC_Response":"You’re welcome.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "Why wouldn't you be able to?",
+				"NPC_Response":"I'll try, Annie.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "It's fine. Just make two trips if you can’t carry it all. I don’t mind waiting.",
+				"NPC_Response":"I'll let you get it yourself then.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Oh, I'm sorry, Fran. I really appreciate it.",
+				"NPC_Response":"It's fine. I'll see if they have milk.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "I would but I really don't want to.",
+				"NPC_Response":"Don't be so lazy, Annie.",
+				"animation": "annoyed_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "It's the least you can do since you still haven’t invited me to your new house!",
+				"NPC_Response":"Uh, I am still settling in…",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Thanks, Annie!",
+				"NPC_Response":"No problem.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Make sure you hold onto it tight!",
+				"NPC_Response":"I really don’t think you need to worry.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "I counted the cookies by the way, so don’t get any ideas!",
+				"NPC_Response":"I wouldn't dream of it.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "Thanks! You know I love my cookies.",
+				"NPC_Response":"Yes… how could I forget?",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Do you think you can handle this?",
+				"NPC_Response":"Jeez, Annie. Just go already.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "I don’t want a repeat of high school when you said you would save my seat that time and forgot!",
+				"NPC_Response":"I don’t know what you are talking about.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "I'm sorry, Annie. I'm just really hungry.",
+				"NPC_Response":"It’s fine. Go ahead.",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "Why do you think they call me the Cookie Monster? Me want cookies!",
+				"NPC_Response":"Right, Annie… just go.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "Make sure you don't steal any yourself! I am watching you!",
+				"NPC_Response":"Annie, there are plenty of cookies left! No one is going to take them.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

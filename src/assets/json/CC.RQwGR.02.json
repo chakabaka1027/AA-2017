@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Hello there, Charlie.",
+			"NPC_Response": "Hi Annie. How's your day going?",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Hey Charlie! Fancy meeting you here.",
+			"NPC_Response": "Yes, Annie, always a pleasure to see you.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"His royal highness, King Charles of Acme Tech. How goes it, kind sir?",
+			"NPC_Response": "Oh, Annie, you silly goose. Such a joker…",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "It's going well!  Could you point me in the direction of the break room?",
+				"NPC_Response": "Why, of course! I could use a coffee myself.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "It's good but I can't find any notepads. Could I have one of yours?",
+				"NPC_Response": "Of course! I would be happy to help.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "Not good. I forgot my wallet at home this morning.",
+				"NPC_Response": "I'm sorry to hear that.  Is there anything I can do?",
+				"animation": ""
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Where are you off to?",
+				"NPC_Response": "Just taking a stroll to stretch my legs.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "I feel like I already have so much work to do!",
+				"NPC_Response": "Yes, it can be a lot when you're new to a company.  You'll get caught up in no time!",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Did you see the cake in the break room? Can you sneak in  and steal me a slice?",
+				"NPC_Response": "Yes, it’s Luna's birthday! She always brings cake.   You are welcome to help yourself to some.",
+				"animation": ""
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "So, did you see the news that we have the afternoon off on Friday?",
+				"NPC_Response": "I did! Such a treat. Do you have any nice plans.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "I did go to juggling school.",
+				"NPC_Response": "A woman of endless surprises…",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "I'm disappointed none of the other employees have asked me to go out after work? I can't understand why! I'm delightful!",
+				"NPC_Response": "You certainly are. I am sure they will arrange something soon.",
+				"animation": "surprised_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "I'm still figuring out my way around. Would you mind walking with me?",
+				"NPC_Response":"That's only natural.  I'd be delighted.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Thanks! This place is like a maze.  And not the good kind where there's a prize at the end.",
+				"NPC_Response":"Oh, I see the lady likes puzzles!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "I don't drink coffee. Caffeine isn't good for you. You should really stick to herbal tea.",
+				"NPC_Response":"Well, thank you for your concern. I'll have to give that a try.",
+				"animation": "surprised_mild"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "Thanks so much! I like taking notes on paper.",
+				"NPC_Response":"I couldn't agree more. Computers can be so impersonal.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "Great! I'm so close to completing my collection. I just need a few more.",
+				"NPC_Response":"An avid collector, I see… It's always good to have hobbies.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "Thank you! I ran out at home and why spend money when office supplies are free?",
+				"NPC_Response":"Well, I won't tell if you won't!",
+				"animation": "surprised_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Would you mind lending me a few dollars so I can buy lunch?",
+				"NPC_Response":"Not at all. Please, it's on me! Consider it a welcome gift.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Can you lend me $20? They're selling soft pretzels in the lobby and I want to bring some home!",
+				"NPC_Response":"Well, I don't know if I have that much but I would be happy to check.  I can't resist a good pretzel either!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "I need to borrow $100.  There's a one day sale at the mall and I want to run out at lunch and buy a new bag!",
+				"NPC_Response":"Oh,  I don't have that much money on me, I'm afraid. But I think the bag you have is lovely.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Would you mind opening the door for me? I've got my hands full.",
+				"NPC_Response":"My pleasure.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Can I join you? I could use a break too.",
+				"NPC_Response":"Your company would be most welcome.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "While you're strolling, can you walk past the break room and get me some chocolates?",
+				"NPC_Response":"Well, I wasn’t planning on walking that way but if the lady needs chocolate, she shall have it!",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Do you think you could show me how to fill in my company profile?",
+				"NPC_Response":"Of course! I'd be happy to help you out.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "Could you explain some of these projects to me so I don’t have to read all these files!",
+				"NPC_Response":"I think it might be helpful for you to read through them but who am I to refuse…",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Can you fill out these reports for me? You're familiar with them so you'll go such much faster!",
+				"NPC_Response":"It pains me to say it, but I think that's something you'll have to do on your own.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Oh, great.  Thanks! Would you like me to bring you a piece?",
+				"NPC_Response":"How could I refuse such a sweet offer?",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "I already took three slices! I just want another to take home!",
+				"NPC_Response":"Oh, well, I'm sure no one would mind. I can keep a secret!",
+				"animation": "surprised_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "I'd really prefer if you got it for me. If someone else brings it to me then the calories don’t count.",
+				"NPC_Response":"Sorry to be the bearer of bad news, but I don't think that's true.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "No. I'm still looking for ideas. Could you  send me any recommendations you have in the area?",
+				"NPC_Response":"I would be happy to!",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "I'd like to go to the beach with some friends.  Would you be able to walk my dog for me?",
+				"NPC_Response":"Oh, I'd be happy to help you out.  Dogs are wonderful… they don’t call them man's best friend for nothing!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "I want to go to the Renaissance Fair and learn to make soap like in the 1500's! Can you go to my house and walk my dog? He only bites a little!",
+				"NPC_Response":"Oh, he sounds quite feisty! I'd love to meet the little fella but unfortunately I am busy!",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "Could you hand me those three rubber band balls? I'll show you my latest act!",
+				"NPC_Response":"This I must see!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "I went to juggling camp every summer.  Hand me those three rubber band balls!",
+				"NPC_Response":"Yes, m' am!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "You don't believe me? Go find me three balls and I will prove it.",
+				"NPC_Response":"I never said anything of the sort! I am sure you are a fine juggler.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "I'm sure you're right. I'd love to get to know the people here.",
+				"NPC_Response":"And you will… just be patient!",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "What's taking them so long? Do you think you could  speak to them about arranging something?",
+				"NPC_Response":"Sure… I'll have a talk with them today.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "Can you just arrange it then? And  I want to go somewhere with fruity drinks with those little umbrellas!",
+				"NPC_Response":"I, um... Well, organizing is not my strong suit but I would be happy to mention it to the others for you.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

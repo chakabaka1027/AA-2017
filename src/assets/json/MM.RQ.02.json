@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Would you like anything from the cafe?",
+			"NPC_Response": "I'm fine, thanks.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Would you like to eat lunch with me?",
+			"NPC_Response": "Thank you but I already ate.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Can I take a two hour lunch break?",
+			"NPC_Response": "Um, we usually only take one hour.",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "OK, would you mind if I go get a coffee now?",
+				"NPC_Response": "Go ahead.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "Can I get you a coffee or tea? You look like you could really  use it!",
+				"NPC_Response": "No, really. I'm fine.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": " Can I borrow a few dollars for a coffee? I forgot my wallet.",
+				"NPC_Response": "I'm sorry, I don't have any money on me.",
+				"animation": ""
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "OK, no problem. Can I take my lunch now?",
+				"NPC_Response": "Sure. Go ahead.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Could I go eat my lunch in the garden? It's so nice outside!",
+				"NPC_Response": "Sure, I enjoy eating there myself.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "I wish you waited for me! Can we eat together tomorrow?",
+				"NPC_Response": "I usually eat lunch at my desk but thanks.",
+				"animation": "surprised_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Ok, I understand. Can I go buy lunch at the cafeteria?",
+				"NPC_Response": "Of course.  I would recommend the pizza.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "My last job always let me take two hour lunches.",
+				"NPC_Response": "Well, here at Acme Tech we only take one hour.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "Could I just take a nap then?  I was just going to zone out at my desk anyway!",
+				"NPC_Response": "Well, I think we can find some work for you to do.",
+				"animation": "annoyed_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Thanks!",
+				"NPC_Response":"You're welcome.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Thanks, boss man!",
+				"NPC_Response":"No problem.",
+				"animation": ""
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Right on, boss-a-rino!",
+				"NPC_Response":"Um, you're welcome. And just Mike will do.",
+				"animation": "surprised_mild"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "Are you sure?",
+				"NPC_Response":"Yes, thank you.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "No really, you look exhausted!",
+				"NPC_Response":"Well, I am a bit tired.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "Seriously, Mike, have you looked in the mirror? The bags under your eyes tell a different story!  ",
+				"NPC_Response":"I said I am fine.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "That's alright. I'll see if Fran has any.",
+				"NPC_Response":"Alright then.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "That's alright, I'll just steal one!",
+				"NPC_Response":"Uh, haha, I hope you're joking…",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "It’s ok! I'll just flirt with the cashier. That always works when you look as good as I do!",
+				"NPC_Response":"Yes, well, good luck with that I suppose.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Thanks! Have a good afternoon.",
+				"NPC_Response":"You too.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Thanks! I'll bring you back a cookie.",
+				"NPC_Response":"That's not necessary but thank you.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "Do you want to share my sandwich with me? It's peanut butter and jelly, just like my mom used to make!",
+				"NPC_Response":"Uhh, that sounds nice but no thank you.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "I love the flowers!",
+				"NPC_Response":"Yes,  enjoy your lunch!",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "I like chasing the dragonflies! They're so fast.",
+				"NPC_Response":"Yes...well, they do have wings…",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "I saw a beautiful plant out there that I want to dig up and take home with me!",
+				"NPC_Response":"I don't think that's allowed!",
+				"animation": "surprised_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "OK, I understand.  Maybe another time.",
+				"NPC_Response":"Sure, another time.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "OK, I can eat at your desk with you.",
+				"NPC_Response":"I meant I prefer to eat alone.",
+				"animation": "annoyed_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "I knowI I was watching you through your window.  You're a loud chewer.",
+				"NPC_Response":"I would prefer you didn’t do that.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Thanks, Mike! I'll give it a try!",
+				"NPC_Response":"Enjoy your meal.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "I'm sure it's not as good as the pizza my grandmother makes.",
+				"NPC_Response":"Well, I like it.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Are you crazy? I can’t eat pizza on a Monday! It’s bad luck! I'll get struck by lightning!",
+				"NPC_Response":"I really don’t think that's true.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "OK, that's fine. I'll be back in an hour.",
+				"NPC_Response":"I'm sure it will be plenty of time.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "That's not enough time to eat and go for my daily swim! I have to wait 30 minutes to digest.",
+				"NPC_Response":"I would suggest swimming after work.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "My last job was so much better than this one. Our lunches lasted all afternoon sometimes!",
+				"NPC_Response":"That's quite unfortunate to hear.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "OK, you're right. I'd be happy to do whatever you need.",
+				"NPC_Response":"That's good to hear.",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "I have work to do. I'm just not interested!",
+				"NPC_Response":"I'm sorry but that's part of your job.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "I'm not getting paid enough to work hard, Mike.  You should know that!",
+				"NPC_Response":"I don’t know that, Annie and  I really don't agree.",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}

@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Hi Luna!",
+			"NPC_Response": "Hi Annie. How's it going?",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Luna! What's happening?",
+			"NPC_Response": "Uh, hello  Annie…",
+			"animation": "surprised_mild"
+		},
+		{
+			"code":"C",
+			"PC_Text":"There she is… The one, the only, the luminescent…. Luna!",
+			"NPC_Response": "That's kind of you, Annie. Nice to see you again.",
+			"animation": ""
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "Everything is going well! I am loving it here.",
+				"NPC_Response": "Acme Tech is a great place to work.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "I'm good! I'm having trouble sleeping recently though.",
+				"NPC_Response": "Oh, I'm sorry to hear that. I'm sure that's frustrating.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "I'm feeling super stressed! My parents are coming to visit this weekend and I haven't planned anything.  They can be so picky.",
+				"NPC_Response": "Oh, that should be nice to see your parents though!",
+				"animation": ""
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Do you know any nice restaurants in the area? I want to go buy some lunch.",
+				"NPC_Response": "There are a few good places.  What kind of food do you like?",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "So what was your major in college?",
+				"NPC_Response": "Oh, well that was some time ago! But I majored in business. What about you?",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "So, what was the last movie you watched that made you cry?",
+				"NPC_Response": "Umm, I don't remember.  I don't usually cry at movies.",
+				"animation": "surprised_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "You too, Luna.  How have you been?",
+				"NPC_Response": "I'm doing well. I'm looking forward to the weekend. I'm going camping for the first time!",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "Did you see what Fran is wearing today?",
+				"NPC_Response": "Yes,  I think she looks lovely!",
+				"animation": ""
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "So, what kind of bonus did you get last year?",
+				"NPC_Response": "I'm sorry… I don't think we are supposed to talk about that.",
+				"animation": "surprised_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Everyone is so friendly.  It's been great meeting so many new people.",
+				"NPC_Response":"I know! At my last job they ran out of desks so they put me on a different floor all by myself. It was so lonely.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "It's so much better than my last job as a zookeeper at the local zoo. I had to clean up whenever the monkeys went to the bathroom!",
+				"NPC_Response":"Oh no! I'm afraid of monkeys ever since I was a little kid and a monkey climbed out of a tree and stole my banana.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Yea, I can see myself becoming president of the company by next year! I already made my business cards!",
+				"NPC_Response":"Wow, that would be impressive! I was supposed to be promoted at my last job but on the day of my promotion, the company went bankrupt.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "It is... but I'm planning on a nice hot  bath tonight to help me sleep.",
+				"NPC_Response":"That's a good idea! I used to have a bathtub but I left the water running and it crashed through my floor.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "It's my fault. I like watching horror movies right before bed time!",
+				"NPC_Response":"Oh no. Horror movies scare me ever since I accidentally watched one as a kid. I thought it was a Disney cartoon!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "It's a good thing actually! I think I am finally going to achieve my dream and become a vampire! I'm going to live forever!",
+				"NPC_Response":"One time at a local fair, a man sold me magic pills that he said would keep me young forever. I am pretty sure they were just chocolate M&M's though.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Yea, it should be fun. I guess we can visit some of the museums.",
+				"NPC_Response":"That's a great idea! I would lend you my Art Museum pass but I lost my wallet on the way to work.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "I guess! You know families though. They can be such a pain! At least my brothers aren't coming, too!",
+				"NPC_Response":"Well, you're lucky you can see your brothers! My brother ran off to join the circus after college and we never heard from him again.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "What if you show them around? You would be a great tour guide! You can cancel your plans and pick them up, right?",
+				"NPC_Response":"Uhhh… well I am busy this week. And actually, I got 2 flat tires on my way to work this morning so I don't have a car now!",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "I like everything! What do you recommend?",
+				"NPC_Response":"Well, my favorite is the local French restaurant. I used to love their cheeses but I developed a dairy allergy this year!",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "I like anywhere that I can watch the kitchen as they make the food. I don't want them messing with my meal!",
+				"NPC_Response":"I worked in a restaurant like that.  I used to practice my juggling with the bread rolls until they fired me… something about  health codes.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "I only eat food that I can eat with my hands.  It’s not appropriate to carry weapons around, and forks are basically just tiny spears.",
+				"NPC_Response":"I see… Well, I think there is a good burger place around the corner. You don't need a fork for that!",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Oh, that's useful! I majored in software engineering.",
+				"NPC_Response":"That's a great field to be in.  I wanted to be an engineer but I checked the wrong box on my college applicatio!",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "I majored in oceanography.  I love marine life and wanted to be a sea captain!",
+				"NPC_Response":"That's interesting! I'd love to work on a boat but I get sea sick just from swimming in a pool!",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "I majored in knitting and basket weaving.  I think it has some serious potential to help me look cool when I become a grandmother.",
+				"NPC_Response":"Wow, I'm terrible at knitting! I tried making a sock once but it was so long, now I just wear it as a scarf!",
+				"animation": "surprised_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "Oh really? Those romantic comedies always get me!",
+				"NPC_Response":"I'm more of an adventure type myself!",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "What about that Disney movie where the cat got stuck in the tree?  It reminds me of my cat who passed away, Mr. Mittens!",
+				"NPC_Response":"I'm sorry about your cat… Cats never seem to like me. I think they know I am a dog person.",
+				"animation": "surprised_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": " TV shows? Books? Come on! You seem like the sensitive type to me! Just tell me how you feel.",
+				"NPC_Response":"I don't know what to say, Annie.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Oh that sounds fun! I'm sure that will be relaxing.",
+				"NPC_Response":"Yea, It will be great to sleep under the stars!",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Sounds great! Can I come? I've never been!",
+				"NPC_Response":"Oh, sorry Annie. I'm going with my family and there's no more room in the tent.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Oh, no! I've been watching Bears Attack! Recently on TV every night. I'd be terrified if I were you.",
+				"NPC_Response":"Thanks a lot, Annie! I don't think I'll be able to sleep tonight!",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "I really like her shirt! That's a great shade of purple.",
+				"NPC_Response":"Yea, I had a dress just like it but the dry cleaners lost it!",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "I love her shirt, but it would look better on me…",
+				"NPC_Response":"Well, umm...Maybe she will let you borrow it one day,",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "I'm thinking of dying my hair purple like that! What do you think? It would look great for my new work ID.",
+				"NPC_Response":"I dyed my hair blue once for Halloween. The box said temporary but the dye stayed in my hair for 3 months! I had blue hair in my high school photos!",
+				"animation": "surprised_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "OK, I am just curious.  I'd love to buy a new laptop with mine!",
+				"NPC_Response":" Yea, me too. I got a new one last month but  my dog knocked over a bowl of cereal on the keyboard and only the letters G and R will work now.",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "Come on! I won't tell anyone. Just tell me if it's enough to buy that jet ski I've been wanting.",
+				"NPC_Response":"Sorry, Annie. I really don’t know...",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "OK, so what can we talk about? Do you know any dirty jokes?",
+				"NPC_Response":" I don't like to tell jokes ever since my boyfriend left me to become a clown.",
+				"animation": "surprised_bold"
+			}
+		]
+	}
+}

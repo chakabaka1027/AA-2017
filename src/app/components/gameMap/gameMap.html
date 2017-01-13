@@ -1,0 +1,27 @@
+<div ng-repeat = "roomKey in gameMap.roomKeys"
+	ng-class = "{'conversation-room': gameMap.roomHasConversation(roomKey), 
+	'lobby': roomKey === 'lobby',
+	'conferenceRoom': roomKey === 'conferenceRoom',
+	'anniesOffice': roomKey === 'anniesOffice',
+	'mikesOffice': roomKey === 'mikesOffice',
+	'fransOffice': roomKey === 'fransOffice',
+	'breakRoom': roomKey === 'breakRoom'}"
+	
+	class = "game-map-room game-room">
+
+	<div> {{ roomKey }} </div>
+
+
+<!-- True or False Text 
+	<div> {{ gameMap.roomConversations[roomKey]}} </div>
+-->
+
+</div>
+
+<div class = "vertical-line"> </div>
+
+<!-- click me button 
+	<button ng-click = "show = !show"> click me </button>
+-->
+
+

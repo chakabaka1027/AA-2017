@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Can I borrow your stapler?",
+			"NPC_Response": "Sure.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Can you swing by the cafeteria?",
+			"NPC_Response": "In about 20 minutes.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Can you show me your paycheck?",
+			"NPC_Response": "What?!",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "Can I have some staples?",
+				"NPC_Response": "Sure.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "Can you make sure it has staples in it?",
+				"NPC_Response": "Um, sure.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "This stapler is such a pretty color. Can I keep it?",
+				"NPC_Response": "No!",
+				"animation": "annoyed_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "When you go, could you grab me a coffee?",
+				"NPC_Response": "Not a problem.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Could you go sooner? I'm fading fast and the only thing that can revive me is 50cc of caffeine, stat.",
+				"NPC_Response": "I guess I could leave a bit sooner.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "I need you to go now. I think I'm dying from caffeine withdrawal.",
+				"NPC_Response": "Why don't you go yourself?",
+				"animation": "confused_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Would you mind showing me your paycheck? I have some questions about mine.",
+				"NPC_Response": "That sounds like a Human Resources issue.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "Can't you let me just take a peek?",
+				"NPC_Response": "Annie, that's personal information. I don't think this request is appropriate.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "I need to know how much you get paid so I know what to ask for when I ask for a raise.",
+				"NPC_Response": "Isn't it a bit premature to be thinking about a raise?",
+				"animation": "confused_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Great, thanks! I'll return it as soon as I'm done.",
+				"NPC_Response":"Sounds good.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Great. I'll return it sometime later today.",
+				"NPC_Response":"Um, sure.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Oh, those are the boring regular staples? Don't you have the pretty shiny purple ones? Those are my favorite to staple with.",
+				"NPC_Response":"Sorry, no. Just regular ol' staples.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "Thanks! Don't want to get to my desk and have to come back for staples.",
+				"NPC_Response":"That makes sense.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "I hate putting staples in. I always worry I'm going to staple my fingers together.",
+				"NPC_Response":"Really?",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "I like to pretend staplers are alligators and I am a zookeeper feeding them staples.",
+				"NPC_Response":"I've never thought about it that way.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Not forever, just for the next hour or so.",
+				"NPC_Response":"Oh, ok.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Not forever, just the next week or so.",
+				"NPC_Response":"No, I need my stapler.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "Could you give me the receipt for the stapler so I can go buy the exact same kind? It's just so pretty!",
+				"NPC_Response":"I don't have that on hand.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "Here's $5. That should be enough.",
+				"NPC_Response":"Thanks.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Here's $5. Keep the change!",
+				"NPC_Response":"Uh, thanks I guess",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "I don't have any cash on me, but I'll pay you back tomorrow. Promise!",
+				"NPC_Response":"Um, ok.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "You're the best!",
+				"NPC_Response":"Yeah, sure…",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "I don't actually know how much 50cc's is, but can you get me that coffee that comes in the big red cup with an M on it?",
+				"NPC_Response":"You mean a medium...",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Thank you, nurse Fran. Because of you, this patient will live to see another day.",
+				"NPC_Response":"Great.",
+				"animation": "confused_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "You're probably right - I should just do it myself.",
+				"NPC_Response":"Yeah.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "I can't. I hurt my ankle jumping on my bed this morning. Pretty please?",
+				"NPC_Response":"How old are you, Annie?",
+				"animation": "surprised_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "I got locked in a haunted cafeteria once when I was a kid, and I've been scared of them ever since.",
+				"NPC_Response":"Huh?",
+				"animation": "surprised_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Good call, thanks Fran.",
+				"NPC_Response":"Not a problem.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Can you take me there?",
+				"NPC_Response":"Yeah, sure.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "If I write my questions down, can you take them to Human Resources next time you're nearby?",
+				"NPC_Response":"No. Just no.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "You're probably right, Fran. I'll figure it out some other way.",
+				"NPC_Response":"You should talk to Human Resources about it.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "But we're best friends, right? We share everything!",
+				"NPC_Response":"Not really, no.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "But I know lots of personal things about you. Like your favorite color, home address, and social secuirty number.",
+				"NPC_Response":"How could you possibly know that?!",
+				"animation": "confused_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Maybe you're right.  I should probably wait a full week before asking.",
+				"NPC_Response":"That's not what I meant.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "Early bird catches the worm!",
+				"NPC_Response":"That is not what that saying means.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "You're right, what was I thinking? I haven't even brought in baked goods yet. Gotta set the mood first!",
+				"NPC_Response":"I don't think that's going to help.",
+				"animation": "confused_bold"
+			}
+		]
+	}
+}

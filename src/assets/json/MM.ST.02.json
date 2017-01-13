@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Do you play any sportS?",
+			"NPC_Response": "I do, actually. I play tennis on the weekends.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"You work out, right? I can tell!",
+			"NPC_Response": "Um, yes, I do go to the gym.",
+			"animation": "surprised_mild"
+		},
+		{
+			"code":"C",
+			"PC_Text":"Wow, those are some big muscles!",
+			"NPC_Response": "Uh, Thank you.",
+			"animation": "surprised_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "Oh, I like watching tennis!",
+				"NPC_Response": "Oh, do you have a favorite player?",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "Is that the one with the racquets?",
+				"NPC_Response": "Uh, yes. It's a great sport.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "I didn't know men played tennis! I watch it all the time.",
+				"NPC_Response": "Uh, yes. It's a great sport.",
+				"animation": "surprised_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "Oh, I need to join a gym.",
+				"NPC_Response": "Well, the company offers free gym memberships.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Which gym? I need a work out partner!",
+				"NPC_Response": "Oh, I go to one by my home.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "I can tell! You look good.",
+				"NPC_Response": "Well, thank you. I try.",
+				"animation": "surprised_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "I'm really  interested in working out now.",
+				"NPC_Response": "Yes, well personal fitness is very important.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "Do you follow a special diet?",
+				"NPC_Response": "No, I just try to eat healthy foods and exercise to stay in good shape.",
+				"animation": ""
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "I bet you hear that all the time from the ladies here.",
+				"NPC_Response": "Um, no,you're the first.",
+				"animation": "surprised_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "I really like Roger Federer.",
+				"NPC_Response":"He's a great player.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "I don't like to play favorites.",
+				"NPC_Response":"Well, that's very fair of you.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "I just watch to see the players in shorts!",
+				"NPC_Response":"Oh, I see.",
+				"animation": "surprised_mild"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "Yes, I've been watching the US Open on tv.",
+				"NPC_Response":"There have been some great matches.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "I'd love to learn if you want to teach me!",
+				"NPC_Response":"I don’t think I will really have time for that. Sorry.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "I just watch to see the players in shorts!",
+				"NPC_Response":"Oh, I see.",
+				"animation": "surprised_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "It is! It's great exercise.",
+				"NPC_Response":"It certainly is.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Do you have your own ball boy?",
+				"NPC_Response":"No, of course not.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "I just watch to see the players in shorts!",
+				"NPC_Response":"Oh, I see.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "That's great!",
+				"NPC_Response":"Yes, we try to encourage healthy employees!",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Will they buy me new running shoes too?",
+				"NPC_Response":"Um, unfortunately no. That's up to you.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "It's the least they could do considering the low salaries.",
+				"NPC_Response":"I can't say I agree with you. I think they are very generous.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Oh, ok. That sounds convenient!",
+				"NPC_Response":"It is. Good luck finding a partner.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "Oh, where do you live? Maybe I can join you.",
+				"NPC_Response":"Well, I prefer to work out on my own but thanks.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Sounds good! I'll meet you at your home tomorrow at 6am.",
+				"NPC_Response":"I don’t think so. And how do you know where I live?",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "It's so important for your health.",
+				"NPC_Response":"I agree.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "You must be doing something right!",
+				"NPC_Response":"Well, thank you.",
+				"animation": "surprised_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "With those muscles? Don't be modest!",
+				"NPC_Response":"That's, uh… kind of you to say.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "It's so important for your health.",
+				"NPC_Response":"That's true.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "I know! I don't want to gain weight sitting at my desk all day!",
+				"NPC_Response":"Um, I'm sure you won't.  Try to walk at lunch.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": " Do you want to work out together? You can be my spotter.",
+				"NPC_Response":"Uhh, that's a nice offer but I prefer to work out alone.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "It's so important for your health.",
+				"NPC_Response":"That's true.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "I know! I don't want to gain weight from this job!",
+				"NPC_Response":"I'm sure you won't.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "We can work out together.  I can bench 200lbs!",
+				"NPC_Response":"Wow! That's  quite impressive.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Well, you're in great shape!",
+				"NPC_Response":"That's kind of you to say.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "I'm sure they are all thinking it.",
+				"NPC_Response":"I really couldn't say.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "Are you single?",
+				"NPC_Response":"Actually, I am married.",
+				"animation": "surprised_bold"
+			}
+		]
+	}
+}

@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Hello again!",
+			"NPC_Response": "Good morning.",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Ugh, Mondays. Am I right?",
+			"NPC_Response": "Um, yeah. It's Monday alright.",
+			"animation": ""
+		},
+		{
+			"code":"C",
+			"PC_Text":"Wow Fran, I just noticed you look terrible this morning!",
+			"NPC_Response": "Jeez Annie. I was up all night.",
+			"animation": "annoyed_mild"
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "How was your weekend?",
+				"NPC_Response": "Nice, relaxing. And you?",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "What did you do this weekend?",
+				"NPC_Response": "Oh you know, the usual...grocery shopping, cleaned the house a bit, walked the dog.",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "Tell me everything you did this weekend. I want all the juicy details!",
+				"NPC_Response": "Juicy details? What do you think I did this weekend?",
+				"animation": "confused_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "It always comes too soon, always after Sunday.",
+				"NPC_Response": "Yep. Darn linear time.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "Another week working for the man.",
+				"NPC_Response": "You just started here.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Let's take the day off and just go have a margarita on the beach!",
+				"NPC_Response": "But Annie it's your first day...",
+				"animation": "surprised_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Why?",
+				"NPC_Response": "I just haven't been able to sleep well the last few days.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "You party animal!",
+				"NPC_Response": "No, Annie. I've been having problems falling asleep at night.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "I can tell! You look like you had a little too much fun at the office party last night.",
+				"NPC_Response": "I'm not hung over, Annie. I just haven't been sleeping well.",
+				"animation": "annoyed_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "Good. Caught up on some bills and took a walk in the park.",
+				"NPC_Response":"That sounds nice.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Fun! I went to the zoo to see the new baby panda! But all it did was poop on the floor.",
+				"NPC_Response":"Gross...",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Great! I saw that new mystery movie. Turns out it was his evil twin the whole time!",
+				"NPC_Response":"Did you just spoil the entire movie?",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "You are a responsible adult.",
+				"NPC_Response":"Um, thanks?",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "That sounds so boring though. Didn't you have any fun?",
+				"NPC_Response":"I found it relaxing...",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "I love dogs! Can you invite me over the next time you walk your dog?",
+				"NPC_Response":"That is not going to happen.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "Maybe you found a great sale at the mall.",
+				"NPC_Response":"Actually, there was a great sale at Pottery Barn...",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "Attempted to eat 6 tubs of ice cream in one night?",
+				"NPC_Response":"Is that even humanly possible?",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "Took up kickboxing to fight crime and become the Midnight Avenger?",
+				"NPC_Response":"That's a definite no.",
+				"animation": "confused_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "That's ok. That means Friday is just around the corner.",
+				"NPC_Response":"Sure, whatever helps you through the week.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "Do you ever wonder why Monday is called Monday and not, I don't know, Doodleday?",
+				"NPC_Response":"Not really, no.",
+				"animation": "confused_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "Time's not a line, it's a circle. That's why clocks are round.",
+				"NPC_Response":"I can't even argue with that.",
+				"animation": "confused_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Well, yeah. Just an expression.",
+				"NPC_Response":"Uh huh.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "But it feels like forever!",
+				"NPC_Response":"It does?",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Well, someone has a case of the Mondays!",
+				"NPC_Response":"What does that even mean?",
+				"animation": "confused_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "I guess you're right.",
+				"NPC_Response":"Yea, I think you should make a good impression.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "So what? No one will notice!",
+				"NPC_Response":"I don't want to get in trouble, Annie.",
+				"animation": "annoyed_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "Come on! Live a little! Don't be so boring.",
+				"NPC_Response":"Jeez, Annie. I'll go with you on Saturday if you really want.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "Hopefully you'll sleep better tonight.",
+				"NPC_Response":"Thanks, Annie.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "Sometimes when I can't sleep, I'll read the latest Apple Terms of Service. Knocks me right out.",
+				"NPC_Response":"I bet it does.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "A few shots of bourbon always does the trick for me.",
+				"NPC_Response":"I bet it does.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "Oh, that's not good.",
+				"NPC_Response":"No, it's not.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Sometimes when I can't sleep, I'll read the latest Apple Terms of Service. Knocks me right out.",
+				"NPC_Response":"I bet it does.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "Did you know you can die from lack of sleep?",
+				"NPC_Response":"I'm not sure you have that right.",
+				"animation": "surprised_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Oh. I'm sorry to hear that.",
+				"NPC_Response":"Thanks.",
+				"animation": ""
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "I'll come over after work and make my world-famous Annie Apple Martini. It'll knock you right out!",
+				"NPC_Response":"I bet it does.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "You should see a doctor about that.  You can die from lack of sleep, you know.",
+				"NPC_Response":"I'm not sure you have that right.",
+				"animation": "surprised_bold"
+			}
+		]
+	}
+}

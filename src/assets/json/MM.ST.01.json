@@ -1,0 +1,267 @@
+{
+	"node1": [
+		{
+			"code":"A",
+			"PC_Text":"Hi Mike. Did you watch the game last night?",
+			"NPC_Response": "Which game?",
+			"animation": ""
+		},
+		{
+			"code":"B",
+			"PC_Text":"Howdy ho! Did you catch the game last night?",
+			"NPC_Response": "Which game?",
+			"animation": "confused_mild"
+		},
+		{
+			"code":"C",
+			"PC_Text":"Hello Mike. Did you catch the presidential debate last night?",
+			"NPC_Response": "Some of it.",
+			"animation": ""
+		}
+	],
+	"node2": {
+		"A": [
+			{
+				"code":"AA", 
+				"PC_Text": "The soccer match between Chelsea and Manchester United.",
+				"NPC_Response": "Yes, I did see that.",
+				"animation": ""
+			},
+			{
+				"code":"AB",
+				"PC_Text": "The US soccer team's qualifying match, duh!",
+				"NPC_Response": "Oh, no I missed that. I'm not much of a soccer fan",
+				"animation": ""
+			},
+			{
+				"code":"AC", 
+				"PC_Text": "Are you kidding? The only game that matters!",
+				"NPC_Response": "Which would be…?",
+				"animation": "confused_mild"
+			}
+		],
+		"B": [
+			{
+				"code":"BA", 
+				"PC_Text": "The pre-season game between the Giants and the Cowboys.",
+				"NPC_Response": "Oh, that was last night? I forgot.",
+				"animation": ""
+			},
+			{
+				"code":"BB", 
+				"PC_Text": "The pre-season game between the Giants and the Cowboys, duh!",
+				"NPC_Response": "I saw the last half of the game.",
+				"animation": ""
+			},
+			{
+				"code":"BC", 
+				"PC_Text": "Are you kidding? The only game that matters!",
+				"NPC_Response": "Which would be…?",
+				"animation": "confused_mild"
+			}
+		],
+		"C": [
+			{
+				"code":"CA", 
+				"PC_Text": "Yeah, it can be hard to watch sometimes",
+				"NPC_Response": "An informed public is important, but I feel the debates sometimes are more a circus than anything else.",
+				"animation": ""
+			},
+			{
+				"code":"CB", 
+				"PC_Text": "It's like a trainwreck crashed into another trainwreck and you just can't look away.",
+				"NPC_Response": "Actually, I would have liked to watch the whole thing, but I got home late. It's important.",
+				"animation": ""
+			},
+			{
+				"code":"CC", 
+				"PC_Text": "I still can't believe they let that guy from Arizona run. He looks like a mule sounds like one too.",
+				"NPC_Response": "I think his policy positions are worth knowing, regardless of how he looks or sounds.",
+				"animation": "annoyed_mild"
+			}
+		]
+	},
+	"node3": {
+		"AA": [
+			{
+				"code":"AAA", 
+				"PC_Text": "It was a brilliant match.",
+				"NPC_Response":"Definitely.",
+				"animation": ""
+			},
+			{
+				"code":"AAB", 
+				"PC_Text": "Manchester United is the worst. I can't believe they won that game.",
+				"NPC_Response":"I was cheering for Manchester United...",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"AAC", 
+				"PC_Text": "Can you believe how blind those referees were? Chelsea got totally screwed.",
+				"NPC_Response":"I was cheering for Manchester United...",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AB": [
+			{
+				"code":"ABA", 
+				"PC_Text": "That's a bummer. It was a good game.",
+				"NPC_Response":"If you say so.",
+				"animation": ""
+			},
+			{
+				"code":"ABB", 
+				"PC_Text": "Not a soccer fan? But it's the world's game!",
+				"NPC_Response":"Just never got into it.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ABC", 
+				"PC_Text": "Everyone is a soccer fan, you just aren't watching it with the right people. I'll show you the real way to watch soccer!",
+				"NPC_Response":"That really is not necessary.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"AC": [
+			{
+				"code":"ACA", 
+				"PC_Text": "The US soccer team qualifying match, of course!",
+				"NPC_Response":"Oh, no. I didn't watch.",
+				"animation": ""
+			},
+			{
+				"code":"ACB", 
+				"PC_Text": "The US soccer team qualifying match, you big silly!",
+				"NPC_Response":"Um, ok.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"ACC", 
+				"PC_Text": "It's only the most important game of the pre-olympic season! The US soccer team qualifier, of course!",
+				"NPC_Response":"I see. I didn't know that.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"BA": [
+			{
+				"code":"BAA", 
+				"PC_Text": "It's just preseason, but it was still a good game.",
+				"NPC_Response":"Glad to hear it.",
+				"animation": ""
+			},
+			{
+				"code":"BAB", 
+				"PC_Text": "I'll text you before next game so you don't miss it.",
+				"NPC_Response":"Um, ok.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BAC", 
+				"PC_Text": "I never miss a game. I'm a hardcore fan, I even have a Giants' tattoo on my butt to prove it!",
+				"NPC_Response":"I really didn't need to know that.",
+				"animation": "surprised_bold"
+			}
+		],
+		"BB": [
+			{
+				"code":"BBA", 
+				"PC_Text": "Oh good, I'm glad you saw some of it at least.",
+				"NPC_Response":"Me too.",
+				"animation": ""
+			},
+			{
+				"code":"BBB", 
+				"PC_Text": "Only the last half?! You missed the bset part!",
+				"NPC_Response":"It's all I had time for.",
+				"animation": "surprised_mild"
+			},
+			{
+				"code":"BBC", 
+				"PC_Text": "Oh silly Mike. You have to watch the whole thing or it doesn't count.",
+				"NPC_Response":"Count toward what?!",
+				"animation": "surprised_bold"
+			}
+		],
+		"BC": [
+			{
+				"code":"BCA", 
+				"PC_Text": "The Giants versus Cowboys pre-season game.",
+				"NPC_Response":"Oh. No, I don't usually watch pre-season games.",
+				"animation": ""
+			},
+			{
+				"code":"BCB", 
+				"PC_Text": "The Giants versus Cowboys pre-season game, you adorable nerd!",
+				"NPC_Response":"Oh. No, I don't usually watch pre-season games.",
+				"animation": "confused_mild"
+
+			},
+			{
+				"code":"BCC", 
+				"PC_Text": "It's only the most important game of the pre-season! Giants versus Cowboys, of course.",
+				"NPC_Response":"I don't even like football.",
+				"animation": "mike_confused_bold"
+			}
+		],
+		"CA": [
+			{
+				"code":"CAA",
+				"PC_Text": "At least they kept it clean this time.",
+				"NPC_Response":"That was a nice change of pace.",
+				"animation": ""
+			},
+			{
+				"code":"CAB",
+				"PC_Text": "\"Informed public?\" I think you give viewers too much credit!",
+				"NPC_Response":"That's rather pessimistic.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CAC",
+				"PC_Text": "Especially that male candidate from Nowhere, Arizona He's such an idiot, I can't believe they let him on stage.",
+				"NPC_Response":"I don't feel comfortable talking about this topic.",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CB":[
+			{
+				"code":"CBA",
+				"PC_Text": "Oh. Well it should be up on YouTube by now, if you want to watch the whole thing.",
+				"NPC_Response":"Thanks for the suggestion.",
+				"animation": ""
+			},
+			{
+				"code":"CBB",
+				"PC_Text": "Important, right! Ha ha ha Mike, you're so funny!",
+				"NPC_Response":"I wasn't joking.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CBC",
+				"PC_Text": "Really? We might have to start calling you \"Masochistic Mike\"!",
+				"NPC_Response":"Uh, why?",
+				"animation": "annoyed_bold"
+			}
+		],
+		"CC": [
+			{
+				"code":"CCA",
+				"PC_Text": "Yeah, you're right.",
+				"NPC_Response":"…Let's talk about something else.",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCB",
+				"PC_Text": "Well yes. But he still looks and sounds funny.",
+				"NPC_Response":"I guess...",
+				"animation": "annoyed_mild"
+			},
+			{
+				"code":"CCC",
+				"PC_Text": "Maybe, but he sure made a donkey of himself! Ha ha ha.",
+				"NPC_Response":"I suppose...",
+				"animation": "annoyed_bold"
+			}
+		]
+	}
+}
