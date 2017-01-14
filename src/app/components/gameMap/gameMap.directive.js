@@ -14,16 +14,16 @@
 			templateUrl: "app/components/gameMap/gameMap.html"
 		};
 
-		function controller($scope, $attrs){
+		function controller($scope){
 			var vm = this;
-			vm.levels = levelDataHandler[$attrs.name];
-			vm.rooms = vm.levels.rooms;
 			vm.roomKeys = ['lobby', 'conferenceRoom', 'anniesOffice', 'mikesOffice', 'fransOffice', 'breakRoom'];
 			vm.roomHasConversation = roomHasConversation;
 			vm.show = false;
 
-			$scope.$watch(function(){return $scope.levelTest}, function(){
-				$log.log("level = " + $scope.levelTest)
+			updateConversations();
+
+			$scope.$watch(function(){return $scope.main.levelCount}, function(){
+				$log.log("level = " + $scope.main.levelCount)
 				updateConversations();
 			});
 
@@ -46,11 +46,11 @@
 			}
 
 			function updateConversations(){
-				if (!$scope.levelTest){
+				if (!$scope.main.levelCount){
 					return;
 				}
 				vm.roomConversations = {};
-				vm.levels = levelDataHandler[$scope.levelTest];
+				vm.levels = levelDataHandler["level_" + $scope.main.levelCount];
 				vm.rooms = vm.levels.rooms;
 				angular.forEach(vm.roomKeys, function(roomKey){
 					vm.roomConversations[roomKey] = roomHasConversation(roomKey);

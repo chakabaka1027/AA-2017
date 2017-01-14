@@ -439,7 +439,7 @@
 				for(var animationKey in characterDefinition.animations){
 					var frames = [animationKey];
 					frames = frames.concat(characterDefinition.animations[animationKey]);
-					characterSprite.addAnimation.apply(animationKey, frames);
+					characterSprite.addAnimation.apply(characterSprite, frames);
 				}
 			}
 			/*================================== Check for collisions with furniture =========================================*/

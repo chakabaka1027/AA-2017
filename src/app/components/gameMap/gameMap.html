@@ -1,5 +1,8 @@
 <div ng-repeat = "roomKey in gameMap.roomKeys"
 	ng-class = "{'conversation-room': gameMap.roomHasConversation(roomKey), 
+
+	'current-room': main.roomKey === roomKey,
+
 	'lobby': roomKey === 'lobby',
 	'conferenceRoom': roomKey === 'conferenceRoom',
 	'anniesOffice': roomKey === 'anniesOffice',
@@ -11,6 +14,7 @@
 
 	<div> {{ roomKey }} </div>
 
+	<img src= "assets/images/UI/speechIcon.png">
 
 <!-- True or False Text 
 	<div> {{ gameMap.roomConversations[roomKey]}} </div>

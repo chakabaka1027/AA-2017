@@ -1,3 +1,11 @@
+game-map {
+  display: block;
+  position: relative;
+  height: 500px;
+  width: 500px;
+
+}
+
 game-map .game-map-room{
 	width: 110px;
 	text-align: center;
@@ -43,6 +51,26 @@ game-map .game-map-room{
    top: 46.5%;
    left: 53%;
 }
+
+.game-room img{
+  position: relative;
+  display: none; 
+  top: -80px;
+}
+
+.conversation-room{
+  background: green;
+}
+
+.game-room.conversation-room img{
+  display: initial;
+}
+
+.current-room{
+  background: blue;
+  border: 3px solid #3e5380;
+}
+
 
 .horizontal-line {
    width: 100px;
