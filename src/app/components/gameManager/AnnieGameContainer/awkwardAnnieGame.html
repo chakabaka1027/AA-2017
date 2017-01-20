@@ -2,9 +2,12 @@
 <div class="gameContainer">
 	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
 	<div class="main-pane">
+
 		<game-manager main="main" room="main.roomKey"></game-manager>
 
 		<game-map name= "{{ 'level_'+ main.levelCount }}" > {{ gameMap.levels }} </game-map>
+
+
 
 
 		<div ng-if="!main.hideDialogue" class="conversationContainer">

@@ -1,3 +1,6 @@
+<div class="map-background"></div>
+
+
 <div ng-repeat = "roomKey in gameMap.roomKeys"
 	ng-class = "{'conversation-room': gameMap.roomHasConversation(roomKey), 
 
@@ -12,8 +15,9 @@
 	
 	class = "game-map-room game-room">
 
+	<!-- say the name of the room
 	<div> {{ roomKey }} </div>
-
+	-->
 	<img src= "assets/images/UI/speechIcon.png">
 
 <!-- True or False Text 
@@ -22,7 +26,15 @@
 
 </div>
 
+
+
+
+
+
+<!--
 <div class = "vertical-line"> </div>
+
+-->
 
 <!-- click me button 
 	<button ng-click = "show = !show"> click me </button>

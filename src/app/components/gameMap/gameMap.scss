@@ -1,61 +1,75 @@
 game-map {
   display: block;
   position: relative;
-  height: 500px;
-  width: 500px;
+  height: 0px;
+  width: 950px;
 
 }
 
 game-map .game-map-room{
-	width: 110px;
+	width: 30px;
 	text-align: center;
-	line-height: 90px;
-	border: 3px solid #73AD21;
+	height: 25px;
+	border: 2px solid black;
 }
 
 .game-room {
 	position: absolute;
 	width: 110px;
-    height: 90px;
+  height: 90px;
 }
 
+.map-background{
+  position: absolute;
+  border: 3px solid black;
+  width: 130px;
+  height: 122px;
+  top: -131px;
+  right: 0px;
+  background: #8abee5;
+
+}
+
+
 .lobby {
-    top: 50%;
-    right: 50%;
+  top: -80px;
+  right: 50px;
 }
 .conferenceRoom {
-    top: 35%;
-    right: 44%;
+  top: -120px;
+  right: 25px;
 }
 .anniesOffice {
-    top: 50%;
-    right: 39%;
+  top: -80px;
+  right: 5px;
 }
 .mikesOffice {
-    top: 35%;
-    right: 56%;
+  top: -120px;
+  right: 75px;
 }
 .fransOffice {
-    top: 50%;
-    right: 61%;
+  top: -80px;
+  right: 95px;
 }
 .breakRoom {
-    top: 65%;
-    right: 50%;
+  top: -40px;
+  right: 50px;
 }
 
 .vertical-line {
-   height: 30px;
-   border-left: 3px solid green;
-   position: absolute;
-   top: 46.5%;
-   left: 53%;
+  height: 30px;
+  border-left: 3px solid green;
+  position: absolute;
+  top: 46.5%;
+  left: 53%;
 }
 
 .game-room img{
   position: relative;
   display: none; 
-  top: -80px;
+  top: 3px;
+  height: 70%;
+  width: 70%;
 }
 
 .conversation-room{
@@ -73,10 +87,10 @@ game-map .game-map-room{
 
 
 .horizontal-line {
-   width: 100px;
-   border-top: 3px solid green;
-   position: absolute;
-   top: 100px;
-   left: 300px;
+  width: 100px;
+  border-top: 3px solid green;
+  position: absolute;
+  top: 100px;
+  left: 300px;
 }
 
