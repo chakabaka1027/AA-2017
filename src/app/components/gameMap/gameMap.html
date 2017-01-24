@@ -1,4 +1,8 @@
+<div ng-if = "show" class = "background-dimmer"></div>
+
+
 <div ng-click = "show = !show" class="map-background">
+
 	<div ng-repeat = "roomKey in gameMap.roomKeys"
 		ng-class = "{ 
 
@@ -46,7 +50,7 @@
 						
 				class = "enlarged-game-map-room enlarged-game-room">
 
-				<div ng-class = "{'enlarged-current-room': main.roomKey === roomKey}"></div>
+				<div ng-class = "{'enlarged-current-room-overlay': main.roomKey === roomKey}"></div>
 				<img src= "assets/images/UI/speechIcon.png">
 
 			</div>

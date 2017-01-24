@@ -28,7 +28,6 @@ game-map .game-map-room{
 
 .map-background{
 
-
   position: absolute;
   border-top: 5px solid #607c92;
   border-left: 5px solid #607c92;
@@ -107,6 +106,10 @@ game-map .enlarged-game-map-room{
   height: 90px;
 }
 .enlarged-map-background{
+
+  box-shadow: -8px -8px 20px #4e4e4e;
+
+
   position: absolute;
   border-top: 5px solid #607c92;
   border-left: 5px solid #607c92;
@@ -174,12 +177,21 @@ game-map .enlarged-game-map-room{
   border: 2px solid black;
 }
 
-.enlarged-current-room{
+.enlarged-current-room-overlay{
   background-color: #ae372a;
   opacity: 0.6;
-  top: -100 px;
   width: 100%;
   height: 100%;
+}
+
+.background-dimmer{
+  position: absolute;
+  background-color: #000000;
+  top: -503px;
+
+  opacity: 0.4;
+  width: 950px;
+  height: 501px;
 }
 
 
