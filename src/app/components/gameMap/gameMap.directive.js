@@ -56,6 +56,7 @@
 					vm.roomConversations[roomKey] = roomHasConversation(roomKey);
 				});
 			}
+
 		}
 
 		
