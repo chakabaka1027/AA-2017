@@ -40,6 +40,7 @@
 
 				ng-class = "{ 
 				'conversation-room': gameMap.roomHasConversation(roomKey), 
+				'enlarged-conversation-room-overlay': main.roomKey === roomKey,
 
 				'enlarged-lobby': roomKey === 'lobby',
 				'enlarged-conferenceRoom': roomKey === 'conferenceRoom',

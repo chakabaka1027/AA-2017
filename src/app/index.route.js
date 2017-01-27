@@ -35,6 +35,14 @@
         templateUrl: 'app/components/gameMap/gameMapTest.html'
       });
 
+      $stateProvider
+      .state('dialougeTestBed', {
+        url: '/dialogTestBed',
+        templateUrl: 'app/components/dialogueTestBed/dialogueTestBed.html',
+        controller: 'displayDialougeTestBed', //throws away old main and recreates it
+        controllerAs: "dialogTest"
+      });
+
     $stateProvider
       .state('endScreen', {
         url: '/endScreen',

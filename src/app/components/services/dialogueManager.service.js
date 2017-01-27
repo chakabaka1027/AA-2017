@@ -41,5 +41,13 @@
 				return response.data;
 			});
 		};
+		service.getDialogKeys = getDialogKeys;
+
+		function getDialogKeys(){
+			return Object.keys(dialoguePaths);
+		}
 	}
+
+
+
 })();

@@ -41,7 +41,7 @@
 			var showArrows = false;
 			var timerPromise;
 			var showNPCDialogBubble = false;
-			var bubbleHeight = 75;
+			var bubbleHeight = 150;
 			var resetDisplay;
 			var lastCharCollidedInto = null;
 			var pointsBubble;

@@ -12,7 +12,8 @@
 			templateUrl: 'app/components/dialogueManager/dialogueManager.html',
 			controller: displayDialougeController,
 			scope: {
-				main: "="
+				main: "=",
+				isTestBed: "="
 			},
 			controllerAs: 'vm',
 			bindToController: true
@@ -24,10 +25,10 @@
 			var vm = this;
 			var dialogueRoot;
 			var codeNode2;
-			var pc_Text_Timer = 350;
-			var pc_npc_timer = pc_Text_Timer + 400;
-			var mild_Animation_Timer = 1000;
-			var noExpression_Timer = 700;
+			var pc_Text_Timer = (vm.isTestBed ? 0 : 350);
+			var pc_npc_timer = (vm.isTestBed ? 0 : pc_Text_Timer + 400);
+			var mild_Animation_Timer = (vm.isTestBed ? 0 : 1000);
+			var noExpression_Timer = (vm.isTestBed ? 0 : 700);
 			var latestChoice = {};
 			var npc = "";
 			var decisionPath = "";
@@ -53,8 +54,32 @@
 			vm.node3Response = true;
 
 			$scope.$watch(function(){ return vm.main.currentConversation;}, function(){
+				resetDialog();
 				chooseDialogueScript();
+
 			});
+
+			function resetDialog(){
+				npc = "";
+				decisionPath = "";
+				randomChoices = [];
+				successfulConvos;
+				scores = {
+					A:0,
+					B:3,
+					C:5
+				};
+
+				vm.choiceDelay = true;
+				vm.main.totalConvoPoints = 0;
+				vm.showContinue = false;
+				vm.chosenAnnie = "";
+				vm.npcResponse = "";
+				vm.node1Hidden = false;
+				vm.node2Hidden = true;
+				vm.node3Hidden = true;
+				vm.node3Response = true;
+			}
 
 			// Set Dialogue - move to another file, will need info from main controller
 			function chooseDialogueScript(){
