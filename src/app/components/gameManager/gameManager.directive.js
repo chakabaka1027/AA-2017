@@ -6,7 +6,10 @@
 		.directive('gameManager', gameManager);
 
 	/** @ngInject */
-	function gameManager(gM_Char_Position_Data, gM_Animation_Data, gM_RoomData, gM_FurnitureData, levelDataHandler, mappingService, arrowData, audioService, userDataService, globalGameInfo, $location, $log){
+	function gameManager(gM_Char_Position_Data, gM_Animation_Data, gM_RoomData, gM_FurnitureData, 
+		levelDataHandler, mappingService, arrowData, audioService, userDataService, globalGameInfo, 
+		$location, $log){
+
 		var directive = {
 			restrict:'E',
 			// templateUrl: defined in index.route.js file 
@@ -16,9 +19,50 @@
 			},
 			controller: controller, //controller for this directive
 			controllerAs:'vm',
-			bindToController: true
+			bindToController: true,
+			link: link
 		};
 		return directive;
+		function link(scope, elm, attrs, ctlr){
+			elm.on("mousedown", mouseDown);
+			elm.on("mouseup", mouseUp);
+
+			function mouseDown(evt){
+
+				var xa = ctlr.anniePosition.x;
+				var ya = ctlr.anniePosition.y;
+				var xm = evt.offsetX;
+				var ym = evt.offsetY;
+				var b1 = ya - xa;
+				var b2 = ya + xa;
+
+				var isAboveLine1 = (ym < xm + b1);
+				var isAboveLine2 = (ym < -xm + b2);
+
+
+				var udrl;
+				if (isAboveLine1 && isAboveLine2){
+					udrl = "up";
+				} else if (!isAboveLine1 && isAboveLine2){
+					udrl = "left";
+				} else if (isAboveLine1 && !isAboveLine2){
+					udrl = "right";
+				} else if (!isAboveLine1 && !isAboveLine2){
+					udrl = "down";
+				}
+				$log.log(udrl);
+
+				ctlr.annie_Walking = true;
+
+				ctlr.udrl = udrl;
+			}
+
+			function mouseUp(evt){
+				ctlr.annie_Walking = false;
+
+				$log.log(evt.type)
+			}
+		}
 
 		/** @ngInject */
 		function controller($scope,$timeout,$window){ //needs to be inside gameManager and have inject before
@@ -27,7 +71,7 @@
 			var myCanvas;
 			var currentRoomKey = vm.main.roomKey;
 			var arrowDelay = 1250;
-			var annie_Walking = false;
+			vm.annie_Walking = false;
 			var annie_Talking = false;
 			var annieFaceOtherWay = false;
 			var currentRoomData = gM_RoomData[currentRoomKey];
@@ -56,6 +100,9 @@
 			var doorTransitionSound,
 					successfulConvo,
 					unsuccessfulConvo;
+
+			vm.anniePosition = {x:0, y:0};
+
 			// vm.main.beginingOfLevel2 = false; //used for ets's level transition comment
 
 			//window.keyUp 
@@ -63,7 +110,7 @@
 				code = e.keyCode ? e.keyCode : e.which;
 				//    up key        down key         right key    left key
 				if (code === 38 || code === 40 || code === 39 || code === 37){
-					annie_Walking = true;
+					vm.annie_Walking = true;
 					// showArrows = false; //Uncomment if ETS changes mind
 					annieWalkingCode = code;
 					if(!annie_Talking){
@@ -102,6 +149,9 @@
 			/*===================================================================
 				Controller Functions
 			===================================================================*/
+
+
+
 			function resetArrowTimer(){
 				if(timerPromise){
 					$timeout.cancel(timerPromise);
@@ -119,7 +169,7 @@
 				currentRoom.drawPointsBubble = drawPointsBubble;
 				var positionData = gM_Char_Position_Data;
 				var walking_Speed = 7;
-				annie_Walking = false;
+				vm.annie_Walking = false;
 				var furniture = [];
 				// For wall collision, should be smaller than screen dimensions
 				var minWidth = 70,
@@ -222,8 +272,9 @@
 					/*does next room have dialogue, need this data whenever a door is entered*/ 
 					getDoorStatus();
 
-					doorTransitionSound.setVolume(0.1);
-					doorTransitionSound.play();
+					//doorTransitionSound.setVolume(0.1);
+					//doorTransitionSound.play();
+
 					/*========== Track Data ===================================*/ 
 					currentNPCsprites.forEach(function(character){ //get talking characters
 						if(checkRoomDialogs(character.name)){
@@ -294,39 +345,39 @@
 					// Keep annie from wallking off the walls
 					if(annieSprite.position.y < minHeight){
 						annieSprite.position.y += 3;
-						annie_Walking = false;
+						vm.annie_Walking = false;
 					}else if(annieSprite.position.y > maxHeight){
 						annieSprite.position.y -= 3;
-						annie_Walking = false;
+						vm.annie_Walking = false;
 					}else if(annieSprite.position.x < minWidth){
 						annieSprite.position.x += 3;
-						annie_Walking = false;
+						vm.annie_Walking = false;
 					}else if(annieSprite.position.x > maxWidth){
 						annieSprite.position.x -= 3;
-						annie_Walking = false;
+						vm.annie_Walking = false;
 					}
 					// Make annie walk
-					if(annie_Walking && !annie_Talking){
-						if(annieWalkingCode === room.LEFT_ARROW){ //walk left
+					if(vm.annie_Walking && !annie_Talking){
+						if(annieWalkingCode === room.LEFT_ARROW || vm.udrl === "left"){ //walk left
 							annieSprite.changeAnimation("walkingSide");
 							annieSprite.mirrorX(1);
 							annieSprite.velocity.x = -walking_Speed;
 							annieSprite.velocity.y = 0;
-						} else if (annieWalkingCode === room.RIGHT_ARROW) { //walk right
+						} else if (annieWalkingCode === room.RIGHT_ARROW || vm.udrl === "right") { //walk right
 							annieSprite.changeAnimation("walkingSide");
 							annieSprite.mirrorX(-1);
 							annieSprite.velocity.x = walking_Speed;
 							annieSprite.velocity.y = 0;
-						}else if (annieWalkingCode === room.UP_ARROW){ //walk up, away from the player
+						}else if (annieWalkingCode === room.UP_ARROW || vm.udrl === "up"){ //walk up, away from the player
 							annieSprite.changeAnimation("walkingUp");
 							annieSprite.velocity.y = -walking_Speed;
 							annieSprite.velocity.x = 0;
-						}else if (annieWalkingCode === room.DOWN_ARROW){ //walk down, towards the player
+						}else if (annieWalkingCode === room.DOWN_ARROW || vm.udrl === "down"){  //walk down, towards the player
 							annieSprite.changeAnimation("walkingDown");
 							annieSprite.velocity.y = walking_Speed;
 							annieSprite.velocity.x = 0;
 						}
-					}	else if(!annie_Walking){ //if not walking or out of bounds, draw standing image
+					}	else if(!vm.annie_Walking){ //if not walking or out of bounds, draw standing image
 							annieSprite.velocity.x = 0; //Stop annie from walking
 							annieSprite.velocity.y = 0;
 						if(annieWalkingCode == room.LEFT_ARROW){
@@ -367,11 +418,13 @@
 					}
 					
 					room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
+
+					vm.anniePosition = annieSprite.position;
 				}; //end of draw
 
 				/*=================== Check when key is released and stop walking ===============================================*/
 				room.keyReleased = function(event){
-					annie_Walking = false;
+					vm.annie_Walking = false;
 				};
 
 				//position and create furniture, need to use room so function has to be in a different scope
