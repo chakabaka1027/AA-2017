@@ -1,0 +1,12 @@
+<div class = "gameContainer"> 
+	<div class="main-pane">
+		<div class = "conversationContainer"> 
+			<display-dialouge main = "dialogTest" is-test-bed = "true"> </display-dialouge>
+			<div style = "width: 600px; background: blue;"> </div>
+
+		</div>
+	</div>
+</div>
+
+
+<select ng-options="item for item in dialogTest.dialogList" ng-model = "dialogTest.currentConversation"> </select>
