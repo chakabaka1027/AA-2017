@@ -1,5 +1,5 @@
 
-<div class="gameContainer"> 
+<div class="gameContainer" ng-if="dialogTest.hasLoaded"> 
 	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
 	<div class="main-pane">
 
@@ -27,4 +27,13 @@
 
 <div style = "position: relative; text-align: center; top: 10px"> {{ dialogTest.branchHistory.join(" | ") }} </div>
 
-<select style="position: absolute; top: 10px; left: 10px;" ng-options="item for item in dialogTest.dialogList" ng-model = "dialogTest.currentConversation"> </select>
+<select ng-options="item for item in dialogTest.dialogList" ng-model = "dialogTest.currentConversation"> </select>
+
+<div>
+    <input type="file" load-xlsx-file="dialogTest.loadFromFile(fileObject)"/>
+	<div> <span style="font-weight: bold;"> Currently Viewed Content: </span> {{ dialogTest.currentSource }}</div>
+
+</div>
+
+<button ng-click= "dialogTest.loadFromFile(dialogTest.lastFileObject)" ng-if="dialogTest.lastFileObject"> Reload File </button>
+

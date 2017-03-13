@@ -30,6 +30,7 @@
     vm.convoCounter = {};
     vm.totalConvosAvailable = 18;
     vm.convoAttemptsTotal = 0;
+    return;
 
     nextLevelData();
     

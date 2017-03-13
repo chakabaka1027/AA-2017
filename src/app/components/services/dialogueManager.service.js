@@ -13,6 +13,7 @@
 
 		var service = {
 			getDialogs: getDialogs,
+			getDialogKeys: getDialogKeys,
 			dialogWorksheetKeys: dialogWorksheetKeys
 		};
 
@@ -42,6 +43,7 @@
 			mike_RQ_02:"assets/json/MM.RQ.02.json"
 		};
 
+
 		// so we can work with the data loaded via spreadsheet...
 		for (var dialogKey in dialogJsonPaths) {
 			var p = dialogJsonPaths[dialogKey].split('/');
@@ -51,21 +53,26 @@
 		}
 
 		$log.log("I'm running");
-		loadFromServer();
+		service.loadedPromise = loadFromServer();
 
 		return service;
+
+		function getDialogKeys(){
+			return Object.keys(dialogJsonPaths);
+		}
 
 		function loadFromServer() {
             var url = 'assets/Awkward Annie sequencing_v13_08_09_16_v2.xlsx';
 
             $log.log("Loading from url '"+url+"' ...");
 
-            parseAAContentService.parseContentFromUrl(url)
+            return parseAAContentService.parseContentFromUrl(url)
                 .then(function(parsedContent) {
                     $log.log("Loaded from url '"+url+"'.");
                     $log.log('Success!');
                     $log.log(parsedContent);
-                });
+                })
+                .then(function(){$log.log("Take a look at me now!!!")});
 
         }
 
@@ -78,6 +85,7 @@
 				deferred.resolve(spreadsheetContent);
 				return deferred.promise;
 			}
+			$log.log("Falling Back to JSON");
 
 			return $http.get(dialogJsonPaths[dialogKey]).then(function(response){
 				return response.data;
