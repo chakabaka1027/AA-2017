@@ -8,6 +8,10 @@
   "globals": {
     "angular": true,
     "module": true,
-    "inject": true
+    "inject": true,
+    "XLSX": true
+  },
+  "rules":{
+    "no-unused-vars": 1
   }
 }

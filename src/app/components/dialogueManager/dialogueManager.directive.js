@@ -25,10 +25,10 @@
 			var vm = this;
 			var dialogueRoot;
 			var codeNode2;
-			var pc_Text_Timer = (vm.isTestBed ? 0 : 350);
-			var pc_npc_timer = (vm.isTestBed ? 0 : pc_Text_Timer + 400);
-			var mild_Animation_Timer = (vm.isTestBed ? 0 : 1000);
-			var noExpression_Timer = (vm.isTestBed ? 0 : 700);
+			var pc_Text_Timer =  350;
+			var pc_npc_timer = pc_Text_Timer + 400;
+			var mild_Animation_Timer =  1000;
+			var noExpression_Timer =  700;
 			var latestChoice = {};
 			var npc = "";
 			var decisionPath = "";
@@ -52,6 +52,8 @@
 			vm.node2Hidden = true;
 			vm.node3Hidden = true;
 			vm.node3Response = true;
+			vm.main.branchHistory = [];
+
 
 			$scope.$watch(function(){ return vm.main.currentConversation;}, function(){
 				resetDialog();
@@ -114,6 +116,7 @@
 				vm.node3Hidden = true;
 				// Set dialogue data for current node
 				vm.node1Response = choice;
+
 				codeNode2 = choice.code;
 				// Shuffle choices
 				var originalNodeTwo = dialogueRoot.node2[codeNode2];
@@ -121,9 +124,17 @@
 				loadResponses(choice); // Responses with timers
 				// Data
 				var currenBranch = choice.code.charAt(0);
+
+
+				trackBranches(currenBranch);
+
+
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_state","1",vm.main.failedConvos[vm.main.currentConversation]);
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_user",currenBranch, choice.PC_Text);
-				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_system",scores[currenBranch],randomChoices.indexOf(choice)+1);
+
+				if(!vm.isTestBed){
+					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_system",scores[currenBranch],randomChoices.indexOf(choice)+1);
+				}
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_NPC",choice.animation,choice.NPC_Response); //text_position
 				randomChoices = shuffle(originalNodeTwo);//shuffle next choices
 			}//end of showNode2
@@ -144,9 +155,17 @@
 				loadResponses(choice);
 				// Data
 				var currenBranch = choice.code.charAt(1);
+
+				trackBranches(currenBranch);
+
+
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_state","2",vm.main.failedConvos[vm.main.currentConversation]);
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_user",currenBranch, choice.PC_Text);
+				
+				if (!vm.isTestBed){
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_system",scores[currenBranch],randomChoices.indexOf(choice)+1);
+				}
+
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_NPC",choice.animation,choice.NPC_Response); //text_position
 				randomChoices = shuffle(originalNodeThree); //shuffle them
 			}//end of showNode3
@@ -159,28 +178,44 @@
 				vm.npcResponse = ""; 	// clear response before showing next
 				loadResponses(choice);
 				vm.showContinue = true;
+				
 				// check succes
-				if(vm.main.roomData.characters[vm.main.talkingWith].successPaths.indexOf(choice.code) >= 0){
-					vm.main.completedConvos.push(vm.main.currentConversation);
-					// Calculate score
-					vm.main.totalConvoPoints = 0;
-					for(var i in choice.code){
-						vm.main.totalConvoPoints += scores[choice.code[i]];
-					}
-					// vm.main.playerScore += vm.main.totalConvoPoints; //update score
+				if(!vm.isTestBed){
+					if(vm.main.roomData.characters[vm.main.talkingWith].successPaths.indexOf(choice.code) >= 0){
+						vm.main.completedConvos.push(vm.main.currentConversation);
+						// Calculate score
+						vm.main.totalConvoPoints = 0;
+						for(var i in choice.code){
+							vm.main.totalConvoPoints += scores[choice.code[i]];
+						}
+						// vm.main.playerScore += vm.main.totalConvoPoints; //update score
 
-					vm.main.lastConversationSuccessful = true;
-				}else{
-					vm.main.failedConvos[vm.main.currentConversation] += 1;
-					vm.main.lastConversationSuccessful = false;
-				}
+						vm.main.lastConversationSuccessful = true;
+					}else{
+						vm.main.failedConvos[vm.main.currentConversation] += 1;
+						vm.main.lastConversationSuccessful = false;
+					}
+				}	
 				// Data
 				var currenBranch = choice.code.charAt(2);
+
+				trackBranches(currenBranch);
+
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_state","3",vm.main.failedConvos[vm.main.currentConversation]);
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_user",currenBranch, choice.PC_Text);
-				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_system",scores[currenBranch],randomChoices.indexOf(choice)+1);
+				if (!vm.isTestBed){
+					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_system",scores[currenBranch],randomChoices.indexOf(choice)+1);
+
+				}
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_NPC",choice.animation,choice.NPC_Response); //text_position
 				decisionPath = choice.code;
+			}
+
+			function trackBranches(currenBranch){
+
+				vm.main.branchHistory.push(currenBranch);
+				$log.log(vm.branchHistory);
+
 			}
 
 			function clickContinue(){
@@ -197,26 +232,32 @@
 				vm.main.animationTitle = "";
 
 				// End of convo data
-				if(vm.main.lastConversationSuccessful){
-					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_result",vm.main.totalConvoPoints,decisionPath);
-					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_end",vm.main.currentConversation,"Success");
-				}else{
-					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_result",vm.main.totalConvoPoints,decisionPath);
-					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_end",vm.main.currentConversation,"Fail");
+				if (!vm.isTestBed){
+					if(vm.main.lastConversationSuccessful){
+						userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_result",vm.main.totalConvoPoints,decisionPath);
+						userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_end",vm.main.currentConversation,"Success");
+					}else{
+						userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_result",vm.main.totalConvoPoints,decisionPath);
+						userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_end",vm.main.currentConversation,"Fail");
+					}
+					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"NPC_state",vm.main.talkingWith);
+					var progressBarInfo = Math.round((vm.main.completedConvos.length/vm.main.totalConvosAvailable)*100);
+					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Player_State",vm.main.playerScore, progressBarInfo);
+					successfulConvos = vm.main.completedConvos.length;
+					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Game_convo",successfulConvos,vm.main.convoAttemptsTotal);
+					userDataService.postData(); //Post data after convo is over
+					chooseDialogueScript();
 				}
-				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"NPC_state",vm.main.talkingWith);
-				var progressBarInfo = Math.round((vm.main.completedConvos.length/vm.main.totalConvosAvailable)*100);
-				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Player_State",vm.main.playerScore, progressBarInfo);
-				successfulConvos = vm.main.completedConvos.length;
-				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Game_convo",successfulConvos,vm.main.convoAttemptsTotal);
-				userDataService.postData(); //Post data after convo is over
-				chooseDialogueScript();
+
 			}
 
 		/*=============== Functions =================*/
-			function shuffle(choices){ 
-				for(var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
-				return choices;
+			function shuffle(choices){
+				if (!vm.isTestBed){
+					for(var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
+					return choices;
+				}
+				
 			}
 
 			function loadResponses(choice){
@@ -239,6 +280,15 @@
 									watchPromise(); //get's rid of previously created $watch
 							}
 						});
+
+						//displays responses in the test bed when dialogue is complete for awkward convos
+						if (vm.isTestBed){
+							latestChoice = choice;
+							audioService.playAudio("UIbuttonclick-option1.wav");
+							vm.npcResponse = choice.NPC_Response;
+							delayChoiceDisplay();
+							watchPromise(); //get's rid of previously created $watch
+						}
 						vm.main.animationDone = false; //reset
 					}else if(vm.main.animationTitle && vm.main.animationTitle.indexOf("mild") >= 0){ //if mild expression
 						$timeout(function(){

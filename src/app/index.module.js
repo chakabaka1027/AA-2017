@@ -2,6 +2,9 @@
   'use strict';
 
   angular
-    .module('awkwardAnnie', ['ngMessages', 'ngAria', 'ui.router']);
+    .module('importContent', []);
+
+  angular
+    .module('awkwardAnnie', ['ngMessages', 'ngAria', 'ui.router', 'importContent']);
 
 })();

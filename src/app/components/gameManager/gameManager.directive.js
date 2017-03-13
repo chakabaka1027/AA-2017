@@ -20,47 +20,128 @@
 			controller: controller, //controller for this directive
 			controllerAs:'vm',
 			bindToController: true,
-			link: link
+			link: link, 
+			//template: ['<div class="debugContainer">',
+			//				'<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Click</input>',
+			//			'</div>'].join("")
 		};
 		return directive;
 		function link(scope, elm, attrs, ctlr){
+
+			var mouseAnchorX;
+			var mouseAnchorY;
+
 			elm.on("mousedown", mouseDown);
-			elm.on("mouseup", mouseUp);
+			$('html').on("mouseup", mouseUp);
+
+			$('html').on('keydown', function(e) {
+				var code = e.keyCode ? e.keyCode : e.which;
+				//    up key        down key         right key    left key
+				if (code === 38 || code === 40 || code === 39 || code === 37){
+					ctlr.walkingInfo.wasMouseTriggered = false;
+					ctlr.annie_Walking = true;
+					ctlr.walkingInfo.walking = true;
+					switch (code){
+						case 38: 
+							ctlr.walkingInfo.direction = "up";
+							break;
+						case 40:
+							ctlr.walkingInfo.direction = "down";
+							break;
+						case 39:
+							ctlr.walkingInfo.direction = "right";
+							break;
+						case 37:
+							ctlr.walkingInfo.direction = "left";
+							break;
+					}
+
+					// showArrows = false; //Uncomment if ETS changes mind
+					//annieWalkingCode = code;
+					
+				}
+			});
+
+			scope.$watch(function(){return ctlr.walkingInfo.walking;}, function(){
+				if(!ctlr.walkingInfo.walking){
+					elm.off("mousemove", mouseMove);
+				}
+			})
+
+			ctlr.updateWalkDirection = updateWalkDirection;
 
 			function mouseDown(evt){
 
-				var xa = ctlr.anniePosition.x;
-				var ya = ctlr.anniePosition.y;
-				var xm = evt.offsetX;
-				var ym = evt.offsetY;
-				var b1 = ya - xa;
-				var b2 = ya + xa;
-
-				var isAboveLine1 = (ym < xm + b1);
-				var isAboveLine2 = (ym < -xm + b2);
-
-
-				var udrl;
-				if (isAboveLine1 && isAboveLine2){
-					udrl = "up";
-				} else if (!isAboveLine1 && isAboveLine2){
-					udrl = "left";
-				} else if (isAboveLine1 && !isAboveLine2){
-					udrl = "right";
-				} else if (!isAboveLine1 && !isAboveLine2){
-					udrl = "down";
+				if(!ctlr.walkingInfo.allowMouseHold){
+					elm.on("mousemove", mouseMove);
 				}
-				$log.log(udrl);
 
-				ctlr.annie_Walking = true;
+				mouseAnchorX = evt.offsetX;
+				mouseAnchorY = evt.offsetY;
 
-				ctlr.udrl = udrl;
+				ctlr.walkingInfo.walking = true;
+				ctlr.walkingInfo.wasMouseTriggered = true;
+
+				updateWalkDirection();
+
 			}
 
 			function mouseUp(evt){
-				ctlr.annie_Walking = false;
+
+				elm.off("mousemove", mouseMove);
+
+				if(!ctlr.walkingInfo.allowMouseHold){
+					ctlr.walkingInfo.walking = false;
+				}
+
 
 				$log.log(evt.type)
+			}
+
+			function mouseMove(evt){
+				mouseAnchorX = evt.offsetX;
+				mouseAnchorY = evt.offsetY;
+			}
+
+			function updateWalkDirection(){
+				if(ctlr.walkingInfo.walking && ctlr.walkingInfo.wasMouseTriggered){
+					var xa = ctlr.anniePosition.x;
+					var ya = ctlr.anniePosition.y;
+					
+					var xm = mouseAnchorX;
+					var ym = mouseAnchorY;
+
+					var dx = xa - xm;
+					var dy = ya - ym;
+
+					var dist = Math.sqrt(dx*dx + dy*dy);
+					if (dist < 15){
+						ctlr.walkingInfo.walking = false;
+						return;
+					}
+
+					var b1 = ya - xa;
+					var b2 = ya + xa;
+
+					var isAboveLine1 = (ym < xm + b1);
+					var isAboveLine2 = (ym < -xm + b2);
+
+
+					var udrl;
+					if (isAboveLine1 && isAboveLine2){
+						udrl = "up";
+					} else if (!isAboveLine1 && isAboveLine2){
+						udrl = "left";
+					} else if (isAboveLine1 && !isAboveLine2){
+						udrl = "right";
+					} else if (!isAboveLine1 && !isAboveLine2){
+						udrl = "down";
+					}
+
+					ctlr.walkingInfo.direction = udrl;
+
+
+				}
 			}
 		}
 
@@ -71,14 +152,11 @@
 			var myCanvas;
 			var currentRoomKey = vm.main.roomKey;
 			var arrowDelay = 1250;
-			vm.annie_Walking = false;
 			var annie_Talking = false;
 			var annieFaceOtherWay = false;
 			var currentRoomData = gM_RoomData[currentRoomKey];
-			var code;
 			var previousRoom = currentRoomKey;
 			var newRoom = "";
-			var annieWalkingCode;
 			var annieSprite,
 					annieStartX,
 					annieStartY;
@@ -103,21 +181,17 @@
 
 			vm.anniePosition = {x:0, y:0};
 
+			vm.walkingInfo = {
+				walking: false, 
+				direction: "right", 
+				wasMouseTriggered: false, 
+				allowMouseHold: true
+			};
+
 			// vm.main.beginingOfLevel2 = false; //used for ets's level transition comment
 
 			//window.keyUp 
-			$('html').on('keydown', function(e) {
-				code = e.keyCode ? e.keyCode : e.which;
-				//    up key        down key         right key    left key
-				if (code === 38 || code === 40 || code === 39 || code === 37){
-					vm.annie_Walking = true;
-					// showArrows = false; //Uncomment if ETS changes mind
-					annieWalkingCode = code;
-					if(!annie_Talking){
-						resetArrowTimer();
-					}
-				}
-			});
+			
 
 			$scope.$on('$destroy', function(){
 				$('html').off('keydown'); //removes event listeners for key down
@@ -272,8 +346,8 @@
 					/*does next room have dialogue, need this data whenever a door is entered*/ 
 					getDoorStatus();
 
-					//doorTransitionSound.setVolume(0.1);
-					//doorTransitionSound.play();
+					doorTransitionSound.setVolume(0.1);
+					doorTransitionSound.play();
 
 					/*========== Track Data ===================================*/ 
 					currentNPCsprites.forEach(function(character){ //get talking characters
@@ -346,49 +420,58 @@
 					if(annieSprite.position.y < minHeight){
 						annieSprite.position.y += 3;
 						vm.annie_Walking = false;
+						vm.walkingInfo.walking = false;
 					}else if(annieSprite.position.y > maxHeight){
 						annieSprite.position.y -= 3;
 						vm.annie_Walking = false;
+						vm.walkingInfo.walking = false;
 					}else if(annieSprite.position.x < minWidth){
 						annieSprite.position.x += 3;
 						vm.annie_Walking = false;
+						vm.walkingInfo.walking = false;
+
 					}else if(annieSprite.position.x > maxWidth){
 						annieSprite.position.x -= 3;
 						vm.annie_Walking = false;
+						vm.walkingInfo.walking = false;
+
 					}
 					// Make annie walk
-					if(vm.annie_Walking && !annie_Talking){
-						if(annieWalkingCode === room.LEFT_ARROW || vm.udrl === "left"){ //walk left
+					if(vm.walkingInfo.walking && !annie_Talking){
+
+						resetArrowTimer();
+
+						if(vm.walkingInfo.direction === "left"){ //walk left
 							annieSprite.changeAnimation("walkingSide");
 							annieSprite.mirrorX(1);
 							annieSprite.velocity.x = -walking_Speed;
 							annieSprite.velocity.y = 0;
-						} else if (annieWalkingCode === room.RIGHT_ARROW || vm.udrl === "right") { //walk right
+						} else if (vm.walkingInfo.direction === "right") { //walk right
 							annieSprite.changeAnimation("walkingSide");
 							annieSprite.mirrorX(-1);
 							annieSprite.velocity.x = walking_Speed;
 							annieSprite.velocity.y = 0;
-						}else if (annieWalkingCode === room.UP_ARROW || vm.udrl === "up"){ //walk up, away from the player
+						}else if (vm.walkingInfo.direction === "up"){ //walk up, away from the player
 							annieSprite.changeAnimation("walkingUp");
 							annieSprite.velocity.y = -walking_Speed;
 							annieSprite.velocity.x = 0;
-						}else if (annieWalkingCode === room.DOWN_ARROW || vm.udrl === "down"){  //walk down, towards the player
+						}else if (vm.walkingInfo.direction === "down"){  //walk down, towards the player
 							annieSprite.changeAnimation("walkingDown");
 							annieSprite.velocity.y = walking_Speed;
 							annieSprite.velocity.x = 0;
 						}
-					}	else if(!vm.annie_Walking){ //if not walking or out of bounds, draw standing image
+					}	else if(!vm.walkingInfo.walking){ //if not walking or out of bounds, draw standing image
 							annieSprite.velocity.x = 0; //Stop annie from walking
 							annieSprite.velocity.y = 0;
-						if(annieWalkingCode == room.LEFT_ARROW){
+						if(vm.walkingInfo.direction === "left"){
 							annieSprite.changeAnimation("standingSide");
 							annieSprite.mirrorX(1);
-						}else if(annieWalkingCode == room.RIGHT_ARROW){
+						}else if(vm.walkingInfo.direction === "right"){
 							annieSprite.changeAnimation("standingSide");
 							annieSprite.mirrorX(-1);
-						}else if(annieWalkingCode == room.UP_ARROW){
+						}else if(vm.walkingInfo.direction === "up"){
 							annieSprite.changeAnimation("standingUp");
-						}else if(annieWalkingCode == room.DOWN_ARROW){
+						}else if(vm.walkingInfo.direction === "down"){
 							annieSprite.changeAnimation("standingDown");
 						}else if(annie_Talking){
 							annieSprite.changeAnimation("talking");
@@ -420,11 +503,14 @@
 					room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
 
 					vm.anniePosition = annieSprite.position;
+					vm.updateWalkDirection();
+
 				}; //end of draw
 
 				/*=================== Check when key is released and stop walking ===============================================*/
 				room.keyReleased = function(event){
 					vm.annie_Walking = false;
+					vm.walkingInfo.walking = false;
 				};
 
 				//position and create furniture, need to use room so function has to be in a different scope
@@ -500,6 +586,7 @@
 				for(var furnitureItem in furnitureList){
 					sprite.collide(furnitureList[furnitureItem].data, function(spriteA, spriteB){
 						specialCollision(furnitureList[furnitureItem].name);
+						vm.walkingInfo.walking = false;
 					}); //collide(sprite,function)
 				}
 			}
@@ -528,6 +615,8 @@
 
 			// Show Dialogue
 			function dialogTriggered(spriteA,spriteB){
+				vm.walkingInfo.walking = false;
+				
 				var characters = vm.main.roomData.characters;
 				lastCharCollidedInto = spriteB;
 				if(resetDisplay.visible){ //&& spriteB === lastCharCollidedInto

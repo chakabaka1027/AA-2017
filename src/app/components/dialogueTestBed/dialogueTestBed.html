@@ -1,12 +1,30 @@
-<div class = "gameContainer"> 
+
+<div class="gameContainer"> 
+	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
 	<div class="main-pane">
+
+
+
 		<div class = "conversationContainer"> 
+
 			<display-dialouge main = "dialogTest" is-test-bed = "true"> </display-dialouge>
+
+
+			 
 			<div style = "width: 600px; background: blue;"> </div>
+			<pop-up-dialogue-manager ng-if="dialogTest.displayCharacters"
+			main="dialogTest"></pop-up-dialogue-manager>
+
 
 		</div>
+
+
+		
+
 	</div>
 </div>
 
 
-<select ng-options="item for item in dialogTest.dialogList" ng-model = "dialogTest.currentConversation"> </select>
+<div style = "position: relative; text-align: center; top: 10px"> {{ dialogTest.branchHistory.join(" | ") }} </div>
+
+<select style="position: absolute; top: 10px; left: 10px;" ng-options="item for item in dialogTest.dialogList" ng-model = "dialogTest.currentConversation"> </select>

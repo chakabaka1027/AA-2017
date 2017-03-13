@@ -10,7 +10,8 @@
     "animate.css": "~3.4.0",
     "angular": "~1.5.3",
     "p5.js": "p5js#^0.5.2",
-    "p5.play": "https://github.com/molleindustria/p5.play.git"
+    "p5.play": "https://github.com/molleindustria/p5.play.git",
+    "js-xlsx": "^0.9.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"

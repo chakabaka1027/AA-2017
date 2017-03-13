@@ -3,11 +3,16 @@
 	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
 	<div class="main-pane">
 
-		<game-manager main="main" room="main.roomKey"></game-manager>
+		<game-manager main="main" room="main.roomKey">
+			<!-- 
+			<div class="debugContainer">
+				<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Hold</input>
+			</div>
+			-->
 
-		<game-map name= "{{ 'level_'+ main.levelCount }}" > {{ gameMap.levels }} </game-map>
+		</game-manager>
 
-
+		<game-map name="{{ 'level_'+ main.levelCount }}" > {{ gameMap.levels }} </game-map>
 
 
 		<div ng-if="!main.hideDialogue" class="conversationContainer">

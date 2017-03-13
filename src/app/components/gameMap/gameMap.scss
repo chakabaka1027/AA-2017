@@ -6,9 +6,6 @@
   padding: 13px;
 }
 
-game-map {
-
-}
 
 game-map .game-map-room{
 	width: 22px;
@@ -21,6 +18,8 @@ game-map .game-map-room{
 	position: absolute;
 	width: 110px;
   height: 90px;
+    background: white;
+
 }
 
 .map-background{
@@ -72,11 +71,10 @@ game-map .game-map-room{
 
 
 .conversation-room{
-  background: green;
 }
 
 .current-room{
-  background-color: #ae372a;
+  background-color: #9dbb56;
   border: 3px solid #3e5380;
 }
 
@@ -168,11 +166,19 @@ game-map .enlarged-game-map-room{
   width: 75%;
 }
 
-.enlarged-x-button {
-  width: 10px;
-  height: 10px;
-  border: 2px solid black;
+.game-room.conversation-room img{
+  display: initial;
 }
+
+.game-room img{
+  position: absolute;
+  display: none; 
+  top: 2px;
+  right: 4px;
+  height: 75%;
+  width: 70%;
+}
+
 
 .enlarged-current-room-overlay{
   background-color: #ae372a;
