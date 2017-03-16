@@ -6,7 +6,7 @@
 		.directive('displayDialouge', displayDialouge);
 
 	/** @ngInject */
-	function displayDialouge(dialogueService, userDataService, audioService, $log){ //$log parameter goes in here
+	function displayDialouge(dialogueService, userDataService, audioService, $log, conversationP5Data){ //$log parameter goes in here
 		var directive = {
 			restrict: 'E',
 			templateUrl: 'app/components/dialogueManager/dialogueManager.html',
@@ -271,7 +271,12 @@
 				},pc_Text_Timer);
 
 				$timeout(function(){
-					vm.main.animationTitle = choice.animation;
+					if (choice.animation==='' || conversationP5Data[vm.main.talkingWith].animations[choice.animation]) {
+						vm.main.animationTitle = choice.animation;
+					} else {
+						$log.warn('there is no animation "'+choice.animation+'" for character '+vm.main.talkingWith);
+						vm.main.animationTitle = '';
+					}
 					if(vm.main.animationTitle && vm.main.animationTitle.indexOf("bold") >= 0){ //if it has an animated expression, wait until it's done.
 						// var npc_vt_anim_timer = vm.main.numberOfFrames * 100; //length of animation
 						var watchPromise = $scope.$watch(function(){return vm.main.animationDone;}, function(){
