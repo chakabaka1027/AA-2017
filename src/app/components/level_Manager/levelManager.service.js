@@ -7,7 +7,7 @@
 
 	/** @ngInject */
 	function levelDataHandler($log){
-		var allLevelData = {
+		var service = {
 			level_1: {  /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 				requiredConversations: ['fran_Linear'],
 				startingRoom: "lobby",
@@ -280,14 +280,16 @@
 					}
 				}
 			},
-			getRoomDialogs: getRoomDialogs
+			getRoomDialogs: getRoomDialogs,
+			getSuccessPaths: getSuccessPaths
 		};
-		return allLevelData;
+
+		return service;
 
 		//Is there any dialog in this room, if yes, what are they. 
 		//Later on check if they've been completed
 		function getRoomDialogs(levelKey, roomKey){
-			var currentRoomCheck = allLevelData[levelKey].rooms[roomKey];
+			var currentRoomCheck = service[levelKey].rooms[roomKey];
 			var dialogs = [];
 
 			angular.forEach(currentRoomCheck.characters, function(characterData,characterName){
@@ -300,6 +302,33 @@
 			});
 			return dialogs;
 		}
+
+		function getSuccessPaths(dialogKey) {
+			for (var levelKey in service) {
+				if (levelKey.indexOf('level_')===0) {
+					var levelInfo = service[levelKey];
+					for (var roomKey in levelInfo.rooms) {
+						var roomInfo = levelInfo.rooms[roomKey];
+						for (var charKey in roomInfo.characters) {
+							var charInfo = roomInfo.characters[charKey];
+
+							if (charInfo.dialogKey===dialogKey) {
+								return charInfo.successPaths;
+							}
+
+							if (charInfo.secondConvo && charInfo.secondConvo.dialogKey===dialogKey) {
+								return charInfo.secondConvo.successPaths;
+							}
+
+						}
+					}
+				}
+			}
+
+			// not found!
+			return [];
+		}
+
 	}//end of controller
 })();
 /*rooms

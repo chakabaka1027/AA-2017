@@ -20,11 +20,19 @@
 		</select>
 
 		<div ng-class="{'invalid-animation': !dialogTest.animationValid}" style="text-align: center;">
-			{{(!dialogTest.animationValid ? 'No emotion "' + dialogTest.animationTitle+ '" for '+dialogTest.talkingWith: '')}}&nbsp;
+			{{(!dialogTest.animationValid ? 
+					'No emotion "' + dialogTest.currentChoiceInfo.animation+ '" for '+dialogTest.talkingWith
+					: dialogTest.currentChoiceInfo.animation)}}&nbsp;
 		</div>
 
-		<div>{{dialogTest.branchHistory.length<3 ? 
-				'node'+(dialogTest.branchHistory.length+1)+' PC options : ' : 'done'}}</div>
+		<div ng-if="dialogTest.branchHistory.length<3">
+			Node{{(dialogTest.branchHistory.length+1)}} PC options :
+		</div>
+		<div ng-if="dialogTest.branchHistory.length>=3">
+			Done; Outcome: 
+			<span ng-if="dialogTest.isSuccessfulPath" style="color: green"><b>Success</b></span>
+			<span ng-if="!dialogTest.isSuccessfulPath" style="color: red"><b>Failure</b></span>
+		</div>
 
 		<div class="navigation-hints">
 			<div class="pc-options"

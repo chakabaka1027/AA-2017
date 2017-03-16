@@ -35,7 +35,7 @@
 
 				for(var personName in room.characters){
 					if(room.characters[personName]){
-						if(room.characters[personName].successPaths){
+						if(room.characters[personName].dialogKey || room.characters[personName].successPaths){
 							return true;
 						}
 					}

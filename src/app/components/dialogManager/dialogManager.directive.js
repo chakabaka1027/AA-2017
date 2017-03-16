@@ -6,7 +6,7 @@
 		.directive('displayDialog', displayDialog);
 
 	/** @ngInject */
-	function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data){ //$log parameter goes in here
+	function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler) {
 		var directive = {
 			restrict: 'E',
 			templateUrl: 'app/components/dialogManager/dialogManager.html',
@@ -52,7 +52,11 @@
 			vm.node2Hidden = true;
 			vm.node3Hidden = true;
 			vm.node3Response = true;
+
+			// for debugging in testbed...
 			vm.main.branchHistory = [];
+			vm.main.currentChoiceInfo = {};
+
 
 
 			$scope.$watch(function(){ return vm.main.currentConversation;}, function(){
@@ -180,8 +184,13 @@
 				loadResponses(choice);
 				vm.showContinue = true;
 				
-				// check succes
+				// check success
 				if(!vm.isTestBed){
+
+					$log.log('Checking for level success... these arrays should be the same...');
+					$log.log(levelDataHandler.getSuccessPaths(vm.main.currentConversation));
+					$log.log(vm.main.roomData.characters[vm.main.talkingWith].successPaths);
+
 					if(vm.main.roomData.characters[vm.main.talkingWith].successPaths.indexOf(choice.code) >= 0){
 						vm.main.completedConvos.push(vm.main.currentConversation);
 						// Calculate score
@@ -250,7 +259,9 @@
 					chooseDialogScript();
 				}
 
+				// for debugging in testbed...
 				vm.main.branchHistory = [];
+				vm.main.currentChoiceInfo = {};
 
 			}
 
@@ -264,6 +275,10 @@
 			}
 
 			function loadResponses(choice){
+
+				// for debugging purposes, added by chas...
+				vm.main.currentChoiceInfo = choice;
+
 				vm.npcResponse = ""; // clear response before showing next
 				vm.choiceDelay = false;
 				$timeout( function(){ 
