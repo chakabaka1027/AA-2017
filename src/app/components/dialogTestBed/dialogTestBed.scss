@@ -71,6 +71,16 @@
 		}
 	}
 
+	.animation-indicator {
+		text-align: center;
+		position: relative;
+		top: 10px;
+
+		&.chas-flipped {
+			margin-left: 650px;
+		}
+	}
+
 	.navigation-hints {
 		position: relative;
 		height: 20px;

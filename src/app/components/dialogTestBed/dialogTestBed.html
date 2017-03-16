@@ -24,7 +24,7 @@
 			<label for="flipDialog">Flip dialog horizontally</label>
 		</div>
 
-		<div ng-class="{'invalid-animation': !dialogTest.animationValid}" style="text-align: center;">
+		<div class="animation-indicator" ng-class="{'invalid-animation': !dialogTest.animationValid, 'chas-flipped': dialogTest.flipDialog}">
 			{{(!dialogTest.animationValid ? 
 					'No emotion "' + dialogTest.currentChoiceInfo.animation+ '" for '+dialogTest.talkingWith
 					: dialogTest.currentChoiceInfo.animation)}}&nbsp;
