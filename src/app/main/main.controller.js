@@ -31,6 +31,10 @@
     vm.totalConvosAvailable = 18;
     vm.convoAttemptsTotal = 0;
 
+    vm.flipDialogs = (userDataService.userID==='flip');
+    $log.log('player id is "'+userDataService.userID+'" '+vm.flipDialogs);
+
+
     nextLevelData();
     
     function setConversation(talkingWith){

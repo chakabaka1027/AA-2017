@@ -29,7 +29,7 @@
 
 	}
 
-	input+label, .util-button {
+	input[type=file]+label, .util-button {
 		cursor: pointer;
 		display: inline-block;
 		margin: 3px;
@@ -51,6 +51,11 @@
 		&:focus {
 			outline: none;
 		}
+	}
+
+	.flip-input {
+		display: inline-block;
+		float: right;
 	}
 
 	select {
@@ -87,6 +92,16 @@
 		.pc-label {
 			left: 750px;
 			background-color: #92aec4;
+		}
+
+		&.chas-flipped {
+			.npc-label {
+				left: 750px;
+			}
+
+			.pc-label {
+				left: 445px;
+			}
 		}
 	}
 

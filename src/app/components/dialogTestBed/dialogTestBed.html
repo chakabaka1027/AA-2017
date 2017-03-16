@@ -19,6 +19,11 @@
 				ng-model = "dialogTest.currentConversation">
 		</select>
 
+		<div class="flip-input">
+			<input type="checkbox" ng-model="dialogTest.flipDialog" id="flipDialog">
+			<label for="flipDialog">Flip dialog horizontally</label>
+		</div>
+
 		<div ng-class="{'invalid-animation': !dialogTest.animationValid}" style="text-align: center;">
 			{{(!dialogTest.animationValid ? 
 					'No emotion "' + dialogTest.currentChoiceInfo.animation+ '" for '+dialogTest.talkingWith
@@ -34,7 +39,7 @@
 			<span ng-if="!dialogTest.isSuccessfulPath" style="color: red"><b>Failure</b></span>
 		</div>
 
-		<div class="navigation-hints">
+		<div class="navigation-hints" ng-class="{'chas-flipped': dialogTest.flipDialog}">
 			<div class="pc-options"
 				ng-if="dialogTest.branchHistory.length<3">
 				<span ng-if="!dialogTest.isLinearDialog">
@@ -51,7 +56,7 @@
 
 </div>
 
-<div class="gameContainer" ng-if="dialogTest.hasLoaded"> 
+<div class="gameContainer" ng-class="{'chas-flipped': dialogTest.flipDialog}" ng-if="dialogTest.hasLoaded"> 
 	
 	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
 	<div class="main-pane">
