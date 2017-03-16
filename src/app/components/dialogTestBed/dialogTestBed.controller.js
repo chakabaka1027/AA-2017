@@ -15,6 +15,7 @@
     vm.currentSource = "Website"
     vm.animationValid = true;
     vm.successPaths = [];
+    vm.flipDialog = true;
 
     dialogService.loadedPromise.then(activate);
 

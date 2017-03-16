@@ -52,9 +52,6 @@
       right: 325px;
     }
 
-    /* for chas 'flipped' mode... */
-
-
   }
 
   .itemRight{
@@ -64,6 +61,7 @@
 
   }
 
+  /* for chas 'flipped' mode... */
   &.chas-flipped {
 
     .itemRight {
@@ -72,12 +70,14 @@
     }
 
     .pc-bubble {
+      /* background-image: url("../assets/images/conversation_items/flip_thought_bubble.png"); */
       top: 0px;
       right: 325px;
       z-index: 1;
     }
 
     .npc-bubble {
+      /* background-image: url("../assets/images/conversation_items/flip_thought_bubble_reverse.png"); */
       top: 0px;
       right: 30px;
       z-index: 1;

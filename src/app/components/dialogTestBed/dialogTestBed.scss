@@ -56,6 +56,10 @@
 	.flip-input {
 		display: inline-block;
 		float: right;
+
+		input, input+label {
+			cursor: pointer;
+		}
 	}
 
 	select {
