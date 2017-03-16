@@ -10,29 +10,35 @@
 	    </div>
 	</div>
 
-	<select ng-options="item.key as item.label for item in dialogTest.dialogList" 
-			ng-model = "dialogTest.currentConversation">
-	</select>
-
-	<div ng-class="{'invalid-animation': !dialogTest.animationValid}" style="text-align: center;">
-		{{(!dialogTest.animationValid ? 'No emotion "' + dialogTest.animationTitle+ '" for '+dialogTest.talkingWith: '')}}&nbsp;
+	<div ng-if="!dialogTest.hasLoaded">
+		Loading...
 	</div>
 
-	<div>{{dialogTest.branchHistory.length<3 ? 
-			'node'+(dialogTest.branchHistory.length+1)+' PC options : ' : 'done'}}</div>
+	<div ng-if="dialogTest.hasLoaded">
+		<select ng-options="item.key as item.label for item in dialogTest.dialogList" 
+				ng-model = "dialogTest.currentConversation">
+		</select>
 
-	<div class="navigation-hints">
-		<div class="pc-options"
-			ng-if="dialogTest.branchHistory.length<3">
-			<span ng-if="!dialogTest.isLinearDialog">
-			{{dialogTest.branchHistory.join('')+'A-PC'}},
-			{{dialogTest.branchHistory.join('')+'B-PC'}},</span>
-			{{dialogTest.branchHistory.join('')+'C-PC'}}
+		<div ng-class="{'invalid-animation': !dialogTest.animationValid}" style="text-align: center;">
+			{{(!dialogTest.animationValid ? 'No emotion "' + dialogTest.animationTitle+ '" for '+dialogTest.talkingWith: '')}}&nbsp;
 		</div>
-		
-		<div class="npc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-NPC'}}</div>
-		<div class="pc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-PC'}}</div>
 
+		<div>{{dialogTest.branchHistory.length<3 ? 
+				'node'+(dialogTest.branchHistory.length+1)+' PC options : ' : 'done'}}</div>
+
+		<div class="navigation-hints">
+			<div class="pc-options"
+				ng-if="dialogTest.branchHistory.length<3">
+				<span ng-if="!dialogTest.isLinearDialog">
+				{{dialogTest.branchHistory.join('')+'A-PC'}},
+				{{dialogTest.branchHistory.join('')+'B-PC'}},</span>
+				{{dialogTest.branchHistory.join('')+'C-PC'}}
+			</div>
+			
+			<div class="npc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-NPC'}}</div>
+			<div class="pc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-PC'}}</div>
+
+		</div>
 	</div>
 
 </div>
