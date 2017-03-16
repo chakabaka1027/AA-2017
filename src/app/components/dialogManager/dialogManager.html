@@ -1,4 +1,4 @@
-<!-- Dialogue Choices -->
+<!-- dialog Choices -->
 <div class="playerChoices">
 	<div ng-if="!vm.node1Hidden">
 		<div class="choices" ng-repeat="choice in vm.choice">
@@ -20,7 +20,7 @@
 			<br><br>
 		</div>
 	</div>
-	<br>
+	<br/>
 	<p ng-if="vm.choiceDelay &&!vm.showContinue">Please select an option above for what you want Annie to say.</p>
 
 	<div class="blue-continue" ng-click="vm.clickContinue()" ng-if="vm.showContinue && vm.choiceDelay"></div>
@@ -31,13 +31,12 @@
 	NPC-visual text <input type="text" value="" name="npc-vt-delay" ng-model="npcVtTimerValue"">
 	<br>
 	<button type="button" ng-click='vm.setTimers(pcNpcTimerValue,npcVtTimerValue)'>Update</button>-->
-	</div>
+</div>
 
-	<div class="pc-bubble">
-	<!-- Annie's bubble -->
-		<p id="pcBubbleText"> {{vm.chosenAnnie}}</p>
-	</div>
-	<div class="npc-bubble" ng-if="vm.npcResponse">
-		<p id="npcBubbleText">{{vm.npcResponse}}</p>
-	</div>
-
+<div class="pc-bubble">
+<!-- Annie's bubble -->
+	<p id="pcBubbleText"> {{vm.chosenAnnie}}</p>
+</div>
+<div class="npc-bubble" ng-if="vm.npcResponse">
+	<p id="npcBubbleText">{{vm.npcResponse}}</p>
+</div>

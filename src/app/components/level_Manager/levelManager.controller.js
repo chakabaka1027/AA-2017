@@ -6,10 +6,10 @@
 		.directive('levelManager', levelManager);
 
 	/** @ngInject */
-	function levelManager(dialogueService, $log){ //$log parameter goes in here
+	function levelManager(dialogService, $log){ //$log parameter goes in here
 		var directive = {
 			restrict: 'E',
-			templateUrl: 'app/components/dialogueManager/dialogueManager.html',
+			templateUrl: 'app/components/dialogManager/dialogManager.html',
 			controller: levelManagerController,
 			scope: {
 				main: "=",
@@ -25,7 +25,7 @@
 			var vm = this;
 
 			var totalConvos = 0;
-			// Check if dialogues were all completed and move onto next level
+			// Check if dialogs were all completed and move onto next level
 			if(vm.main.levelConvosNeeded.indexOf(vm.main.completedConvos) >= 0){
 				totalConvos += 1;
 			}

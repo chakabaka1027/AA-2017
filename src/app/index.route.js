@@ -36,10 +36,10 @@
       });
 
       $stateProvider
-      .state('dialougeTestBed', {
+      .state('dialogTestBed', {
         url: '/dialogTestBed',
-        templateUrl: 'app/components/dialogueTestBed/dialogueTestBed.html',
-        controller: 'displayDialougeTestBed', //throws away old main and recreates it
+        templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
+        controller: 'displayDialogTestBed', //throws away old main and recreates it
         controllerAs: "dialogTest"
       });
 

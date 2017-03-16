@@ -3,10 +3,10 @@
 
   angular
     .module('awkwardAnnie')
-    .controller('displayDialougeTestBed', displayDialougeTestBed);
+    .controller('displayDialogTestBed', displayDialogTestBed);
 
   /** @ngInject */
-  function displayDialougeTestBed($log, $scope, $timeout, dialogueService, parseAAContentService, conversationP5Data) {
+  function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService, conversationP5Data) {
     var vm = this;
     vm.currentConversation = "fran_Linear";
     vm.talkingWith = "fran";
@@ -15,17 +15,17 @@
     vm.currentSource = "Website"
     vm.animationValid = true;
 
-    dialogueService.loadedPromise.then(activate);
+    dialogService.loadedPromise.then(activate);
 
     function activate(){
       $log.log("loaded dialog data")
       vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
       vm.levelUp = false;
       vm.failedConvos= [];
-      vm.dialogList = dialogueService.getDialogKeys()
+      vm.dialogList = dialogService.getDialogKeys()
                         .map(function(dkey) {
                           return {
-                            label: dkey+' ['+dialogueService.dialogWorksheetKeys[dkey]+']',
+                            label: dkey+' ['+dialogService.dialogWorksheetKeys[dkey]+']',
                             key: dkey
                           };
                         });

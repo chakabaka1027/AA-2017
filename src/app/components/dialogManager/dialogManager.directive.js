@@ -3,14 +3,14 @@
 
 	angular
 		.module('awkwardAnnie')
-		.directive('displayDialouge', displayDialouge);
+		.directive('displayDialog', displayDialog);
 
 	/** @ngInject */
-	function displayDialouge(dialogueService, userDataService, audioService, $log, conversationP5Data){ //$log parameter goes in here
+	function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data){ //$log parameter goes in here
 		var directive = {
 			restrict: 'E',
-			templateUrl: 'app/components/dialogueManager/dialogueManager.html',
-			controller: displayDialougeController,
+			templateUrl: 'app/components/dialogManager/dialogManager.html',
+			controller: displayDialogController,
 			scope: {
 				main: "=",
 				isTestBed: "="
@@ -21,9 +21,9 @@
 		return directive;
 		
 		/** @ngInject */
-		function displayDialougeController($scope, $timeout){
+		function displayDialogController($scope, $timeout){
 			var vm = this;
-			var dialogueRoot;
+			var dialogRoot;
 			var codeNode2;
 			var pc_Text_Timer =  350;
 			var pc_npc_timer = pc_Text_Timer + 400;
@@ -57,7 +57,7 @@
 
 			$scope.$watch(function(){ return vm.main.currentConversation;}, function(){
 				resetDialog();
-				chooseDialogueScript();
+				chooseDialogScript();
 
 			});
 
@@ -83,22 +83,22 @@
 				vm.node3Response = true;
 			}
 
-			// Set Dialogue - move to another file, will need info from main controller
-			function chooseDialogueScript(){
+			// Set dialog - move to another file, will need info from main controller
+			function chooseDialogScript(){
 				npc = vm.main.talkingWith;
 				vm.main.animationTitle = "";
 				//Get branching conversation data
 				var dialog = vm.main.currentConversation;
-				dialogueService.getDialogs(dialog).then(function(data){
-					dialogueRoot = data;
+				dialogService.getDialogs(dialog).then(function(data){
+					dialogRoot = data;
 					// save choices to an array
-					var originalNodeOne = dialogueRoot.node1;
+					var originalNodeOne = dialogRoot.node1;
 					// Shuffle node one, can't shuffle others until 
 					randomChoices = shuffle(originalNodeOne);
 					// Give new array to DOM
 					vm.choice = originalNodeOne;
-					vm.choice2 = dialogueRoot.node2;
-					vm.choice3 = dialogueRoot.node3;
+					vm.choice2 = dialogRoot.node2;
+					vm.choice3 = dialogRoot.node3;
 					vm.main.isLinearDialog = vm.choice.length===1;
 				});
 				// vm.main.failedConvos[vm.main.currentConversation];
@@ -115,12 +115,12 @@
 				vm.node1Hidden = true;
 				vm.node2Hidden = false; //show if choice is clicked
 				vm.node3Hidden = true;
-				// Set dialogue data for current node
+				// Set dialog data for current node
 				vm.node1Response = choice;
 
 				codeNode2 = choice.code;
 				// Shuffle choices
-				var originalNodeTwo = dialogueRoot.node2[codeNode2];
+				var originalNodeTwo = dialogRoot.node2[codeNode2];
 				vm.choice2 = originalNodeTwo; //data needed to pull up choices
 				loadResponses(choice); // Responses with timers
 				// Data
@@ -149,7 +149,7 @@
 				// Get button code
 				var codeNode3 = choice.code;
 				// Get choices for next round
-				var originalNodeThree = dialogueRoot.node3[codeNode3];
+				var originalNodeThree = dialogRoot.node3[codeNode3];
 				vm.choice3 = originalNodeThree; //send them to the dom
 				// Set animation information
 				// vm.main.animationTitle = choice.animation;
@@ -220,7 +220,7 @@
 			}
 
 			function clickContinue(){
-				vm.main.hideDialogue = true;
+				vm.main.hideDialog = true;
 				vm.chosenAnnie = "";
 				vm.npcResponse = "";
 				vm.node1Hidden = false;
@@ -247,7 +247,7 @@
 					successfulConvos = vm.main.completedConvos.length;
 					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Game_convo",successfulConvos,vm.main.convoAttemptsTotal);
 					userDataService.postData(); //Post data after convo is over
-					chooseDialogueScript();
+					chooseDialogScript();
 				}
 
 				vm.main.branchHistory = [];
@@ -289,7 +289,7 @@
 							}
 						});
 
-						//displays responses in the test bed when dialogue is complete for awkward convos
+						//displays responses in the test bed when dialog is complete for awkward convos
 						if (vm.isTestBed){
 							latestChoice = choice;
 							audioService.playAudio("UIbuttonclick-option1.wav");
@@ -338,7 +338,7 @@
 					// Get button code
 					var codeNode3 = choice.code;
 					// Get choices for next round
-					var originalNodeThree = dialogueRoot.node3[codeNode3];
+					var originalNodeThree = dialogRoot.node3[codeNode3];
 					shuffle(originalNodeThree); //shuffle them
 					vm.choice3 = originalNodeThree; //send them to the dom
 					// Set animation information

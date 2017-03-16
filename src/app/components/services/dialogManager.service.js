@@ -2,7 +2,7 @@
 	'use strict';
 	
 	angular.module('importContent')
-	.service('dialogueService', dialogContentService);
+	.service('dialogService', dialogContentService);
 
 	// how to use it
 	// service.getDialogs("LinearMike");

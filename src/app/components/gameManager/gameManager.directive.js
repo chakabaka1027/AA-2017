@@ -301,6 +301,7 @@
 				/*==================================================================================
 					Create characters and add animations
 				==================================================================================*/
+					$log.log('roomData...', vm.main.roomData);
 					for(var char in vm.main.roomData.characters){
 						currentNPCsprites.push(char); // + "_Sprite"
 					}
@@ -343,7 +344,7 @@
 					resetDisplay = room.createSprite(annieSprite.position.x,annieSprite.position.y);
 					resetDisplay.addAnimation("reset","assets/images/ResetBubbleAnimations/ResetAnimation01.png","assets/images/ResetBubbleAnimations/ResetAnimation12.png");
 					resetDisplay.visible = false;
-					/*does next room have dialogue, need this data whenever a door is entered*/ 
+					/*does next room have dialog, need this data whenever a door is entered*/ 
 					getDoorStatus();
 
 					doorTransitionSound.setVolume(0.1);
@@ -371,7 +372,7 @@
 						annieSprite.collide(currentNPCsprites[i],dialogTriggered);
 					}
 					// Big step
-					if(vm.main.hideDialogue){ //annie not talking
+					if(vm.main.hideDialog){ //annie not talking
 						if(annie_Talking){
 							showArrows = false;
 							if(!vm.main.lastConversationSuccessful){ //make reset sprite visible
@@ -613,7 +614,7 @@
 				vm.main.beginingOfLevel2 = false;
 			}
 
-			// Show Dialogue
+			// Show dialog
 			function dialogTriggered(spriteA,spriteB){
 				vm.walkingInfo.walking = false;
 				
@@ -631,7 +632,7 @@
 							if(character.secondConvo && vm.main.completedConvos.indexOf(character.secondConvo.dialogKey) < 0){ // if there's a second conversation and hasn't been completed
 								vm.main.currentConversation = character.secondConvo.dialogKey; 
 								vm.main.talkingWith = spriteB.name;
-								vm.main.hideDialogue = false;
+								vm.main.hideDialog = false;
 								annie_Talking = true;
 								//EXAMPLE DATA TRACK
 								userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"NPC_State",spriteB.name); //vm.main.convoCounter[spriteB.name]
@@ -639,7 +640,7 @@
 							}
 						}else{ //if first convo
 							vm.main.setConversation(spriteB.name);
-							vm.main.hideDialogue = false;
+							vm.main.hideDialog = false;
 							annie_Talking = true;
 							userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"NPC_State",spriteB.name); //vm.main.convoCounter[spriteB.name]
 							userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_start",vm.main.currentConversation);
@@ -682,9 +683,9 @@
 			});
 			// Want to play correct sounds after the player clicks coninue, so it doesn't play over animation sounds
 			// It works for the first conversation, and then gives me an error for the rest
-			$scope.$watch(function(){return vm.main.hideDialogue}, function(newVal,oldVal){ //except for initialization
+			$scope.$watch(function(){return vm.main.hideDialog}, function(newVal,oldVal){ //except for initialization
 				if(currentRoom){
-					if(vm.main.hideDialogue !== oldVal && newVal){ //don't play when it opens
+					if(vm.main.hideDialog !== oldVal && newVal){ //don't play when it opens
 						vm.main.playerScore += vm.main.totalConvoPoints; //update score
 						// Check for end of level
 						// if(vm.main.areDialogsCompleted(vm.main.levelConvosNeeded,vm.main.completedConvos)){ //is player done with all convos in the level

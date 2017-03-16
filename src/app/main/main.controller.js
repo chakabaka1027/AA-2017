@@ -7,7 +7,7 @@
     // In the future this should be a service insead of the main controller. Wouldn't need other files if this change happened, but I didn't have time to refactor this project. 
 
   /** @ngInject */
-  function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogueService) {
+  function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService) {
     var vm = this;
     vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
     vm.levelUp = false;
@@ -21,7 +21,7 @@
     vm.playerScore = 0; // Main controller controls score, what characters were spoken too
     vm.totalConvoPoints = 0;
     vm.completedConvos = [];
-    vm.hideDialogue = true;
+    vm.hideDialog = true;
     vm.numberOfFrames = 0;
     vm.beginingOfLevel2 = false;
     vm.lastConversationSuccessful = false;

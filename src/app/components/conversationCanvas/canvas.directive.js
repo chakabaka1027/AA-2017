@@ -3,10 +3,10 @@
 
 	angular
 		.module('awkwardAnnie')
-		.directive('popUpDialogueManager', popUpDialogueManager);
+		.directive('popUpDialogManager', popUpDialogManager);
 
 	/** @ngInject */
-	function popUpDialogueManager(conversationP5Data, $log){
+	function popUpDialogManager(conversationP5Data, $log){
 		var directive = {
 			restrict: "E",
 			controller: controller, //controller for this directive
@@ -16,7 +16,7 @@
 				animationDone: "=",
 				numberOfFrames: "=",
 				talkingWith: "=",
-				hideDialogue: "="
+				hideDialog: "="
 			},
 			controllerAs:'vm',
 			bindToController: true
@@ -28,21 +28,21 @@
 			var vm = this;
 
 			var myCanvas;
-			var dialogueSprite;
-			var annieDialogueSprite;
-			var newDialogueCanvas;
+			var dialogSprite;
+			var annieDialogSprite;
+			var newDialogCanvas;
 			var universalSurprised,
 					universalConfused,
 					universalAnnoyed;
 
 			$scope.$on('$destroy', function(){ 
-				newDialogueCanvas.remove();
+				newDialogCanvas.remove();
 			});
 
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				p5 object, 2nd canvas for dialogs
 			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-			var dialogueCanvas = function(insetWindow){
+			var dialogCanvas = function(insetWindow){
 				/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					PRELOAD
 						Load images or sounds before used
@@ -66,11 +66,11 @@
 					myCanvas.class("convoCanvas");
 					myCanvas.class("itemRight");
 					// Characters
-					annieDialogueSprite = insetWindow.createSprite(conversationP5Data.annie.positionX,conversationP5Data.annie.positionY);
-					addAnimationsToChar(conversationP5Data.annie,annieDialogueSprite);
+					annieDialogSprite = insetWindow.createSprite(conversationP5Data.annie.positionX,conversationP5Data.annie.positionY);
+					addAnimationsToChar(conversationP5Data.annie,annieDialogSprite);
 					// need to change from talkingWith to var
-					dialogueSprite = insetWindow.createSprite(conversationP5Data[vm.main.talkingWith].positionX,conversationP5Data[vm.main.talkingWith].positionY);
-					addAnimationsToChar(conversationP5Data[vm.main.talkingWith],dialogueSprite);
+					dialogSprite = insetWindow.createSprite(conversationP5Data[vm.main.talkingWith].positionX,conversationP5Data[vm.main.talkingWith].positionY);
+					addAnimationsToChar(conversationP5Data[vm.main.talkingWith],dialogSprite);
 				};
 				/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					DRAW
@@ -81,26 +81,26 @@
 					insetWindow.background('#dae7b9');
 					// if sprite has animation for the choice, change it
 					if(vm.main.animationTitle !== ""){
-						dialogueSprite.changeAnimation(vm.main.animationTitle);
+						dialogSprite.changeAnimation(vm.main.animationTitle);
 						if(vm.main.animationTitle.indexOf("bold") > 0){
-							if(dialogueSprite.animation.getFrame() === dialogueSprite.animation.getLastFrame()){
+							if(dialogSprite.animation.getFrame() === dialogSprite.animation.getLastFrame()){
 								if(!vm.main.animationDone){
 									vm.main.animationDone = true;
 									$scope.$apply();
 								}
 							}
 						}
-						dialogueSprite.animation.frameDelay = 1;
-						dialogueSprite.animation.looping = false;
+						dialogSprite.animation.frameDelay = 1;
+						dialogSprite.animation.looping = false;
 						}else{
-							dialogueSprite.changeAnimation("normal");
+							dialogSprite.changeAnimation("normal");
 						}
 					// Last line
 					insetWindow.drawSprites();
 				}; //end of draw
 			};
 			
-			newDialogueCanvas = new p5(dialogueCanvas);
+			newDialogCanvas = new p5(dialogCanvas);
 
 			// Only called when title changes, not every draw
 			$scope.$watch(function(){return vm.main.animationTitle}, function(newVal,oldVal){
