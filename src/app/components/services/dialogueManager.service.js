@@ -9,6 +9,8 @@
 
 	/** @ngInject */
 	function dialogContentService($log, $http, $q, parseAAContentService){
+        var defaultUrl = 'assets/AwkwardAnnieDialogContent.xlsx';
+
 		var dialogWorksheetKeys = {};
 
 		var service = {
@@ -61,22 +63,39 @@
 		}
 
 		function loadFromServer() {
-            var url = 'assets/AwkwardAnnieDialogContent.xlsx';
 
-            $log.log("Loading from url '"+url+"' ...");
+            $log.log("Loading from url '"+defaultUrl+"' ...");
 
-            return parseAAContentService.parseContentFromUrl(url)
+            return parseAAContentService.parseContentFromUrl(defaultUrl)
                 .then(function(parsedContent) {
-                    $log.log("Loaded from url '"+url+"'.");
+                    $log.log("Loaded from url '"+defaultUrl+"'.");
                     $log.log('Success!');
                     $log.log(parsedContent);
                 })
-                .then(function(){$log.log("Take a look at me now!!!")});
+                .then(function(){$log.log("Take a look at me now!!!")})
+                .catch(function() {$log.log('Falling back to JSON files');}
+                );
 
         }
 
 		function getDialogs(dialogKey){
 
+			return service.loadedPromise
+				.then(function() {
+					var spreadsheetContent = parseAAContentService.parsedContent[dialogWorksheetKeys[dialogKey]];
+					if (spreadsheetContent) {
+						return spreadsheetContent;
+					}
+
+					$log.log('Falling back to JSON file "'+dialogJsonPaths[dialogKey]+'"');
+
+					return $http.get(dialogJsonPaths[dialogKey]).then(function(response){
+						return response.data;
+					});
+
+				});
+
+			/*
 			var spreadsheetContent = parseAAContentService.parsedContent[dialogWorksheetKeys[dialogKey]];
 			if (spreadsheetContent) {
 				// it's been loaded from a spreadsheet...
@@ -89,6 +108,8 @@
 			return $http.get(dialogJsonPaths[dialogKey]).then(function(response){
 				return response.data;
 			});
+			*/
+
 		};
 	}
 })();
