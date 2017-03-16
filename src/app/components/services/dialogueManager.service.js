@@ -52,7 +52,6 @@
 			dialogWorksheetKeys[dialogKey] = worksheetKey;
 		}
 
-		$log.log("I'm running");
 		service.loadedPromise = loadFromServer();
 
 		return service;
@@ -62,7 +61,7 @@
 		}
 
 		function loadFromServer() {
-            var url = 'assets/Awkward Annie sequencing_v13_08_09_16_v2.xlsx';
+            var url = 'assets/AwkwardAnnieDialogContent.xlsx';
 
             $log.log("Loading from url '"+url+"' ...");
 
