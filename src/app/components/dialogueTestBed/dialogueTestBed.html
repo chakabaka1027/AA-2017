@@ -1,5 +1,44 @@
 
+<div class="testbed-header">
+	<div class="tb-row1">
+		<div><b>Viewing Content from: </b>{{ dialogTest.currentSource }}</div>
+	    <div class="select-source">
+	    	<div class="util-button" ng-click= "dialogTest.loadFromFile(dialogTest.lastFileObject)" 
+	    		ng-if="dialogTest.lastFileObject">Reload xlsx file</div>
+	    	<input class="input-file" name="input-file" id="input-file" type="file" load-xlsx-file="dialogTest.loadFromFile(fileObject)"/>
+	    	<label for="input-file">Choose local xlsx file...</label>
+	    </div>
+	</div>
+
+	<select ng-options="item.key as item.label for item in dialogTest.dialogList" 
+			ng-model = "dialogTest.currentConversation">
+	</select>
+
+	<div ng-class="{'invalid-animation': !dialogTest.animationValid}" style="text-align: center;">
+		{{(!dialogTest.animationValid ? 'No emotion "' + dialogTest.animationTitle+ '" for '+dialogTest.talkingWith: '')}}&nbsp;
+	</div>
+
+	<div>{{dialogTest.branchHistory.length<3 ? 
+			'node'+(dialogTest.branchHistory.length+1)+' PC options : ' : 'done'}}</div>
+
+	<div class="navigation-hints">
+		<div class="pc-options"
+			ng-if="dialogTest.branchHistory.length<3">
+			<span ng-if="!dialogTest.isLinearDialog">
+			{{dialogTest.branchHistory.join('')+'A-PC'}},
+			{{dialogTest.branchHistory.join('')+'B-PC'}},</span>
+			{{dialogTest.branchHistory.join('')+'C-PC'}}
+		</div>
+		
+		<div class="npc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-NPC'}}</div>
+		<div class="pc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-PC'}}</div>
+
+	</div>
+
+</div>
+
 <div class="gameContainer" ng-if="dialogTest.hasLoaded"> 
+	
 	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
 	<div class="main-pane">
 
@@ -9,11 +48,12 @@
 
 			<display-dialouge main = "dialogTest" is-test-bed = "true"> </display-dialouge>
 
-
-			 
 			<div style = "width: 600px; background: blue;"> </div>
-			<pop-up-dialogue-manager ng-if="dialogTest.displayCharacters"
-			main="dialogTest"></pop-up-dialogue-manager>
+			
+			<pop-up-dialogue-manager 
+				ng-if="dialogTest.displayCharacters"
+				main="dialogTest">
+			</pop-up-dialogue-manager>
 
 
 		</div>
@@ -24,16 +64,4 @@
 	</div>
 </div>
 
-
-<div style = "position: relative; text-align: center; top: 10px"> {{ dialogTest.branchHistory.join(" | ") }} </div>
-
-<select ng-options="item for item in dialogTest.dialogList" ng-model = "dialogTest.currentConversation"> </select>
-
-<div>
-    <input type="file" load-xlsx-file="dialogTest.loadFromFile(fileObject)"/>
-	<div> <span style="font-weight: bold;"> Currently Viewed Content: </span> {{ dialogTest.currentSource }}</div>
-
-</div>
-
-<button ng-click= "dialogTest.loadFromFile(dialogTest.lastFileObject)" ng-if="dialogTest.lastFileObject"> Reload File </button>
 

@@ -1,0 +1,100 @@
+.testbed-header {
+	background-color: whitesmoke;
+	padding: 5px;
+	width: 952px;
+	border: 1px solid gray;
+	box-sizing: border-box;
+	margin: auto;
+
+	.tb-row1 {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid lightgray;
+		padding-bottom: 5px;
+		margin-bottom: 5px;
+	}
+
+	.select-source {
+		font-size: 14px;
+	}
+
+	.input-file {
+		width: 0.1px;
+		height: 0.1px;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		z-index: -1;
+
+	}
+
+	input+label, .util-button {
+		cursor: pointer;
+		display: inline-block;
+		margin: 3px;
+		padding: 5px;
+		background-color: lightgray;
+		border-radius: 5px;
+		border: 1px solid #888;
+		box-shadow: 1px 1px 3px #888;
+
+		&:hover {
+			background-color: #66a4bd;
+		}
+
+		&:active {
+			background-color: black;
+			color: white;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	select {
+		font-size: 14px;
+	    background-color: lightgray;
+	    margin: 3px;
+		border-radius: 3px;
+	    box-shadow: 1px 1px 3px #888;
+	    cursor: pointer;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.navigation-hints {
+		position: relative;
+		height: 20px;
+		padding: 3px;
+
+		.npc-label, .pc-label  {
+			position: absolute;
+			text-align: left;
+			top: 0;
+			padding: 3px;
+			border: 1px solid lightgray;
+		}
+
+		.npc-label {
+			left: 445px;
+			background-color: white;
+		}
+
+		.pc-label {
+			left: 750px;
+			background-color: #92aec4;
+		}
+	}
+
+}
+
+
+.invalid-animation {
+	color: red;
+	font-weight: bold;
+}
+

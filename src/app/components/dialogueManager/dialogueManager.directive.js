@@ -99,6 +99,7 @@
 					vm.choice = originalNodeOne;
 					vm.choice2 = dialogueRoot.node2;
 					vm.choice3 = dialogueRoot.node3;
+					vm.main.isLinearDialog = vm.choice.length===1;
 				});
 				// vm.main.failedConvos[vm.main.currentConversation];
 				if(angular.isUndefined(vm.main.failedConvos[vm.main.currentConversation])){
@@ -211,10 +212,10 @@
 				decisionPath = choice.code;
 			}
 
-			function trackBranches(currenBranch){
+			function trackBranches(currentBranch){
 
-				vm.main.branchHistory.push(currenBranch);
-				$log.log(vm.branchHistory);
+				vm.main.branchHistory.push(currentBranch);
+				$log.log('currentBranch', 'node'+(vm.main.branchHistory.length+1), vm.main.branchHistory.join(''));
 
 			}
 
@@ -248,6 +249,8 @@
 					userDataService.postData(); //Post data after convo is over
 					chooseDialogueScript();
 				}
+
+				vm.main.branchHistory = [];
 
 			}
 
