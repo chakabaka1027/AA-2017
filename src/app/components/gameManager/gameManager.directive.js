@@ -20,7 +20,7 @@
 			controller: controller, //controller for this directive
 			controllerAs:'vm',
 			bindToController: true,
-			link: link, 
+			link: link
 			//template: ['<div class="debugContainer">',
 			//				'<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Click</input>',
 			//			'</div>'].join("")

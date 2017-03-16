@@ -36,8 +36,8 @@
 				moment().format('HH:mm:ss')
 			];
 
-			if (data1===undefined || data1 === null) data1 = '';
-			if (data2===undefined || data2 === null) data2 = '';
+			if (angular.isUndefined(data1) || data1 === null) data1 = '';
+			if (angular.isUndefined(data2) || data2 === null) data2 = '';
 
 			row = row.concat([gameLevel, location, action, data1, data2]);
 			$log.log('Data tracked: '+row.join(','));

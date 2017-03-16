@@ -9,7 +9,10 @@
     "angular": true,
     "module": true,
     "inject": true,
-    "XLSX": true
+    "XLSX": true,
+    "p5": true,
+    "$": true,
+    "moment": true
   },
   "rules":{
     "no-unused-vars": 1
