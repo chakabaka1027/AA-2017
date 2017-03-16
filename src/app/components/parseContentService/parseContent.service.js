@@ -48,6 +48,7 @@
 				'NPC_Response': utfClean(row[col+2]),
 				'animation': row[4].toLowerCase()
 			};
+			d.animation = (d.animation==='neutral' ? '' : d.animation);
 			return d;
 		}
 
