@@ -45,7 +45,7 @@
           vm.displayCharacters = false;
           $timeout(function(){vm.displayCharacters = true}, 0);
           vm.successPaths = levelDataHandler.getSuccessPaths(vm.currentConversation);
-          $log.log('Success Paths: '+vm.successPaths);
+          // $log.log('Success Paths: '+vm.successPaths);
         }
       );
 
@@ -66,7 +66,7 @@
     function loadFromFile(fileObject) {
 
       if(fileObject.name.indexOf(".xlsx") < 0){
-        alert("Not an Excel File!")
+        alert("Sorry, but "+fileObject.name+" is not an XLSX Excel File!")
         return;
       }
 
