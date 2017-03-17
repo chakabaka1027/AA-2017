@@ -49,6 +49,7 @@
 				'animation': row[4].toLowerCase()
 			};
 			d.animation = (d.animation==='neutral' ? '' : d.animation);
+			d.animation = d.animation.replace('surprise_', 'surprised_');
 			return d;
 		}
 
