@@ -40,7 +40,7 @@
 			if (angular.isUndefined(data2) || data2 === null) data2 = '';
 
 			row = row.concat([gameLevel, location, action, data1, data2]);
-			$log.log('Data tracked: '+row.join(','));
+			// $log.log('Data tracked: '+row.join(','));
 
 			service.dataRows.push(row);
 

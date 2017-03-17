@@ -187,9 +187,9 @@
 				// check success
 				if(!vm.isTestBed){
 
-					$log.log('Checking for level success... these arrays should be the same...');
-					$log.log(levelDataHandler.getSuccessPaths(vm.main.currentConversation));
-					$log.log(vm.main.roomData.characters[vm.main.talkingWith].successPaths);
+					// $log.log('Checking for level success... these arrays should be the same...');
+					// $log.log(levelDataHandler.getSuccessPaths(vm.main.currentConversation));
+					// $log.log(vm.main.roomData.characters[vm.main.talkingWith].successPaths);
 
 					if(vm.main.roomData.characters[vm.main.talkingWith].successPaths.indexOf(choice.code) >= 0){
 						vm.main.completedConvos.push(vm.main.currentConversation);
@@ -224,7 +224,7 @@
 			function trackBranches(currentBranch){
 
 				vm.main.branchHistory.push(currentBranch);
-				$log.log('currentBranch', 'node'+(vm.main.branchHistory.length+1), vm.main.branchHistory.join(''));
+				// $log.log('currentBranch', 'node'+(vm.main.branchHistory.length+1), vm.main.branchHistory.join(''));
 
 			}
 
