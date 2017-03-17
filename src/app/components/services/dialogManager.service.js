@@ -72,10 +72,25 @@
                     $log.log('Success!');
                     $log.log(parsedContent);
                 })
-                .then(function(){$log.log("Take a look at me now!!!")})
+                .then(function(){
+                	$log.log("Take a look at me now!!!")
+                	adjustDialogWorksheetKeys();
+                })
                 .catch(function() {$log.log('Falling back to JSON files');}
                 );
 
+        }
+
+        // becuase the json paths don't actually line up with the damn worksheet keys... grrrrr.....!!!
+        function adjustDialogWorksheetKeys() {
+        	var casedKeyMap = Object.keys(parseAAContentService.parsedContent)
+        						.reduce(function(acc, wsKey) { acc[wsKey.toUpperCase()] = wsKey; return acc;}, {});
+        	$log.log(casedKeyMap);
+        	var adjustedKeys = {};
+        	for (var dialogKey in dialogWorksheetKeys) {
+        		adjustedKeys[dialogKey] = casedKeyMap[dialogWorksheetKeys[dialogKey].toUpperCase()];
+        	}
+        	service.dialogWorksheetKeys = dialogWorksheetKeys = adjustedKeys;
         }
 
 		function getDialogs(dialogKey){
@@ -87,7 +102,7 @@
 						return spreadsheetContent;
 					}
 
-					$log.log('Falling back to JSON file "'+dialogJsonPaths[dialogKey]+'"');
+					$log.warn('Falling back to JSON file "'+dialogJsonPaths[dialogKey]+'"');
 
 					return $http.get(dialogJsonPaths[dialogKey]).then(function(response){
 						return response.data;
