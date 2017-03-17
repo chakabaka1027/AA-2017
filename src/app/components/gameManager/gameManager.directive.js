@@ -34,7 +34,19 @@
 			elm.on("mousedown", mouseDown);
 			$('html').on("mouseup", mouseUp);
 
-			$('html').on('keydown', function(e) {
+			$('html').on('keydown', trackKeys);
+
+			scope.$watch(function(){return ctlr.walkingInfo.walking;}, function(){
+				if(!ctlr.walkingInfo.walking){
+					elm.off("mousemove", mouseMove);
+				}
+			})
+
+			ctlr.updateWalkDirection = updateWalkDirection;
+
+			scope.$on('$destroy', releaseBindings);
+
+			function trackKeys(e) {
 				var code = e.keyCode ? e.keyCode : e.which;
 				//    up key        down key         right key    left key
 				if (code === 38 || code === 40 || code === 39 || code === 37){
@@ -60,15 +72,7 @@
 					//annieWalkingCode = code;
 					
 				}
-			});
-
-			scope.$watch(function(){return ctlr.walkingInfo.walking;}, function(){
-				if(!ctlr.walkingInfo.walking){
-					elm.off("mousemove", mouseMove);
-				}
-			})
-
-			ctlr.updateWalkDirection = updateWalkDirection;
+			}
 
 			function mouseDown(evt){
 
@@ -95,7 +99,7 @@
 				}
 
 
-				$log.log(evt.type)
+				// $log.log(evt.type)
 			}
 
 			function mouseMove(evt){
@@ -142,6 +146,14 @@
 
 
 				}
+			}
+
+			function releaseBindings() {
+				$log.log('gameManager: releasing bindings');
+				elm.off("mousemove", mouseMove);
+				elm.off("mousedown", mouseDown);
+				$('html').off("mouseup", mouseUp);
+				$('html').off('keydown', trackKeys);
 			}
 		}
 
