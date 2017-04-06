@@ -252,7 +252,9 @@
 					}
 					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"NPC_state",vm.main.talkingWith);
 					var progressBarInfo = Math.round((vm.main.completedConvos.length/vm.main.totalConvosAvailable)*100);
-					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Player_State",vm.main.playerScore, progressBarInfo);
+					
+					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Player_State",vm.main.playerScore+vm.main.totalConvoPoints, progressBarInfo);
+					
 					successfulConvos = vm.main.completedConvos.length;
 					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Game_convo",successfulConvos,vm.main.convoAttemptsTotal);
 					userDataService.postData(); //Post data after convo is over

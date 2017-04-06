@@ -20,7 +20,7 @@
 		return directive;
 		
 		/** @ngInject */
-		function introController($timeout, $location){
+		function introController($timeout, $location, $state){
 			var vm = this;
 			vm.checkID = checkID;
 			vm.next = next;
@@ -55,13 +55,17 @@
 			function checkID(){ //make sure ID is a number and assign it to the data service
 				userDataService.userID = vm.playerID;
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
-				$location.path("/instructions").search({USERID: vm.playerID});
+				$state.go("instructions");  
+
+				//$location.path("/instructions").search({USERID: vm.playerID});
 			}
 
 			function next(){ //make sure ID is a number and assign it to the data service
 				userDataService.userID = vm.playerID;
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
-				$location.path("/instructions").search({USERID: vm.playerID});
+				$state.go("instructions");  
+
+				//$location.path("/instructions").search({USERID: vm.playerID});
 			}
 		}//end of controller
 	}

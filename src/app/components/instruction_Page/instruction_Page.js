@@ -6,7 +6,7 @@
 		.directive('instructionPage', instructionPage)
 
 	/** @ngInject */
-	function instructionPage($location, userDataService, $log){ //$log parameter goes in here
+	function instructionPage($location, userDataService, $log, $state){ //$log parameter goes in here
 		var directive = {
 			restrict: 'E',
 			templateUrl: "app/components/instruction_Page/instruction_Page.html",
@@ -28,7 +28,9 @@
 				vm.clickCounter += 1;
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
 				if(vm.clickCounter >= 2){
-					$location.path("/awkwardAnnieGame").search({USERID: userDataService.userID});
+					
+					$state.go("awkwardAnnieGame");  
+					//location.path("/awkwardAnnieGame").search({USERID: userDataService.userID});
 				}
 			}
 		}//end of controller
