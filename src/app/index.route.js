@@ -29,12 +29,6 @@
         controllerAs: 'main'
       });
 
-    $stateProvider
-      .state('gameMapTest', {
-        url: '/gameMapTest',
-        templateUrl: 'app/components/gameMap/gameMapTest.html'
-      });
-
       $stateProvider
       .state('dialogTestBed', {
         url: '/dialogTestBed',
@@ -51,7 +45,7 @@
 
     $stateProvider
       .state('endScreen', {
-        url: '/endScreen',
+        //url: '/endScreen',
         templateUrl: 'app/components/endScreenManager/endScreen.html'
       });
 

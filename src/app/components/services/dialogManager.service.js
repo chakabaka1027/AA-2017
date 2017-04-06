@@ -8,7 +8,7 @@
 	// service.getDialogs("LinearMike");
 
 	/** @ngInject */
-	function dialogContentService($log, $http, $q, parseAAContentService){
+	function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
         var defaultUrl = 'assets/AwkwardAnnieDialogContent.xlsx';
 
 		var dialogWorksheetKeys = {};
@@ -54,7 +54,14 @@
 			dialogWorksheetKeys[dialogKey] = worksheetKey;
 		}
 
-		service.loadedPromise = loadFromServer();
+		var deferred = $q.defer();
+		service.loadedPromise = deferred.promise;
+		//$log.log("creating timeout")
+
+		$timeout(function(){ 
+		//$log.log("actually loading xlsx")
+			deferred.resolve(loadFromServer());
+		}, 500)
 
 		return service;
 

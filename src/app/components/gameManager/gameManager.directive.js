@@ -158,7 +158,7 @@
 		}
 
 		/** @ngInject */
-		function controller($scope,$timeout,$window){ //needs to be inside gameManager and have inject before
+		function controller($state, $scope,$timeout,$window){ //needs to be inside gameManager and have inject before
 			var vm = this;
 
 			var myCanvas;
@@ -224,7 +224,8 @@
 					globalGameInfo.playerScore = vm.main.playerScore;
 					globalGameInfo.totalConvos = vm.main.completedConvos.length;
 					$timeout(function() {
-						$location.path("/endScreen");
+						$state.go("endScreen");
+						//$location.path("/endScreen");
 					}, 1000);
 				}
 				if(currentRoom && newVal != oldVal){ //make sure there's a room before you check and draw the appropriate guiding arrows
