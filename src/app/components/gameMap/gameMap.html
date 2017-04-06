@@ -1,9 +1,9 @@
-<div ng-if = "show" class = "background-dimmer"></div>
+<div ng-if="show" class = "background-dimmer"></div>
 
 
 <div class="map-background"> <!-- include this as attribute along with commented code below for enlarged minimap functionality: ng-click = "show = !show" -->
-	<div ng-repeat = "roomKey in gameMap.roomKeys"
-		ng-class = "{ 
+	<div ng-repeat="roomKey in gameMap.roomKeys"
+		ng-class="{ 
 		'conversation-room': gameMap.roomHasConversation(roomKey),
 
 		'current-room': main.roomKey === roomKey,
@@ -15,10 +15,10 @@
 		'fransOffice': roomKey === 'fransOffice',
 		'breakRoom': roomKey === 'breakRoom'}"
 		
-		class = "game-map-room game-room">
+		class="game-map-room game-room">
 
 		<!-- display chat bubble icon in minimap-->
-		<img src= "assets/images/UI/asterisk.png">
+		<img src="assets/images/UI/asterisk.png">
 		
 
 	<!-- enlarged map

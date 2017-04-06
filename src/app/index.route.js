@@ -43,6 +43,12 @@
         controllerAs: "dialogTest"
       });
 
+      $stateProvider
+      .state('landingPage', {
+        url: '/landingPage',
+        templateUrl: 'app/components/landingPage/landingPage.html'
+      });
+
     $stateProvider
       .state('endScreen', {
         url: '/endScreen',
