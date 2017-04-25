@@ -13,19 +13,26 @@
 		];
 
 		var service = {
-			enabled: false, //writes to database
+			enabled: true, //writes to database
 			userID: "player",
-			version: "Candidate 1.39",
+			version: "Candidate 1.40",
 			sessionID: moment().unix(),
 
 			dataRows: [],
 
 			trackAction: trackAction,
 
-			postData: postData
+			postData: postData,
+
+			resetData: resetData
 		};
 
 		return service;
+
+		function resetData() {
+			service.dataRows = [];
+			service.sessionID = moment().unix();
+		}
 
 		function trackAction(gameLevel, location, action, data1, data2) {
 			var row = [

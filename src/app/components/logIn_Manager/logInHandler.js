@@ -54,6 +54,7 @@
 
 			function checkID(){ //make sure ID is a number and assign it to the data service
 				userDataService.userID = vm.playerID;
+				userDataService.resetData();
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
 				$state.go("instructions");  
 
@@ -62,6 +63,7 @@
 
 			function next(){ //make sure ID is a number and assign it to the data service
 				userDataService.userID = vm.playerID;
+				userDataService.resetData();
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
 				$state.go("instructions");  
 
