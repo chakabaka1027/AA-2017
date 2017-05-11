@@ -9,7 +9,7 @@
 
 	/** @ngInject */
 	function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
-        var defaultUrl = 'assets/AwkwardAnnieDialogContent.xlsx';
+        var defaultUrl = 'assets/AwkwardAnnieDialogContent_negative.xlsx';
 
 		var dialogWorksheetKeys = {};
 

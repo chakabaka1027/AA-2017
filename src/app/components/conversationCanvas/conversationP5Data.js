@@ -21,6 +21,8 @@
 				positionY: 325,
 				animations:{
 					"normal": ["assets/images/Characters/Fran/Fran-Inset-Final.png"],
+
+					//negative emotes
 					"surprised_mild": ["assets/images/Characters/Fran/Surprised/Fran_Surprised_Mild.png"],
 					"surprised_bold": ["assets/images/Characters/Fran/Surprised/Fran_Surprised_01.png","assets/images/Characters/Fran/Surprised/Fran_Surprised_18.png"],
 
@@ -28,14 +30,27 @@
 					"confused_bold": ["assets/images/Characters/Fran/Confused/Fran_Confused_01.png","assets/images/Characters/Fran/Confused/Fran_Confused_25.png"],
 
 					"annoyed_mild": ["assets/images/Characters/Fran/Annoyed/Fran_Annoyed_Mild.png"],
-					"annoyed_bold": ["assets/images/Characters/Fran/Annoyed/Fran_Annoyed_01.png","assets/images/Characters/Fran/Annoyed/Fran_Annoyed_25.png"]
+					"annoyed_bold": ["assets/images/Characters/Fran/Annoyed/Fran_Annoyed_01.png","assets/images/Characters/Fran/Annoyed/Fran_Annoyed_25.png"],
+
+					//positive emotes
+					"amused_mild": ["assets/images/Characters/Fran/Amused/Fran_Amused_Mild.png"],
+					"amused_bold": ["assets/images/Characters/Fran/Amused/Fran_Amused_01.png","assets/images/Characters/Fran/Amused/Fran_Amused_22.png"],
+
+					"satisfied_mild": ["assets/images/Characters/Fran/Satisfied/Fran_Satisfied_Mild.png"],
+					"satisfied_bold": ["assets/images/Characters/Fran/Satisfied/Fran_Satisfied_01.png","assets/images/Characters/Fran/Satisfied/Fran_Satisfied_31.png"],
+
+					"agreement_mild": ["assets/images/Characters/Fran/Agreement/Fran_Agreement_Mild.png"],
+					"agreement_bold": ["assets/images/Characters/Fran/Agreement/Fran_Agreement_01.png","assets/images/Characters/Fran/Agreement/Fran_Agreement_22.png"]
 				}
 			},
 			mike:{
 				positionX: 150,
 				positionY: 315,
 				animations:{
+
 					"normal": ["assets/images/Characters/Mike/Mike_Inset_FINAL.png"],
+
+					//negative emotes
 					"surprised_mild": ["assets/images/Characters/Mike/Surprised/Mike_Surprised_mild.png"],
 					"surprised_bold": ["assets/images/Characters/Mike/Surprised/Mike_Surprised_01.png","assets/images/Characters/Mike/Surprised/Mike_Surprised_17.png"],
 
@@ -43,7 +58,18 @@
 					"confused_bold": ["assets/images/Characters/Mike/Confused/Mike_Confused_01.png","assets/images/Characters/Mike/Confused/Mike_Confused_23.png"],
 
 					"annoyed_mild": ["assets/images/Characters/Mike/Annoyed/Mike_Annoyed_Mild.png"],
-					"annoyed_bold": ["assets/images/Characters/Mike/Annoyed/Mike_Annoyed_03.png","assets/images/Characters/Mike/Annoyed/Mike_Annoyed_22.png"]
+					"annoyed_bold": ["assets/images/Characters/Mike/Annoyed/Mike_Annoyed_03.png","assets/images/Characters/Mike/Annoyed/Mike_Annoyed_22.png"],
+
+					//positive emotes
+					"amused_mild": ["assets/images/Characters/Mike/Amused/Mike_Amused_Mild.png"],
+					"amused_bold": ["assets/images/Characters/Mike/Amused/Mike_Amused_01.png","assets/images/Characters/Mike/Amused/Mike_Amused_20.png"],
+
+					"satisfied_mild": ["assets/images/Characters/Mike/Satisfied/Mike_Satisfied_Mild.png"],
+					"satisfied_bold": ["assets/images/Characters/Mike/Satisfied/Mike_Satisfied_01.png","assets/images/Characters/Mike/Satisfied/Mike_Satisfied_26.png"],
+
+					"agreement_mild": ["assets/images/Characters/Mike/Agreement/Mike_Agreement_Mild.png"],
+					"agreement_bold": ["assets/images/Characters/Mike/Agreement/Mike_Agreement_01.png","assets/images/Characters/Mike/Agreement/Mike_Agreement_24.png"]
+
 				}
 			},
 			// Currently no bold animations for NPCs
@@ -52,6 +78,8 @@
 				positionY: 325,
 				animations:{
 					"normal": ["assets/images/Characters/Charlie/Charlie-Inset-Angle-Right.png"],
+
+					//negative emotes
 					"annoyed_mild": ["assets/images/Characters/Charlie/Charlie_Annoyed_Mild.png"],
 					"annoyed_bold": ["assets/images/Characters/Charlie/Charlie_Annoyed_Mild.png"],
 					
@@ -59,7 +87,19 @@
 					"confused_bold": ["assets/images/Characters/Charlie/Charlie_Confused_Mild.png"],
 					
 					"surprised_mild": ["assets/images/Characters/Charlie/Charlie_Surprised_Mild.png"],
-					"surprised_bold": ["assets/images/Characters/Charlie/Charlie_Surprised_Mild.png"]
+					"surprised_bold": ["assets/images/Characters/Charlie/Charlie_Surprised_Mild.png"],
+
+					//positive emotes
+					"amused_mild": ["assets/images/Characters/Charlie/Charlie_Amused_Mild.png"],
+					"amused_bold": ["assets/images/Characters/Charlie/Charlie_Amused_Mild.png"],
+
+					"satisfied_mild": ["assets/images/Characters/Charlie/Charlie_Satisfied_Mild.png"],
+					"satisfied_bold": ["assets/images/Characters/Charlie/Charlie_Satisfied_Mild.png"],
+
+					"agreement_mild": ["assets/images/Characters/Charlie/Charlie_Agreement_Mild.png"],
+					"agreement_bold": ["assets/images/Characters/Charlie/Charlie_Agreement_Mild.png"]
+
+
 				}
 			},
 			luna:{
@@ -67,6 +107,8 @@
 				positionY: 330,
 				animations:{
 					"normal": ["assets/images/Characters/Luna/Luna-Inset-Angle-Right.png"],
+
+					//negative emotes
 					"annoyed_mild": ["assets/images/Characters/Luna/Luna_Annoyed_Mild.png"],
 					"annoyed_bold": ["assets/images/Characters/Luna/Luna_Annoyed_Mild.png"],
 
@@ -74,7 +116,19 @@
 					"confused_bold": ["assets/images/Characters/Luna/Luna_Confused_Mild.png"],
 
 					"surprised_mild": ["assets/images/Characters/Luna/Luna_Surprised_Mild.png"],
-					"surprised_bold": ["assets/images/Characters/Luna/Luna_Surprised_Mild.png"]
+					"surprised_bold": ["assets/images/Characters/Luna/Luna_Surprised_Mild.png"],
+
+					//positive emotes
+					"amused_mild": ["assets/images/Characters/Luna/Luna_Amused_Mild.png"],
+					"amused_bold": ["assets/images/Characters/Luna/Luna_Amused_Mild.png"],
+
+					"satisfied_mild": ["assets/images/Characters/Luna/Luna_Satisfied_Mild.png"],
+					"satisfied_bold": ["assets/images/Characters/Luna/Luna_Satisfied_Mild.png"],
+
+					"agreement_mild": ["assets/images/Characters/Luna/Luna_Agreement_Mild.png"],
+					"agreement_bold": ["assets/images/Characters/Luna/Luna_Agreement_Mild.png"]
+
+
 				}
 			}
 		};
