@@ -22,6 +22,14 @@
 
 			updateConversations();
 
+			$scope.$watch(function(){return $scope.main.completedConvos.join(",")}, function(){
+				if(Array.isArray($scope.main.completedConvos)){
+					$log.log("Conversations updated!");
+					$log.log($scope.main.completedConvos);
+					updateConversations();
+				}
+			});
+
 			$scope.$watch(function(){return $scope.main.levelCount}, function(){
 				$log.log("level = " + $scope.main.levelCount)
 				updateConversations();
@@ -29,15 +37,27 @@
 
 			function roomHasConversation(roomKey){
 				var room = vm.rooms[roomKey];
+				var main = $scope.main;
+
 				if (!room.characters){
 					return false;
 				}
 
 				for(var personName in room.characters){
 					if(room.characters[personName]){
-						if(room.characters[personName].dialogKey || room.characters[personName].successPaths){
-							return true;
+						var personInfo = room.characters[personName];
+						if(personInfo.dialogKey || personInfo.successPaths){
+							if(main.completedConvos.indexOf(personInfo.dialogKey) < 0){
+								return true;
+							}
 						}
+						if(personInfo.secondConvo){
+							if(main.completedConvos.indexOf(personInfo.secondConvo.dialogKey) < 0){
+								return true;
+							}
+						}
+
+
 					}
 
 				}

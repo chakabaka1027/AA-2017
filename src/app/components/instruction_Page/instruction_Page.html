@@ -4,3 +4,7 @@
 <div class="intro2" ng-if="vm.clickCounter === 1">
 	<div class="continue diffRight" ng-click="vm.next()"></div>
 </div>
+
+<button ng-click="vm.loadPositive()">Load Positive</button>
+
+<div ng-if="vm.isLoading" class="loading-block">...Loading...</div>

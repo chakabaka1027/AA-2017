@@ -9,12 +9,22 @@
   function routerConfig($stateProvider, $urlRouterProvider) {
     //remove url later, before release
     // use different controller for welcome screen
+    
+    $stateProvider
+      .state('dialogTestBed', {
+        url: '/dialogTestBed/:gameType?',
+        templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
+        controller: 'displayDialogTestBed', //throws away old main and recreates it
+        controllerAs: "dialogTest"
+      });
+
     $stateProvider
       .state('GameStart', {
-        url: '/:gameType?',
+        url: '/{gameType:positive|negative|}',
         template: "<div class='gameContainer'><log-in-manager></log-in-manager></div>"
       });
-      $stateProvider
+
+    $stateProvider
       .state('instructions', {
         //url: '/instructions',
         template: "<div class='gameContainer'><nav-bar player-score='main.playerScore' level-count='main.levelCount'></nav-bar><instruction_page></instruction_page></div>",
@@ -29,15 +39,8 @@
         controllerAs: 'main'
       });
 
-      $stateProvider
-      .state('dialogTestBed', {
-        url: '/dialogTestBed/:gameType?',
-        templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
-        controller: 'displayDialogTestBed', //throws away old main and recreates it
-        controllerAs: "dialogTest"
-      });
-
-      $stateProvider
+      
+    $stateProvider
       .state('landingPage', {
         url: '/landingPage',
         templateUrl: 'app/components/landingPage/landingPage.html'

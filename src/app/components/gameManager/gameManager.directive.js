@@ -572,8 +572,9 @@
 					room.image(npcHasDialogBubble,characterSprite.position.x-40,characterSprite.position.y-characterSprite.height-bubbleHeight);
 				}
 				function drawPointsBubble(points,npc){
-					var x = npc.position.x+10;
-					var y = npc.position.y - npc.height - 90;
+					var x = npc.position.x;
+					var y = npc.position.y - npc.height - 190;
+					//$log.log(x,y);
 					room.image(pointsBubble, x, y);
 					room.textAlign(room.CENTER, room.CENTER);
 					room.textSize(22);

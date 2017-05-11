@@ -23,3 +23,21 @@
   top: 452px;
   z-index: 10;
 }
+
+.loading-block{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+instruction_page{
+  position: relative;
+  display: block;
+}
