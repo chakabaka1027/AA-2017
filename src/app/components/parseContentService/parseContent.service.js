@@ -46,7 +46,7 @@
 				'code': code,
 				'PC_Text': utfClean(row[col]),
 				'NPC_Response': utfClean(row[col+2]),
-				'animation': row[4].toLowerCase()
+				'animation': row[col + 4].toLowerCase()
 			};
 			d.animation = (d.animation==='neutral' ? '' : d.animation);
 			d.animation = d.animation.replace('surprise_', 'surprised_');

@@ -287,6 +287,7 @@
 					vm.chosenAnnie = choice.PC_Text; 
 				},pc_Text_Timer);
 
+				$log.log('choice.animation' + choice.animation);
 				$timeout(function(){
 					if (choice.animation==='' || conversationP5Data[vm.main.talkingWith].animations[choice.animation]) {
 						vm.main.animationTitle = choice.animation;

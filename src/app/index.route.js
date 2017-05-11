@@ -11,7 +11,7 @@
     // use different controller for welcome screen
     $stateProvider
       .state('GameStart', {
-        url: '/',
+        url: '/:gameType?',
         template: "<div class='gameContainer'><log-in-manager></log-in-manager></div>"
       });
       $stateProvider
@@ -31,7 +31,7 @@
 
       $stateProvider
       .state('dialogTestBed', {
-        url: '/dialogTestBed',
+        url: '/dialogTestBed/:gameType?',
         templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
         controller: 'displayDialogTestBed', //throws away old main and recreates it
         controllerAs: "dialogTest"

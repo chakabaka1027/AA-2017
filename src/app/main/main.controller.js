@@ -7,7 +7,7 @@
     // In the future this should be a service insead of the main controller. Wouldn't need other files if this change happened, but I didn't have time to refactor this project. 
 
   /** @ngInject */
-  function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService) {
+  function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService, $stateParams) {
     var vm = this;
     vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
     vm.levelUp = false;
@@ -30,6 +30,7 @@
     vm.convoCounter = {};
     vm.totalConvosAvailable = 18;
     vm.convoAttemptsTotal = 0;
+
 
     vm.flipDialogs = (userDataService.userID==='flip');
     $log.log('player id is "'+userDataService.userID+'" '+vm.flipDialogs);

@@ -9,14 +9,18 @@
 
 	/** @ngInject */
 	function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
-        var defaultUrl = 'assets/AwkwardAnnieDialogContent_negative.xlsx';
+        var defaultUrl = {
+        	positive:'assets/AwkwardAnnieDialogContent_positive.xlsx', 
+        	negative: 'assets/AwkwardAnnieDialogContent_negative.xlsx'
+        };
 
 		var dialogWorksheetKeys = {};
 
 		var service = {
 			getDialogs: getDialogs,
 			getDialogKeys: getDialogKeys,
-			dialogWorksheetKeys: dialogWorksheetKeys
+			dialogWorksheetKeys: dialogWorksheetKeys,
+			loadFromServer: loadFromServer
 		};
 
 		var dialogJsonPaths = {
@@ -55,13 +59,14 @@
 		}
 
 		var deferred = $q.defer();
+		service.deferred = deferred;
 		service.loadedPromise = deferred.promise;
 		//$log.log("creating timeout")
 
-		$timeout(function(){ 
+		//$timeout(function(){ 
 		//$log.log("actually loading xlsx")
-			deferred.resolve(loadFromServer());
-		}, 500)
+		//	deferred.resolve(loadFromServer());
+		//}, 500)
 
 		return service;
 
@@ -69,13 +74,15 @@
 			return Object.keys(dialogJsonPaths);
 		}
 
-		function loadFromServer() {
+		function loadFromServer(gameType) {
 
-            $log.log("Loading from url '"+defaultUrl+"' ...");
+			gameType = gameType || "negative";
 
-            return parseAAContentService.parseContentFromUrl(defaultUrl)
+            $log.log("Loading from url '"+defaultUrl[gameType]+"' ...");
+
+            return parseAAContentService.parseContentFromUrl(defaultUrl[gameType])
                 .then(function(parsedContent) {
-                    $log.log("Loaded from url '"+defaultUrl+"'.");
+                    $log.log("Loaded from url '"+defaultUrl[gameType]+"'.");
                     $log.log('Success!');
                     $log.log(parsedContent);
                 })

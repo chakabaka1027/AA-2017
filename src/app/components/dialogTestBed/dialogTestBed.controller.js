@@ -6,7 +6,7 @@
     .controller('displayDialogTestBed', displayDialogTestBed);
 
   /** @ngInject */
-  function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService, conversationP5Data, levelDataHandler) {
+  function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService, conversationP5Data, levelDataHandler, $stateParams) {
     var vm = this;
     vm.currentConversation = "fran_Linear";
     vm.talkingWith = "fran";
@@ -17,7 +17,15 @@
     vm.successPaths = [];
     vm.flipDialog = true;
 
-    dialogService.loadedPromise.then(activate);
+    $log.log($stateParams);
+
+    //dialogService.loadedPromise.then(activate);
+    dialogService.loadFromServer($stateParams.gameType).then(
+      function(){
+        dialogService.deferred.resolve();
+        activate();
+
+    });
 
     function activate(){
       $log.log("loaded dialog data")

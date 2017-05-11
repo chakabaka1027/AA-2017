@@ -6,7 +6,7 @@
 		.directive('logInManager', logInManager)
 
 	/** @ngInject */
-	function logInManager($location, userDataService, globalGameInfo, $log){ //$log parameter goes in here
+	function logInManager($location, userDataService, globalGameInfo, $log, $stateParams, dialogService){ //$log parameter goes in here
 		var directive = {
 			restrict: 'AE',
 			controller: introController,
@@ -25,22 +25,30 @@
 			vm.checkID = checkID;
 			vm.next = next;
 			vm.needLogIn = true;
-			if($location.url() != "/"){ //if there's other characters in the url
-				vm.needLogIn = false;
-				var nonAlphaNum = new RegExp("[a-zA-Z0-9\_\s:]");
-				var idQuery = $location.url().split("?")[1];
-				var id = "";
-				if(idQuery.split("&")[1]){
-					globalGameInfo.postURL = idQuery.split("&")[1].split('=')[1];
-					idQuery = idQuery.split(/ID\=|id\=/)[1]; 
-					setID();
-				}else{//if only id is passed in
-					idQuery = idQuery.split(/ID\=|id\=/)[0]; 
-					setID();
-				}
-			}else{ //else if location is = to "...../"
-				$location.path("/");
-			}
+			// if($location.url() != "/"){ //if there's other characters in the url
+			// 	vm.needLogIn = false;
+			// 	var nonAlphaNum = new RegExp("[a-zA-Z0-9\_\s:]");
+			// 	var idQuery = $location.url().split("?")[1];
+			// 	var id = "";
+			// 	if(idQuery.split("&")[1]){
+			// 		globalGameInfo.postURL = idQuery.split("&")[1].split('=')[1];
+			// 		idQuery = idQuery.split(/ID\=|id\=/)[1]; 
+			// 		setID();
+			// 	}else{//if only id is passed in
+			// 		idQuery = idQuery.split(/ID\=|id\=/)[0]; 
+			// 		setID();
+			// 	}
+			// }else{ //else if location is = to "...../"
+			// 	$location.path("/");
+			// }
+
+			$log.log($stateParams);
+    
+		    dialogService.loadFromServer($stateParams.gameType).then(
+		      function(){
+		        dialogService.deferred.resolve();
+		        $log.log("Successfully received xlsx");
+		    });
 
 			function setID(){
 				for(var i in idQuery){
