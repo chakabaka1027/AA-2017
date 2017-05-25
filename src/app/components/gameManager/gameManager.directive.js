@@ -494,7 +494,12 @@
 							}
 						}
 					}
-					room.drawSprites();
+					//room.drawSprites();
+
+					drawFurnitureBehind();
+					drawNPCs();
+
+
 					/*=================== Draw UI elements ===============================================*/
 					//If annie is !walking, !talking, start timer
 					if(showArrows){
@@ -516,6 +521,8 @@
 					
 					room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
 
+					drawFurnitureInFront();
+
 					vm.anniePosition = annieSprite.position;
 					vm.updateWalkDirection();
 
@@ -527,11 +534,34 @@
 					vm.walkingInfo.walking = false;
 				};
 
+				function drawFurnitureInFront(){
+					furniture.forEach(function(item){
+						if(item.data.position.y > annieSprite.position.y && item.canDrawOnTop){
+							room.drawSprite(item.data);
+						}
+					});
+				}
+
+				function drawFurnitureBehind(){
+					furniture.forEach(function(item){
+						if(item.data.position.y < annieSprite.position.y || !item.canDrawOnTop){
+							room.drawSprite(item.data);
+						}
+					});
+				}
+
+				function drawNPCs(){
+					currentNPCsprites.forEach(function(sprite){
+						room.drawSprite(sprite);
+					});
+				}
+
 				//position and create furniture, need to use room so function has to be in a different scope
 				function setFurniture(currentRoom) {
 					for(var item in currentRoom.furniture){
 						var currentObj = currentRoom.furniture[item];
 						var furnitureSprite = {}; //object to hold name as well as collision info
+						furnitureSprite.canDrawOnTop = currentObj.canDrawOnTop;
 						furnitureSprite.name = item; //Add a name to the furniture object to make it easier when checking for collisions
 						// Add sprite data
 						furnitureSprite.data = room.createSprite(currentObj.posX, currentObj.posY); 
@@ -619,6 +649,7 @@
 				myp5.remove(); //this is the culprit, moving this into a timer creates more than 1 canvas
 				$timeout(function() {
 					// currentRoomKey = vm.main.roomKey; //To be set by the level manager
+					vm.walkingInfo.walking = false;
 					newRoom = roomKey;
 					currentRoomKey =  vm.main.roomKey = roomKey;
 					currentRoomData = gM_RoomData[roomKey];

@@ -185,8 +185,10 @@
 					computerDesk_1:{
 						posX: 303.5, posY: 365.5,
 						collider_width: 257, collider_height: 150,
-						collider_X_offset: 0, collider_Y_offset: 20
+						collider_X_offset: 0, collider_Y_offset: 20,
+						canDrawOnTop: true
 					},
+					
 					couch1:{
 						posX: 482, posY: 169.5,
 						collider_width: 236, collider_height: 117,
@@ -202,6 +204,7 @@
 						collider_width: 56, collider_height: 100,
 						collider_X_offset: 0, collider_Y_offset: 10
 					},
+
 					clock:{
 						posX: 485.5, posY: 52,
 						collider_width: 67, collider_height: 52,
@@ -210,7 +213,9 @@
 					blueChair_1:{
 						posX: 287.5, posY: 439,
 						collider_width: 95, collider_height: 50,
-						collider_X_offset: 0, collider_Y_offset: 0
+						collider_X_offset: 0, collider_Y_offset: 0,
+						canDrawOnTop: true
+
 					},
 					left_door:{
 						posX: 21.5, posY: 293.5,
