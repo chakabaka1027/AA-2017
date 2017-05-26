@@ -61,7 +61,7 @@
 			},
 			mike:{
 				conferenceRoom:{
-					startLeftX: 430, startLeftY: 180,
+					startLeftX: 430, startLeftY: 190,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 					mirror:"yes"
