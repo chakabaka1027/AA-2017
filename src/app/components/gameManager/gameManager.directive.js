@@ -200,6 +200,10 @@
 				allowMouseHold: true
 			};
 
+
+			vm.flipDialogs = (userDataService.userID==='flip');
+
+
 			// vm.main.beginingOfLevel2 = false; //used for ets's level transition comment
 
 			//window.keyUp 
@@ -296,6 +300,7 @@
 					};
 					npcHasDialogBubble = room.loadImage("assets/images/UI/speechIcon.png");
 					pointsBubble = room.loadImage("assets/images/UI/PointsBubble.png");
+
 				};
 
 				/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -305,6 +310,7 @@
 						adds animations after creating a character sprite
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 				room.setup = function(){
+
 					room.frameRate(30);
 					myCanvas = room.createCanvas(950,500);
 					myCanvas.parent(angular.element.find("game-manager")[0]); // equivalent of $($element)[0]);
@@ -358,10 +364,12 @@
 					resetDisplay.addAnimation("reset","assets/images/ResetBubbleAnimations/ResetAnimation01.png","assets/images/ResetBubbleAnimations/ResetAnimation12.png");
 					resetDisplay.visible = false;
 					/*does next room have dialog, need this data whenever a door is entered*/ 
-					getDoorStatus();
 
-					doorTransitionSound.setVolume(0.1);
+					getDoorStatus();
+					//doorTransitionSound.setVolume(0.05);
+
 					doorTransitionSound.play();
+					$log.log("doorSound!");
 
 					/*========== Track Data ===================================*/ 
 					currentNPCsprites.forEach(function(character){ //get talking characters
@@ -414,13 +422,13 @@
 
 					// if there's a room on the lower right
 					if(currentRoomKey === "mikesOffice" || currentRoomKey === "conferenceRoom" || currentRoomKey === "lobby"){
-						if(annieSprite.position.x >= 720 && annieSprite.position.x <= 790 && annieSprite.position.y > 419){
+						if(annieSprite.position.x >= 700 && annieSprite.position.x <= 840 && annieSprite.position.y > 419){
 							specialCollision("lower_right_door");
 						}
 					}
 
 					if(currentRoomKey === "conferenceRoom"){
-						if(annieSprite.position.x >= 125 && annieSprite.position.x <= 160 && annieSprite.position.y > 419){
+						if(annieSprite.position.x >= 125 && annieSprite.position.x <= 180 && annieSprite.position.y > 419){
 							specialCollision("lower_left_door");
 						}
 					}
@@ -670,6 +678,22 @@
 				}
 				if(characters && characters[spriteB.name]){ // if character exists
 					var character = characters[spriteB.name];
+					
+			//flip annie and npc inset position depending on the direction annie talks to npc
+					if(annieSprite.position.x > spriteB.position.x){
+						vm.main.flipDialogs = false;
+						//$log.log(vm.flipDialogs);
+
+					} else {
+						vm.main.flipDialogs = true;
+						//$log.log(vm.flipDialogs);
+
+					}
+
+
+					
+
+
 					if(character.dialogKey && !annie_Talking){
 						var numOfNPCConvos = vm.main.convoCounter[spriteB.name] += 1;
 						vm.main.convoAttemptsTotal += 1;
