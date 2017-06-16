@@ -6,41 +6,54 @@
 
 	var states = {
 	    start: {
-	        npcText: 'Hello, A.',
+	        npcText: 'Hi, Annie, Welcome to your first day at work.',
 	        pcOptions: [
-	            {text: 'Why, hello!', nextState: 's1'}
+	            {text: 'Thanks, but I\’d rather be at home playing video games.', nextState: 's1'}
 	        ]
 	    },
 	    s1: {
-	        npcText: 'Well, welcome to our humble workspace.',
+	        npcText: 'Oh, well, I\’d heard you had a bit of an awkward personality.',
 	        pcOptions: [
-	            {text: 'You are most kind, dear sir; I am flattered.', nextState: 's1a'},
-	            {text: 'I am seriously crazy person, now I want kill you GRRRRR!!!!!', nextState: 's2'}
+	            {text: 'They call me Awkward Annie.  Everyone has their strength - mine is making people uncomfortable.', nextState: 's2'}
 	        ]
 	    },
-	    s1a: {
-	        npcText: 'That doesn\'t seem quite crazy enough.',
+		s2: {
+	        npcText: '...',
 	        pcOptions: [
-	            {text: 'Well, I\'m not actually a psycho.', nextState: 's1a'},
-	            {text: 'Wait, no... I AM crazy person, hate you, GRRRRR!!!!!', nextState: 's2'}
+	            {text: 'PC:  You know I just popped a giant zit on my nose before I got here.', nextState: 's3'}
 	        ]
 	    },
-	    s2: {
-	        npcText: 'Wow! You really are pretty crazy, A.!',
+	    s3: {
+	        npcText: 'OH.  So are you ready to start your first day at work?',
 	        pcOptions: [
-	            {text: 'I\'m terribly sorry, I lost my mind for a moment there. Won\'t happen again.', nextState: 's2a'},
-	            {text: 'Yes, kill you. Kill you all!!! Ahh-hahahaha!!!', nextState: 'end'}
+	            {text: 'Sure.', nextState: 's3a'},
+	            {text: 'Sure, but before we do - I\’ve got to tell you that is the ugliest shirt I\’ve ever seen.', nextState: 's4'}
 	        ]
 	    },
-	    s2a: {
-	        npcText: 'What? We like the cray-cray here, A. Is that a problem?',
+		s3a: {
+	        npcText: 'I\’m surprised you don’t have something more awkward to say. So are you ready to start your first day at work?',
 	        pcOptions: [
-	            {text: 'It\'s just that I\'m not a homicidal maniac; at least I don\'t think I am.', nextState: 's2a'},
-	            {text: 'It\'s only a problem if you can avoid my Swiss Army Knife of Death BITCH!!!', nextState: 'end'}
+	            {text: 'Sure.', nextState: 's3a'},
+	            {text: 'Sure, but before we do - I\’ve got to tell you that is the ugliest shirt I\’ve ever seen.', nextState: 's4'}
+	        ]
+	    },
+
+	    s4: {
+	        npcText: 'What?  I bought this shirt at Snooty Toots, the high end fashion boutique. I think it\’s time I show you to your desk.',
+	        pcOptions: [
+	            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
+	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 'end'}
+	        ]
+	    },
+	    s4a: {
+	        npcText: 'I\’m surprised you don’t have something more awkward to say, Annie.',
+	        pcOptions: [
+	            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
+	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 'end'}
 	        ]
 	    },
 	    end: {
-	        npcText: 'Haha - OW!! O god that hurts!! But that is the kind of stabbing that shows you\'ll fit right in, A.!'
+	        npcText: 'You’ll certainly make this office more interesting. I’m sure your awkward annie shenanigans will liven things up around here. As they say - you do you, Awkward Annie.'
 	    }
 	};
 
@@ -61,7 +74,7 @@
 				vm.curState = states[pcOption.nextState];
 				vm.curStateName =pcOption.nextState;
 				$timeout(function() {
-					$('.text-simulator').scrollTop($('.text-simulator').innerHeight());
+					$('.text-simulator').scrollTop($('.text-simulator')[0].scrollHeight - $('.text-simulator').innerHeight());
 				}, 0);
 			} 
 

@@ -7,6 +7,11 @@ simple-tutorial {
 		.button-holder {
 			width: 300px;
 			padding: 15px;
+
+		}
+
+		.instruction-text{
+			font-size: 14pt;
 		}
 
 		.tutorial-btn {
@@ -36,12 +41,61 @@ simple-tutorial {
 		    box-sizing: border-box;
 		    margin-bottom: 10px;
 		}
+
+		.playerChoices{
+			background-color: #a7c8e7;
+			width: 250px;
+			height: 450px;
+			padding: 10px;
+			font-family: marker-felt;
+			line-height: 1.3em;
+		}
+	}
+
+	.text-holder{
+		position: absolute;
+		width: 600px;
+		height: 500px;
+		left: 320px;
+		/*border: solid 1px black;*/
+	}
+
+	.contact-window{
+		position: absolute;
+		left: 100px;
+		top: 13px;
+		width: 400px;
+		border: solid 3px #4d677f;
+		height: 81px;
+
+		background-image: url('../assets/images/Characters/Fran/Fran_tut.png');
+
+		background-size: 16%;
+		background-repeat:no-repeat;
+		background-position: top;
+
+
+		background-color: #699ccc;
+	}
+
+	.contact-name{
+		position: relative;
+		top: 80%;
+		left: 45.5%;
 	}
 
 	.text-simulator {
-		width: 300px;
-		border: solid 1px black;
-		height: 400px;
+		position: absolute;
+		left: 100px;
+		top: 100px;
+		width: 400px;
+		border-right: solid 3px #4d677f;
+		border-left: solid 3px #4d677f;
+		border-bottom: solid 3px #4d677f;
+		height: 380px;
+
+		background-color: #d3e4f3;
+
 
 		.npc-row, .pc-row {
 			margin: 5px;
@@ -64,4 +118,5 @@ simple-tutorial {
 
 		overflow: scroll;
 	}
+
 }
