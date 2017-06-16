@@ -52,6 +52,12 @@
         templateUrl: 'app/components/endScreenManager/endScreen.html'
       });
 
+    $stateProvider
+      .state('tutorial', {
+        url: '/tutorial',
+        template: '<simple-tutorial></simple-tutorial>'
+      })
+
     $urlRouterProvider.otherwise('/');
   }
 

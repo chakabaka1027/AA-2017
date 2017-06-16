@@ -1,0 +1,17 @@
+<div class="tutorial-holder">
+	<div class="button-holder">
+		<div class="tutorial-btn" ng-repeat="pcOption in tut.curState.pcOptions" ng-click="tut.gotoState(pcOption)">{{pcOption.text}}</div>
+		<div class="tutorial-btn" ng-if="tut.curStateName=='end'" ng-click="vm.next()">Reset</div>
+	</div>
+	<div class="text-simulator">
+		<div class="text-pair">
+			<div ng-repeat="row in tut.textRows">
+				<div class="npc-row">{{row.npcText}}</div>
+				<div class="pc-row">{{row.pcText}}</div>
+			</div>
+			<div class="state-row">
+				<div class="npc-row">{{tut.curState.npcText}}</div>
+			</div>
+		</div>
+	</div>
+</div>
