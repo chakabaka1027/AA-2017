@@ -2,7 +2,7 @@
 	<div class="button-holder">
 		<div class="playerChoices">
 			<div class="tutorial-btn" ng-repeat="pcOption in tut.curState.pcOptions" ng-click="tut.gotoState(pcOption)">{{pcOption.text}}</div>
-			<div class="tutorial-btn" ng-if="tut.curStateName=='end'" ng-click="vm.next()">Thanks</div>
+			<div class="tutorial-btn" ng-if="tut.curStateName=='end'" ng-click="vm.next()">Sure, I can show you this new mole I am growing.</div>
 			<div class="instruction-text">Please select an option above for what you want Annie to say.</div>
 
 		</div>

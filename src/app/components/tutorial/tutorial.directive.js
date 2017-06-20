@@ -18,16 +18,16 @@
 	        ]
 	    },
 		s2: {
-	        npcText: '...',
+	        npcText: 'That\'s certainly a special skill.',
 	        pcOptions: [
-	            {text: 'PC:  You know I just popped a giant zit on my nose before I got here.', nextState: 's3'}
+	            {text: 'You know I just popped a giant zit on my nose before I got here.', nextState: 's3'}
 	        ]
 	    },
 	    s3: {
 	        npcText: 'OH.  So are you ready to start your first day at work?',
 	        pcOptions: [
 	            {text: 'Sure.', nextState: 's3a'},
-	            {text: 'Sure, but before we do - I\’ve got to tell you that is the ugliest shirt I\’ve ever seen.', nextState: 's4'}
+	            {text: 'Sure, but before we do - I\’ve got to tell you that the shirt in your profile picture is the ugliest one I\’ve ever seen.', nextState: 's4'}
 	        ]
 	    },
 		s3a: {
