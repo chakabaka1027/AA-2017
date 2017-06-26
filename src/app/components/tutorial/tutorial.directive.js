@@ -42,22 +42,30 @@
 	        npcText: 'What?  I bought this shirt at Snooty Toots, the high end fashion boutique. I think it\’s time I show you to your desk.',
 	        pcOptions: [
 	            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
-	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 'end'}
+	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 's5'}
 	        ]
 	    },
 	    s4a: {
 	        npcText: 'I\’m surprised you don’t have something more awkward to say, Annie.',
 	        pcOptions: [
 	            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
-	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 'end'}
+	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 's5'}
+	        ]
+	    },
+	    s5: {
+	        npcText: 'You’ll certainly make this office more interesting. I’m sure your awkward annie shenanigans will liven things up around here. As they say - you do you, Awkward Annie.',
+	        pcOptions: [
+	            {text: 'Sure, I can show you this new mole I am growing.', nextState: 'end'}
 	        ]
 	    },
 	    end: {
-	        npcText: 'You’ll certainly make this office more interesting. I’m sure your awkward annie shenanigans will liven things up around here. As they say - you do you, Awkward Annie.'
+	        npcText: 'Great...'
 	    }
 	};
 
-	function simpleTutorial($log, $timeout) {
+	function simpleTutorial($log, $timeout, audioService) {
+
+		
 		return {
 			restrict: 'E',
 			controller: controller,
@@ -68,14 +76,34 @@
 
 		function controller($scope) {
 			var vm = this;
+			vm.showingNPCtext = false;
+			vm.showingDialogOptions = false;
+
+			delayDialog();
 
 			vm.gotoState = function(pcOption) {
+				audioService.playAudio("UIbuttonclick-option2.wav"); 
+
 				vm.textRows.push({npcText: vm.curState.npcText, pcText: pcOption.text});
 				vm.curState = states[pcOption.nextState];
 				vm.curStateName =pcOption.nextState;
+				
+				delayDialog();
+
+				vm.showingNPCtext = false;
+				vm.showingDialogOptions = false;
+
+
+
+				//scroll after pc and npc response
 				$timeout(function() {
 					$('.text-simulator').scrollTop($('.text-simulator')[0].scrollHeight - $('.text-simulator').innerHeight());
-				}, 0);
+				}, 10);
+
+				$timeout(function() {
+					$('.text-simulator').scrollTop($('.text-simulator')[0].scrollHeight - $('.text-simulator').innerHeight());
+				}, 1500);
+
 			} 
 
 			vm.resetState = function() {
@@ -85,6 +113,18 @@
 			}
 
 			vm.resetState();
+
+			function delayDialog(){
+				$timeout(function() {
+					vm.showingNPCtext = true;
+					audioService.playAudio("UIbuttonclick-option1.wav"); 
+				}, 1500);
+
+				$timeout(function() {
+					vm.showingDialogOptions = true;
+				}, 2500);
+
+			}
 
 
 		}

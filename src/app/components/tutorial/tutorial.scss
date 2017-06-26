@@ -11,6 +11,7 @@ simple-tutorial {
 		}
 
 		.instruction-text{
+			padding-top: 15px;
 			font-size: 14pt;
 		}
 
@@ -106,14 +107,14 @@ simple-tutorial {
 			background: blue;
 			color: white;
 			width: 200px;
-			float: left;
+			float: right;
 		}
 
 		.pc-row {
 			background: white;
 			color: black;
 			width: 200px;
-			float: right;
+			float: left;
 		}
 
 		overflow: scroll;

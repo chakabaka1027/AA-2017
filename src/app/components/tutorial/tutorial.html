@@ -1,9 +1,9 @@
 <div class="tutorial-holder">
 	<div class="button-holder">
 		<div class="playerChoices">
-			<div class="tutorial-btn" ng-repeat="pcOption in tut.curState.pcOptions" ng-click="tut.gotoState(pcOption)">{{pcOption.text}}</div>
-			<div class="tutorial-btn" ng-if="tut.curStateName=='end'" ng-click="vm.next()">Sure, I can show you this new mole I am growing.</div>
-			<div class="instruction-text">Please select an option above for what you want Annie to say.</div>
+			<div class="tutorial-btn" ng-if="tut.showingDialogOptions" ng-repeat="pcOption in tut.curState.pcOptions" ng-click="tut.gotoState(pcOption)">{{pcOption.text}}</div>
+			<div class="blue-continue" ng-if="tut.curStateName=='end'" ng-click="vm.next()"></div>
+			<div class="instruction-text" ng-if="tut.showingDialogOptions && tut.curStateName!='end'">Please select an option above for what you want Annie to say.</div>
 
 		</div>
 	</div>
@@ -18,7 +18,7 @@
 						<div class="pc-row">{{row.pcText}}</div>
 					</div>
 					<div class="state-row">
-						<div class="npc-row">{{tut.curState.npcText}}</div>
+						<div class="npc-row" ng-if="tut.showingNPCtext">{{tut.curState.npcText}}</div>
 					</div>
 				</div>
 			</div>
