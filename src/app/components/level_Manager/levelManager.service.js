@@ -281,7 +281,8 @@
 				}
 			},
 			getRoomDialogs: getRoomDialogs,
-			getSuccessPaths: getSuccessPaths
+			getSuccessPaths: getSuccessPaths,
+			fixDamnSuccessPaths: fixDamnSuccessPaths
 		};
 
 		return service;
@@ -327,6 +328,14 @@
 
 			// not found!
 			return [];
+		}
+
+		function fixDamnSuccessPaths() {
+			for (var i=0;i<7;i++) {
+				var levelName = "level_"+(i_1);
+				var levelData = service[levelName];
+
+			}
 		}
 
 	}//end of controller

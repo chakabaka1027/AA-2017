@@ -1,0 +1,126 @@
+
+injectDictionary = {
+	'levelDataService': {
+							level_1: {somestuff}, 
+							<etc.>
+							getRoomDialogs: getRoomDialogs,
+							getSuccessPaths: getSuccessPaths
+						}
+};
+
+function myDirective(levelDataService) {
+
+	var newStuff = {
+		level_1: {some new stuff},
+		level_2: {some other stuff"}
+	};
+
+	function extend(dest, src) {
+		angular.forEach(src, function(k,v) {
+			dest[k] = v;
+		);}
+	})
+
+	angular.extend(levelDataService, newStuff);
+
+}
+
+function myOtherDirective(leveldataService) {
+}
+
+
+function myMainControl(levelDataHandler, .......) {
+	
+	var whichPath = """;
+
+	$http.get('path/to/.json')
+		.then(function(response) {
+			angular.extend(levelDataHandler, response.data);
+		});
+
+	$log.log('my data is ready!!');
+
+}
+
+AA1.json
+
+{			
+
+
+		level_1: {  /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+				requiredConversations: ['fran_Linear'],
+				startingRoom: "lobby",
+				rooms: {
+					lobby:{
+						characters: {
+							fran:{
+								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+								dialogKey: "fran_Linear"
+							}
+						}
+					},
+					conferenceRoom:{
+						characters:{
+							mike:{}
+						}
+					},
+					anniesOffice:{
+						characters:{}
+					},
+					mikesOffice:{
+						characters:{}
+					},
+					fransOffice:{
+						characters:{}
+					},
+					breakRoom:{
+						characters:{
+							charlie:{},
+							luna:{}
+						}
+					}
+				}
+			},
+}
+
+angular.module().service('fetchConfigFiles);
+
+function fetchConfigFiles($http, dialogSever,....) 
+	var service = {
+		fetchStuff: fetchStuff
+	};
+
+	return service;
+
+	function fetchStuff(gameType) {
+	    gameType = gameType || "negative";
+	    
+	    dialogService.loadFromServer(gameType).then(
+	      function(){
+	        dialogService.deferred.resolve();
+	        $log.log("Successfully received xlsx");
+	    });
+
+	    if (gameType==="positive") {
+	    	levelDataHandler.fixDamnSuccessPaths();
+	    } else {
+	    	levelDataHAndler.extendFromJsonFile(someFileName);
+	    }
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+')
