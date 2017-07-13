@@ -23,7 +23,7 @@
         url: '/{gameType:positive|negative|}',
         template: "<div class='gameContainer'><log-in-manager></log-in-manager></div>"
       });
-
+  
     $stateProvider
       .state('instructions', {
         //url: '/instructions',

@@ -10,7 +10,7 @@
 	/** @ngInject */
 	function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
         var defaultUrl = {
-        	positive:'assets/AwkwardAnnieDialogContent_positive.xlsx', 
+        	positive:'assets/AwkwardAnnieDialogContent_positive.xlsx',
         	negative: 'assets/AwkwardAnnieDialogContent_negative.xlsx'
         };
 

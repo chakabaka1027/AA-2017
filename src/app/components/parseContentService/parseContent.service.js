@@ -6,7 +6,7 @@
 
 	/** @ngInject */
 	function parseAAContentService($log, xlsxService) {
-
+		
 		var service = {
 			parsedContent: {},
 

@@ -79,6 +79,10 @@
 			vm.showingNPCtext = false;
 			vm.showingDialogOptions = false;
 
+			var scrollTimer;
+			var showTimer;
+			var hideTimer;
+
 			delayDialog();
 
 			vm.gotoState = function(pcOption) {
@@ -100,7 +104,8 @@
 					$('.text-simulator').scrollTop($('.text-simulator')[0].scrollHeight - $('.text-simulator').innerHeight());
 				}, 10);
 
-				$timeout(function() {
+				$timeout.cancel(scrollTimer);
+				scrollTimer = $timeout(function() {
 					$('.text-simulator').scrollTop($('.text-simulator')[0].scrollHeight - $('.text-simulator').innerHeight());
 				}, 1500);
 
@@ -113,17 +118,32 @@
 			}
 
 			vm.resetState();
+			$scope.$on("$destroy", onDestroy);
+
 
 			function delayDialog(){
-				$timeout(function() {
+
+				$timeout.cancel(showTimer);
+
+				showTimer = $timeout(function() {
 					vm.showingNPCtext = true;
 					audioService.playAudio("UIbuttonclick-option1.wav"); 
 				}, 1500);
 
-				$timeout(function() {
+				$timeout.cancel(hideTimer);
+
+				hideTimer = $timeout(function() {
 					vm.showingDialogOptions = true;
 				}, 2500);
 
+			}
+
+			function onDestroy(){
+				$timeout.cancel(showTimer);
+				$timeout.cancel(hideTimer);
+				$timeout.cancel(scrollTimer);
+
+				//$log.log("I'm destroyed!");
 			}
 
 

@@ -530,6 +530,9 @@
 					room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
 
 					drawFurnitureInFront();
+					if(resetDisplay.visible){
+						room.drawSprite(resetDisplay);
+					}
 
 					vm.anniePosition = annieSprite.position;
 					vm.updateWalkDirection();
