@@ -64,7 +64,7 @@
           vm.animationValid = conversationP5Data[vm.talkingWith].animations[vm.currentChoiceInfo.animation];
         }
 
-        vm.isSuccessfulPath = vm.successPaths.indexOf(vm.currentChoiceInfo.code)>=0;
+        vm.isSuccessfulPath = levelDataHandler.successPaths.indexOf(vm.currentChoiceInfo.code)>=0;
 
       });
 

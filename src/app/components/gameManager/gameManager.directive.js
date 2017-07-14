@@ -222,7 +222,7 @@
 				levelRequiredConvos = vm.main.arrayToString(vm.main.levelConvosNeeded);
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Game_State",levelRequiredConvos);
 
-				if(vm.main.levelCount === 8){ /* END GAME CHECK*/
+				if(vm.main.levelCount > levelDataHandler.maxLevel){ /* END GAME CHECK*/
 					userDataService.trackAction("Game end",vm.main.roomKey,"Game_End",vm.main.playerScore,"0");
 					userDataService.postData(); //end game post data, after conversation is done
 					globalGameInfo.playerScore = vm.main.playerScore;

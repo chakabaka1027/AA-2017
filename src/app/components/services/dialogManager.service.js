@@ -78,11 +78,12 @@
 
 			gameType = gameType || "negative";
 
-            $log.log("Loading from url '"+defaultUrl[gameType]+"' ...");
+			var prefix = gameType.split("-")[0];
+            $log.log("Loading from url '"+defaultUrl[prefix]+"' ...");
 
-            return parseAAContentService.parseContentFromUrl(defaultUrl[gameType])
+            return parseAAContentService.parseContentFromUrl(defaultUrl[prefix])
                 .then(function(parsedContent) {
-                    $log.log("Loaded from url '"+defaultUrl[gameType]+"'.");
+                    $log.log("Loaded from url '"+defaultUrl[prefix]+"'.");
                     $log.log('Success!');
                     $log.log(parsedContent);
                 })

@@ -34,11 +34,7 @@
 			var decisionPath = "";
 			var randomChoices = [];
 			var successfulConvos;
-			var scores = {
-				A:0,
-				B:3,
-				C:5
-			};
+			var scores = levelDataHandler.choiceScores;
 			vm.choiceDelay = true;
 			vm.main.totalConvoPoints = 0;
 			vm.showContinue = false;
@@ -70,11 +66,7 @@
 				decisionPath = "";
 				randomChoices = [];
 				successfulConvos;
-				scores = {
-					A:0,
-					B:3,
-					C:5
-				};
+				scores = levelDataHandler.choiceScores;
 
 				vm.choiceDelay = true;
 				vm.main.totalConvoPoints = 0;
@@ -191,7 +183,7 @@
 					// $log.log(levelDataHandler.getSuccessPaths(vm.main.currentConversation));
 					// $log.log(vm.main.roomData.characters[vm.main.talkingWith].successPaths);
 
-					if(vm.main.roomData.characters[vm.main.talkingWith].successPaths.indexOf(choice.code) >= 0){
+					if(levelDataHandler.successPaths.indexOf(choice.code) >= 0){
 						vm.main.completedConvos.push(vm.main.currentConversation);
 						// Calculate score
 						vm.main.totalConvoPoints = 0;

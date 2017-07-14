@@ -5,10 +5,14 @@
 		.module('awkwardAnnie')
 		.service('levelDataHandler', levelDataHandler);
 
+
 	/** @ngInject */
 	function levelDataHandler($log, $stateParams){
-
 		var service = {
+			choiceScores: {A: 0, B: 3, C: 5},
+			successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+			legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
+			maxLevel: 7,
 		//FULL GAME POS AND NEG
 			level_1: {  /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 				requiredConversations: ['fran_Linear'],
@@ -283,145 +287,7 @@
 				}
 			},
 
-			// //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 1, A – Negative – Set 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			// level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-			// 	requiredConversations: ['mike_RQ_02', 'fran_RQ_02'],
-			// 	startingRoom: "lobby",
-			// 	rooms:{
-			// 		lobby:{
-			// 			characters:{
-			// 				fran:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "fran_RQ_02"
-			// 				}
-			// 			}
-			// 		},
-			// 		conferenceRoom:{
-			// 			characters:{}
-			// 		},
-			// 		anniesOffice:{
-			// 			characters:{}
-			// 		},
-			// 		mikesOffice:{
-			// 			characters: {
-			// 				mike:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "mike_ST_02"
-			// 				}
-			// 			}
-			// 		},
-			// 		fransOffice:{
-			// 			characters:{
-			// 			}
-			// 		},
-			// 		breakRoom:{
-			// 			characters:{
-			// 				charlie:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "charlie_01"
-			// 				},
-			// 				luna:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "luna_01"
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// },
-			// //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			// level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-			// 	requiredConversations: ['mike_RQ_02', 'fran_RQ_02'],
-			// 	startingRoom: "lobby",
-			// 	rooms:{
-			// 		lobby:{
-			// 			characters:{
-			// 				fran:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "fran_ST_02"
-			// 				}
-			// 			}
-			// 		},
-			// 		conferenceRoom:{
-			// 			characters:{}
-			// 		},
-			// 		anniesOffice:{
-			// 			characters:{}
-			// 		},
-			// 		mikesOffice:{
-			// 			characters: {
-			// 				mike:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "mike_RQ_02"
-			// 				}
-			// 			}
-			// 		},
-			// 		fransOffice:{
-			// 			characters:{
-			// 			}
-			// 		},
-			// 		breakRoom:{
-			// 			characters:{
-			// 				charlie:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "charlie_02"
-			// 				},
-			// 				luna:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "luna_01"
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// },
-
-			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Negative – Set 4~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			// level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-			// 	requiredConversations: ['mike_RQ_02', 'fran_RQ_02'],
-			// 	startingRoom: "lobby",
-			// 	rooms:{
-			// 		lobby:{
-			// 			characters:{
-			// 				fran:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "fran_ST_01"
-			// 				}
-			// 			}
-			// 		},
-			// 		conferenceRoom:{
-			// 			characters:{}
-			// 		},
-			// 		anniesOffice:{
-			// 			characters:{}
-			// 		},
-			// 		mikesOffice:{
-			// 			characters: {
-			// 				mike:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "mike_RQ_01"
-			// 				}
-			// 			}
-			// 		},
-			// 		fransOffice:{
-			// 			characters:{
-			// 			}
-			// 		},
-			// 		breakRoom:{
-			// 			characters:{
-			// 				charlie:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "charlie_02"
-			// 				},
-			// 				luna:{
-			// 					successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-			// 					dialogKey: "luna_02"
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// },
-
-
-
+			setUpForGameType: setUpForGameType,
 			getRoomDialogs: getRoomDialogs,
 			getSuccessPaths: getSuccessPaths,
 			fixDamnSuccessPaths: fixDamnSuccessPaths
@@ -429,7 +295,220 @@
 		
 		};
 
+		var otherLevels = {
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 1, A – Negative – Set 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			'positive-set1':{	
+				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['mike_SmallTk_02', 'fran_RQ_02', 'charlie_01', 'luna_01'],
+					startingRoom: "lobby",
+					rooms:{
+						lobby:{
+							characters:{
+								fran:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "fran_RQ_02"
+								}
+							}
+						},
+						conferenceRoom:{
+							characters:{}
+						},
+						anniesOffice:{
+							characters:{}
+						},
+						mikesOffice:{
+							characters: {
+								mike:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "mike_SmallTk_02"
+								}
+							}
+						},
+						fransOffice:{
+							characters:{
+							}
+						},
+						breakRoom:{
+							characters:{
+								charlie:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "charlie_01"
+								},
+								luna:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "luna_01"
+								}
+							}
+						}
+					}
+				}
+			},
+
+			'negative-set1':{	
+				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['mike_SmallTk_02', 'fran_RQ_02', 'charlie_01', 'luna_01'],
+					startingRoom: "lobby",
+					rooms:{
+						lobby:{
+							characters:{
+								fran:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "fran_RQ_02"
+								}
+							}
+						},
+						conferenceRoom:{
+							characters:{}
+						},
+						anniesOffice:{
+							characters:{}
+						},
+						mikesOffice:{
+							characters: {
+								mike:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "mike_SmallTk_02"
+								}
+							}
+						},
+						fransOffice:{
+							characters:{
+							}
+						},
+						breakRoom:{
+							characters:{
+								charlie:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "charlie_01"
+								},
+								luna:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "luna_01"
+								}
+							}
+						}
+					}
+				}
+			},
+
+
+			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			'positive-set3':{	
+				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['mike_RQ_02', 'fran_SmallTk_02', 'charlie_02', 'luna_01'],
+					startingRoom: "lobby",
+					rooms:{
+						lobby:{
+							characters:{
+								fran:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "fran_SmallTk_02"
+								}
+							}
+						},
+						conferenceRoom:{
+							characters:{}
+						},
+						anniesOffice:{
+							characters:{}
+						},
+						mikesOffice:{
+							characters: {
+								mike:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "mike_RQ_02"
+								}
+							}
+						},
+						fransOffice:{
+							characters:{
+							}
+						},
+						breakRoom:{
+							characters:{
+								charlie:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "charlie_02"
+								},
+								luna:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "luna_01"
+								}
+							}
+						}
+					}
+				}
+			},
+				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Negative – Set 4~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			'negative-set4':{	
+				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['mike_RQ_01', 'fran_SmallTk_01', 'charlie_02', 'luna_02'],
+					startingRoom: "lobby",
+					rooms:{
+						lobby:{
+							characters:{
+								fran:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "fran_SmallTk_01"
+								}
+							}
+						},
+						conferenceRoom:{
+							characters:{}
+						},
+						anniesOffice:{
+							characters:{}
+						},
+						mikesOffice:{
+							characters: {
+								mike:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "mike_RQ_01"
+								}
+							}
+						},
+						fransOffice:{
+							characters:{
+							}
+						},
+						breakRoom:{
+							characters:{
+								charlie:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "charlie_02"
+								},
+								luna:{
+									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+									dialogKey: "luna_02"
+								}
+							}
+						}
+					}
+				}
+			}
+		};
 		return service;
+
+		function setUpForGameType(gameType){
+			if(gameType == 'negative'){
+				return;
+			}
+			if(gameType == 'positive'){
+				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];		
+				service.choiceScores = {A: 5, B: 3, C: 0};		
+				return;
+			}
+
+			service.maxLevel = 1;
+			if(gameType.indexOf("positive") === 0){
+				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];	
+				service.choiceScores = {A: 5, B: 3, C: 0};		
+			}
+
+			service.level_1 = otherLevels[gameType].level_1;
+		}
+
+		
 
 		//Is there any dialog in this room, if yes, what are they. 
 		//Later on check if they've been completed

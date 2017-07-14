@@ -6,7 +6,7 @@
 		.directive('logInManager', logInManager)
 
 	/** @ngInject */
-	function logInManager($location, userDataService, globalGameInfo, $log, $stateParams, dialogService){ //$log parameter goes in here
+	function logInManager($location, userDataService, globalGameInfo, $log, $stateParams, dialogService, levelDataHandler){ //$log parameter goes in here
 		var directive = {
 			restrict: 'AE',
 			controller: introController,
@@ -41,9 +41,18 @@
 			// }else{ //else if location is = to "...../"
 			// 	$location.path("/");
 			// }
-
+			$log.log("THESE ARE THE STATEPARAMS");
 			$log.log($stateParams);
-    
+			var gameType;
+    		if(levelDataHandler.legalLevels.indexOf($stateParams.gameType) < 0){
+    			gameType = 'negative';
+    		} else {
+    			gameType = $stateParams.gameType;
+    		}
+
+    		levelDataHandler.setUpForGameType(gameType);
+
+		    
 		    dialogService.loadFromServer($stateParams.gameType).then(
 		      function(){
 		        dialogService.deferred.resolve();
