@@ -6,7 +6,7 @@
     .directive('endScreen', endScreen);
 
     /** @ngInject */
-    function endScreen(userDataService, globalGameInfo, $window){
+    function endScreen(userDataService, globalGameInfo, $window, levelDataHandler){
       var directive = {
         restrict: "E",
         templateUrl: "app/components/endScreenManager/endScreenTemplate.html",
@@ -46,7 +46,7 @@
             $window.open(postURL_concat, '_self');
           }else{
             userDataService.userID = "";
-            $location.path("/GameStart");
+            $location.path("/");
           }
         }
       }
