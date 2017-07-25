@@ -63,7 +63,7 @@
 	    }
 	};
 
-	function simpleTutorial($log, $timeout, audioService) {
+	function simpleTutorial($log, $timeout, audioService, $stateParams) {
 
 		
 		return {

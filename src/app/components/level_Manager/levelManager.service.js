@@ -495,7 +495,7 @@
 			}
 			if(gameType == 'positive'){
 				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];		
-				service.choiceScores = {A: 5, B: 3, C: 0};		
+				service.choiceScores = {A: 5, B: 3, C: 0};	
 				return;
 			}
 
@@ -504,7 +504,6 @@
 				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];	
 				service.choiceScores = {A: 5, B: 3, C: 0};		
 			}
-
 			service.level_1 = otherLevels[gameType].level_1;
 		}
 

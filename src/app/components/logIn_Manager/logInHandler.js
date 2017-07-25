@@ -51,7 +51,6 @@
     		}
 
     		levelDataHandler.setUpForGameType(gameType);
-
 		    
 		    dialogService.loadFromServer($stateParams.gameType).then(
 		      function(){
