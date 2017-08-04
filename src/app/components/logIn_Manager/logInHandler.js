@@ -25,24 +25,10 @@
 			vm.checkID = checkID;
 			vm.next = next;
 			vm.needLogIn = true;
-			// if($location.url() != "/"){ //if there's other characters in the url
-			// 	vm.needLogIn = false;
-			// 	var nonAlphaNum = new RegExp("[a-zA-Z0-9\_\s:]");
-			// 	var idQuery = $location.url().split("?")[1];
-			// 	var id = "";
-			// 	if(idQuery.split("&")[1]){
-			// 		globalGameInfo.postURL = idQuery.split("&")[1].split('=')[1];
-			// 		idQuery = idQuery.split(/ID\=|id\=/)[1]; 
-			// 		setID();
-			// 	}else{//if only id is passed in
-			// 		idQuery = idQuery.split(/ID\=|id\=/)[0]; 
-			// 		setID();
-			// 	}
-			// }else{ //else if location is = to "...../"
-			// 	$location.path("/");
-			// }
+
 			$log.log("THESE ARE THE STATEPARAMS");
 			$log.log($stateParams);
+
 			var gameType;
     		if(levelDataHandler.legalLevels.indexOf($stateParams.gameType) < 0){
     			gameType = 'negative';
@@ -57,6 +43,12 @@
 		        dialogService.deferred.resolve();
 		        $log.log("Successfully received xlsx");
 		    });
+
+			var userID = $location.search().userID;
+			if (userID) {
+				checkInAs(userID);
+				$log.log("checked in");
+			}
 
 			function setID(){
 				for(var i in idQuery){
@@ -84,6 +76,13 @@
 				$state.go("instructions");  
 
 				//$location.path("/instructions").search({USERID: vm.playerID});
+			}
+
+			function checkInAs(id) {
+				userDataService.userID = vm.playerID = id;
+				userDataService.resetData();
+				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
+				$state.go("instructions");
 			}
 		}//end of controller
 	}
