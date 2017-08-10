@@ -58,6 +58,9 @@
 			dialogWorksheetKeys[dialogKey] = worksheetKey;
 		}
 
+		// usage: var d = parseAAContentService.parsedContent[dialogWorksheetKeys['fran_Linear']];
+		//   to get the dialog content for 'FF.Linear'
+
 		var deferred = $q.defer();
 		service.deferred = deferred;
 		service.loadedPromise = deferred.promise;
@@ -102,7 +105,6 @@
         function adjustDialogWorksheetKeys() {
         	var casedKeyMap = Object.keys(parseAAContentService.parsedContent)
         						.reduce(function(acc, wsKey) { acc[wsKey.toUpperCase()] = wsKey; return acc;}, {});
-        	$log.log(casedKeyMap);
         	var adjustedKeys = {};
         	for (var dialogKey in dialogWorksheetKeys) {
         		adjustedKeys[dialogKey] = casedKeyMap[dialogWorksheetKeys[dialogKey].toUpperCase()];
@@ -121,6 +123,7 @@
 		        	service.dialgoWorkshopKeys['fran_Linear'] = 'Fran.Linear.positive';
 		        } else {
 		        	// do nothing so it falls back to using negative...
+					$log.warn('Falling back to using "Fran.Linear"');
 		        }
 	        }
         }
