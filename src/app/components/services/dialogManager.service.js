@@ -88,8 +88,10 @@
                     $log.log(parsedContent);
                 })
                 .then(function(){
-                	$log.log("Take a look at me now!!!")
-                	adjustDialogWorksheetKeys();
+                	$log.log("Take a look at me now!!!");
+                	adjustDialogWorksheetKeys(gameType);
+                	adjustNegativePositiveLinearKeys(gameType);
+                	adjustFeedbackAnimations(gameType);
                 })
                 .catch(function() {$log.log('Falling back to JSON files');}
                 );
@@ -106,6 +108,33 @@
         		adjustedKeys[dialogKey] = casedKeyMap[dialogWorksheetKeys[dialogKey].toUpperCase()];
         	}
         	service.dialogWorksheetKeys = dialogWorksheetKeys = adjustedKeys;
+
+        }
+
+        function adjustNegativePositiveLinearKeys(gameType) {
+        	var isPositive = { some code that determines if this is a positive or negative game based on the gameType };
+        	// next adjust for positive/negative tweaks...
+
+        	// for example....
+        	if (isPositive) {
+        		if (parseAAContentService.parsedContent['Fran.Linear.positive']) {
+		        	service.dialgoWorkshopKeys['fran_Linear'] = 'Fran.Linear.positive';
+		        } else {
+		        	// do nothing so it falls back to using negative...
+		        }
+	        }
+        }
+
+        function adjustFeedbackAnimations(gameType) {
+        	var isPositive = { some code that determines if this is a positive or negative game based on the gameType };
+
+        	for (each of the keys in parseAAContentService.parsedContent) {
+        		var d = {get the appropriate dialog entry for that key} ;
+        		if ('it\'s not a linear entry') {
+		        	d.animation = (isPositive ? d.animationPositive : d.animationNegative);
+		        }
+	        }
+
         }
 
 		function getDialogs(dialogKey){

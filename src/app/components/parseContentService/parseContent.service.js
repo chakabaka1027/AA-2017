@@ -38,18 +38,27 @@
 			return s.trim();
 		}
 
-		function createBlock(row, col, code) {
+		function createBlock(row, col, code, isLinear) {
 			/*
 			the data is always organized in groups of 5 in a row, starting at some index. Not all 5 cells are used; some data is skipped.
 			*/
 			var d = {
 				'code': code,
 				'PC_Text': utfClean(row[col]),
-				'NPC_Response': utfClean(row[col+2]),
-				'animation': row[col + 4].toLowerCase()
+				'NPC_Response': utfClean(row[col+2])
 			};
-			d.animation = (d.animation==='neutral' ? '' : d.animation);
-			d.animation = d.animation.replace('surprise_', 'surprised_');
+			if (!isLinear) {
+				d.animationNegative = row[col + 4].toLowerCase();
+				d.animationPositive = row[col + 5].toLowerCase();
+				d.animationNegative = (d.animationNegative==='neutral' ? '' : d.animationNegative);
+				d.animationNegative = d.animationNegative.replace('surprise_', 'surprised_');
+				d.animationPositive = (d.animationPositive==='neutral' ? '' : d.animationPositive);
+				d.animationPositive = d.animationPositive.replace('surprise_', 'surprised_');
+			} else {
+				d.animation = row[col + 4].toLowerCase();
+				d.animation = (d.animation==='neutral' ? '' : d.animation);
+				d.animation = d.animation.replace('surprise_', 'surprised_');
+			}
 			return d;
 		}
 
@@ -74,10 +83,10 @@
 				if(url === "assets/AwkwardAnnieDialogContent_negative.xlsx"){
 					for (i=0, code='C'; i<4; i++, code += 'C') {
 						if(i === 0){
-							parsed['node'+(i+1)] = [createBlock(row, 5*i, code)];
+							parsed['node'+(i+1)] = [createBlock(row, 5*i, code, true)];
 						} else {
 							parsed['node'+(i+1)] = {}
-							parsed['node'+(i+1)][code.substr(1)] = [createBlock(row, 5*i, code)];
+							parsed['node'+(i+1)][code.substr(1)] = [createBlock(row, 5*i, code, true)];
 
 						}
 						$log.log('linearNegs');
@@ -88,7 +97,7 @@
 							parsed['node'+(i+1)] = [createBlock(row, 5*i, code)];
 						} else {
 							parsed['node'+(i+1)] = {}
-							parsed['node'+(i+1)][code.substr(1)] = [createBlock(row, 5*i, code)];
+							parsed['node'+(i+1)][code.substr(1)] = [createBlock(row, 5*i, code, true)];
 
 						}
 					}
@@ -112,9 +121,9 @@
 				hdrIndex = hdrIndexes[i];
 				choice1 = 'ABC'[i];
 				node2[choice1] = [
-					createBlock(sheetRow(hdrIndex+1), 5, choice1+'A'),
-					createBlock(sheetRow(hdrIndex+5), 5, choice1+'B'),
-					createBlock(sheetRow(hdrIndex+9), 5, choice1+'C')
+					createBlock(sheetRow(hdrIndex+1), 6, choice1+'A'),
+					createBlock(sheetRow(hdrIndex+5), 6, choice1+'B'),
+					createBlock(sheetRow(hdrIndex+9), 6, choice1+'C')
 				];
 			}
 			parsed['node2'] = node2
@@ -129,9 +138,9 @@
 					var pfx = choice1+choice2
 					var rowOffset = hdrIndex+hdrOffset
 					node3[pfx] = [
-						createBlock(sheetRow(rowOffset+1), 10, pfx+'A'),
-						createBlock(sheetRow(rowOffset+2), 10, pfx+'B'),
-						createBlock(sheetRow(rowOffset+3), 10, pfx+'C')
+						createBlock(sheetRow(rowOffset+1), 12, pfx+'A'),
+						createBlock(sheetRow(rowOffset+2), 12, pfx+'B'),
+						createBlock(sheetRow(rowOffset+3), 12, pfx+'C')
 					];
 				}
 			}
