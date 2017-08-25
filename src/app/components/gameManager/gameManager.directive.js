@@ -1,18 +1,21 @@
 (function(){
 	'use strict';
-
+console.log("game manager defined!");//this is just a table look up
+//puts it in table of directives
+//dont vall the function yet - that will happen later as needed
 	angular
 		.module('awkwardAnnie')
 		.directive('gameManager', gameManager);
 
 	/** @ngInject */
-	function gameManager(gM_Char_Position_Data, gM_Animation_Data, gM_RoomData, gM_FurnitureData, 
-		levelDataHandler, mappingService, arrowData, audioService, userDataService, globalGameInfo, 
+	function gameManager(gM_Char_Position_Data, gM_Animation_Data, gM_RoomData, gM_FurnitureData,
+		levelDataHandler, mappingService, arrowData, audioService, userDataService, globalGameInfo,
 		$location, $log){
+			console.log("!!!invoking the directive - printed out once");//this is just a table look up
 
 		var directive = {
 			restrict:'E',
-			// templateUrl: defined in index.route.js file 
+			// templateUrl: defined in index.route.js file
 			// link: link,
 			scope: {
 				main: "="
@@ -54,7 +57,7 @@
 					ctlr.annie_Walking = true;
 					ctlr.walkingInfo.walking = true;
 					switch (code){
-						case 38: 
+						case 38:
 							ctlr.walkingInfo.direction = "up";
 							break;
 						case 40:
@@ -70,7 +73,7 @@
 
 					// showArrows = false; //Uncomment if ETS changes mind
 					//annieWalkingCode = code;
-					
+
 				}
 			}
 
@@ -111,7 +114,7 @@
 				if(ctlr.walkingInfo.walking && ctlr.walkingInfo.wasMouseTriggered){
 					var xa = ctlr.anniePosition.x;
 					var ya = ctlr.anniePosition.y;
-					
+
 					var xm = mouseAnchorX;
 					var ym = mouseAnchorY;
 
@@ -194,9 +197,9 @@
 			vm.anniePosition = {x:0, y:0};
 
 			vm.walkingInfo = {
-				walking: false, 
-				direction: "right", 
-				wasMouseTriggered: false, 
+				walking: false,
+				direction: "right",
+				wasMouseTriggered: false,
 				allowMouseHold: true
 			};
 
@@ -206,8 +209,8 @@
 
 			// vm.main.beginingOfLevel2 = false; //used for ets's level transition comment
 
-			//window.keyUp 
-			
+			//window.keyUp
+
 
 			$scope.$on('$destroy', function(){
 				$('html').off('keydown'); //removes event listeners for key down
@@ -236,7 +239,7 @@
 						currentRoom.getDoorStatus();
 				}
 			});
-			
+
 			/*===================================================================
 				Controller Functions
 			===================================================================*/
@@ -314,7 +317,7 @@
 					room.frameRate(30);
 					myCanvas = room.createCanvas(950,500);
 					myCanvas.parent(angular.element.find("game-manager")[0]); // equivalent of $($element)[0]);
-					setFurniture(currentRoomData); //Set up furniture based on 
+					setFurniture(currentRoomData); //Set up furniture based on
 					resetArrowTimer();
 
 				/*==================================================================================
@@ -346,7 +349,7 @@
 					annieSprite = room.createSprite(annieStartX,annieStartY);
 					annieSprite.setCollider("rectangle",positionData.annie.colliderXoffset,positionData.annie.colliderYoffset,positionData.annie.colliderWidth,positionData.annie.colliderHeight);
 					// annieSprite.debug = true;
-					addAnimations(gM_Animation_Data.annie, annieSprite);  
+					addAnimations(gM_Animation_Data.annie, annieSprite);
 					annieSprite.position.x = positionData.annie.startingX;
 					annieSprite.position.y = positionData.annie.startingY;
 
@@ -363,7 +366,7 @@
 					resetDisplay = room.createSprite(annieSprite.position.x,annieSprite.position.y);
 					resetDisplay.addAnimation("reset","assets/images/ResetBubbleAnimations/ResetAnimation01.png","assets/images/ResetBubbleAnimations/ResetAnimation12.png");
 					resetDisplay.visible = false;
-					/*does next room have dialog, need this data whenever a door is entered*/ 
+					/*does next room have dialog, need this data whenever a door is entered*/
 
 					getDoorStatus();
 					//doorTransitionSound.setVolume(0.05);
@@ -371,7 +374,7 @@
 					doorTransitionSound.play();
 					$log.log("doorSound!");
 
-					/*========== Track Data ===================================*/ 
+					/*========== Track Data ===================================*/
 					currentNPCsprites.forEach(function(character){ //get talking characters
 						if(checkRoomDialogs(character.name)){
 							talkingNPCs.push(character.name);
@@ -410,7 +413,7 @@
 										showPointsBubble = false;
 										/* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 										if(vm.main.areDialogsCompleted(vm.main.levelConvosNeeded,vm.main.completedConvos)){ //is player done with all convos in the level
-											vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/ 
+											vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
 											vm.main.nextLevelData();
 										}
 									},2000);
@@ -526,7 +529,7 @@
 					if(showPointsBubble){ // draw bubble
 						drawPointsBubble(vm.main.totalConvoPoints,lastCharCollidedInto); //lastCharCollidedInto
 					}
-					
+
 					room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
 
 					drawFurnitureInFront();
@@ -575,7 +578,7 @@
 						furnitureSprite.canDrawOnTop = currentObj.canDrawOnTop;
 						furnitureSprite.name = item; //Add a name to the furniture object to make it easier when checking for collisions
 						// Add sprite data
-						furnitureSprite.data = room.createSprite(currentObj.posX, currentObj.posY); 
+						furnitureSprite.data = room.createSprite(currentObj.posX, currentObj.posY);
 						furnitureSprite.data.setCollider("rectangle",currentObj.collider_X_offset,currentObj.collider_Y_offset,currentObj.collider_width,currentObj.collider_height);
 						furnitureSprite.data.addAnimation(item, gM_FurnitureData[item]); //gets image here
 						if(currentObj.mirror){
@@ -619,11 +622,11 @@
 					room.image(pointsBubble, x, y);
 					room.textAlign(room.CENTER, room.CENTER);
 					room.textSize(22);
-					room.fill(0, 102, 153); //color for text 
+					room.fill(0, 102, 153); //color for text
 					room.text(points+" Points",x,y,95,90);
 				}
 			}; //end of current room object
-			
+
 			var myp5 = new p5(currentRoom); // Create p5 object
 
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -673,7 +676,7 @@
 			// Show dialog
 			function dialogTriggered(spriteA,spriteB){
 				vm.walkingInfo.walking = false;
-				
+
 				var characters = vm.main.roomData.characters;
 				lastCharCollidedInto = spriteB;
 				if(resetDisplay.visible){ //&& spriteB === lastCharCollidedInto
@@ -681,7 +684,7 @@
 				}
 				if(characters && characters[spriteB.name]){ // if character exists
 					var character = characters[spriteB.name];
-					
+
 			//flip annie and npc inset position depending on the direction annie talks to npc
 					if(annieSprite.position.x > spriteB.position.x){
 						vm.main.flipDialogs = false;
@@ -694,7 +697,7 @@
 					}
 
 
-					
+
 
 
 					if(character.dialogKey && !annie_Talking){
@@ -702,7 +705,7 @@
 						vm.main.convoAttemptsTotal += 1;
 						if(vm.main.completedConvos.indexOf(character.dialogKey) >= 0){ //if already completed a convo
 							if(character.secondConvo && vm.main.completedConvos.indexOf(character.secondConvo.dialogKey) < 0){ // if there's a second conversation and hasn't been completed
-								vm.main.currentConversation = character.secondConvo.dialogKey; 
+								vm.main.currentConversation = character.secondConvo.dialogKey;
 								vm.main.talkingWith = spriteB.name;
 								vm.main.hideDialog = false;
 								annie_Talking = true;
@@ -761,12 +764,12 @@
 						vm.main.playerScore += vm.main.totalConvoPoints; //update score
 						// Check for end of level
 						// if(vm.main.areDialogsCompleted(vm.main.levelConvosNeeded,vm.main.completedConvos)){ //is player done with all convos in the level
-						// 	vm.main.levelCount += 1;  if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room 
+						// 	vm.main.levelCount += 1;  if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room
 						// 	vm.main.nextLevelData();
 						// }
 						switch(vm.main.lastConversationSuccessful){
 							case true:
-								audioService.playAudio("UIrightanswer.wav"); 
+								audioService.playAudio("UIrightanswer.wav");
 								break;
 							case false:
 								audioService.playAudio("UIwronganswer.wav");

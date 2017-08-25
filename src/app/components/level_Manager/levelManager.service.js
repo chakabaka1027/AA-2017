@@ -121,7 +121,8 @@
 					}
 			},
 			level_4:{ /*~~~~~~~~~~~~~~~~~~~~~~FOUR~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_GR_02', 'fran_GR_01','fran_RQ_01','charlie_01'],
+				//added LL.STwGr.01 : luna_01
+				requiredConversations: ['mike_GR_02', 'fran_GR_01','fran_RQ_01','charlie_01', 'luna_01'],
 				rooms: {
 					lobby:{
 						characters:{}
@@ -156,15 +157,19 @@
 						characters:{
 							charlie:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey: "charlie_01" 
+								dialogKey: "charlie_01"
 							},
-							luna:{}
+							luna:{ //added these two
+								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+								dialogKey: "luna_01"
+							}
 						}
 					}
 				}
 			},
 			level_5:{ /*~~~~~~~~~~~~~~~~~~~~~~FIVE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_SmallTk_01', 'mike_RQ_01', 'fran_GR_02', 'luna_01'],
+				// added CC.RQwGR.01 = ta;led to chatly - //luna01 doesnt play - does it have to do with max levels?
+				requiredConversations: ['mike_SmallTk_01', 'mike_RQ_01', 'fran_GR_02', 'luna_01', 'charly_RQwGr_01'],
 				rooms:{
 					lobby:{
 						characters:{}
@@ -197,17 +202,21 @@
 					},
 					breakRoom:{
 						characters:{
-							charlie:{},
+							charlie:{ //added values below
+								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+								dialogKey:"charly_RQwGr_01"
+							},
 							luna:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey: "luna_01" 
+								dialogKey: "luna_01"
 							}
 						}
 					}
 				}
 			},
 			level_6:{ /*~~~~~~~~~~~~~~~~~~~~~~SIX~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_SmallTk_02', 'fran_SmallTk_02', 'charlie_02', 'luna_02'],
+				requiredConversations: ['mike_SmallTk_02', 'fran_SmallTk_02', 'charly_RQ_02', 'Luna_RQ_01'],
+				//charly_RQ_02 --- replaced charly and changed luna to Luna_RQ_01
 				startingRoom: "lobby",
 				rooms:{
 					lobby:{
@@ -239,18 +248,19 @@
 						characters:{
 							charlie:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey: "charlie_02"
+								dialogKey: "charly_RQ_02"
 							},
 							luna:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey: "luna_02"
+								dialogKey: "Luna_RQ_01"
 							}
 						}
 					}
 				}
 			},
 			level_7:{ /*~~~~~~~~~~~~~~~~~~~~~~SEVEN~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_RQ_02', 'fran_RQ_02'],
+				requiredConversations: ['mike_RQ_02', 'fran_RQ_02', 'charly_SmallTalk_02', 'LL.RQ.02'],
+				//added charly_SmallTalk_02 //LL.RQ.02
 				startingRoom: "lobby",
 				rooms:{
 					lobby:{
@@ -280,8 +290,14 @@
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "fran_RQ_02"
 							},
-							charlie:{},
-							luna:{}
+							charlie:{
+								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+								dialogKey:"charly_SmallTalk_02"
+							},
+							luna:{
+								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+								dialogKey:"LL.RQ.02"
+							}
 						}
 					}
 				}
@@ -291,15 +307,15 @@
 			getRoomDialogs: getRoomDialogs,
 			getSuccessPaths: getSuccessPaths,
 			fixDamnSuccessPaths: fixDamnSuccessPaths
-		
-		
+
+
 		};
 
 		var otherLevels = {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 1, A – Negative – Set 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			'positive-set1':{	
+			'positive-set1':{
 				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-					requiredConversations: ['mike_SmallTk_02', 'fran_RQ_02', 'charlie_01', 'luna_01'],
+					requiredConversations: ['mike_SmallTk_02', 'fran_RQ_02', 'charlie_01', 'Luna_RQ_01'],
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
@@ -336,7 +352,7 @@
 								},
 								luna:{
 									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "luna_01"
+									dialogKey: "Luna_RQ_01"
 								}
 							}
 						}
@@ -344,9 +360,9 @@
 				}
 			},
 
-			'negative-set1':{	
+			'negative-set1':{
 				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-					requiredConversations: ['mike_SmallTk_02', 'fran_RQ_02', 'charlie_01', 'luna_01'],
+					requiredConversations: ['mike_SmallTk_02', 'fran_RQ_02', 'charlie_01', 'Luna_RQ_01'],
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
@@ -383,7 +399,7 @@
 								},
 								luna:{
 									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "luna_01"
+									dialogKey: "Luna_RQ_01"
 								}
 							}
 						}
@@ -393,7 +409,7 @@
 
 
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			'positive-set3':{	
+			'positive-set3':{
 				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 					requiredConversations: ['mike_RQ_02', 'fran_SmallTk_02', 'charlie_02', 'luna_01'],
 					startingRoom: "lobby",
@@ -440,9 +456,9 @@
 				}
 			},
 				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Negative – Set 4~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			'negative-set4':{	
-				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-					requiredConversations: ['mike_RQ_01', 'fran_SmallTk_01', 'charlie_02', 'luna_02'],
+			'negative-set4':{
+				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ //charly_SmallTalk_02charlie_02
+					requiredConversations: ['mike_RQ_01', 'fran_SmallTk_01', 'charlie_02', 'luna_02'], //changed luna_02
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
@@ -494,22 +510,22 @@
 				return;
 			}
 			if(gameType == 'positive'){
-				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];		
-				service.choiceScores = {A: 5, B: 3, C: 0};	
+				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];
+				service.choiceScores = {A: 5, B: 3, C: 0};
 				return;
 			}
 
 			service.maxLevel = 1;
 			if(gameType.indexOf("positive") === 0){
-				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];	
-				service.choiceScores = {A: 5, B: 3, C: 0};		
+				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];
+				service.choiceScores = {A: 5, B: 3, C: 0};
 			}
 			service.level_1 = otherLevels[gameType].level_1;
 		}
 
-		
 
-		//Is there any dialog in this room, if yes, what are they. 
+
+		//Is there any dialog in this room, if yes, what are they.
 		//Later on check if they've been completed
 		function getRoomDialogs(levelKey, roomKey){
 			var currentRoomCheck = service[levelKey].rooms[roomKey];

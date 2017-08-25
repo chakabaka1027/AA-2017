@@ -1,16 +1,20 @@
 (function() {
 	'use strict';
-
 	angular.module('importContent')
 		.service('parseAAContentService', parseAAContentService);
-
+//can be placd here
 	/** @ngInject */
-	function parseAAContentService($log, xlsxService) {
-		
+	function parseAAContentService($log, xlsxService, $stateParams) {// added stateParams
+
+		var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
+
+		var localBoolean; // *** added new //anything is here are the private var
+
+		// place url here
 		var service = {
 			parsedContent: {},
 
-			parseContentFromUrl: parseContentFromUrl,
+			parseContentFromGameType: parseContentFromGameType,
 			parseContentFromFile: parseContentFromFile,
 
 			// mostly internal; exposed for testing...
@@ -39,15 +43,15 @@
 		}
 
 		function createBlock(row, col, code, isLinear) {
-			/*
-			the data is always organized in groups of 5 in a row, starting at some index. Not all 5 cells are used; some data is skipped.
-			*/
+
 			var d = {
 				'code': code,
 				'PC_Text': utfClean(row[col]),
-				'NPC_Response': utfClean(row[col+2])
+				'NPC_Response': utfClean(row[col+2]),
+
 			};
-			if (!isLinear) {
+			if (!isLinear) { //check line 53 -
+
 				d.animationNegative = row[col + 4].toLowerCase();
 				d.animationPositive = row[col + 5].toLowerCase();
 				d.animationNegative = (d.animationNegative==='neutral' ? '' : d.animationNegative);
@@ -61,8 +65,7 @@
 			}
 			return d;
 		}
-
-		function parseSheet(sheet, url) {
+		function parseSheet(sheet, gameType) {
 
 			var hdrIndexes = findSectionHeaders(sheet);
 
@@ -80,7 +83,8 @@
 				// it's a 'linear' exchange...
 				row = sheetRow(hdrIndexes[0]+1);
 
-				if(url === "assets/AwkwardAnnieDialogContent_negative.xlsx"){
+					// console.log("::::--- localBoolian ::: was postive ");
+				if(gameType === "negative"){
 					for (i=0, code='C'; i<4; i++, code += 'C') {
 						if(i === 0){
 							parsed['node'+(i+1)] = [createBlock(row, 5*i, code, true)];
@@ -92,9 +96,10 @@
 						$log.log('linearNegs');
 					}
 				} else {
+
 					for (i=0, code='A'; i<4; i++, code += 'A') {
 						if(i === 0){
-							parsed['node'+(i+1)] = [createBlock(row, 5*i, code)];
+							parsed['node'+(i+1)] = [createBlock(row, 5*i, code, true)];
 						} else {
 							parsed['node'+(i+1)] = {}
 							parsed['node'+(i+1)][code.substr(1)] = [createBlock(row, 5*i, code, true)];
@@ -104,7 +109,7 @@
 					$log.log('linearPos');
 
 				}
-				
+
 				return parsed;
 			}
 
@@ -126,7 +131,7 @@
 					createBlock(sheetRow(hdrIndex+9), 6, choice1+'C')
 				];
 			}
-			parsed['node2'] = node2
+			parsed['node2'] = node2 ;
 
 			var node3 = {};
 			for (i=0; i<3; i++) {
@@ -135,8 +140,8 @@
 				for (j=0; j<3; j++) {
 					hdrOffset = [0,4,8][j];
 					choice2 = 'ABC'[j];
-					var pfx = choice1+choice2
-					var rowOffset = hdrIndex+hdrOffset
+					var pfx = choice1+choice2;
+					var rowOffset = hdrIndex+hdrOffset;
 					node3[pfx] = [
 						createBlock(sheetRow(rowOffset+1), 12, pfx+'A'),
 						createBlock(sheetRow(rowOffset+2), 12, pfx+'B'),
@@ -154,6 +159,7 @@
 			}
 
 		}
+
 
 		function parseSheetFromFile(sheet, fileObject) {
 
@@ -173,7 +179,7 @@
 				// it's a 'linear' exchange...
 				row = sheetRow(hdrIndexes[0]+1);
 
-				if(fileObject[0] = "assets/AwkwardAnnieDialogContent_negative.xlsx"){
+				if(fileObject[0] = "q"){
 					for (i=0, code='C'; i<4; i++, code += 'C') {
 						if(i === 0){
 							parsed['node'+(i+1)] = [createBlock(row, 5*i, code)];
@@ -194,7 +200,7 @@
 						}
 					}
 				}
-				
+
 				return parsed;
 			}
 
@@ -245,14 +251,14 @@
 
 		}
 
-		function parseAllSheets(book, url) {
+		function parseAllSheets(book, gameType) {
 			var parsed = {};
 			$log.log(book);
 			var sheetNames = book.SheetNames;
 			sheetNames.forEach(function(sheetName) {
 				if (sheetName !== 'Template') {
 					var sheet = book.Sheets[sheetName];
-					var sheetParsed = parseSheet(sheet, url);
+					var sheetParsed = parseSheet(sheet, gameType);
 					if (sheetParsed) {
 						parsed[sheetName] = sheetParsed;
 						$log.log(sheetName);
@@ -277,7 +283,7 @@
 					var sheetParsed = parseSheetFromFile(sheet, fileObject);
 					if (sheetParsed) {
 						parsed[sheetName] = sheetParsed;
-						$log.log(sheetName);
+						$log.log("sheet parsed: "+sheetName);//does not prtint
 					} else {
 						$log.warn(sheetName+': unparseable');
 					}
@@ -285,18 +291,20 @@
 					$log.log(sheetName+': skipping');
 				}
 			});
-
 			return parsed;
+
 		}
 
-		function parseContentFromUrl(url) {
-			return xlsxService.loadWorkbookFromUrl(url)
+
+		function parseContentFromGameType( gameType) {//!reached
+			return xlsxService.loadWorkbookFromUrl(defaultUrl)
 				.then(function(book) {
-					$log.log("book loaded");
-					service.parsedContent = parseAllSheets(book, url);
-					return service.parsedContent;
+					$log.log("!!!book loaded");
+					service.parsedContent = parseAllSheets(book, gameType);
+					return service.parsedContent;//returns a whole ds of parsed data
 				});
 		}
+
 
 		function parseContentFromFile(fileObject) {
 			return xlsxService.loadWorkbookFromFile(fileObject)

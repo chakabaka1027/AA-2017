@@ -65,7 +65,7 @@
 
 	function simpleTutorial($log, $timeout, audioService, $stateParams) {
 
-		
+
 		return {
 			restrict: 'E',
 			controller: controller,
@@ -86,12 +86,12 @@
 			delayDialog();
 
 			vm.gotoState = function(pcOption) {
-				audioService.playAudio("UIbuttonclick-option2.wav"); 
+				audioService.playAudio("UIbuttonclick-option2.wav");
 
 				vm.textRows.push({npcText: vm.curState.npcText, pcText: pcOption.text});
 				vm.curState = states[pcOption.nextState];
 				vm.curStateName =pcOption.nextState;
-				
+
 				delayDialog();
 
 				vm.showingNPCtext = false;
@@ -109,7 +109,7 @@
 					$('.text-simulator').scrollTop($('.text-simulator')[0].scrollHeight - $('.text-simulator').innerHeight());
 				}, 1500);
 
-			} 
+			}
 
 			vm.resetState = function() {
 				vm.textRows = [];
@@ -127,7 +127,7 @@
 
 				showTimer = $timeout(function() {
 					vm.showingNPCtext = true;
-					audioService.playAudio("UIbuttonclick-option1.wav"); 
+					audioService.playAudio("UIbuttonclick-option1.wav");
 				}, 1500);
 
 				$timeout.cancel(hideTimer);

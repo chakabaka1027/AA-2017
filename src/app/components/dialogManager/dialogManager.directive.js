@@ -19,7 +19,7 @@
 			bindToController: true
 		};
 		return directive;
-		
+
 		/** @ngInject */
 		function displayDialogController($scope, $timeout){
 			var vm = this;
@@ -38,7 +38,7 @@
 			vm.choiceDelay = true;
 			vm.main.totalConvoPoints = 0;
 			vm.showContinue = false;
-			vm.clickContinue = clickContinue; 
+			vm.clickContinue = clickContinue;
 			vm.showNode2 = showNode2;
 			vm.showNode3 = showNode3;
 			vm.showNode3Response = showNode3Response;
@@ -80,6 +80,7 @@
 			}
 
 			// Set dialog - move to another file, will need info from main controller
+			//bwing called here --- 
 			function chooseDialogScript(){
 				npc = vm.main.talkingWith;
 				vm.main.animationTitle = "";
@@ -89,7 +90,7 @@
 					dialogRoot = data;
 					// save choices to an array
 					var originalNodeOne = dialogRoot.node1;
-					// Shuffle node one, can't shuffle others until 
+					// Shuffle node one, can't shuffle others until
 					randomChoices = shuffle(originalNodeOne);
 					// Give new array to DOM
 					vm.choice = originalNodeOne;
@@ -137,7 +138,7 @@
 			}//end of showNode2
 
 			function showNode3(choice){
-				audioService.playAudio("UIbuttonclick-option2.wav"); 
+				audioService.playAudio("UIbuttonclick-option2.wav");
 				// Hide/show neccessary items
 				vm.node3Hidden = false; //show choice if clicked
 				vm.node2Hidden = true;
@@ -158,7 +159,7 @@
 
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_state","2",vm.main.failedConvos[vm.main.currentConversation]);
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_user",currenBranch, choice.PC_Text);
-				
+
 				if (!vm.isTestBed){
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_system",scores[currenBranch],randomChoices.indexOf(choice)+1);
 				}
@@ -166,16 +167,16 @@
 				userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"convo_NPC",choice.animation,choice.NPC_Response); //text_position
 				randomChoices = shuffle(originalNodeThree); //shuffle them
 			}//end of showNode3
-			
+
 			function showNode3Response(choice){ //choice parameter
-				audioService.playAudio("UIbuttonclick-option2.wav"); 
+				audioService.playAudio("UIbuttonclick-option2.wav");
 				vm.node3Hidden = true;
 				// vm.main.animationTitle = choice.animation;
 				// hasAnimation(choice);
 				vm.npcResponse = ""; 	// clear response before showing next
 				loadResponses(choice);
 				vm.showContinue = true;
-				
+
 				// check success
 				if(!vm.isTestBed){
 
@@ -197,7 +198,7 @@
 						vm.main.failedConvos[vm.main.currentConversation] += 1;
 						vm.main.lastConversationSuccessful = false;
 					}
-				}	
+				}
 				// Data
 				var currenBranch = choice.code.charAt(2);
 
@@ -244,9 +245,9 @@
 					}
 					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"NPC_state",vm.main.talkingWith);
 					var progressBarInfo = Math.round((vm.main.completedConvos.length/vm.main.totalConvosAvailable)*100);
-					
+
 					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Player_State",vm.main.playerScore+vm.main.totalConvoPoints, progressBarInfo);
-					
+
 					successfulConvos = vm.main.completedConvos.length;
 					userDataService.trackAction(vm.main.levelCount,vm.main.roomKey,"Game_convo",successfulConvos,vm.main.convoAttemptsTotal);
 					userDataService.postData(); //Post data after convo is over
@@ -265,7 +266,7 @@
 					for(var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
 					return choices;
 				}
-				
+
 			}
 
 			function loadResponses(choice){
@@ -275,8 +276,8 @@
 
 				vm.npcResponse = ""; // clear response before showing next
 				vm.choiceDelay = false;
-				$timeout( function(){ 
-					vm.chosenAnnie = choice.PC_Text; 
+				$timeout( function(){
+					vm.chosenAnnie = choice.PC_Text;
 				},pc_Text_Timer);
 
 				$log.log('choice.animation' + choice.animation);
@@ -319,7 +320,7 @@
 							audioService.playAudio("UIbuttonclick-option1.wav");
 							vm.npcResponse = choice.NPC_Response;
 							delayChoiceDisplay();
-						}, noExpression_Timer); 
+						}, noExpression_Timer);
 					}
 					// return;
 				}, pc_npc_timer); //wait after PC text is shown + extra
@@ -339,11 +340,11 @@
 			function showNextNode(choice){
 				if(node != lastNode){
 					// Hide/show neccessary items
-					put in a loop or just use a global varible reset after continue is clicked 
+					put in a loop or just use a global varible reset after continue is clicked
 					set node[i]Hidden = true node[i-1]Hidden = true
 					vm.node3Hidden = !vm.node3Hidden;
 					vm.node2Hidden = !vm.node2Hidden;
-					
+
 					vm.node2Response = choice;
 					// Get button code
 					var codeNode3 = choice.code;

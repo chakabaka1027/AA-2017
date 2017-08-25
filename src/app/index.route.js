@@ -9,10 +9,10 @@
   function routerConfig($stateProvider, $urlRouterProvider) {
     //remove url later, before release
     // use different controller for welcome screen
-    
+
     $stateProvider
       .state('dialogTestBed', {
-        url: '/dialogTestBed/:gameType?',
+        url: '/dialogTestBed/:gameType?',//
         templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
         controller: 'displayDialogTestBed', //throws away old main and recreates it
         controllerAs: "dialogTest"
@@ -23,7 +23,7 @@
         url: '/{gameType}',
         template: "<div class='gameContainer'><log-in-manager></log-in-manager></div>"
       });
-  
+
     $stateProvider
       .state('instructions', {
         //url: '/instructions',
@@ -39,7 +39,7 @@
         controllerAs: 'main'
       });
 
-      
+
     $stateProvider
       .state('landingPage', {
         url: '/landingPage',
