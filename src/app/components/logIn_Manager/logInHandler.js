@@ -18,13 +18,13 @@
 			bindToController: true
 		};
 		return directive;
-		
+
 		/** @ngInject */
 		function introController($timeout, $location, $state){
 			var vm = this;
 			vm.checkID = checkID;
 			vm.next = next;
-			vm.needLogIn = true;
+			vm.needLogIn = true; //it is here - by default it is set to true? - location manu[ulates the URL - right? ]
 
 			$log.log("THESE ARE THE STATEPARAMS");
 			$log.log($stateParams);
@@ -37,15 +37,15 @@
     		}
 
     		levelDataHandler.setUpForGameType(gameType);
-		    
+
 		    dialogService.loadFromServer($stateParams.gameType).then(
 		      function(){
-		        dialogService.deferred.resolve();
+		        dialogService.deferred.resolve();//get the right dailoug
 		        $log.log("Successfully received xlsx");
 		    });
 
-			var userID = $location.search().userID;
-			if (userID) {
+			var userID = $location.search().userID; //user ID is a qury param -  (--rul > key=value)
+			if (userID) {//if it is in the ditionay
 				checkInAs(userID);
 				$log.log("checked in");
 			}
@@ -64,7 +64,7 @@
 				userDataService.userID = vm.playerID;
 				userDataService.resetData();
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
-				$state.go("instructions");  
+				$state.go("instructions");
 
 				//$location.path("/instructions").search({USERID: vm.playerID});
 			}
@@ -73,12 +73,12 @@
 				userDataService.userID = vm.playerID;
 				userDataService.resetData();
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
-				$state.go("instructions");  
+				$state.go("instructions");
 
 				//$location.path("/instructions").search({USERID: vm.playerID});
 			}
 
-			function checkInAs(id) {
+			function checkInAs(id) {//user ID - need to send it when we quit
 				userDataService.userID = vm.playerID = id;
 				userDataService.resetData();
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");

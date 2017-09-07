@@ -6,7 +6,7 @@
 
 	var states = {
 	    start: {
-	        npcText: 'Hi, Annie, Welcome to your first day at work.',
+	        npcText: 'Test, Annie, Welcome to your first day at work.',
 	        pcOptions: [
 	            {text: 'Thanks, but I\’d rather be at home playing video games.', nextState: 's1'}
 	        ]

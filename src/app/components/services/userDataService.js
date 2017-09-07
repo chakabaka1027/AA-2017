@@ -1,12 +1,12 @@
 (function(){
 	'use strict';
-	
+
 	angular.module('awkwardAnnie')
 	.service('userDataService', userDataService);
 
 	/** @ngInject */
 	function userDataService($http, $log){
-		
+
 		var hostBaseAddress = "awkwardBackend";
 		var rowHeaders = [
 			"Game Version", "User ID", "Session ID", "Date", "Time (HH:MM:SS)", "GameLevel", "Location", "Action", "Data_1", "Data_2"
@@ -64,12 +64,16 @@
 
 			var data = {
 				fname: service.userID+'_'+service.sessionID,
-				csvData: csv
+				csvData: csv //rows in csv format - posted to a csv file
+				// talks to php -
+				//url and what protocol
 			};
 
 			if (!service.enabled) {
 				$log.log('Would post; but data posting disabled');
 			} else {
+				// url and what data they want ? json and userid_ sucsess true
+
 				var url = hostBaseAddress+'/awkwardData.php';
 				$log.log('Posting to: '+hostBaseAddress+'/data/'+data.fname+'.csv');
 				$http.post(url, data)
@@ -83,5 +87,8 @@
 		}
 
 	}
+	//funciton postCompletion(){
+	//what is the data exactly - what is the user id syntax ( get )
+// }
 
 })();

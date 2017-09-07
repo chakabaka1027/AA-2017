@@ -22,11 +22,11 @@
       /** @ngInject */
       function controller($scope, $log, $location) {
         var vm = this;
-        vm.quit = quit;
+        vm.quit = quit; //this is it what happens when we click 
         vm.userID = userDataService.userID;
         vm.playerScore = globalGameInfo.playerScore;
         vm.totalConvos = globalGameInfo.totalConvos;
-        
+
         function quit(){ //make sure ID is a number and assign it to the data service
           if(globalGameInfo.postURL){
             for(var i in globalGameInfo.postURL){
@@ -42,7 +42,7 @@
             }
             var postURL_concat = "https://" + globalGameInfo.postURL + "&USERID=" + userDataService.userID;
             $log.log("Rerouting to " + postURL_concat);
-            
+
             $window.open(postURL_concat, '_self');
           }else{
             userDataService.userID = "";

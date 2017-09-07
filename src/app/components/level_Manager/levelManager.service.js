@@ -259,8 +259,8 @@
 				}
 			},
 			level_7:{ /*~~~~~~~~~~~~~~~~~~~~~~SEVEN~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_RQ_02', 'fran_RQ_02', 'charly_SmallTalk_02', 'LL.RQ.02'],
-				//added charly_SmallTalk_02 //LL.RQ.02
+				requiredConversations: ['mike_RQ_02', 'fran_RQ_02', 'charly_SmallTalk_02', 'Luna_RQ_02'],
+				//added charly_SmallTalk_02 //LL.RQ.02 //Luna_RQ_02
 				startingRoom: "lobby",
 				rooms:{
 					lobby:{
@@ -296,7 +296,7 @@
 							},
 							luna:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey:"LL.RQ.02"
+								dialogKey:"Luna_RQ_02"
 							}
 						}
 					}
