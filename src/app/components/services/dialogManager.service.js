@@ -13,12 +13,12 @@
 	function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
 		console.log("!!!service invoked -dialogContentService");
 
-			  var defaultUrl = {
+			var defaultUrl = {
 				positive:	'assets/AwkwardAnnieDialogContent_all.xlsx',
         negative: 'assets/AwkwardAnnieDialogContent_all.xlsx'
 			};
 
-
+		var boolianValTest;
 		var dialogWorksheetKeys = {};
 
 		var service = {
@@ -101,7 +101,8 @@
 		function loadFromServer(gameType) {
 
 			gameType = gameType || "negative";
-
+			boolianValTest = gameType;
+			console.log(">>>>call from server" + boolianValTest);
 			var prefix = gameType.split("-")[0];
       $log.log("Loading from url '"+prefix+"' ...");
 

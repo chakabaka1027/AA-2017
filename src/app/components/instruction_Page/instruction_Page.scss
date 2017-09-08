@@ -10,9 +10,19 @@
 .intro2{
 	width: 950px;
 	height: 500px;
-	background-image: url("../assets/images/instruction_Page/ETS_instructions.png");
+  background-image: url("../assets/images/instruction_Page/ETS_instructions_N.png");
 	background-size: 905px 430px;
-	background-position: center; 
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: white;
+	color: red;
+}
+.intro3{
+	width: 950px;
+	height: 500px;
+	background-image: url("../assets/images/instruction_Page/ETS_instructions_P.png");
+	background-size: 905px 430px;
+	background-position: center;
 	background-repeat: no-repeat;
 	background-color: white;
 	color: red;

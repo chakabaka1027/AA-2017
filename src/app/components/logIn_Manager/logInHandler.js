@@ -7,6 +7,8 @@
 
 	/** @ngInject */
 	function logInManager($location, userDataService, globalGameInfo, $log, $stateParams, dialogService, levelDataHandler){ //$log parameter goes in here
+		console.log("::::--$stateParams.gameType"+$stateParams.gameType);
+
 		var directive = {
 			restrict: 'AE',
 			controller: introController,

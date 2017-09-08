@@ -18,13 +18,14 @@
 			bindToController: true
 		};
 		return directive;
-		
+
 		/** @ngInject */
 		function introController(){
 			var vm = this;
 			vm.next = next;
 			vm.clickCounter = 0;
 			vm.loadPositive = loadPositive;
+			vm.getVersion = getVersion;
 
 			function loadPositive(){
 
@@ -37,8 +38,23 @@
 			        $state.go("awkwardAnnieGame")
 
 		    	});
-			 
 
+
+
+			}
+
+			function getVersion(){
+				console.log(">>> getting version for images ");
+				var path = $location.path();
+				var p = path.toString();
+				if(p.includes("negative")){
+					console.log(">>> returning negative - 10 ");
+					return 10;
+				}
+				else {
+					console.log(">>> returning postive  - --10");
+					return -10;
+				}
 
 			}
 
@@ -46,8 +62,8 @@
 				vm.clickCounter += 1;
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
 				if(vm.clickCounter >= 2){
-					
-					$state.go("awkwardAnnieGame");  
+
+					$state.go("awkwardAnnieGame");
 					//location.path("/awkwardAnnieGame").search({USERID: userDataService.userID});
 				}
 			}

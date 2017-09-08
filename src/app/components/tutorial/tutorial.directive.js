@@ -4,67 +4,145 @@
 	angular.module('awkwardAnnie')
 		.directive('simpleTutorial', simpleTutorial);
 
-	var states = {
+var localgameType; //just for testing
+	var posStates = {
 	    start: {
-	        npcText: 'Test, Annie, Welcome to your first day at work.',
+	        npcText: ' Postive: Hi, Annie, Welcome to your first day at work..',
 	        pcOptions: [
-	            {text: 'Thanks, but I\’d rather be at home playing video games.', nextState: 's1'}
+	            {text: 'Thanks, but I\’m a bit nervous about saying the wrong things to people.', nextState: 's1'}
 	        ]
 	    },
 	    s1: {
-	        npcText: 'Oh, well, I\’d heard you had a bit of an awkward personality.',
+	        npcText: 'Oh, yeah, I remember you struggling with that when we were younger.',
 	        pcOptions: [
-	            {text: 'They call me Awkward Annie.  Everyone has their strength - mine is making people uncomfortable.', nextState: 's2'}
+	            {text: 'Ha, they called me Awkward Annie.  Everyone has their strength - mine is saying the inappropriate thing.  ', nextState: 's2'}
 	        ]
 	    },
 		s2: {
 	        npcText: 'That\'s certainly a special skill.',
 	        pcOptions: [
-	            {text: 'You know I just popped a giant zit on my nose before I got here.', nextState: 's3'}
+	            {text: 'Yeah, I\’m doing better now though. I just pay more attention to which things I should say and which I should keep to myself. ', nextState: 's3'}
 	        ]
 	    },
 	    s3: {
-	        npcText: 'OH.  So are you ready to start your first day at work?',
+	        npcText: 'OK.  So are you ready to start your first day at work?',
 	        pcOptions: [
-	            {text: 'Sure.', nextState: 's3a'},
-	            {text: 'Sure, but before we do - I\’ve got to tell you that the shirt in your profile picture is the ugliest one I\’ve ever seen.', nextState: 's4'}
+	            {text: 'Sure thing \“Fran-cy Pants\”! Get it, I combined your name with \“Fancy Pants\”. It\’s funny right?', nextState: 's3a'},
+	            {text: 'Absolutely. I hope I don’t offend too many people today.  ', nextState: 's4'}
 	        ]
 	    },
+
+
 		s3a: {
-	        npcText: 'I\’m surprised you don’t have something more awkward to say. So are you ready to start your first day at work?',
+	        npcText: 'What? I don’t think those kind of nicknames are exactly office appropriate. We’re not in high school anymore. So are you ready to start your first day at work? ',
 	        pcOptions: [
-	            {text: 'Sure.', nextState: 's3a'},
-	            {text: 'Sure, but before we do - I\’ve got to tell you that is the ugliest shirt I\’ve ever seen.', nextState: 's4'}
+						{text: 'Sure thing \“Fran-cy Pants\”! Get it, I combined your name with \“Fancy Pants\”. It\’s funny right?', nextState: 's3a'},
+						{text: 'Absolutely. I hope I don’t offend too many people today.  ', nextState: 's4'}
 	        ]
 	    },
 
 	    s4: {
-	        npcText: 'What?  I bought this shirt at Snooty Toots, the high end fashion boutique. I think it\’s time I show you to your desk.',
+	        npcText: 'I hope not either. I think it\’s time to meet in the lobby',
 	        pcOptions: [
-	            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
-	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 's5'}
+	            {text: 'Great! My brain sometimes farts out comments that people take as inappropriate. Not everyone appreciates bathroom humor.  ', nextState: 's4a'},
+	            {text: 'Great! Maybe you can help me to be sure and only say things that don\’t make for awkward situations.', nextState: 's5'}
 	        ]
 	    },
 	    s4a: {
-	        npcText: 'I\’m surprised you don’t have something more awkward to say, Annie.',
+	        npcText: 'Yeah, see. You’re already talking about topics that are a bit awkward to do in the office. Maybe you should try to keep that stuff inside your head. Are you ready to get started?',
 	        pcOptions: [
-	            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
-	            {text: 'Desk, shmesh.  Let’s go get a drink at the bar - I heard they make a great morning cocktail.', nextState: 's5'}
+						{text: 'Great! My brain sometimes farts out comments that people take as inappropriate. Not everyone appreciates bathroom humor.  ', nextState: 's4a'},
+						{text: 'Great! Maybe you can help me to be sure and only say things that don\’t make for awkward situations.', nextState: 's5'}
 	        ]
 	    },
 	    s5: {
-	        npcText: 'You’ll certainly make this office more interesting. I’m sure your awkward annie shenanigans will liven things up around here. As they say - you do you, Awkward Annie.',
+	        npcText: 'You\’ll certainly make this office more interesting. I\’m sure your awkward annie shenanigans will liven things up around here. Good luck trying to change your reputation as Awkward Annie. ',
 	        pcOptions: [
-	            {text: 'Sure, I can show you this new mole I am growing.', nextState: 'end'}
+	            {text: 'Thanks. ', nextState: 'end'}
 	        ]
 	    },
 	    end: {
-	        npcText: 'Great...'
+	        // npcText: 'Great...'
 	    }
 	};
 
-	function simpleTutorial($log, $timeout, audioService, $stateParams) {
 
+		var negStates = {
+		    start: {
+		        npcText: 'negative, Hi, Annie, Welcome to your first day at work.',
+		        pcOptions: [
+		            {text: 'Thanks, but I\’d rather be at home playing video games.', nextState: 's1'}
+		        ]
+		    },
+		    s1: {
+		        npcText: 'Oh, well, I\’d heard you had a bit of an awkward personality.',
+		        pcOptions: [
+		            {text: 'They call me Awkward Annie.  Everyone has their strength - mine is saying inappropriate things. ', nextState: 's2'}
+		        ]
+		    },
+			s2: {
+		        npcText: 'That\'s certainly a special skill.',
+		        pcOptions: [
+		            {text: 'Yeah, well I like being \“special\”. I\’m like a special agent of awkwardness. Unstoppable awkwardness! ', nextState: 's3'}
+		        ]
+		    },
+		    s3: {
+		        npcText: 'Ok.  So are you ready to start your first day at work?',
+		        pcOptions: [
+		            {text: 'I sure am. Let\’s get things started. This should be a fun day.', nextState: 's3a'},
+		            {text: 'What? You don\’t like my “special agent of awkwardness” joke? What happened to your sense of humor? Oh, no. Is this a boring office? ', nextState: 's4'}
+		        ]
+		    },
+			s3a: {
+		        npcText: 'I\’m surprised you don\’t have something more awkward to say. So are you ready to start your first day at work?  ',
+		        pcOptions: [
+							{text: 'I sure am. Let\’s get things started. This should be a fun day.', nextState: 's3a'},
+							{text: 'What? You don\’t like my “special agent of awkwardness” joke? What happened to your sense of humor? Oh, no. Is this a boring office? ', nextState: 's4'}
+		        ]
+		    },
+
+		    s4: {
+		        npcText: 'What? No, people definitely have a sense of humor. You just tend to take things a bit farther than most people do. I forgot what it\’s like to be \“Akward Annie.\” Anyway, I think it\’s time to meet in the lobby. ',
+		        pcOptions: [
+		            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
+		            {text: 'The lobby?! That sounds like a great place to get this party started! You do have party decorations and noise makers, right? A dance party always gets the day started right.', nextState: 's5'}
+		        ]
+		    },
+		    s4a: {
+		        npcText: 'I\’m surprised you don\’t have something more awkward to say, Annie.',
+		        pcOptions: [
+							{text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
+							{text: 'The lobby?! That sounds like a great place to get this party started! You do have party decorations and noise makers, right? A dance party always gets the day started right.', nextState: 's5'}
+		        ]
+		    },
+		    s5: {
+		        npcText: 'You\’ll certainly make this office more interesting. I\’m sure your awkward annie shenanigans will liven things up around here. As they say - you do you, Awkward Annie. ',
+		        pcOptions: [
+		            {text: 'Thanks.', nextState: 'end'}
+		        ]
+		    },
+		    end: {
+		        // npcText: 'Great...'
+		    }
+		};
+
+	function simpleTutorial($log, $timeout, audioService, $stateParams, $location) {
+		console.log("simple tutorial e-1");
+		//a  bad way - should i acsess the route insread - cannot figure out how to get the value if it uses another controller - might break it
+		//temp fix
+		var path = $location.path();
+		var p = path.toString();
+		if(p.includes("negative")){
+			localgameType = false;
+		}
+		else {
+			localgameType = true;
+		}
+
+		console.log(">>>path"+path +" boolian value"+localgameType);
+
+		// dialogService. //returns undefined - I get it cz its defined locally ---
+		// console.log(">>>>call from simple rutoral"+dialogService.boolianValTest) ;
 
 		return {
 			restrict: 'E',
@@ -74,7 +152,12 @@
 			templateUrl: 'app/components/tutorial/tutorial.html'
 		};
 
+
+
 		function controller($scope) {
+			console.log(">>>"+$stateParams.gameType);
+			console.log(">>>"+localgameType);
+
 			var vm = this;
 			vm.showingNPCtext = false;
 			vm.showingDialogOptions = false;
@@ -83,14 +166,22 @@
 			var showTimer;
 			var hideTimer;
 
+			// var isPos = dialogService.getGameType();
+			console.log("dialogService.getGameType()")
 			delayDialog();
 
 			vm.gotoState = function(pcOption) {
 				audioService.playAudio("UIbuttonclick-option2.wav");
-
-				vm.textRows.push({npcText: vm.curState.npcText, pcText: pcOption.text});
-				vm.curState = states[pcOption.nextState];
-				vm.curStateName =pcOption.nextState;
+				if(localgameType===true){
+					vm.textRows.push({npcText: vm.curState.npcText, pcText: pcOption.text});
+					vm.curState = posStates[pcOption.nextState];
+					vm.curStateName =pcOption.nextState;
+			}
+				else {
+					vm.textRows.push({npcText: vm.curState.npcText, pcText: pcOption.text});
+					vm.curState = negStates[pcOption.nextState];
+					vm.curStateName =pcOption.nextState;
+				}
 
 				delayDialog();
 
@@ -113,8 +204,14 @@
 
 			vm.resetState = function() {
 				vm.textRows = [];
-				vm.curState = states['start'];
+				if(localgameType===true){
+				vm.curState = posStates['start'];
 				vm.curStateName = 'start';
+			}else {
+				vm.curState = negStates['start'];
+				vm.curStateName = 'start';
+			}
+
 			}
 
 			vm.resetState();
