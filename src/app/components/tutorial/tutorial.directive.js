@@ -7,7 +7,7 @@
 var localgameType; //just for testing
 	var posStates = {
 	    start: {
-	        npcText: ' Postive: Hi, Annie, Welcome to your first day at work..',
+	        npcText: ' Hi, Annie, Welcome to your first day at work..',
 	        pcOptions: [
 	            {text: 'Thanks, but I\’m a bit nervous about saying the wrong things to people.', nextState: 's1'}
 	        ]
@@ -69,7 +69,7 @@ var localgameType; //just for testing
 
 		var negStates = {
 		    start: {
-		        npcText: 'negative, Hi, Annie, Welcome to your first day at work.',
+		        npcText: 'Hi, Annie, Welcome to your first day at work.',
 		        pcOptions: [
 		            {text: 'Thanks, but I\’d rather be at home playing video games.', nextState: 's1'}
 		        ]
