@@ -48,9 +48,14 @@
 
 			var userID = $location.search().userID; //user ID is a qury param -  (--rul > key=value)
 			if (userID) {//if it is in the ditionay
-				checkInAs(userID);
+				globalGameInfo.userForwarded = true;
+				checkInAs(userID);//would want to say globalgameinfo.userforwarded  //  == true / check flag
 				$log.log("checked in");
 			}
+			else {
+				globalGameInfo.userForwarded = false;
+			}
+			// else -
 
 			function setID(){
 				for(var i in idQuery){

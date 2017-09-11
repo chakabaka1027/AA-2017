@@ -132,11 +132,11 @@ var localgameType; //just for testing
 		//temp fix
 		var path = $location.path();
 		var p = path.toString();
-		if(p.includes("negative")){
-			localgameType = false;
+		if(p.includes("positive")){
+			localgameType = true;
 		}
 		else {
-			localgameType = true;
+			localgameType = false;
 		}
 
 		console.log(">>>path"+path +" boolian value"+localgameType);
