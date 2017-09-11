@@ -17,8 +17,6 @@
     vm.successPaths = [];
     vm.flipDialog = true;
 
-    $log.log($stateParams);
-
     //dialogService.loadedPromise.then(activate);
     dialogService.loadFromServer($stateParams.gameType).then(
       function(){
@@ -28,7 +26,6 @@
     });
 
     function activate(){
-      $log.log("loaded dialog data")
       vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
       vm.levelUp = false;
       vm.failedConvos= [];
@@ -39,16 +36,13 @@
                             key: dkey
                           };
                         });
-      $log.log(vm.dialogList);
       vm.displayCharacters = true;
       vm.hasLoaded = true;
       vm.currentChoiceInfo = {};
 
-      $scope.$watch(function(){ return vm.currentConversation;},   
+      $scope.$watch(function(){ return vm.currentConversation;},
         function(newVal, oldVal){
-          $log.log('select: ', vm.currentConversation);
-          vm.branchHistory = []; 
-          $log.log(newVal, oldVal);
+          vm.branchHistory = [];
           vm.talkingWith = vm.currentConversation.split("_")[0];
           vm.displayCharacters = false;
           $timeout(function(){vm.displayCharacters = true}, 0);
@@ -86,14 +80,12 @@
       parseAAContentService.parseContentFromFile(fileObject)
           .then(function(parsedContent) {
               vm.status = "Loaded from file '"+fileObject.name+"'.";
-              $log.log('Success!');
-              $log.log(parsedContent);
               vm.lastFileObject = fileObject;
               vm.hasLoaded = true;
       });
     }
 
-    
-  }   
+
+  }
 
 })();

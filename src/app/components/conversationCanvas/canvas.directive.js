@@ -22,7 +22,7 @@
 			bindToController: true
 		};
 		return directive;
-		
+
 		/** @ngInject */
 		function controller($scope, $element, $timeout){
 			var vm = this;
@@ -35,7 +35,7 @@
 					universalConfused,
 					universalAnnoyed;
 
-			$scope.$on('$destroy', function(){ 
+			$scope.$on('$destroy', function(){
 				newDialogCanvas.remove();
 			});
 
@@ -95,11 +95,11 @@
 						}else{
 							dialogSprite.changeAnimation("normal");
 						}
-					// Last line
+
 					insetWindow.drawSprites();
-				}; //end of draw
+				}; 
 			};
-			
+
 			newDialogCanvas = new p5(dialogCanvas);
 
 			// Only called when title changes, not every draw

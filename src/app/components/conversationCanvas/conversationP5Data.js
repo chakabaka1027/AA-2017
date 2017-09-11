@@ -71,10 +71,8 @@
 
 					"agree_mild": ["assets/images/Characters/Mike/Agreement/Mike_Agreement_Mild.png"],
 					"agree_bold": ["assets/images/Characters/Mike/Agreement/Mike_Agreement_01.png","assets/images/Characters/Mike/Agreement/Mike_Agreement_24.png"]
-//this was agreement_bold
 				}
 			},
-			// Currently no bold animations for NPCs
 			charlie:{
 				positionX: 150,
 				positionY: 325,

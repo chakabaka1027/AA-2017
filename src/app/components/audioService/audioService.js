@@ -17,8 +17,8 @@
 					audioTag.currentTime = 0;
 					audioTag.play();
 				} else {
-					audioTag = new $window.Audio(audioFolder+fname); //adds html audio tag
-					service.audioTags[fname] = audioTag; 
+					audioTag = new $window.Audio(audioFolder+fname); 
+					service.audioTags[fname] = audioTag;
 					audioTag.play();
 				}
 			}

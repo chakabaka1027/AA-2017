@@ -79,8 +79,6 @@
 				vm.node3Response = true;
 			}
 
-			// Set dialog - move to another file, will need info from main controller
-			//bwing called here --- 
 			function chooseDialogScript(){
 				npc = vm.main.talkingWith;
 				vm.main.animationTitle = "";
@@ -180,9 +178,7 @@
 				// check success
 				if(!vm.isTestBed){
 
-					// $log.log('Checking for level success... these arrays should be the same...');
-					// $log.log(levelDataHandler.getSuccessPaths(vm.main.currentConversation));
-					// $log.log(vm.main.roomData.characters[vm.main.talkingWith].successPaths);
+
 
 					if(levelDataHandler.successPaths.indexOf(choice.code) >= 0){
 						vm.main.completedConvos.push(vm.main.currentConversation);
@@ -191,7 +187,6 @@
 						for(var i in choice.code){
 							vm.main.totalConvoPoints += scores[choice.code[i]];
 						}
-						// vm.main.playerScore += vm.main.totalConvoPoints; //update score
 
 						vm.main.lastConversationSuccessful = true;
 					}else{
@@ -217,7 +212,6 @@
 			function trackBranches(currentBranch){
 
 				vm.main.branchHistory.push(currentBranch);
-				// $log.log('currentBranch', 'node'+(vm.main.branchHistory.length+1), vm.main.branchHistory.join(''));
 
 			}
 
@@ -280,7 +274,6 @@
 					vm.chosenAnnie = choice.PC_Text;
 				},pc_Text_Timer);
 
-				$log.log('choice.animation' + choice.animation);
 				$timeout(function(){
 					if (choice.animation==='' || conversationP5Data[vm.main.talkingWith].animations[choice.animation]) {
 						vm.main.animationTitle = choice.animation;

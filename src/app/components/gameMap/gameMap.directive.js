@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	
+
 	angular
 		.module('awkwardAnnie')
 		.directive('gameMap', gameMap);
@@ -24,8 +24,6 @@
 
 			$scope.$watch(function(){return $scope.main.completedConvos.join(",")}, function(){
 				if(Array.isArray($scope.main.completedConvos)){
-					$log.log("Conversations updated!");
-					$log.log($scope.main.completedConvos);
 					updateConversations();
 				}
 			});
@@ -79,7 +77,7 @@
 
 		}
 
-		
+
 	}
 
 

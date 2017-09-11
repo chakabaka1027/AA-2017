@@ -152,7 +152,6 @@ console.log("game manager defined!");//this is just a table look up
 			}
 
 			function releaseBindings() {
-				$log.log('gameManager: releasing bindings');
 				elm.off("mousemove", mouseMove);
 				elm.off("mousedown", mouseDown);
 				$('html').off("mouseup", mouseUp);
@@ -323,7 +322,6 @@ console.log("game manager defined!");//this is just a table look up
 				/*==================================================================================
 					Create characters and add animations
 				==================================================================================*/
-					$log.log('roomData...', vm.main.roomData);
 					for(var char in vm.main.roomData.characters){
 						currentNPCsprites.push(char); // + "_Sprite"
 					}
@@ -372,7 +370,6 @@ console.log("game manager defined!");//this is just a table look up
 					//doorTransitionSound.setVolume(0.05);
 
 					doorTransitionSound.play();
-					$log.log("doorSound!");
 
 					/*========== Track Data ===================================*/
 					currentNPCsprites.forEach(function(character){ //get talking characters
