@@ -1,0 +1,10 @@
+{
+
+
+	"version": "1.0.7",
+
+	"startState": "awkwardAnnieGame",
+
+	"postURL": "http://researchtech1.ets.org/C3.Net/launch/GameComplete.aspx"
+
+}

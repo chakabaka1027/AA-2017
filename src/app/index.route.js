@@ -11,6 +11,13 @@
     // use different controller for welcome screen
 //is this the page that handles url intries? do we need to inject hte location here?
 //or add it as a new state? ---
+
+    $stateProvider
+      .state('initialization', {
+        url: '/{gameType}',
+        template: '<initialize-game></initialize-game>'
+      });
+
     $stateProvider
       .state('dialogTestBed', {
         url: '/dialogTestBed/:gameType?',//
@@ -21,7 +28,7 @@
 
     $stateProvider
       .state('GameStart', {
-        url: '/{gameType}',
+        // url: '/{gameType}',
         template: "<div class='gameContainer'><log-in-manager></log-in-manager></div>"
       });
 
