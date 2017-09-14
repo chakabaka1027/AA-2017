@@ -44,29 +44,26 @@
 			}
 
 			function getVersion(){
-				console.log(">>> getting version for images ");
 				var path = $location.path();
 				var p = path.toString();
 				if(p.includes("negative")){
-					console.log(">>> returning negative - 10 ");
+
 					return 10;
 				}
 				else {
-					console.log(">>> returning postive  - --10");
+
 					return -10;
 				}
-
 			}
 
-			function next(){ //make sure ID is a number and assign it to the data service
+			function next(){
 				vm.clickCounter += 1;
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
 				if(vm.clickCounter >= 2){
 
 					$state.go("awkwardAnnieGame");
-					//location.path("/awkwardAnnieGame").search({USERID: userDataService.userID});
 				}
 			}
-		}//end of controller
+		}
 	}
 })();

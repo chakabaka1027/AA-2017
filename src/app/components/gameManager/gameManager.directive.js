@@ -1,8 +1,5 @@
 (function(){
 	'use strict';
-console.log("game manager defined!");//this is just a table look up
-//puts it in table of directives
-//dont vall the function yet - that will happen later as needed
 	angular
 		.module('awkwardAnnie')
 		.directive('gameManager', gameManager);
@@ -11,7 +8,6 @@ console.log("game manager defined!");//this is just a table look up
 	function gameManager(gM_Char_Position_Data, gM_Animation_Data, gM_RoomData, gM_FurnitureData,
 		levelDataHandler, mappingService, arrowData, audioService, userDataService, globalGameInfo,
 		$location, $log){
-			console.log("!!!invoking the directive - printed out once");//this is just a table look up
 
 		var directive = {
 			restrict:'E',
@@ -102,7 +98,6 @@ console.log("game manager defined!");//this is just a table look up
 				}
 
 
-				// $log.log(evt.type)
 			}
 
 			function mouseMove(evt){
@@ -615,7 +610,6 @@ console.log("game manager defined!");//this is just a table look up
 				function drawPointsBubble(points,npc){
 					var x = npc.position.x;
 					var y = npc.position.y - npc.height - 190;
-					//$log.log(x,y);
 					room.image(pointsBubble, x, y);
 					room.textAlign(room.CENTER, room.CENTER);
 					room.textSize(22);
@@ -685,11 +679,9 @@ console.log("game manager defined!");//this is just a table look up
 			//flip annie and npc inset position depending on the direction annie talks to npc
 					if(annieSprite.position.x > spriteB.position.x){
 						vm.main.flipDialogs = false;
-						//$log.log(vm.flipDialogs);
 
 					} else {
 						vm.main.flipDialogs = true;
-						//$log.log(vm.flipDialogs);
 
 					}
 

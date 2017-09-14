@@ -5,17 +5,29 @@
 	.service('userDataService', userDataService);
 
 	/** @ngInject */
-	function userDataService($http, $log){
+	function userDataService($http, $log  ){
+
+		//weird doesnt pass it - gives me an undefined value -- ( unlessI include evrything here - had the same issue with instructions before )
+		// var gameType;
+		// 	if(levelDataHandler.legalLevels.indexOf($stateParams.gameType) < 0){
+		// 		gameType = 'negative';
+		// 	} else {
+		// 		gameType = $stateParams.gameType;
+		// 	}
 
 		var hostBaseAddress = "awkwardBackend";
 		var rowHeaders = [
 			"Game Version", "User ID", "Session ID", "Date", "Time (HH:MM:SS)", "GameLevel", "Location", "Action", "Data_1", "Data_2"
 		];
-
+		// var u = $location.url();
+		// var savedversion = u.replace('\/','–');
+		// console.log(">>"+savedversion);
 		var service = {
 			enabled: true, //writes to database
 			userID: "player",
-			version: "Candidate 1.40",
+			version: "AAv2.96",
+		  gameType: " ",
+			// version: "AAv2.96".concat(savedversion),
 			sessionID: moment().unix(),
 
 			dataRows: [],
@@ -36,12 +48,15 @@
 
 		function trackAction(gameLevel, location, action, data1, data2) {
 			var row = [
-				service.version,
+				service.version+':'+service.gameType,
 				service.userID,
 				service.sessionID,
 				moment().format('M/D/YYYY'),
 				moment().format('HH:mm:ss')
 			];
+			// var u = $location.url(); //same issue gives me an undefined game type
+			console.log("testing... version: "+service.version + " gamt ype "+service.gameType + " user ID is "+service.userID );
+
 
 			if (angular.isUndefined(data1) || data1 === null) data1 = '';
 			if (angular.isUndefined(data2) || data2 === null) data2 = '';
@@ -52,7 +67,7 @@
 			service.dataRows.push(row);
 
 		}
-
+//game type gives +vse and negative but not all four versions?
 		function postData() {
 			var csvRows = [rowHeaders].concat(service.dataRows);
 
@@ -63,7 +78,7 @@
 			});
 
 			var data = {
-				fname: service.userID+'_'+service.sessionID,
+				fname: service.userID+'_'+ service.gameType+'_'+service.sessionID,
 				csvData: csv //rows in csv format - posted to a csv file
 				// talks to php -
 				//url and what protocol

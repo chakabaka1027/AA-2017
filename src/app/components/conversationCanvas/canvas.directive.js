@@ -68,7 +68,7 @@
 					// Characters
 					annieDialogSprite = insetWindow.createSprite(conversationP5Data.annie.positionX,conversationP5Data.annie.positionY);
 					addAnimationsToChar(conversationP5Data.annie,annieDialogSprite);
-					// need to change from talkingWith to var
+
 					dialogSprite = insetWindow.createSprite(conversationP5Data[vm.main.talkingWith].positionX,conversationP5Data[vm.main.talkingWith].positionY);
 					addAnimationsToChar(conversationP5Data[vm.main.talkingWith],dialogSprite);
 				};
@@ -97,7 +97,7 @@
 						}
 
 					insetWindow.drawSprites();
-				}; 
+				};
 			};
 
 			newDialogCanvas = new p5(dialogCanvas);

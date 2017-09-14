@@ -47,7 +47,6 @@
           vm.displayCharacters = false;
           $timeout(function(){vm.displayCharacters = true}, 0);
           vm.successPaths = levelDataHandler.getSuccessPaths(vm.currentConversation);
-          // $log.log('Success Paths: '+vm.successPaths);
         }
       );
 

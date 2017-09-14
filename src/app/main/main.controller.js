@@ -4,7 +4,7 @@
   angular
     .module('awkwardAnnie')
     .controller('MainController', MainController);
-    // In the future this should be a service insead of the main controller. Wouldn't need other files if this change happened, but I didn't have time to refactor this project. 
+    // In the future this should be a service insead of the main controller. Wouldn't need other files if this change happened, but I didn't have time to refactor this project.
 
   /** @ngInject */
   function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService, $stateParams) {
@@ -37,7 +37,7 @@
 
 
     nextLevelData();
-    
+
     function setConversation(talkingWith){
       vm.talkingWith = talkingWith;
       vm.currentConversation = vm.roomData.characters[talkingWith].dialogKey;
@@ -53,17 +53,15 @@
         var currentLevel = "level_"+vm.levelCount;
         vm.roomData = levelDataHandler[currentLevel].rooms[roomKey];
     }
-    /*//ETS requested transition if(vm.main.levelCount === 0){ vm.main.levelCount += 1; }else if(vm.main.levelCount === 1){ vm.main.levelCount += 1; vm.main.setRoomLevelData("conferenceRoom");}*/
 
-    //checks the array of completed dialog names and compares it to the possible convos
     function areDialogsCompleted(possibleConvos, completedConvos){
         for(var i=0; i<possibleConvos.length; i++){
             if(completedConvos.indexOf(possibleConvos[i]) < 0){
                 return false;
             }
         }
-        return true; //if all possible convos are in the completedConvos array, return true
-    } //can use it to check room dialogs as well as level needed dialogs
+        return true;
+    }
 
     function arrayToString(array){
         var stringConcat = "";

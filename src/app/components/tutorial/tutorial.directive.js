@@ -127,9 +127,7 @@ var localgameType; //just for testing
 		};
 
 	function simpleTutorial($log, $timeout, audioService, $stateParams, $location) {
-		console.log("simple tutorial e-1");
-		//a  bad way - should i acsess the route insread - cannot figure out how to get the value if it uses another controller - might break it
-		//temp fix
+
 		var path = $location.path();
 		var p = path.toString();
 		if(p.includes("positive")){
@@ -139,10 +137,6 @@ var localgameType; //just for testing
 			localgameType = false;
 		}
 
-		console.log(">>>path"+path +" boolian value"+localgameType);
-
-		// dialogService. //returns undefined - I get it cz its defined locally ---
-		// console.log(">>>>call from simple rutoral"+dialogService.boolianValTest) ;
 
 		return {
 			restrict: 'E',
@@ -155,8 +149,7 @@ var localgameType; //just for testing
 
 
 		function controller($scope) {
-			console.log(">>>"+$stateParams.gameType);
-			console.log(">>>"+localgameType);
+
 
 			var vm = this;
 			vm.showingNPCtext = false;
@@ -166,8 +159,6 @@ var localgameType; //just for testing
 			var showTimer;
 			var hideTimer;
 
-			// var isPos = dialogService.getGameType();
-			console.log("dialogService.getGameType()")
 			delayDialog();
 
 			vm.gotoState = function(pcOption) {
@@ -239,8 +230,6 @@ var localgameType; //just for testing
 				$timeout.cancel(showTimer);
 				$timeout.cancel(hideTimer);
 				$timeout.cancel(scrollTimer);
-
-				//$log.log("I'm destroyed!");
 			}
 
 

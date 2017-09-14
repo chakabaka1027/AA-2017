@@ -2,15 +2,12 @@
 	'use strict';
 	angular.module('importContent')
 		.service('parseAAContentService', parseAAContentService);
-//can be placd here
-	/** @ngInject */
-	function parseAAContentService($log, xlsxService, $stateParams) {// added stateParams
 
+	/** @ngInject */
+	function parseAAContentService($log, xlsxService, $stateParams) {
 		var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
 
-		var localBoolean; // *** added new //anything is here are the private var
-
-		// place url here
+		var localBoolean;
 		var service = {
 			parsedContent: {},
 
@@ -80,10 +77,10 @@
 
 
 			if (hdrIndexes.length===1) {
-				// it's a 'linear' exchange...
+
 				row = sheetRow(hdrIndexes[0]+1);
 
-					// console.log("::::--- localBoolian ::: was postive ");
+
 				if(gameType === "negative"){
 					for (i=0, code='C'; i<4; i++, code += 'C') {
 						if(i === 0){
@@ -93,7 +90,7 @@
 							parsed['node'+(i+1)][code.substr(1)] = [createBlock(row, 5*i, code, true)];
 
 						}
-						$log.log('linearNegs');
+
 					}
 				} else {
 
@@ -106,7 +103,7 @@
 
 						}
 					}
-					$log.log('linearPos');
+
 
 				}
 
@@ -153,7 +150,7 @@
 
 			return parsed;
 
-			// because I'm lazy and don't want to type that much... :)
+
 			function sheetRow(rowIx) {
 				return xlsxService.sheetRow(sheet, rowIx);
 			}
@@ -244,7 +241,7 @@
 
 			return parsed;
 
-			// because I'm lazy and don't want to type that much... :)
+
 			function sheetRow(rowIx) {
 				return xlsxService.sheetRow(sheet, rowIx);
 			}
@@ -253,7 +250,6 @@
 
 		function parseAllSheets(book, gameType) {
 			var parsed = {};
-			$log.log(book);
 			var sheetNames = book.SheetNames;
 			sheetNames.forEach(function(sheetName) {
 				if (sheetName !== 'Template') {
@@ -261,7 +257,7 @@
 					var sheetParsed = parseSheet(sheet, gameType);
 					if (sheetParsed) {
 						parsed[sheetName] = sheetParsed;
-						$log.log(sheetName);
+
 					} else {
 						$log.warn(sheetName+': unparseable');
 					}
@@ -275,7 +271,6 @@
 
 		function parseAllSheetsFromFile(book, fileObject) {
 			var parsed = {};
-			$log.log(book);
 			var sheetNames = book.SheetNames;
 			sheetNames.forEach(function(sheetName) {
 				if (sheetName !== 'Template') {
@@ -283,7 +278,7 @@
 					var sheetParsed = parseSheetFromFile(sheet, fileObject);
 					if (sheetParsed) {
 						parsed[sheetName] = sheetParsed;
-						$log.log("sheet parsed: "+sheetName);//does not prtint
+
 					} else {
 						$log.warn(sheetName+': unparseable');
 					}
@@ -299,7 +294,6 @@
 		function parseContentFromGameType( gameType) {//!reached
 			return xlsxService.loadWorkbookFromUrl(defaultUrl)
 				.then(function(book) {
-					$log.log("!!!book loaded");
 					service.parsedContent = parseAllSheets(book, gameType);
 					return service.parsedContent;//returns a whole ds of parsed data
 				});
@@ -309,8 +303,6 @@
 		function parseContentFromFile(fileObject) {
 			return xlsxService.loadWorkbookFromFile(fileObject)
 				.then(function(book) {
-
-					$log.log(fileObject);
 					service.parsedContent = parseAllSheetsFromFile(book, fileObject);
 					return service.parsedContent;
 				});

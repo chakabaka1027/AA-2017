@@ -29,7 +29,6 @@
 			});
 
 			$scope.$watch(function(){return $scope.main.levelCount}, function(){
-				$log.log("level = " + $scope.main.levelCount)
 				updateConversations();
 			});
 

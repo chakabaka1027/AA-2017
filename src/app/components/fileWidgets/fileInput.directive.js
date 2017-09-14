@@ -15,7 +15,6 @@
 		};
 
 		function link(scope, elm, attrs) {
-			$log.log(scope);
 
 			elm.on('click', function() {
 				$(elm)[0].value = null; // so that we get a change event...
@@ -28,7 +27,7 @@
 				}
 
 				scope.$apply();
-				
+
 			});
 		}
 	}

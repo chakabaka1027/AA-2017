@@ -7,7 +7,6 @@
 
 	/** @ngInject */
 	function logInManager($location, userDataService, globalGameInfo, $log, $stateParams, dialogService, levelDataHandler){ //$log parameter goes in here
-		console.log("::::--$stateParams.gameType"+$stateParams.gameType);
 
 		var directive = {
 			restrict: 'AE',
@@ -39,7 +38,6 @@
     		}
 
     		levelDataHandler.setUpForGameType(gameType);
-
 		    dialogService.loadFromServer($stateParams.gameType).then(
 		      function(){
 		        dialogService.deferred.resolve();//get the right dailoug
@@ -69,8 +67,10 @@
 
 			function checkID(){ //make sure ID is a number and assign it to the data service
 				userDataService.userID = vm.playerID;
+				userDataService.gameType = gameType;
 				userDataService.resetData();
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
+
 				$state.go("instructions");
 
 				//$location.path("/instructions").search({USERID: vm.playerID});
@@ -87,6 +87,7 @@
 
 			function checkInAs(id) {//user ID - need to send it when we quit
 				userDataService.userID = vm.playerID = id;
+				userDataService.gameType = gameType;
 				userDataService.resetData();
 				userDataService.trackAction(vm.levelCount,"Start","Game_Start","Game Start");
 				$state.go("instructions");
