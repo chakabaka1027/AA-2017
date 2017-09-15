@@ -1,11 +1,9 @@
 <div class="intro">
-	<form name="playerInfo" class="log-in" ng-submit="vm.checkID();">
-		<!--   need to wrap below in ng- if ? bah mentioned baove - is it already done?  -->
+	<form name="playerInfo" class="log-in" ng-submit="vm.submitID();">
 		<input type="text" name="playerID" ng-model="vm.playerID" placeholder="Enter ID" ng-required ng-pattern="/^[A-Za-z0-9\_]+$/">
 		<input type="Submit" name="" value="" class="continue" ng-disabled="playerInfo.playerID.$pristine || playerInfo.playerID.$dirty && playerInfo.playerID.$invalid">
 
 		<div class="custom-error" ng-show="playerInfo.playerID.$error.required || playerInfo.playerID.$dirty && playerInfo.playerID.$invalid">Please enter a correct ID</div>
 	</form>
-	<!--  it is already here but not as a part  the url ? - checking vm.needlogin -->
-	<!-- <div ng-if="!vm.needLogIn" class="continue right" ng-click="vm.next()"></div> -->
+
 </div>

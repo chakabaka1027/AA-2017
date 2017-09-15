@@ -4,7 +4,7 @@
 		.service('parseAAContentService', parseAAContentService);
 
 	/** @ngInject */
-	function parseAAContentService($log, xlsxService, $stateParams) {
+	function parseAAContentService($log, xlsxService) {
 		var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
 
 		var localBoolean;

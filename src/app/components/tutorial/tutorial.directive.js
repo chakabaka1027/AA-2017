@@ -126,7 +126,7 @@ var localgameType; //just for testing
 		    }
 		};
 
-	function simpleTutorial($log, $timeout, audioService, $stateParams, $location) {
+	function simpleTutorial($log, $timeout, audioService, $location) {
 
 		var path = $location.path();
 		var p = path.toString();

@@ -81,77 +81,79 @@
 			var prefix = gameType.split("-")[0];
       $log.log("Loading from url '"+prefix+"' ...");
 
-            return parseAAContentService.parseContentFromGameType(prefix)
-                .then(function(parsedContent) {
-                    $log.log("Test Loaded from url '"+prefix+"'.");
-                    $log.log('Success!');
+      return parseAAContentService.parseContentFromGameType(prefix)
+          .then(function(parsedContent) {
+              $log.log("Test Loaded from url '"+prefix+"'.");
+              $log.log('Success!');
 
-                })
-                .then(function(){
-                	$log.log("Take a look at me now!!!");
-                	adjustDialogWorksheetKeys();
-                	adjustNegativePositiveLinearKeys(gameType);
-                	adjustFeedbackAnimations(gameType);
-
-                })
-                .catch(function() {$log.log('Falling back to JSON files');}
-                );
-
-        }
-
-        function adjustDialogWorksheetKeys() {
-
-        	var casedKeyMap = Object.keys(parseAAContentService.parsedContent)
-        						.reduce(function(acc, wsKey) { acc[wsKey.toUpperCase()] = wsKey; return acc;}, {});
-        	var adjustedKeys = {};
-        	for (var dialogKey in dialogWorksheetKeys) {
-        		adjustedKeys[dialogKey] = casedKeyMap[dialogWorksheetKeys[dialogKey].toUpperCase()];
-        	}
-        	service.dialogWorksheetKeys = dialogWorksheetKeys = adjustedKeys;
-
-  }
-        function adjustNegativePositiveLinearKeys(gameType) {
-
-					var posKeys = "positive";
-					var isPositive = gameType.indexOf(posKeys) > -1;
-					if(isPositive){
-						service.dialogWorksheetKeys['fran_Linear'] = 'FF.Linear.positive';
-						service.dialogWorksheetKeys['mike_Linear'] = 'MM.Linear.positive';
+          })
+          .then(function(){
+          	$log.log("Take a look at me now!!!");
+          	adjustDialogWorksheetKeys();
+          	adjustNegativePositiveLinearKeys(gameType);
+          	adjustFeedbackAnimations(gameType);
+						service.deferred.resolve();
+          })
+          .catch(function() {
+						alert("error loading :"+ prefix +" please contact programmer");
 					}
-					else{
-							console.log("negative value");
-						}
-					 }
+          );
 
-        function adjustFeedbackAnimations(gameType) {
-
-          var ispos = getGameType(gameType);
-					function chaseTree (node){
-						if(!Array.isArray(node)){
-
-							angular.forEach(node , function(subNode){
-									chaseTree(subNode );
-							})
-						}
-
-						else{
-							angular.forEach(node, function(step){
-								if(angular.isUndefined(step.animation)){
-								 step.animation = ispos? step.animationPositive: step.animationNegative;
- 							 }
-						 })
-					}
-				}
-					chaseTree(parseAAContentService.parsedContent);
     }
 
+      function adjustDialogWorksheetKeys() {
 
+      	var casedKeyMap = Object.keys(parseAAContentService.parsedContent)
+      						.reduce(function(acc, wsKey) { acc[wsKey.toUpperCase()] = wsKey; return acc;}, {});
+      	var adjustedKeys = {};
+      	for (var dialogKey in dialogWorksheetKeys) {
+      		adjustedKeys[dialogKey] = casedKeyMap[dialogWorksheetKeys[dialogKey].toUpperCase()];
+      	}
+      	service.dialogWorksheetKeys = dialogWorksheetKeys = adjustedKeys;
 
-		function getGameType(gameType){
+}
+      function adjustNegativePositiveLinearKeys(gameType) {
+
 				var posKeys = "positive";
 				var isPositive = gameType.indexOf(posKeys) > -1;
-				return isPositive;
+				if(isPositive){
+					service.dialogWorksheetKeys['fran_Linear'] = 'FF.Linear.positive';
+					service.dialogWorksheetKeys['mike_Linear'] = 'MM.Linear.positive';
 				}
+				else{
+						console.log("negative value");
+					}
+				 }
+
+      function adjustFeedbackAnimations(gameType) {
+
+        var ispos = getGameType(gameType);
+				function chaseTree (node){
+					if(!Array.isArray(node)){
+
+						angular.forEach(node , function(subNode){
+								chaseTree(subNode );
+						})
+					}
+
+					else{
+						angular.forEach(node, function(step){
+							if(angular.isUndefined(step.animation)){
+							 step.animation = ispos? step.animationPositive: step.animationNegative;
+							 }
+					 })
+				}
+			}
+				chaseTree(parseAAContentService.parsedContent);
+  }
+
+
+
+	function getGameType(gameType){
+			var posKeys = "positive";
+			var isPositive = gameType.indexOf(posKeys) > -1;
+			return isPositive;
+			}
 
 
 		function getDialogs(dialogKey){

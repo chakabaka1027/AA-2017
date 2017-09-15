@@ -1,19 +1,11 @@
 <div class="intro1" ng-if="vm.clickCounter === 0">
 	<simple-tutorial></simple-tutorial>
-	<!--<div class="continue diffRight" ng-click="vm.next()"></div>-->
 </div>
  <div ng-class= "vm.getVersion() > 0 ? 'intro2' : 'intro3' " ng-if="vm.clickCounter === 1" >
-<!-- <div class="intro2" ng-if="vm.clickCounter === 1"> -->
 	<div class="continue diffRight" ng-click="vm.next()"></div>
 </div>
 
-<!-- <div  ng-if="vm.getVersion()=== 0"> false </div>
-<div  ng-if="vm.getVersion()=== 1"> true </div> -->
 
-
-
-
-
-<!--<button ng-click="vm.loadPositive()">Load Positive</button>-->
 
 <div ng-if="vm.isLoading" class="loading-block">...Loading...</div>
+<!-- //make font size bigger - fix the CSS here - or opeque or white ..etc / -->

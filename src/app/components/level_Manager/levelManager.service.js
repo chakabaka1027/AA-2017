@@ -7,7 +7,7 @@
 
 
 	/** @ngInject */
-	function levelDataHandler($log, $stateParams){
+	function levelDataHandler($log){
 		var service = {
 			choiceScores: {A: 0, B: 3, C: 5},
 			successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],

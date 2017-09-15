@@ -5,7 +5,7 @@
 		.directive('initializeGame', initializeGame);
 
 	/** @ngInject */
-	function initializeGame($log, $q, $http, $state, $timeout, $location, $stateParams, gameConfig, globalGameInfo) {
+	function initializeGame($log, $q, $http, $state, $location, userDataService,  $stateParams, dialogService, gameConfig, userGameInfo , levelDataHandler) {
 
 		return {
 			restrict: 'E',
@@ -20,22 +20,35 @@
 
 			gameConfig.fetchConfig()
 				.then(function() {
+
+
 					gameType = $stateParams.gameType || 'negative';
-					globalGameInfo.gameType = gameType;
+
+					if(levelDataHandler.legalLevels.indexOf(gameType) < 0){
+						alert("not a legal level, please type in a legal level");
+						return ;
+					}
+
+					userGameInfo.gameType = gameType;
 					var userID = $location.search().userID; //user ID is a qury param -  (--rul > key=value)
 
 					if (userID) {//if it is in the dictionary
-						globalGameInfo.userForwarded = true;
-						globalGameInfo.userID = userID;
+						userGameInfo.userForwarded = true;
+						userGameInfo.userID = userID;
 					}
 					else {
-						globalGameInfo.userForwarded = false;
+						userGameInfo.userForwarded = false;
 					}
-
+					$log.log(">>>>>> reached!");
+					levelDataHandler.setUpForGameType(gameType);
+					//this may take time - consider moving elsewhere...
+					dialogService.loadFromServer(gameType);
 					// other stuff.....
 
 
-					if (globalGameInfo.userForwarded) {
+					if (userGameInfo.userForwarded) {
+						userDataService.resetData();
+						userDataService.trackAction(0,"Start","Game_Start","Game Start");
 						$state.go('instructions');
 					} else {
 						$state.go('GameStart');
@@ -49,20 +62,3 @@
 	}
 
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

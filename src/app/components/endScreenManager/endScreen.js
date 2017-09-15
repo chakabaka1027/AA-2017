@@ -6,7 +6,7 @@
     .directive('endScreen', endScreen);
 
     /** @ngInject */
-    function endScreen(userDataService, globalGameInfo, $window, levelDataHandler, $state){
+    function endScreen(userDataService, userGameInfo, $window, levelDataHandler, $state){
       var directive = {
         restrict: "E",
         templateUrl: "app/components/endScreenManager/endScreenTemplate.html",
@@ -24,12 +24,12 @@
         var vm = this;
         vm.quit = quit; //this is it what happens when we click
         vm.userID = userDataService.userID;
-        vm.playerScore = globalGameInfo.playerScore;
-        vm.totalConvos = globalGameInfo.totalConvos;
+        vm.playerScore = userGameInfo.playerScore;
+        vm.totalConvos = userGameInfo.totalConvos;
 
         function quit(){ //make sure ID is a number and assign it to the data service
-          if(globalGameInfo.userForwarded){
-            $window.open(globalGameInfo.redirectURL(), '_self'); // let global game info tell us what url we are sending -
+          if(userGameInfo.userForwarded){
+            $window.open(userGameInfo.redirectURL(), '_self'); // let global game info tell us what url we are sending -
           }else{
             userDataService.userID = "";
             $state.go("GameStart");

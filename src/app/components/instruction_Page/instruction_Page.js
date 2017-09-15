@@ -3,7 +3,7 @@
 
 	angular
 		.module('awkwardAnnie')
-		.directive('instructionPage', instructionPage)
+		.directive('instructionPage', instructionPage);
 
 	/** @ngInject */
 	function instructionPage($location, userDataService, $log, $state, dialogService){ //$log parameter goes in here
@@ -24,25 +24,13 @@
 			var vm = this;
 			vm.next = next;
 			vm.clickCounter = 0;
-			vm.loadPositive = loadPositive;
 			vm.getVersion = getVersion;
 
-			function loadPositive(){
-
-				vm.isLoading = true;
-
-				dialogService.loadFromServer("positive").then(function(){
-			        dialogService.deferred.resolve();
-			        $log.log("Successfully received xlsx");
-
-			        $state.go("awkwardAnnieGame")
-
-		    	});
-
-
-
-			}
-
+			//setting promice flasg to ttru e
+			vm.isLoading = true;
+			dialogService.loadedPromise.then(function(){ //if thi swas sesolved vmloading = true else false immeditly
+				vm.isLoading = false;
+			});
 			function getVersion(){
 				var path = $location.path();
 				var p = path.toString();
@@ -64,6 +52,6 @@
 					$state.go("awkwardAnnieGame");
 				}
 			}
-		}
+		} //introController
 	}
 })();

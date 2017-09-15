@@ -6,7 +6,7 @@
 
 	/** @ngInject */
 	function gameManager(gM_Char_Position_Data, gM_Animation_Data, gM_RoomData, gM_FurnitureData,
-		levelDataHandler, mappingService, arrowData, audioService, userDataService, globalGameInfo,
+		levelDataHandler, mappingService, arrowData, audioService, userDataService, userGameInfo,
 		$location, $log){
 
 		var directive = {
@@ -222,8 +222,8 @@
 				if(vm.main.levelCount > levelDataHandler.maxLevel){ /* END GAME CHECK*/
 					userDataService.trackAction("Game end",vm.main.roomKey,"Game_End",vm.main.playerScore,"0");
 					userDataService.postData(); //end game post data, after conversation is done
-					globalGameInfo.playerScore = vm.main.playerScore;
-					globalGameInfo.totalConvos = vm.main.completedConvos.length;
+					userGameInfo.playerScore = vm.main.playerScore;
+					userGameInfo.totalConvos = vm.main.completedConvos.length;
 					$timeout(function() {
 						$state.go("endScreen");
 						//$location.path("/endScreen");
