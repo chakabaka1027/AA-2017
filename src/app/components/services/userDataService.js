@@ -25,7 +25,7 @@
 		var service = {
 			enabled: true, //writes to database
 			userID: "player",
-			version: "AAv2.96",
+			version: "AAv2.98",
 		  gameType: " ",
 			// version: "AAv2.96".concat(savedversion),
 			sessionID: moment().unix(),

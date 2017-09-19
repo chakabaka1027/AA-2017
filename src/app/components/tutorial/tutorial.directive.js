@@ -62,7 +62,7 @@ var localgameType; //just for testing
 	        ]
 	    },
 	    end: {
-	        // npcText: 'Great...'
+				npcText: 'bye'
 	    }
 	};
 
@@ -102,7 +102,7 @@ var localgameType; //just for testing
 		    },
 
 		    s4: {
-		        npcText: 'What? No, people definitely have a sense of humor. You just tend to take things a bit farther than most people do. I forgot what it\’s like to be \“Akward Annie.\” Anyway, I think it\’s time to meet in the lobby. ',
+		        npcText: 'What? No, people definitely have a sense of humor. You just tend to take things a bit farther than most people do. I forgot what it\’s like to be \"Awkward Annie.\” Anyway, I think it\’s time to meet in the lobby. ',
 		        pcOptions: [
 		            {text: 'Thanks. That would really be nice of you.', nextState: 's4a'},
 		            {text: 'The lobby?! That sounds like a great place to get this party started! You do have party decorations and noise makers, right? A dance party always gets the day started right.', nextState: 's5'}
@@ -122,7 +122,7 @@ var localgameType; //just for testing
 		        ]
 		    },
 		    end: {
-		        // npcText: 'Great...'
+		        npcText: 'bye'
 		    }
 		};
 

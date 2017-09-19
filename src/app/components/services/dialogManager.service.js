@@ -44,8 +44,8 @@
 
 //new ones
 			charly_SmallTalk_02:"assets/json/CC.ST.02.json",
-			charly_RQwGr_01:"assets/json/CC.RQwGr.01.json",
-			charly_RQ_02:"assets/json/CC.RQ.02.json",
+			charlie_RQwGr_02:"assets/json/CC.RQwGr.02.json",
+			charlie_RQ_02:"assets/json/CC.RQ.02.json",
 			Luna_RQ_01:"assets/json/LL.RQ.01.json",
 			Luna_RQ_02:"assets/json/LL.RQ.02.json"
 

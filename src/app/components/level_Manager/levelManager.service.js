@@ -169,7 +169,7 @@
 			},
 			level_5:{ /*~~~~~~~~~~~~~~~~~~~~~~FIVE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 				// added CC.RQwGR.01 = ta;led to chatly - //luna01 doesnt play - does it have to do with max levels?
-				requiredConversations: ['mike_SmallTk_01', 'mike_RQ_01', 'fran_GR_02', 'luna_01', 'charly_RQwGr_01'],
+				requiredConversations: ['mike_SmallTk_01', 'mike_RQ_01', 'fran_GR_02', 'luna_02', 'charlie_RQwGr_02'],
 				rooms:{
 					lobby:{
 						characters:{}
@@ -204,18 +204,18 @@
 						characters:{
 							charlie:{ //added values below
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey:"charly_RQwGr_01"
+								dialogKey:"charlie_RQwGr_02"
 							},
 							luna:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey: "luna_01"
+								dialogKey: "luna_02"
 							}
 						}
 					}
 				}
 			},
 			level_6:{ /*~~~~~~~~~~~~~~~~~~~~~~SIX~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_SmallTk_02', 'fran_SmallTk_02', 'charly_RQ_02', 'Luna_RQ_01'],
+				requiredConversations: ['mike_SmallTk_02', 'fran_SmallTk_02', 'charlie_RQ_02', 'Luna_RQ_01'],
 				//charly_RQ_02 --- replaced charly and changed luna to Luna_RQ_01
 				startingRoom: "lobby",
 				rooms:{
@@ -248,7 +248,7 @@
 						characters:{
 							charlie:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey: "charly_RQ_02"
+								dialogKey: "charlie_RQ_02"
 							},
 							luna:{
 								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
@@ -411,7 +411,7 @@
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			'positive-set3':{
 				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-					requiredConversations: ['mike_RQ_02', 'fran_SmallTk_02', 'charlie_02', 'luna_01'],
+					requiredConversations: ['mike_RQ_02', 'fran_SmallTk_02', 'charlie_RQwGr_02', 'luna_01'],
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
@@ -444,7 +444,7 @@
 							characters:{
 								charlie:{
 									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "charlie_02"
+									dialogKey: "charlie_RQwGr_02"
 								},
 								luna:{
 									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
@@ -457,8 +457,8 @@
 			},
 				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Negative – Set 4~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			'negative-set4':{
-				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ //charly_SmallTalk_02charlie_02
-					requiredConversations: ['mike_RQ_01', 'fran_SmallTk_01', 'charlie_02', 'luna_02'], //changed luna_02
+				level_1:{ /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ //charly_SmallTalk_02charlie_RQ_02
+					requiredConversations: ['mike_RQ_01', 'fran_SmallTk_01', 'charlie_RQ_02', 'luna_02'], //changed luna_02
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
@@ -491,7 +491,7 @@
 							characters:{
 								charlie:{
 									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "charlie_02"
+									dialogKey: "charlie_RQ_02"
 								},
 								luna:{
 									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
