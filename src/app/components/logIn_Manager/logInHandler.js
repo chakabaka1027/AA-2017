@@ -1,41 +1,41 @@
-(function(){
-	'use strict';
+(function() {
+  'use strict';
 
-	angular
-		.module('awkwardAnnie')
-		.directive('logInManager', logInManager)
+  angular
+    .module('awkwardAnnie')
+    .directive('logInManager', logInManager)
 
-	/** @ngInject */
-	function logInManager($location, userDataService, userGameInfo, $log, dialogService, levelDataHandler){ //$log parameter goes in here
+  /** @ngInject */
+  function logInManager($location, userDataService, userGameInfo, $log, dialogService, levelDataHandler) { //$log parameter goes in here
 
-		var directive = {
-			restrict: 'AE',
-			controller: introController,
-			templateUrl: "app/components/logIn_Manager/introSpecs.html",
-			scope: {
-				main: "="
-			},
-			controllerAs: 'vm',
-			bindToController: true
-		};
-		return directive;
-//levelDataHandler.legalLevels.indexOf
-		/** @ngInject */
-		function introController($timeout, $location, $state){
-			var vm = this;
-			vm.submitID = submitID;
+    var directive = {
+      restrict: 'AE',
+      controller: introController,
+      templateUrl: "app/components/logIn_Manager/introSpecs.html",
+      scope: {
+        main: "="
+      },
+      controllerAs: 'vm',
+      bindToController: true
+    };
+    return directive;
+    //levelDataHandler.legalLevels.indexOf
+    /** @ngInject */
+    function introController($timeout, $location, $state) {
+      var vm = this;
+      vm.submitID = submitID;
 
-			function submitID(){ //make sure ID is a number and assign it to the data service
-				userDataService.userID = vm.playerID;
-				userDataService.resetData();
-				userDataService.trackAction(0,"Start","Game_Start","Game Start");
+      function submitID() { //make sure ID is a number and assign it to the data service
+        userDataService.userID = vm.playerID;
+        userDataService.resetData();
+        userDataService.trackAction(0, "Start", "Game_Start", "Game Start");
 
-				$state.go("instructions");
+        $state.go("instructions");
 
-				//$location.path("/instructions").search({USERID: vm.playerID});
-			}
+        //$location.path("/instructions").search({USERID: vm.playerID});
+      }
 
 
-		}//end of controller
-	}
+    } //end of controller
+  }
 })();

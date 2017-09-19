@@ -1,145 +1,162 @@
 (function() {
-	'use strict';
+  'use strict';
 
-	angular.module('importContent')
-		.service('xlsxService', xlsxService);
+  angular.module('importContent')
+    .service('xlsxService', xlsxService);
 
-	/** @ngInject */
-	function xlsxService($log, $http, $q) {
+  /** @ngInject */
+  function xlsxService($log, $http, $q) {
 
-		var reParseCR = /([A-Z]+)([0-9]+)/; // for parsing of column/row references
+    var reParseCR = /([A-Z]+)([0-9]+)/; // for parsing of column/row references
 
-		var service = {
-			loadWorkbookFromUrl: loadWorkbookFromUrl,
-			loadWorkbookFromFile: loadWorkbookFromFile,
-			
-			decodeCR: decodeCR,
-			encodeCR: encodeCR,
-			cellValue: cellValue,
-			findSheetSize: findSheetSize,
-			sheetRow: sheetRow
-		};
+    var service = {
+      loadWorkbookFromUrl: loadWorkbookFromUrl,
+      loadWorkbookFromFile: loadWorkbookFromFile,
 
-		return service;
+      decodeCR: decodeCR,
+      encodeCR: encodeCR,
+      cellValue: cellValue,
+      findSheetSize: findSheetSize,
+      sheetRow: sheetRow
+    };
 
-		function decodeCR(crKey) {
-			// convert e.g., 'A1' to {c:0, r:0} and EZ12' to {c:155, r:11} 
+    return service;
 
-			var m = reParseCR.exec(crKey);
-			var cc = m[1], rc = m[2];
+    function decodeCR(crKey) {
+      // convert e.g., 'A1' to {c:0, r:0} and EZ12' to {c:155, r:11}
 
-			var c = 0;
-			for (var i = 0; i<cc.length; i++) {
-				c = 26*c + cc.charCodeAt(i) - 64;
-			}
+      var m = reParseCR.exec(crKey);
+      var cc = m[1],
+        rc = m[2];
 
-			return {c:c-1, r:(rc*1)-1};
-		}
+      var c = 0;
+      for (var i = 0; i < cc.length; i++) {
+        c = 26 * c + cc.charCodeAt(i) - 64;
+      }
 
-		function encodeCR(c,r) {
-			// convert e.g., {c:0, r:0} to 'A1' and {c:155, r:11} to 'EZ12'
-			var CHAR_SPACE = 26; // A-Z
-			var cc = '';
-			while (c>=0) {
-				cc = String.fromCharCode(c % CHAR_SPACE + 65) + cc
-				c = Math.floor(c / CHAR_SPACE) - 1;
-			}
-			return cc+(r+1);
-		}
+      return {
+        c: c - 1,
+        r: (rc * 1) - 1
+      };
+    }
 
-		function cellValue(sheet, c, r) {
-			var cell = sheet[encodeCR(c,r)];
-			return (angular.isUndefined(cell) ? '' : cell.v);
-		}
+    function encodeCR(c, r) {
+      // convert e.g., {c:0, r:0} to 'A1' and {c:155, r:11} to 'EZ12'
+      var CHAR_SPACE = 26; // A-Z
+      var cc = '';
+      while (c >= 0) {
+        cc = String.fromCharCode(c % CHAR_SPACE + 65) + cc
+        c = Math.floor(c / CHAR_SPACE) - 1;
+      }
+      return cc + (r + 1);
+    }
 
-		function findSheetSize(sheet) {
-			var sheetSize = {r:0, c:0};
+    function cellValue(sheet, c, r) {
+      var cell = sheet[encodeCR(c, r)];
+      return (angular.isUndefined(cell) ? '' : cell.v);
+    }
 
-			for (var crKey in sheet) {
-				if (crKey[0]==='!') continue;
-				var cr = decodeCR(crKey);
-				sheetSize.c = Math.max(sheetSize.c, cr.c+1);
-				sheetSize.r = Math.max(sheetSize.r, cr.r+1);
-			}
+    function findSheetSize(sheet) {
+      var sheetSize = {
+        r: 0,
+        c: 0
+      };
 
-			return sheetSize;
-		}
+      for (var crKey in sheet) {
+        if (crKey[0] === '!') continue;
+        var cr = decodeCR(crKey);
+        sheetSize.c = Math.max(sheetSize.c, cr.c + 1);
+        sheetSize.r = Math.max(sheetSize.r, cr.r + 1);
+      }
 
-		function sheetRow(sheet, r) {
-			var numCols = findSheetSize(sheet).c;
-			var row = [];
-			for (var c=0; c<numCols; c++) {
-				row.push(cellValue(sheet, c, r));
-			}
-			return row;
-		}
+      return sheetSize;
+    }
 
-		/* processing array buffers, only required for readAsArrayBuffer; damn you, IE!!! */
-		function fixdata(data) {
-			var o = "", l = 0, w = 10240;
-			for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
-			o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
-			return o;
-		}
+    function sheetRow(sheet, r) {
+      var numCols = findSheetSize(sheet).c;
+      var row = [];
+      for (var c = 0; c < numCols; c++) {
+        row.push(cellValue(sheet, c, r));
+      }
+      return row;
+    }
 
-		function loadWorkbookFromUrl(url) {
-			return $http.get(url, {responseType:'arraybuffer'})
-				.then(function(response) {
-					var arraybuffer = response.data;
+    /* processing array buffers, only required for readAsArrayBuffer; damn you, IE!!! */
+    function fixdata(data) {
+      var o = "",
+        l = 0,
+        w = 10240;
+      for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+      o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+      return o;
+    }
 
-					/* convert data to binary string */
-					var data = new Uint8Array(arraybuffer);
-					var arr = new Array();
-					for(var i = 0; i != data.length; ++i) {
-						arr[i] = String.fromCharCode(data[i]);
-					}
-					var bstr = arr.join("");
+    function loadWorkbookFromUrl(url) {
+      return $http.get(url, {
+          responseType: 'arraybuffer'
+        })
+        .then(function(response) {
+          var arraybuffer = response.data;
 
-					/* Call XLSX */
-					var workbook = XLSX.read(bstr, {type:"binary"});
+          /* convert data to binary string */
+          var data = new Uint8Array(arraybuffer);
+          var arr = new Array();
+          for (var i = 0; i != data.length; ++i) {
+            arr[i] = String.fromCharCode(data[i]);
+          }
+          var bstr = arr.join("");
 
-					return workbook;
-				});
-		}
+          /* Call XLSX */
+          var workbook = XLSX.read(bstr, {
+            type: "binary"
+          });
 
-		// file must be a single file from a file list generated by drag/drop or a file input element...
-		function loadWorkbookFromFile(file) {
-			var deferred = $q.defer();
-			var name = file.name;
-			
-			var reader = new FileReader();
-			var rABS = 'readAsBinaryString' in reader;
+          return workbook;
+        });
+    }
 
-			reader.onload = function(e) {
-				var data = e.target.result;
+    // file must be a single file from a file list generated by drag/drop or a file input element...
+    function loadWorkbookFromFile(file) {
+      var deferred = $q.defer();
+      var name = file.name;
 
-				var workbook;
-				if(rABS) {
-					/* if binary string, read with type 'binary' */
-					workbook = XLSX.read(data, {type: 'binary'});
-				} else {
-					/* if array buffer, convert to base64 */
-					var arr = fixdata(data);
-					workbook = XLSX.read(btoa(arr), {type: 'base64'});
-				}
+      var reader = new FileReader();
+      var rABS = 'readAsBinaryString' in reader;
 
-				/* DO SOMETHING WITH workbook HERE */
-				deferred.resolve(workbook);
-			};
+      reader.onload = function(e) {
+        var data = e.target.result;
 
-			if(rABS) {
-				reader.readAsBinaryString(file);
-			} else {
-				reader.readAsArrayBuffer(file);
-			}
+        var workbook;
+        if (rABS) {
+          /* if binary string, read with type 'binary' */
+          workbook = XLSX.read(data, {
+            type: 'binary'
+          });
+        } else {
+          /* if array buffer, convert to base64 */
+          var arr = fixdata(data);
+          workbook = XLSX.read(btoa(arr), {
+            type: 'base64'
+          });
+        }
 
-			return deferred.promise;
-		}
+        /* DO SOMETHING WITH workbook HERE */
+        deferred.resolve(workbook);
+      };
 
-		// files must be a file list generated by drag/drop or a file input element...
-		function loadWorkbookFromFileList(files) {
-			$log.error('loadWorkbookFromFileList is not implemented yet');
-		}
+      if (rABS) {
+        reader.readAsBinaryString(file);
+      } else {
+        reader.readAsArrayBuffer(file);
+      }
 
-	}
+      return deferred.promise;
+    }
+
+    // files must be a file list generated by drag/drop or a file input element...
+    function loadWorkbookFromFileList(files) {
+      $log.error('loadWorkbookFromFileList is not implemented yet');
+    }
+
+  }
 })();

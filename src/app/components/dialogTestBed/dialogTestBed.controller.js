@@ -19,45 +19,51 @@
 
     //dialogService.loadedPromise.then(activate);
     dialogService.loadFromServer($stateParams.gameType).then(
-      function(){
+      function() {
         dialogService.deferred.resolve();
         activate();
 
-    });
+      });
 
-    function activate(){
+    function activate() {
       vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
       vm.levelUp = false;
-      vm.failedConvos= [];
+      vm.failedConvos = [];
       vm.dialogList = dialogService.getDialogKeys()
-                        .map(function(dkey) {
-                          return {
-                            label: dkey+' ['+dialogService.dialogWorksheetKeys[dkey]+']',
-                            key: dkey
-                          };
-                        });
+        .map(function(dkey) {
+          return {
+            label: dkey + ' [' + dialogService.dialogWorksheetKeys[dkey] + ']',
+            key: dkey
+          };
+        });
       vm.displayCharacters = true;
       vm.hasLoaded = true;
       vm.currentChoiceInfo = {};
 
-      $scope.$watch(function(){ return vm.currentConversation;},
-        function(newVal, oldVal){
+      $scope.$watch(function() {
+          return vm.currentConversation;
+        },
+        function(newVal, oldVal) {
           vm.branchHistory = [];
           vm.talkingWith = vm.currentConversation.split("_")[0];
           vm.displayCharacters = false;
-          $timeout(function(){vm.displayCharacters = true}, 0);
+          $timeout(function() {
+            vm.displayCharacters = true
+          }, 0);
           vm.successPaths = levelDataHandler.getSuccessPaths(vm.currentConversation);
         }
       );
 
-      $scope.$watch(function(){return vm.currentChoiceInfo;}, function() {
+      $scope.$watch(function() {
+        return vm.currentChoiceInfo;
+      }, function() {
         if (!vm.currentChoiceInfo.animation) {
           vm.animationValid = true;
         } else {
           vm.animationValid = conversationP5Data[vm.talkingWith].animations[vm.currentChoiceInfo.animation];
         }
 
-        vm.isSuccessfulPath = levelDataHandler.successPaths.indexOf(vm.currentChoiceInfo.code)>=0;
+        vm.isSuccessfulPath = levelDataHandler.successPaths.indexOf(vm.currentChoiceInfo.code) >= 0;
 
       });
 
@@ -66,22 +72,22 @@
 
     function loadFromFile(fileObject) {
 
-      if(fileObject.name.indexOf(".xlsx") < 0){
-        alert("Sorry, but "+fileObject.name+" is not an XLSX Excel File!")
+      if (fileObject.name.indexOf(".xlsx") < 0) {
+        alert("Sorry, but " + fileObject.name + " is not an XLSX Excel File!")
         return;
       }
 
       vm.hasLoaded = false;
 
-      vm.status = "Loading from file '"+fileObject.name+"' ...";
-      vm.currentSource = fileObject.name+' (local)';
+      vm.status = "Loading from file '" + fileObject.name + "' ...";
+      vm.currentSource = fileObject.name + ' (local)';
 
       parseAAContentService.parseContentFromFile(fileObject)
-          .then(function(parsedContent) {
-              vm.status = "Loaded from file '"+fileObject.name+"'.";
-              vm.lastFileObject = fileObject;
-              vm.hasLoaded = true;
-      });
+        .then(function(parsedContent) {
+          vm.status = "Loaded from file '" + fileObject.name + "'.";
+          vm.lastFileObject = fileObject;
+          vm.hasLoaded = true;
+        });
     }
 
 

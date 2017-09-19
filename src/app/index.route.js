@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
-    //remove url later, before release 
+    //remove url later, before release
     // use different controller for welcome screen
 //is this the page that handles url intries? do we need to inject hte location here?
 //or add it as a new state? ---
@@ -42,7 +42,7 @@
     $stateProvider
       .state('awkwardAnnieGame', {
         //url: '/awkwardAnnieGame',
-        templateUrl: 'app/components/gameManager/AnnieGameContainer/awkwardAnnieGame.html',
+        templateUrl: 'app/components/gameMap/gameManager/AnnieGameContainer/awkwardAnnieGame.html',
         controller: 'MainController', //throws away old main and recreates it
         controllerAs: 'main'
       });

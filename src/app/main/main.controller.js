@@ -8,6 +8,7 @@
 
   /** @ngInject */
   function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService) {
+    console.log(">>>this was injected!");
     var vm = this;
     vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
     vm.levelUp = false;

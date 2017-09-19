@@ -11,16 +11,16 @@
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',
       scope: {
-          main: '=',
-          playerScore: "=",
-          levelCount: "="
+        main: '=',
+        playerScore: "=",
+        levelCount: "="
       },
       controller: NavbarController,
       controllerAs: 'vm',
       bindToController: true
     };
     return directive;
-    
+
     /** @ngInject */
     function NavbarController($scope) {
       var vm = this;
