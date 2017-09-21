@@ -19,10 +19,11 @@
       controller: controller, //controller for this directive
       controllerAs: 'vm',
       bindToController: true,
-      link: link
+      link: link,
       //template: ['<div class="debugContainer">',
       //				'<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Click</input>',
       //			'</div>'].join("")
+      template: ''
     };
     return directive;
 
@@ -320,7 +321,11 @@
 
           room.frameRate(30);
           myCanvas = room.createCanvas(950, 500);
+          
+          // ************* this is where the canvas element gets attached to the DOM
           myCanvas.parent(angular.element.find("game-manager")[0]); // equivalent of $($element)[0]);
+          // *************
+
           setFurniture(currentRoomData); //Set up furniture based on
           resetArrowTimer();
 

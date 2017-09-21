@@ -36,13 +36,13 @@
       .state('instructions', {
         //url: '/instructions',
         template: "<div class='gameContainer'><nav-bar player-score='main.playerScore' level-count='main.levelCount'></nav-bar><instruction_page click-sound></instruction_page></div>",
-         controller: 'MainController', //throws away old main and recreates it
+        controller: 'MainController', //throws away old main and recreates it
         controllerAs: 'main'
       });
     $stateProvider
       .state('awkwardAnnieGame', {
         //url: '/awkwardAnnieGame',
-        templateUrl: 'app/components/gameMap/gameManager/AnnieGameContainer/awkwardAnnieGame.html',
+        template: '<awkward-annie-game></awkward-annie-game>',
         controller: 'MainController', //throws away old main and recreates it
         controllerAs: 'main'
       });

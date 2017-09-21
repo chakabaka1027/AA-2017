@@ -1,0 +1,15 @@
+
+<awkward-annine-game>
+
+	<nav-bar></nav-bar>
+
+	<game-manager room-info="roomInfo">
+		<!-- canvas element gets added in here under program control via p5 -->
+	</game-manager>
+
+	<display-dialog ng-if="showConvo" conversation="conversation">
+	</display-dialog>
+
+	<game-map></game-map>
+
+</awkward-annine-game>

@@ -9,7 +9,7 @@
   function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler) {
     var directive = {
       restrict: 'E',
-      templateUrl: 'app/components/dialogManager/dialogManager.html',
+      templateUrl: 'app/components/displayDialog/displayDialog.html',
       controller: displayDialogController,
       scope: {
         main: "=",

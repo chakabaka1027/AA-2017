@@ -6,6 +6,7 @@
     .controller('MainController', MainController);
 
 
+    /** @ngInject */
     function MainController(levelDataHandler, userDataService, $log) {
 
     // function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService) {
@@ -177,3 +178,5 @@ function arrayToString(array){ //or string.join
     return stringConcat;
 }
 }
+*/
+
