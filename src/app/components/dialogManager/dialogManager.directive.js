@@ -36,7 +36,7 @@
       var successfulConvos;
       var scores = levelDataHandler.choiceScores;
       vm.choiceDelay = true;
-      vm.main.totalConvoPoints = 0;
+      vm.main.totalConvoPoints = 0; //q whsats the point of msin controller then ?
       vm.showContinue = false;
       vm.clickContinue = clickContinue;
       vm.showNode2 = showNode2;
