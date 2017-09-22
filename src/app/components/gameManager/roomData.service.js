@@ -3,10 +3,10 @@
 
 	angular
 		.module('awkwardAnnie')
-		.service('gM_RoomData', gM_RoomData);
+		.service('roomData', roomData);
 
 	/** @ngInject */
-	function gM_RoomData(){
+	function roomData(){
 		var roomData = {
 			anniesOffice: { //Annie's Office
 				bg: "assets/images/rooms/Annie-Room-Bkgd.jpg",

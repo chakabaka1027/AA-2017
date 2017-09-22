@@ -3,10 +3,10 @@
 	
 	angular
 		.module('awkwardAnnie')
-		.service('gM_FurnitureData', gM_FurnitureData);
+		.service('furnitureData', furnitureData);
 
 		/** @ngInject */
-		function gM_FurnitureData(){
+		function furnitureData(){
 			// name of furniture must be the same as the furniture object in gameManagerRoom.service
 			var furnitureData = {
 				annies_whiteBoard: "assets/images/rooms/Room_Items/Annie-Room-Board.png",

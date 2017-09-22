@@ -3,10 +3,10 @@
 
 	angular
 		.module('awkwardAnnie')
-		.service('gM_Animation_Data', gM_Animation_Data);
+		.service('animationData', animationData);
 
 	/** @ngInject */
-	function gM_Animation_Data(){
+	function animationData(){
 		var gameCharacterData = {
 			annie: {
 				animations: {

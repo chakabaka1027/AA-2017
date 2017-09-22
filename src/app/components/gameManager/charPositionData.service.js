@@ -3,10 +3,11 @@
 
 	angular
 		.module('awkwardAnnie')
-		.service('gM_Char_Position_Data', gM_Char_Position_Data);
+		.service('charPositionData', charPositionData);
 
 	/** @ngInject */
-	function gM_Char_Position_Data(){
+	function charPositionData(){
+
 		var startLocations = {
 			upperL:{ //if you make the y too low or too high she'll collide with the door
 				x: 115, y: 150, animationState: "standingDown", mirror: null
@@ -27,6 +28,7 @@
 				x: 175, y: 410, animationState: "standingUp", mirror: null
 			}
 		};
+
 		var gameCharacterData = {
 			annie: {
 				startingX: 750, startingY: 260,
@@ -108,7 +110,8 @@
 					colliderWidth: 60, colliderHeight: 60
 				}
 			}
-		}
+		};
+
 		return gameCharacterData;
 	}
 })();
