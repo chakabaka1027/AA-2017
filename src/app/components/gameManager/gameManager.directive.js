@@ -54,7 +54,7 @@
         //    up key        down key         right key    left key
         if (code === 38 || code === 40 || code === 39 || code === 37) {
           ctlr.walkingInfo.wasMouseTriggered = false;
-          ctlr.annie_Walking = true; //set to true when we press on the key - sets to false if off of key ? 
+          ctlr.annie_Walking = true; //set to true when we press on the key - sets to false if off of key ?
           ctlr.walkingInfo.walking = true;
           switch (code) {
             case 38:
@@ -442,75 +442,7 @@
             }
           }
 
-          //ETS wanted this transition, ignoring it for now
-          // if(vm.main.levelCount === 2 && vm.main.beginingOfLevel2){
-          // 	previousRoom = "lobby";
-          // 	createRoom("conferenceRoom");
-          // }
-          // Keep annie from wallking off the walls
-          // if (annieSprite.position.y < minHeight) {
-          //   annieSprite.position.y += 3;
-          //   vm.annie_Walking = false;
-          //   vm.walkingInfo.walking = false;
-          // } else if (annieSprite.position.y > maxHeight) {
-          //   annieSprite.position.y -= 3;
-          //   vm.annie_Walking = false;
-          //   vm.walkingInfo.walking = false;
-          // } else if (annieSprite.position.x < minWidth) {
-          //   annieSprite.position.x += 3;
-          //   vm.annie_Walking = false;
-          //   vm.walkingInfo.walking = false;
-          //
-          // } else if (annieSprite.position.x > maxWidth) {
-          //   annieSprite.position.x -= 3;
-          //   vm.annie_Walking = false;
-          //   vm.walkingInfo.walking = false;
-          //
-          // }
-          // // Make annie walk
-          // if (vm.walkingInfo.walking && !annie_Talking) {
-          //
-          //   resetArrowTimer();
-          //
-          //   if (vm.walkingInfo.direction === "left") { //walk left
-          //     annieSprite.changeAnimation("walkingSide");
-          //     annieSprite.mirrorX(1);
-          //     annieSprite.velocity.x = -walking_Speed;
-          //     annieSprite.velocity.y = 0;
-          //   } else if (vm.walkingInfo.direction === "right") { //walk right
-          //     annieSprite.changeAnimation("walkingSide");
-          //     annieSprite.mirrorX(-1);
-          //     annieSprite.velocity.x = walking_Speed;
-          //     annieSprite.velocity.y = 0;
-          //   } else if (vm.walkingInfo.direction === "up") { //walk up, away from the player
-          //     annieSprite.changeAnimation("walkingUp");
-          //     annieSprite.velocity.y = -walking_Speed;
-          //     annieSprite.velocity.x = 0;
-          //   } else if (vm.walkingInfo.direction === "down") { //walk down, towards the player
-          //     annieSprite.changeAnimation("walkingDown");
-          //     annieSprite.velocity.y = walking_Speed;
-          //     annieSprite.velocity.x = 0;
-          //   }
-          // } else if (!vm.walkingInfo.walking) { //if not walking or out of bounds, draw standing image
-          //   annieSprite.velocity.x = 0; //Stop annie from walking
-          //   annieSprite.velocity.y = 0;
-          //   if (vm.walkingInfo.direction === "left") {
-          //     annieSprite.changeAnimation("standingSide");
-          //     annieSprite.mirrorX(1);
-          //   } else if (vm.walkingInfo.direction === "right") {
-          //     annieSprite.changeAnimation("standingSide");
-          //     annieSprite.mirrorX(-1);
-          //   } else if (vm.walkingInfo.direction === "up") {
-          //     annieSprite.changeAnimation("standingUp");
-          //   } else if (vm.walkingInfo.direction === "down") {
-          //     annieSprite.changeAnimation("standingDown");
-          //   } else if (annie_Talking) {
-          //     annieSprite.changeAnimation("talking");
-          //     if (annieFaceOtherWay === true) {
-          //       annieSprite.mirrorX(-1);
-          //     }
-          //   }
-          // }
+
           //room.drawSprites();
           AnnieController();
           drawFurnitureBehind();
@@ -563,38 +495,29 @@
 
             resetArrowTimer();
 
-            if (vm.walkingInfo.direction === "left") { //walk left
-              annieSprite.changeAnimation("walkingSide");
-              annieSprite.mirrorX(1);
-              annieSprite.velocity.x = -walking_Speed;
-              annieSprite.velocity.y = 0;
+            if (vm.walkingInfo.direction === "left") { //walk left //paramaters - animation, mirrot value - x vel and y vel
+              moveAnnieManagment( "walkingSide",  1, -walking_Speed, 0 ); //odd sending a -v value like this didnt give me an error ? js...
             } else if (vm.walkingInfo.direction === "right") { //walk right
-              annieSprite.changeAnimation("walkingSide");
-              annieSprite.mirrorX(-1);
-              annieSprite.velocity.x = walking_Speed;
-              annieSprite.velocity.y = 0;
+              moveAnnieManagment( "walkingSide",  -1, walking_Speed, 0 );
             } else if (vm.walkingInfo.direction === "up") { //walk up, away from the player
-              annieSprite.changeAnimation("walkingUp");
-              annieSprite.velocity.y = -walking_Speed;
-              annieSprite.velocity.x = 0;
+              moveAnnieManagment( "walkingUp",  0, 0, -walking_Speed );
             } else if (vm.walkingInfo.direction === "down") { //walk down, towards the player
-              annieSprite.changeAnimation("walkingDown");
-              annieSprite.velocity.y = walking_Speed;
-              annieSprite.velocity.x = 0;
+              moveAnnieManagment( "walkingDown",  0, 0, walking_Speed );
             }
           } else if (!vm.walkingInfo.walking) { //if not walking or out of bounds, draw standing image
-            annieSprite.velocity.x = 0; //Stop annie from walking
-            annieSprite.velocity.y = 0;
+
             if (vm.walkingInfo.direction === "left") {
-              annieSprite.changeAnimation("standingSide");
-              annieSprite.mirrorX(1);
+              moveAnnieManagment( "standingSide",  1, 0, 0 ); //not sure if this is a better way or not - adds more lines but it is written - or add a new funciton that does just this-
+
             } else if (vm.walkingInfo.direction === "right") {
-              annieSprite.changeAnimation("standingSide");
-              annieSprite.mirrorX(-1);
+              moveAnnieManagment( "standingSide",  -1, 0, 0 );
+
             } else if (vm.walkingInfo.direction === "up") {
-              annieSprite.changeAnimation("standingUp");
+              moveAnnieManagment( "standingUp",  0, 0, 0 );
+
             } else if (vm.walkingInfo.direction === "down") {
-              annieSprite.changeAnimation("standingDown");
+              moveAnnieManagment( "standingDown",  0, 0, 0 );
+
             } else if (annie_Talking) {
               annieSprite.changeAnimation("talking");
               if (annieFaceOtherWay === true) {
@@ -604,7 +527,6 @@
           }//end of else if
 
         }//end of annie controller  functionn
-
 
 
         function drawFurnitureInFront() {
@@ -871,6 +793,17 @@
       function moveAnnie(){
 
       }
+
+      function moveAnnieManagment( animation,  mirrorValue, Xvelocity, yVelocity ){
+        //tried this with an extra cond for missoring didn't work - so doing an overloaded method --
+        if(mirrorValue!=0){
+          annieSprite.mirrorX(mirrorValue);
+        }
+        annieSprite.changeAnimation(animation);
+        annieSprite.velocity.x = Xvelocity;
+        annieSprite.velocity.y = yVelocity;
+      }
+
 
     } //end of controller
   } //end of game manager/file
