@@ -54,7 +54,7 @@
         //    up key        down key         right key    left key
         if (code === 38 || code === 40 || code === 39 || code === 37) {
           ctlr.walkingInfo.wasMouseTriggered = false;
-          ctlr.annie_Walking = true;
+          ctlr.annie_Walking = true; //set to true when we press on the key - sets to false if off of key ? 
           ctlr.walkingInfo.walking = true;
           switch (code) {
             case 38:
@@ -329,7 +329,7 @@
 
           room.frameRate(30);
           myCanvas = room.createCanvas(950, 500);
-          
+
           // ************* this is where the canvas element gets attached to the DOM
           myCanvas.parent(angular.element.find("game-manager")[0]); // equivalent of $($element)[0]);
           // *************
@@ -340,7 +340,7 @@
           /*==================================================================================
           	Create characters and add animations
           ==================================================================================*/
-          
+
           npcSprites = [];
           for (var spriteName in vm.main.roomData.characters) {
             var spriteInfo = positionData[spriteName][currentRoomKey];
@@ -448,25 +448,116 @@
           // 	createRoom("conferenceRoom");
           // }
           // Keep annie from wallking off the walls
-          if (annieSprite.position.y < minHeight) {
-            annieSprite.position.y += 3;
-            vm.annie_Walking = false;
-            vm.walkingInfo.walking = false;
-          } else if (annieSprite.position.y > maxHeight) {
-            annieSprite.position.y -= 3;
-            vm.annie_Walking = false;
-            vm.walkingInfo.walking = false;
-          } else if (annieSprite.position.x < minWidth) {
-            annieSprite.position.x += 3;
-            vm.annie_Walking = false;
-            vm.walkingInfo.walking = false;
+          // if (annieSprite.position.y < minHeight) {
+          //   annieSprite.position.y += 3;
+          //   vm.annie_Walking = false;
+          //   vm.walkingInfo.walking = false;
+          // } else if (annieSprite.position.y > maxHeight) {
+          //   annieSprite.position.y -= 3;
+          //   vm.annie_Walking = false;
+          //   vm.walkingInfo.walking = false;
+          // } else if (annieSprite.position.x < minWidth) {
+          //   annieSprite.position.x += 3;
+          //   vm.annie_Walking = false;
+          //   vm.walkingInfo.walking = false;
+          //
+          // } else if (annieSprite.position.x > maxWidth) {
+          //   annieSprite.position.x -= 3;
+          //   vm.annie_Walking = false;
+          //   vm.walkingInfo.walking = false;
+          //
+          // }
+          // // Make annie walk
+          // if (vm.walkingInfo.walking && !annie_Talking) {
+          //
+          //   resetArrowTimer();
+          //
+          //   if (vm.walkingInfo.direction === "left") { //walk left
+          //     annieSprite.changeAnimation("walkingSide");
+          //     annieSprite.mirrorX(1);
+          //     annieSprite.velocity.x = -walking_Speed;
+          //     annieSprite.velocity.y = 0;
+          //   } else if (vm.walkingInfo.direction === "right") { //walk right
+          //     annieSprite.changeAnimation("walkingSide");
+          //     annieSprite.mirrorX(-1);
+          //     annieSprite.velocity.x = walking_Speed;
+          //     annieSprite.velocity.y = 0;
+          //   } else if (vm.walkingInfo.direction === "up") { //walk up, away from the player
+          //     annieSprite.changeAnimation("walkingUp");
+          //     annieSprite.velocity.y = -walking_Speed;
+          //     annieSprite.velocity.x = 0;
+          //   } else if (vm.walkingInfo.direction === "down") { //walk down, towards the player
+          //     annieSprite.changeAnimation("walkingDown");
+          //     annieSprite.velocity.y = walking_Speed;
+          //     annieSprite.velocity.x = 0;
+          //   }
+          // } else if (!vm.walkingInfo.walking) { //if not walking or out of bounds, draw standing image
+          //   annieSprite.velocity.x = 0; //Stop annie from walking
+          //   annieSprite.velocity.y = 0;
+          //   if (vm.walkingInfo.direction === "left") {
+          //     annieSprite.changeAnimation("standingSide");
+          //     annieSprite.mirrorX(1);
+          //   } else if (vm.walkingInfo.direction === "right") {
+          //     annieSprite.changeAnimation("standingSide");
+          //     annieSprite.mirrorX(-1);
+          //   } else if (vm.walkingInfo.direction === "up") {
+          //     annieSprite.changeAnimation("standingUp");
+          //   } else if (vm.walkingInfo.direction === "down") {
+          //     annieSprite.changeAnimation("standingDown");
+          //   } else if (annie_Talking) {
+          //     annieSprite.changeAnimation("talking");
+          //     if (annieFaceOtherWay === true) {
+          //       annieSprite.mirrorX(-1);
+          //     }
+          //   }
+          // }
+          //room.drawSprites();
+          AnnieController();
+          drawFurnitureBehind();
+          drawNPCs();
 
-          } else if (annieSprite.position.x > maxWidth) {
-            annieSprite.position.x -= 3;
-            vm.annie_Walking = false;
-            vm.walkingInfo.walking = false;
 
+          /*=================== Draw UI elements ===============================================*/
+          //If annie is !walking, !talking, start timer
+          if (showArrows) {
+            drawDoorArrows();
           }
+          /*=================== Draw NPC dialog bubble===============================================*/
+          npcSprites.forEach(function(character) {
+            if (checkRoomDialogs(character.name)) {
+              if (character !== lastCharCollidedInto && !showPointsBubble) { //always draw bubble
+                drawBubble(character);
+              } else if (character === lastCharCollidedInto && !conversationResetBubble.visible && !showPointsBubble) { //if bubble is already drawn, skip bubble
+                drawBubble(character);
+              }
+            }
+          });
+          if (showPointsBubble) { // draw bubble
+            drawPointsBubble(vm.main.totalConvoPoints, lastCharCollidedInto); //lastCharCollidedInto
+          }
+
+          room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
+
+          drawFurnitureInFront();
+          if (conversationResetBubble.visible) {
+            room.drawSprite(conversationResetBubble);
+          }
+
+          vm.anniePosition = annieSprite.position;
+          vm.updateWalkDirection();
+
+        }; //end of draw function
+
+        /*=================== Check when key is released and stop walking ===============================================*/
+        room.keyReleased = function(event) {
+          vm.annie_Walking = false;
+          vm.walkingInfo.walking = false;
+        };
+
+        function AnnieController(){          //rename it - testing
+
+          // moveAnnieSetUp(); //looks like there isnt a need for it ? weird - part one in its own function
+          moveAnnie();
           // Make annie walk
           if (vm.walkingInfo.walking && !annie_Talking) {
 
@@ -510,49 +601,11 @@
                 annieSprite.mirrorX(-1);
               }
             }
-          }
-          //room.drawSprites();
+          }//end of else if
 
-          drawFurnitureBehind();
-          drawNPCs();
+        }//end of annie controller  functionn
 
 
-          /*=================== Draw UI elements ===============================================*/
-          //If annie is !walking, !talking, start timer
-          if (showArrows) {
-            drawDoorArrows();
-          }
-          /*=================== Draw NPC dialog bubble===============================================*/
-          npcSprites.forEach(function(character) {
-            if (checkRoomDialogs(character.name)) {
-              if (character !== lastCharCollidedInto && !showPointsBubble) { //always draw bubble
-                drawBubble(character);
-              } else if (character === lastCharCollidedInto && !conversationResetBubble.visible && !showPointsBubble) { //if bubble is already drawn, skip bubble
-                drawBubble(character);
-              }
-            }
-          });
-          if (showPointsBubble) { // draw bubble
-            drawPointsBubble(vm.main.totalConvoPoints, lastCharCollidedInto); //lastCharCollidedInto
-          }
-
-          room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
-
-          drawFurnitureInFront();
-          if (conversationResetBubble.visible) {
-            room.drawSprite(conversationResetBubble);
-          }
-
-          vm.anniePosition = annieSprite.position;
-          vm.updateWalkDirection();
-
-        }; //end of draw
-
-        /*=================== Check when key is released and stop walking ===============================================*/
-        room.keyReleased = function(event) {
-          vm.annie_Walking = false;
-          vm.walkingInfo.walking = false;
-        };
 
         function drawFurnitureInFront() {
           furniture.forEach(function(item) {
@@ -785,6 +838,40 @@
           }
         }
       });
+//////*****************************  new functions     *************************************/////////
+//////*****************************  &heler functions  ************************************/////////
+//////*************************************************************************************/////////
+
+      //new helper functions - to declutter
+      function moveAnnieSetUp(){  //commented doesnt look like its being needed - but if it is used and setUpWALLKING BOOLIAN IS NT ON - stops annie from moving
+
+        if (annieSprite.position.y < minHeight) {
+            annieSprite.position.y += 3;
+            setupAnnieWalkingBoolian();
+        } else if (annieSprite.position.y > maxHeight) {
+            annieSprite.position.y -= 3;
+            setupAnnieWalkingBoolian();
+        } else if (annieSprite.position.x < minWidth) {
+            annieSprite.position.x += 3;
+            setupAnnieWalkingBoolian();
+        } else if (annieSprite.position.x > maxWidth) {
+            annieSprite.position.x -= 3;
+            setupAnnieWalkingBoolian();
+        }
+        //since this happens in evry statment
+        // vm.annie_Walking = false;
+        // vm.walkingInfo.walking = false;// coppying this here stops annie from moving - is something setting it to true ?
+    }//end of move annie
+
+      function setupAnnieWalkingBoolian(){
+        vm.annie_Walking = false;
+        vm.walkingInfo.walking = false;
+      }
+
+      function moveAnnie(){
+
+      }
+
     } //end of controller
   } //end of game manager/file
 })();
