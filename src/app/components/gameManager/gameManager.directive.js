@@ -441,13 +441,10 @@
               handleDoorCollision("lower_left_door");
             }
           }
-
-
           //room.drawSprites();
           AnnieController();
           drawFurnitureBehind();
           drawNPCs();
-
 
           /*=================== Draw UI elements ===============================================*/
           //If annie is !walking, !talking, start timer
@@ -488,45 +485,10 @@
 
         function AnnieController(){          //rename it - testing
 
-          // moveAnnieSetUp(); //looks like there isnt a need for it ? weird - part one in its own function
-          moveAnnie();
-          // Make annie walk
-          if (vm.walkingInfo.walking && !annie_Talking) {
+          moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ); //declared it out of scope hence sending them - also no need for set up ? works without it ( left it in incase it breaks anything )
+          moveAnnie(walking_Speed);
 
-            resetArrowTimer();
-
-            if (vm.walkingInfo.direction === "left") { //walk left //paramaters - animation, mirrot value - x vel and y vel
-              moveAnnieManagment( "walkingSide",  1, -walking_Speed, 0 ); //odd sending a -v value like this didnt give me an error ? js...
-            } else if (vm.walkingInfo.direction === "right") { //walk right
-              moveAnnieManagment( "walkingSide",  -1, walking_Speed, 0 );
-            } else if (vm.walkingInfo.direction === "up") { //walk up, away from the player
-              moveAnnieManagment( "walkingUp",  0, 0, -walking_Speed );
-            } else if (vm.walkingInfo.direction === "down") { //walk down, towards the player
-              moveAnnieManagment( "walkingDown",  0, 0, walking_Speed );
-            }
-          } else if (!vm.walkingInfo.walking) { //if not walking or out of bounds, draw standing image
-
-            if (vm.walkingInfo.direction === "left") {
-              moveAnnieManagment( "standingSide",  1, 0, 0 ); //not sure if this is a better way or not - adds more lines but it is written - or add a new funciton that does just this-
-
-            } else if (vm.walkingInfo.direction === "right") {
-              moveAnnieManagment( "standingSide",  -1, 0, 0 );
-
-            } else if (vm.walkingInfo.direction === "up") {
-              moveAnnieManagment( "standingUp",  0, 0, 0 );
-
-            } else if (vm.walkingInfo.direction === "down") {
-              moveAnnieManagment( "standingDown",  0, 0, 0 );
-
-            } else if (annie_Talking) {
-              annieSprite.changeAnimation("talking");
-              if (annieFaceOtherWay === true) {
-                annieSprite.mirrorX(-1);
-              }
-            }
-          }//end of else if
-
-        }//end of annie controller  functionn
+        }
 
 
         function drawFurnitureInFront() {
@@ -743,11 +705,7 @@
         if (currentRoom) {
           if (vm.main.hideDialog !== oldVal && newVal) { //don't play when it opens
             vm.main.playerScore += vm.main.totalConvoPoints; //update score
-            // Check for end of level
-            // if(vm.main.areDialogsCompleted(vm.main.levelConvosNeeded,vm.main.completedConvos)){ //is player done with all convos in the level
-            // 	vm.main.levelCount += 1;  if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room
-            // 	vm.main.nextLevelData();
-            // }
+
             switch (vm.main.lastConversationSuccessful) {
               case true:
                 audioService.playAudio("UIrightanswer.wav");
@@ -761,11 +719,11 @@
         }
       });
 //////*****************************  new functions     *************************************/////////
-//////*****************************  &heler functions  ************************************/////////
-//////*************************************************************************************/////////
+//////*****************************  &helper functions  ************************************/////////
+//////******************************** related to annie only - *****************************************************/////////
 
       //new helper functions - to declutter
-      function moveAnnieSetUp(){  //commented doesnt look like its being needed - but if it is used and setUpWALLKING BOOLIAN IS NT ON - stops annie from moving
+      function moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ){  //commented doesnt look like its being needed - but if it is used and setUpWALLKING BOOLIAN IS NT ON - stops annie from moving
 
         if (annieSprite.position.y < minHeight) {
             annieSprite.position.y += 3;
@@ -780,22 +738,47 @@
             annieSprite.position.x -= 3;
             setupAnnieWalkingBoolian();
         }
-        //since this happens in evry statment
-        // vm.annie_Walking = false;
-        // vm.walkingInfo.walking = false;// coppying this here stops annie from moving - is something setting it to true ?
+        //since this happens in evry statmen why not add them in the end - logical error doesn't work // vm.annie_Walking = false;  // vm.walkingInfo.walking = false;// coppying this here stops annie from moving - is something setting it to true ?
     }//end of move annie
 
-      function setupAnnieWalkingBoolian(){
+      function setupAnnieWalkingBoolian(){//would refactor this but it would create more conditions to be checked  - not sure if it would benifit us //      function setupAnnieWalkingBoolian(xValue, yValue, isWalking){//would refactor this but it would create more conditions to be checked  - not sure if it would benifit us
         vm.annie_Walking = false;
         vm.walkingInfo.walking = false;
       }
 
-      function moveAnnie(){
+      function moveAnnie(walking_Speed){ //this is still ugly -- check if it is being called anywhere else( maybe where we check left.right/up --- ) -
+        if (vm.walkingInfo.walking && !annie_Talking) {
+          resetArrowTimer();
 
+          if (vm.walkingInfo.direction === "left") { //walk left //paramaters - animation, mirrot value - x vel and y vel
+              moveAnnieManagment( "walkingSide",  1, -walking_Speed, 0 ); //odd sending a -v value like this didnt give me an error ? js...
+          } else if (vm.walkingInfo.direction === "right") { //walk right
+              moveAnnieManagment( "walkingSide",  -1, walking_Speed, 0 );
+          } else if (vm.walkingInfo.direction === "up") { //walk up, away from the player
+              moveAnnieManagment( "walkingUp",  0, 0, -walking_Speed );
+          } else if (vm.walkingInfo.direction === "down") { //walk down, towards the player
+              moveAnnieManagment( "walkingDown",  0, 0, walking_Speed );
+          }
+        } else if (!vm.walkingInfo.walking) { //if not walking or out of bounds, draw standing image
+
+            if (vm.walkingInfo.direction === "left") {
+                moveAnnieManagment( "standingSide",  1, 0, 0 ); //not sure if this is a better way or not - adds more lines but it is written - or add a new funciton that does just this-
+            } else if (vm.walkingInfo.direction === "right") {//os this being called anywhere else - ?
+                moveAnnieManagment( "standingSide",  -1, 0, 0 );
+            } else if (vm.walkingInfo.direction === "up") {
+                moveAnnieManagment( "standingUp",  0, 0, 0 );
+            } else if (vm.walkingInfo.direction === "down") {
+                moveAnnieManagment( "standingDown",  0, 0, 0 );
+            } else if (annie_Talking) {
+              annieSprite.changeAnimation("talking");
+              if (annieFaceOtherWay === true) {
+                annieSprite.mirrorX(-1);
+              }
+            }
+        }//end of else if
       }
 
       function moveAnnieManagment( animation,  mirrorValue, Xvelocity, yVelocity ){
-        //tried this with an extra cond for missoring didn't work - so doing an overloaded method --
         if(mirrorValue!=0){
           annieSprite.mirrorX(mirrorValue);
         }
@@ -803,8 +786,6 @@
         annieSprite.velocity.x = Xvelocity;
         annieSprite.velocity.y = yVelocity;
       }
-
-
     } //end of controller
   } //end of game manager/file
 })();

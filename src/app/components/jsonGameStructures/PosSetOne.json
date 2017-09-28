@@ -1,0 +1,46 @@
+{"positive-set":{
+  "level_1":{
+  "requiredConversations": ["mike_SmallTk_02", "fran_RQ_02", "charlie_01", "Luna_RQ_01"],
+    "startingRoom": "lobby",
+    "rooms":{
+      "lobby":{
+        "characters":{
+          "fran":{
+            "successPaths": ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+            "dialogKey": "fran_RQ_02"
+          }
+        }
+      },
+      "conferenceRoom":{
+        "characters":{}
+      },
+      "anniesOffice":{
+        "characters":{}
+      },
+      "mikesOffice":{
+        "characters": {
+          "mike":{
+            "successPaths": ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+            "dialogKey": "mike_SmallTk_02"
+          }
+        }
+      },
+      "fransOffice":{
+        "characters":{
+        }
+      },
+      "breakRoom":{
+        "characters":{
+        "charlie":{
+            "successPaths": ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+            "dialogKey": "charlie_01"
+          },
+          "luna":{
+          "successPaths": ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
+          "dialogKey": "Luna_RQ_01"
+          }
+        }
+      }
+    }
+  }
+},
