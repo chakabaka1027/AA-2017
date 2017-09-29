@@ -14,7 +14,7 @@
 
     $stateProvider
       .state('initialization', {
-        // url: '/{gameType}',
+        url: '/{gameType}',
         template: '<initialize-game></initialize-game>'
       });
 
@@ -42,7 +42,7 @@
     $stateProvider
       .state('awkwardAnnieGame', {
         //url: '/awkwardAnnieGame',
-        url: '/{gameType}',
+        // url: '/{gameType}',
         template: '<awkward-annie-game></awkward-annie-game>',
         controller: 'MainController', //throws away old main and recreates it
         controllerAs: 'main'

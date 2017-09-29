@@ -50,7 +50,6 @@
           $timeout(function() {
             vm.displayCharacters = true
           }, 0);
-          vm.successPaths = levelDataHandler.getSuccessPaths(vm.currentConversation);
         }
       );
 

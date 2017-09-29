@@ -40,13 +40,13 @@
         var room = vm.rooms[roomKey];
         var main = $scope.main;
 
-        if (!room.characters) {
+        if (!room) {
           return false;
         }
 
-        for (var personName in room.characters) {
-          if (room.characters[personName]) {
-            var personInfo = room.characters[personName];
+        for (var personName in room) {
+          if (room[personName]) {
+            var personInfo = room[personName];
             if (personInfo.dialogKey || personInfo.successPaths) {
               if (main.completedConvos.indexOf(personInfo.dialogKey) < 0) {
                 return true;
@@ -71,8 +71,8 @@
           return;
         }
         vm.roomConversations = {};
-        vm.levels = levelDataHandler["level_" + $scope.main.levelCount];
-        vm.rooms = vm.levels.rooms;
+        vm.level = levelDataHandler.levels["level_" + $scope.main.levelCount];
+        vm.rooms = vm.level.rooms;
         angular.forEach(vm.roomKeys, function(roomKey) {
           vm.roomConversations[roomKey] = roomHasConversation(roomKey);
         });

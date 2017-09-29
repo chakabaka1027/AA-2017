@@ -257,7 +257,7 @@
       function trackRoomEntry() {
           /*========== Tracking Room Enter ===================================*/
           var talkingNPCs = [], npcNames = [];
-          for (var spriteName in vm.main.roomData.characters) {
+          for (var spriteName in vm.main.roomData) {
             if (checkRoomDialogs(spriteName)) {
               talkingNPCs.push(spriteName);
               npcNames.push(spriteName);
@@ -342,7 +342,7 @@
           ==================================================================================*/
 
           npcSprites = [];
-          for (var spriteName in vm.main.roomData.characters) {
+          for (var spriteName in vm.main.roomData) {
             var spriteInfo = positionData[spriteName][currentRoomKey];
             if (angular.isUndefined(vm.main.convoCounter[spriteName])) {
               vm.main.convoCounter[spriteName] = 0;
@@ -622,7 +622,7 @@
       function dialogTriggered(spriteA, spriteB) {
         vm.walkingInfo.walking = false;
 
-        var characters = vm.main.roomData.characters;
+        var characters = vm.main.roomData;
         lastCharCollidedInto = spriteB;
         if (conversationResetBubble.visible) { //&& spriteB === lastCharCollidedInto
           return;
@@ -674,7 +674,7 @@
       }
 
       function checkRoomDialogs(character) {
-        var characterDialog = vm.main.roomData.characters[character];
+        var characterDialog = vm.main.roomData[character];
         if (characterDialog && characterDialog.dialogKey) {
           if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
             if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {

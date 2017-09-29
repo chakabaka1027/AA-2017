@@ -41,18 +41,18 @@
 
     function setConversation(talkingWith){
       vm.talkingWith = talkingWith;
-      vm.currentConversation = vm.roomData.characters[talkingWith].dialogKey;
+      vm.currentConversation = vm.roomData[talkingWith].dialogKey;
     }
 
     function nextLevelData(){
       var currentLevel = "level_"+vm.levelCount;
-      vm.levelConvosNeeded = levelDataHandler[currentLevel].requiredConversations;
-      vm.roomData = levelDataHandler[currentLevel].rooms[vm.roomKey];
+      vm.levelConvosNeeded = levelDataHandler.levels[currentLevel].requiredConversations;
+      vm.roomData = levelDataHandler.levels[currentLevel].rooms[vm.roomKey];
     }
 
     function setRoomData(roomKey){
         var currentLevel = "level_"+vm.levelCount;
-        vm.roomData = levelDataHandler[currentLevel].rooms[roomKey];
+        vm.roomData = levelDataHandler.levels[currentLevel].rooms[roomKey];
     }
 
     function areDialogsCompleted(possibleConvos, completedConvos){

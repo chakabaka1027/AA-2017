@@ -13,7 +13,7 @@
 			successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 			legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
 			maxLevel: 7,
-			
+
 			//FULL GAME POS AND NEG
 			levels: {
 				level_1: {  /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -178,10 +178,8 @@
 			},
 
 			setUpForGameType: setUpForGameType,
-			getRoomDialogs: getRoomDialogs,
-			getSuccessPaths: getSuccessPaths,
-			fixDamnSuccessPaths: fixDamnSuccessPaths
-		};
+			getRoomDialogs: getRoomDialogs
+				};
 
 		var otherLevels = {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~AA – Positive – Set 1, A – Negative – Set 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -312,7 +310,7 @@
 				service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];
 				service.choiceScores = {A: 5, B: 3, C: 0};
 			}
-			service.level_1 = otherLevels[gameType].level_1;
+			service.levels.level_1= otherLevels[gameType].level_1;
 		}
 
 
@@ -320,13 +318,18 @@
 		//Is there any dialog in this room, if yes, what are they.
 		//Later on check if they've been completed
 		function getRoomDialogs(levelKey, roomKey){
-			var currentRoomCheck = service[levelKey].rooms[roomKey];
+			var currentRoomCheck = service.levels[levelKey].rooms[roomKey];
 			var dialogs = [];
+			if(!currentRoomCheck)// not{
+				{
+					return dialogs;
+				}
 
-			angular.forEach(currentRoomCheck.characters, function(characterData,characterName){
+			angular.forEach(currentRoomCheck, function(characterData,characterName){
 				if(characterData.dialogKey){
 					dialogs.push(characterData.dialogKey);
 				}
+				//second convo - come back  if we chaneg this later
 				if(characterData.secondConvo && characterData.secondConvo.dialogKey){
 					dialogs.push(characterData.secondConvo.dialogKey);
 				}
@@ -335,6 +338,7 @@
 		}
 
 		function getSuccessPaths(dialogKey) {
+			$log.error("are you sure you wanna be using this - should not return paths ");
 			for (var levelKey in service) {
 				if (levelKey.indexOf('level_')===0) {
 					var levelInfo = service[levelKey];
@@ -360,32 +364,7 @@
 			return [];
 		}
 
-		function fixDamnSuccessPaths() {
-			for (var i=0;i<7;i++) {
-				var levelName = "level_"+(i_1);
-				var levelData = service[levelName];
 
-			}
-		}
 
 	}//end of controller
 })();
-/*rooms
-lobby:{
-	characters:{}
-},
-conferenceRoom:{
-	characters:{}
-},
-anniesOffice:{
-	characters:{}
-},
-mikesOffice:{
-	characters:{}
-},
-fransOffice:{
-	characters:{}
-},
-breakRoom:{
-	characters:{}
-}*/
