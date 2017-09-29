@@ -13,289 +13,163 @@
 			successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 			legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
 			maxLevel: 7,
-		//FULL GAME POS AND NEG
-			level_1: {  /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['fran_Linear'],
-				startingRoom: "lobby",
-				rooms: {
-					lobby:{
-						characters: {
+			
+			//FULL GAME POS AND NEG
+			levels: {
+				level_1: {  /*~~~~~~~~~~~~~~~~~~~~~~ONE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['fran_Linear'],
+					startingRoom: "lobby",
+					rooms: {
+						lobby:{
 							fran:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "fran_Linear"
 							}
-						}
-					},
-					conferenceRoom:{
-						characters:{
-							mike:{}
-						}
-					},
-					anniesOffice:{
-						characters:{}
-					},
-					mikesOffice:{
-						characters:{}
-					},
-					fransOffice:{
-						characters:{}
-					},
-					breakRoom:{
-						characters:{
-							charlie:{},
-							luna:{}
-						}
-					}
-				}
-			},
-			level_2:{ /*~~~~~~~~~~~~~~~~~~~~~~TWO~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['fran_SmallTk_01'],
-				startingRoom: "conferenceRoom",
-				rooms: {
-					lobby:{
-						characters: {
-							fran:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-								dialogKey: "fran_SmallTk_01"
-							}
-						}
-					},
-					conferenceRoom:{
-						characters:{
-							mike:{}
-						}
-					},
-					anniesOffice:{
-						characters:{}
-					},
-					mikesOffice:{
-						characters:{}
-					},
-					fransOffice:{
-						characters:{}
-					},
-					breakRoom:{
-						characters:{
-							charlie:{},
-							luna:{}
-						}
-					}
-				}
-			},
-			level_3:{ /*~~~~~~~~~~~~~~~~~~~~~~THREE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_Linear', 'mike_GR_01'],
-				startingRoom: "lobby",
-				rooms: {
-						lobby:{
-							characters:{}
 						},
 						conferenceRoom:{
-							characters:{
+							mike:{}
+						},
+						breakRoom:{
+							charlie:{},
+							luna:{}
+						}
+					}
+				},
+				level_2:{ /*~~~~~~~~~~~~~~~~~~~~~~TWO~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['fran_SmallTk_01'],
+					startingRoom: "conferenceRoom",
+					rooms: {
+						lobby:{
+							fran:{
+								dialogKey: "fran_SmallTk_01"
+							}
+						},
+						conferenceRoom:{
+							mike:{}
+						},
+						breakRoom:{
+							charlie:{},
+							luna:{}
+						}
+					}
+				},
+				level_3:{ /*~~~~~~~~~~~~~~~~~~~~~~THREE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['mike_Linear', 'mike_GR_01'],
+					startingRoom: "lobby",
+					rooms: {
+							conferenceRoom:{
 								mike:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 									dialogKey: "mike_Linear",
 									secondConvo:{
-										successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 										dialogKey: "mike_GR_01"
 									}
 								}
-							}
-						},
-						anniesOffice:{
-							characters:{}
-						},
-						mikesOffice:{
-							characters:{}
-						},
-						fransOffice:{
-							characters:{
+							},
+							fransOffice:{
 								fran:{}
-							}
-						},
-						breakRoom:{
-							characters:{
+							},
+							breakRoom:{
 								charlie:{},
 								luna:{}
 							}
 						}
-					}
-			},
-			level_4:{ /*~~~~~~~~~~~~~~~~~~~~~~FOUR~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				//added LL.STwGr.01 : luna_01
-				requiredConversations: ['mike_GR_02', 'fran_GR_01','fran_RQ_01','charlie_01', 'luna_01'],
-				rooms: {
-					lobby:{
-						characters:{}
-					},
-					conferenceRoom:{
-						characters:{}
-					},
-					anniesOffice:{
-						characters:{}
-					},
-					mikesOffice:{
-						characters:{
+				},
+				level_4:{ /*~~~~~~~~~~~~~~~~~~~~~~FOUR~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					//added LL.STwGr.01 : luna_01
+					requiredConversations: ['mike_GR_02', 'fran_GR_01','fran_RQ_01','charlie_01', 'luna_01'],
+					rooms: {
+						mikesOffice:{
 							mike:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "mike_GR_02"
 							}
-						}
-					},
-					fransOffice:{
-						characters:{
+						},
+						fransOffice:{
 							fran:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "fran_GR_01",
 								secondConvo:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 									dialogKey: "fran_RQ_01"
 								}
 							}
-						}
-					},
-					breakRoom:{
-						characters:{
+						},
+						breakRoom:{
 							charlie:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "charlie_01"
 							},
 							luna:{ //added these two
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "luna_01"
 							}
 						}
 					}
-				}
-			},
-			level_5:{ /*~~~~~~~~~~~~~~~~~~~~~~FIVE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				// added CC.RQwGR.01 = ta;led to chatly - //luna01 doesnt play - does it have to do with max levels?
-				requiredConversations: ['mike_SmallTk_01', 'mike_RQ_01', 'fran_GR_02', 'luna_02', 'charlie_RQwGr_02'],
-				rooms:{
-					lobby:{
-						characters:{}
-					},
-					conferenceRoom:{
-						characters:{}
-					},
-					anniesOffice:{
-						characters:{}
-					},
-					mikesOffice:{
-						characters: {
+				},
+				level_5:{ /*~~~~~~~~~~~~~~~~~~~~~~FIVE~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					// added CC.RQwGR.01 = ta;led to chatly - //luna01 doesnt play - does it have to do with max levels?
+					requiredConversations: ['mike_SmallTk_01', 'mike_RQ_01', 'fran_GR_02', 'luna_02', 'charlie_RQwGr_02'],
+					rooms:{
+						mikesOffice:{
 							mike:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "mike_SmallTk_01",
 								secondConvo:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 									dialogKey: "mike_RQ_01"
 								}
 							}
-						}
-					},
-					fransOffice:{
-						characters:{
+						},
+						fransOffice:{
 							fran:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "fran_GR_02"
 							}
-						}
-					},
-					breakRoom:{
-						characters:{
+						},
+						breakRoom:{
 							charlie:{ //added values below
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey:"charlie_RQwGr_02"
 							},
 							luna:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "luna_02"
 							}
 						}
 					}
-				}
-			},
-			level_6:{ /*~~~~~~~~~~~~~~~~~~~~~~SIX~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_SmallTk_02', 'fran_SmallTk_02', 'charlie_RQ_02', 'Luna_RQ_01'],
-				//charly_RQ_02 --- replaced charly and changed luna to Luna_RQ_01
-				startingRoom: "lobby",
-				rooms:{
-					lobby:{
-						characters:{}
-					},
-					conferenceRoom:{
-						characters:{}
-					},
-					anniesOffice:{
-						characters:{}
-					},
-					mikesOffice:{
-						characters: {
+				},
+				level_6:{ /*~~~~~~~~~~~~~~~~~~~~~~SIX~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['mike_SmallTk_02', 'fran_SmallTk_02', 'charlie_RQ_02', 'Luna_RQ_01'],
+					//charly_RQ_02 --- replaced charly and changed luna to Luna_RQ_01
+					startingRoom: "lobby",
+					rooms:{
+						mikesOffice:{
 							mike:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "mike_SmallTk_02"
 							}
-						}
-					},
-					fransOffice:{
-						characters:{
+						},
+						fransOffice:{
 							fran:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "fran_SmallTk_02"
 							}
-						}
-					},
-					breakRoom:{
-						characters:{
+						},
+						breakRoom:{
 							charlie:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "charlie_RQ_02"
 							},
 							luna:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "Luna_RQ_01"
 							}
 						}
 					}
-				}
-			},
-			level_7:{ /*~~~~~~~~~~~~~~~~~~~~~~SEVEN~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-				requiredConversations: ['mike_RQ_02', 'fran_RQ_02', 'charly_SmallTalk_02', 'Luna_RQ_02'],
-				//added charly_SmallTalk_02 //LL.RQ.02 //Luna_RQ_02
-				startingRoom: "lobby",
-				rooms:{
-					lobby:{
-						characters:{}
-					},
-					conferenceRoom:{
-						characters:{}
-					},
-					anniesOffice:{
-						characters:{}
-					},
-					mikesOffice:{
-						characters: {
+				},
+				level_7:{ /*~~~~~~~~~~~~~~~~~~~~~~SEVEN~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+					requiredConversations: ['mike_RQ_02', 'fran_RQ_02', 'charly_SmallTalk_02', 'Luna_RQ_02'],
+					//added charly_SmallTalk_02 //LL.RQ.02 //Luna_RQ_02
+					startingRoom: "lobby",
+					rooms:{
+						mikesOffice:{
 							mike:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "mike_RQ_02"
 							}
-						}
-					},
-					fransOffice:{
-						characters:{
-						}
-					},
-					breakRoom:{
-						characters:{
+						},
+						breakRoom:{
 							fran:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey: "fran_RQ_02"
 							},
 							charlie:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey:"charly_SmallTalk_02"
 							},
 							luna:{
-								successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
 								dialogKey:"Luna_RQ_02"
 							}
 						}
@@ -307,8 +181,6 @@
 			getRoomDialogs: getRoomDialogs,
 			getSuccessPaths: getSuccessPaths,
 			fixDamnSuccessPaths: fixDamnSuccessPaths
-
-
 		};
 
 		var otherLevels = {
@@ -319,41 +191,21 @@
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
-							characters:{
-								fran:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "fran_RQ_02"
-								}
+							fran:{
+								dialogKey: "fran_RQ_02"
 							}
-						},
-						conferenceRoom:{
-							characters:{}
-						},
-						anniesOffice:{
-							characters:{}
 						},
 						mikesOffice:{
-							characters: {
-								mike:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "mike_SmallTk_02"
-								}
-							}
-						},
-						fransOffice:{
-							characters:{
+							mike:{
+								dialogKey: "mike_SmallTk_02"
 							}
 						},
 						breakRoom:{
-							characters:{
-								charlie:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "charlie_01"
-								},
-								luna:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "Luna_RQ_01"
-								}
+							charlie:{
+								dialogKey: "charlie_01"
+							},
+							luna:{
+								dialogKey: "Luna_RQ_01"
 							}
 						}
 					}
@@ -366,41 +218,21 @@
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
-							characters:{
-								fran:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "fran_RQ_02"
-								}
+							fran:{
+								dialogKey: "fran_RQ_02"
 							}
-						},
-						conferenceRoom:{
-							characters:{}
-						},
-						anniesOffice:{
-							characters:{}
 						},
 						mikesOffice:{
-							characters: {
-								mike:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "mike_SmallTk_02"
-								}
-							}
-						},
-						fransOffice:{
-							characters:{
+							mike:{
+								dialogKey: "mike_SmallTk_02"
 							}
 						},
 						breakRoom:{
-							characters:{
-								charlie:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "charlie_01"
-								},
-								luna:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "Luna_RQ_01"
-								}
+							charlie:{
+								dialogKey: "charlie_01"
+							},
+							luna:{
+								dialogKey: "Luna_RQ_01"
 							}
 						}
 					}
@@ -415,41 +247,21 @@
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
-							characters:{
-								fran:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "fran_SmallTk_02"
-								}
+							fran:{
+								dialogKey: "fran_SmallTk_02"
 							}
-						},
-						conferenceRoom:{
-							characters:{}
-						},
-						anniesOffice:{
-							characters:{}
 						},
 						mikesOffice:{
-							characters: {
-								mike:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "mike_RQ_02"
-								}
-							}
-						},
-						fransOffice:{
-							characters:{
+							mike:{
+								dialogKey: "mike_RQ_02"
 							}
 						},
 						breakRoom:{
-							characters:{
-								charlie:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "charlie_RQwGr_02"
-								},
-								luna:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "luna_01"
-								}
+							charlie:{
+								dialogKey: "charlie_RQwGr_02"
+							},
+							luna:{
+								dialogKey: "luna_01"
 							}
 						}
 					}
@@ -462,41 +274,21 @@
 					startingRoom: "lobby",
 					rooms:{
 						lobby:{
-							characters:{
-								fran:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "fran_SmallTk_01"
-								}
+							fran:{
+								dialogKey: "fran_SmallTk_01"
 							}
-						},
-						conferenceRoom:{
-							characters:{}
-						},
-						anniesOffice:{
-							characters:{}
 						},
 						mikesOffice:{
-							characters: {
-								mike:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "mike_RQ_01"
-								}
-							}
-						},
-						fransOffice:{
-							characters:{
+							mike:{
+								dialogKey: "mike_RQ_01"
 							}
 						},
 						breakRoom:{
-							characters:{
-								charlie:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "charlie_RQ_02"
-								},
-								luna:{
-									successPaths: ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-									dialogKey: "luna_02"
-								}
+							charlie:{
+								dialogKey: "charlie_RQ_02"
+							},
+							luna:{
+								dialogKey: "luna_02"
 							}
 						}
 					}
