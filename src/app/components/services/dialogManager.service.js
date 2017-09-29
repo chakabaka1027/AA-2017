@@ -92,6 +92,7 @@
                 	adjustDialogWorksheetKeys();
                 	adjustNegativePositiveLinearKeys(gameType);
                 	adjustFeedbackAnimations(gameType);
+									service.deferred.resolve();
 
                 })
                 .catch(function() {$log.log('Falling back to JSON files');}
