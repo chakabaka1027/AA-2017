@@ -1,0 +1,126 @@
+{
+    "positive-set1": {
+        "level_1": {
+            "requiredConversations": [
+                "mike_SmallTk_02",
+                "fran_RQ_02",
+                "charlie_01",
+                "Luna_RQ_01"
+            ],
+            "startingRoom": "lobby",
+            "rooms": {
+                "lobby": {
+                    "fran": {
+                        "dialogKey": "fran_RQ_02"
+                    }
+                },
+                "mikesOffice": {
+                    "mike": {
+                        "dialogKey": "mike_SmallTk_02"
+                    }
+                },
+                "breakRoom": {
+                    "charlie": {
+                        "dialogKey": "charlie_01"
+                    },
+                    "luna": {
+                        "dialogKey": "Luna_RQ_01"
+                    }
+                }
+            }
+        }
+    },
+    "negative-set1": {
+        "level_1": {
+            "requiredConversations": [
+                "mike_SmallTk_02",
+                "fran_RQ_02",
+                "charlie_01",
+                "Luna_RQ_01"
+            ],
+            "startingRoom": "lobby",
+            "rooms": {
+                "lobby": {
+                    "fran": {
+                        "dialogKey": "fran_RQ_02"
+                    }
+                },
+                "mikesOffice": {
+                    "mike": {
+                        "dialogKey": "mike_SmallTk_02"
+                    }
+                },
+                "breakRoom": {
+                    "charlie": {
+                        "dialogKey": "charlie_01"
+                    },
+                    "luna": {
+                        "dialogKey": "Luna_RQ_01"
+                    }
+                }
+            }
+        }
+    },
+    "positive-set3": {
+        "level_1": {
+            "requiredConversations": [
+                "mike_RQ_02",
+                "fran_SmallTk_02",
+                "charlie_RQwGr_02",
+                "luna_01"
+            ],
+            "startingRoom": "lobby",
+            "rooms": {
+                "lobby": {
+                    "fran": {
+                        "dialogKey": "fran_SmallTk_02"
+                    }
+                },
+                "mikesOffice": {
+                    "mike": {
+                        "dialogKey": "mike_RQ_02"
+                    }
+                },
+                "breakRoom": {
+                    "charlie": {
+                        "dialogKey": "charlie_RQwGr_02"
+                    },
+                    "luna": {
+                        "dialogKey": "luna_01"
+                    }
+                }
+            }
+        }
+    },
+    "negative-set4": {
+        "level_1": {
+            "requiredConversations": [
+                "mike_RQ_01",
+                "fran_SmallTk_01",
+                "charlie_RQ_02",
+                "luna_02"
+            ],
+            "startingRoom": "lobby",
+            "rooms": {
+                "lobby": {
+                    "fran": {
+                        "dialogKey": "fran_SmallTk_01"
+                    }
+                },
+                "mikesOffice": {
+                    "mike": {
+                        "dialogKey": "mike_RQ_01"
+                    }
+                },
+                "breakRoom": {
+                    "charlie": {
+                        "dialogKey": "charlie_RQ_02"
+                    },
+                    "luna": {
+                        "dialogKey": "luna_02"
+                    }
+                }
+            }
+        }
+    }
+}
