@@ -1,0 +1,93 @@
+{
+    "start": {
+        "npcText": "Hi, Annie, Welcome to your first day at work.",
+        "pcOptions": [
+            {
+                "text": "Thanks, but I’d rather be at home playing video games.",
+                "nextState": "s1"
+            }
+        ]
+    },
+    "s1": {
+        "npcText": "Oh, well, I’d heard you had a bit of an awkward personality.",
+        "pcOptions": [
+            {
+                "text": "They call me Awkward Annie.  Everyone has their strength - mine is saying inappropriate things. ",
+                "nextState": "s2"
+            }
+        ]
+    },
+    "s2": {
+        "npcText": "That's certainly a special skill.",
+        "pcOptions": [
+            {
+                "text": "Yeah, well I like being “special”. I’m like a special agent of awkwardness. Unstoppable awkwardness! ",
+                "nextState": "s3"
+            }
+        ]
+    },
+    "s3": {
+        "npcText": "Ok.  So are you ready to start your first day at work?",
+        "pcOptions": [
+            {
+                "text": "I sure am. Let’s get things started. This should be a fun day.",
+                "nextState": "s3a"
+            },
+            {
+                "text": "What? You don’t like my “special agent of awkwardness” joke? What happened to your sense of humor? Oh, no. Is this a boring office? ",
+                "nextState": "s4"
+            }
+        ]
+    },
+    "s3a": {
+        "npcText": "I’m surprised you don’t have something more awkward to say. So are you ready to start your first day at work?  ",
+        "pcOptions": [
+            {
+                "text": "I sure am. Let’s get things started. This should be a fun day.",
+                "nextState": "s3a"
+            },
+            {
+                "text": "What? You don’t like my “special agent of awkwardness” joke? What happened to your sense of humor? Oh, no. Is this a boring office? ",
+                "nextState": "s4"
+            }
+        ]
+    },
+    "s4": {
+        "npcText": "What? No, people definitely have a sense of humor. You just tend to take things a bit farther than most people do. I forgot what it’s like to be \"Awkward Annie.” Anyway, I think it’s time to meet in the lobby. ",
+        "pcOptions": [
+            {
+                "text": "Thanks. That would really be nice of you.",
+                "nextState": "s4a"
+            },
+            {
+                "text": "The lobby?! That sounds like a great place to get this party started! You do have party decorations and noise makers, right? A dance party always gets the day started right.",
+                "nextState": "s5"
+            }
+        ]
+    },
+    "s4a": {
+        "npcText": "I’m surprised you don’t have something more awkward to say, Annie.",
+        "pcOptions": [
+            {
+                "text": "Thanks. That would really be nice of you.",
+                "nextState": "s4a"
+            },
+            {
+                "text": "The lobby?! That sounds like a great place to get this party started! You do have party decorations and noise makers, right? A dance party always gets the day started right.",
+                "nextState": "s5"
+            }
+        ]
+    },
+    "s5": {
+        "npcText": "You’ll certainly make this office more interesting. I’m sure your awkward annie shenanigans will liven things up around here. As they say - you do you, Awkward Annie. ",
+        "pcOptions": [
+            {
+                "text": "Thanks.",
+                "nextState": "end"
+            }
+        ]
+    },
+    "end": {
+        "npcText": "bye"
+    }
+}

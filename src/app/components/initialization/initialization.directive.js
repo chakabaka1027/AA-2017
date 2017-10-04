@@ -5,7 +5,7 @@
     .directive('initializeGame', initializeGame);
 
   /** @ngInject */
-  function initializeGame($log, $q, $http, $state, $location, userDataService, $stateParams, dialogService, gameConfig, userGameInfo, levelDataHandler) {
+  function initializeGame($log, $q, $http, $state, $location, userDataService, $stateParams, dialogService, gameConfig, userGameInfo, levelDataHandler, IntroService) {
 
     return {
       restrict: 'E',
@@ -28,8 +28,8 @@
             alert("not a legal level, please type in a legal level");
             return;
           }
-
           userGameInfo.gameType = gameType;
+
           var userID = $location.search().userID; //user ID is a qury param -  (--rul > key=value)
 
           if (userID) { //if it is in the dictionary
@@ -38,10 +38,13 @@
           } else {
             userGameInfo.userForwarded = false;
           }
-          $log.log(">>>>>> reached!");
-          levelDataHandler.setUpForGameType(gameType);
+          levelDataHandler.setUpForGameType(gameType);//.then ()///dialougservice.loadfromservice
+          //
           //this may take time - consider moving elsewhere...
           dialogService.loadFromServer(gameType);
+          IntroService.loadTutorialData(gameType);//for introfuctionText
+          // console.log("not yet deffered "+IntroService.dataTest);
+
           // other stuff.....
 
 

@@ -1,0 +1,93 @@
+{
+    "start": {
+        "npcText": " Hi, Annie, Welcome to your first day at work..",
+        "pcOptions": [
+            {
+                "text": "Thanks, but I’m a bit nervous about saying the wrong things to people.",
+                "nextState": "s1"
+            }
+        ]
+    },
+    "s1": {
+        "npcText": "Oh, yeah, I remember you struggling with that when we were younger.",
+        "pcOptions": [
+            {
+                "text": "Ha, they called me Awkward Annie.  Everyone has their strength - mine is saying the inappropriate thing.  ",
+                "nextState": "s2"
+            }
+        ]
+    },
+    "s2": {
+        "npcText": "That's certainly a special skill.",
+        "pcOptions": [
+            {
+                "text": "Yeah, I’m doing better now though. I just pay more attention to which things I should say and which I should keep to myself. ",
+                "nextState": "s3"
+            }
+        ]
+    },
+    "s3": {
+        "npcText": "OK.  So are you ready to start your first day at work?",
+        "pcOptions": [
+            {
+                "text": "Sure thing “Fran-cy Pants”! Get it, I combined your name with “Fancy Pants”. It’s funny right?",
+                "nextState": "s3a"
+            },
+            {
+                "text": "Absolutely. I hope I don’t offend too many people today.  ",
+                "nextState": "s4"
+            }
+        ]
+    },
+    "s3a": {
+        "npcText": "What? I don’t think those kind of nicknames are exactly office appropriate. We’re not in high school anymore. So are you ready to start your first day at work? ",
+        "pcOptions": [
+            {
+                "text": "Sure thing “Fran-cy Pants”! Get it, I combined your name with “Fancy Pants”. It’s funny right?",
+                "nextState": "s3a"
+            },
+            {
+                "text": "Absolutely. I hope I don’t offend too many people today.  ",
+                "nextState": "s4"
+            }
+        ]
+    },
+    "s4": {
+        "npcText": "I hope not either. I think it’s time to meet in the lobby",
+        "pcOptions": [
+            {
+                "text": "Great! My brain sometimes farts out comments that people take as inappropriate. Not everyone appreciates bathroom humor.  ",
+                "nextState": "s4a"
+            },
+            {
+                "text": "Great! Maybe you can help me to be sure and only say things that don’t make for awkward situations.",
+                "nextState": "s5"
+            }
+        ]
+    },
+    "s4a": {
+        "npcText": "Yeah, see. You’re already talking about topics that are a bit awkward to do in the office. Maybe you should try to keep that stuff inside your head. Are you ready to get started?",
+        "pcOptions": [
+            {
+                "text": "Great! My brain sometimes farts out comments that people take as inappropriate. Not everyone appreciates bathroom humor.  ",
+                "nextState": "s4a"
+            },
+            {
+                "text": "Great! Maybe you can help me to be sure and only say things that don’t make for awkward situations.",
+                "nextState": "s5"
+            }
+        ]
+    },
+    "s5": {
+        "npcText": "You’ll certainly make this office more interesting. I’m sure your awkward annie shenanigans will liven things up around here. Good luck trying to change your reputation as Awkward Annie. ",
+        "pcOptions": [
+            {
+                "text": "Thanks. ",
+                "nextState": "end"
+            }
+        ]
+    },
+    "end": {
+        "npcText": "bye"
+    }
+}
