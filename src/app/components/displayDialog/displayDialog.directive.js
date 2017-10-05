@@ -24,7 +24,6 @@
     function displayDialogController($scope, $timeout) {
       var vm = this;
       var dialogRoot;
-      var codeNode2;
       var pc_Text_Timer = 350;
       var pc_npc_timer = pc_Text_Timer + 400;
       var mild_Animation_Timer = 1000;
@@ -39,25 +38,18 @@
       vm.main.totalConvoPoints = 0; //q whsats the point of msin controller then ?
       vm.showContinue = false;
       vm.clickContinue = clickContinue;
-
-      vm.showNode = showNode;
-      //
-      vm.showNode2 = showNode2;
-      vm.showNode3 = showNode3;
+      vm.showNode = showNode;  //instead of shownode2,3
       vm.showNode3Response = showNode3Response;
       vm.chosenAnnie = "";
       vm.npcResponse = "";
-
       vm.node1Hidden = false;
       vm.node2Hidden = true;
-      vm.node3Hidden = true;
+      vm.node3Hidden = true; // vm.hiddenNodes ={ node1: false, node2:true, node3: true - holds same in memeory just reads better --- thoughts?  } //or array of bools?
       vm.node3Response = true;
 
       // for debugging in testbed...
       vm.main.branchHistory = [];
       vm.main.currentChoiceInfo = {};
-
-
 
       $scope.$watch(function() {
         return vm.main.currentConversation;
@@ -73,16 +65,12 @@
         randomChoices = [];
         successfulConvos;
         scores = levelDataHandler.choiceScores;
-
         vm.choiceDelay = true;
         vm.main.totalConvoPoints = 0;
         vm.showContinue = false;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
-
-        vm.node1Hidden = false;
-        vm.node2Hidden = true;
-        vm.node3Hidden = true;
+        HideNodes(false,true,true );
         vm.node3Response = true;
       }
 
@@ -109,75 +97,6 @@
         }
       }
 
-
-      function showNode2(choice) { //first click
-        audioService.playAudio("UIbuttonclick-option2.wav"); //button click sound
-        vm.npcResponse = "";
-        // Hide/show other choices
-        vm.node1Hidden = true;
-        vm.node2Hidden = false; //show if choice is clicked
-        vm.node3Hidden = true;
-        // Set dialog data for current node
-        // vm.node1Response = choice; not used outside of this method
-
-        codeNode2 = choice.code;
-        // Shuffle choices
-        var originalNodeTwo = dialogRoot.node2[codeNode2];
-        vm.choice2 = originalNodeTwo; //data needed to pull up choices
-        loadResponses(choice); // Responses with timers
-        // Data
-        var currenBranch = choice.code.charAt(0);
-
-
-        trackBranches(currenBranch);
-
-
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", "1", vm.main.failedConvos[vm.main.currentConversation]);
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", currenBranch, choice.PC_Text);
-
-        if (!vm.isTestBed) {
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[currenBranch], randomChoices.indexOf(choice) + 1);
-        }
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
-        randomChoices = shuffle(originalNodeTwo); //shuffle next choices
-      } //end of showNode2
-
-
-
-      function showNode3(choice) {
-        audioService.playAudio("UIbuttonclick-option2.wav");
-        // Hide/show neccessary items
-        vm.node1Hidden = true;
-        vm.node3Hidden = false; //show choice if clicked
-        vm.node2Hidden = true;
-        // vm.node2Response = choice;  not needed and not used ?
-        var codeNode3 = choice.code;
-        // Get choices for next round
-        var originalNodeThree = dialogRoot.node3[codeNode3];
-        vm.choice3 = originalNodeThree; //send them to the dom
-        // Set animation information
-        // vm.main.animationTitle = choice.animation;
-        loadResponses(choice);
-        // Data
-        var currenBranch = choice.code.charAt(1);
-
-
-      //still needed only diff is 2 instead of 1
-        trackBranches(currenBranch);
-
-
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", "2", vm.main.failedConvos[vm.main.currentConversation]);
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", currenBranch, choice.PC_Text);
-
-        if (!vm.isTestBed) {
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[currenBranch], randomChoices.indexOf(choice) + 1);
-        }
-
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
-        randomChoices = shuffle(originalNodeThree); //shuffle them
-      } //end of showNode3
-
-
 //this is the script that needs refactoring
 //line 108
       /*=============== Button operations =================*/
@@ -193,9 +112,6 @@
 
         // check success
         if (!vm.isTestBed) {
-
-
-
           if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) {
             vm.main.completedConvos.push(vm.main.currentConversation);
             // Calculate score
@@ -212,32 +128,21 @@
         }
         // Data
         var currenBranch = choice.code.charAt(2);
-
         trackBranches(currenBranch);
-
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", "3", vm.main.failedConvos[vm.main.currentConversation]);
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", currenBranch, choice.PC_Text);
-        if (!vm.isTestBed) {
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[currenBranch], randomChoices.indexOf(choice) + 1);
-
-        }
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
+        dataTracking(currenBranch,choice, 3 );
         decisionPath = choice.code;
       }
 
       function trackBranches(currentBranch) {
 
         vm.main.branchHistory.push(currentBranch);
-
       }
 
       function clickContinue() {
         vm.main.hideDialog = true;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
-        vm.node1Hidden = false;
-        vm.node2Hidden = true;
-        vm.node3Hidden = true;
+        HideNodes(false, true, true);
         vm.showNPCbubbleText = true;
         vm.NPC_responseHidden = true;
         vm.node3Response = true;
@@ -272,22 +177,19 @@
 
       /*=============== Functions =================*/
       function shuffle(choices) {
-        console.log("sent in shuffle "+ choices.toString() );
-
         if (!vm.isTestBed) {
           for (var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
           return choices;
         }
-
       }
 
       function loadResponses(choice) {
-
         // for debugging purposes, added by chas...
         vm.main.currentChoiceInfo = choice;
 
         vm.npcResponse = ""; // clear response before showing next
         vm.choiceDelay = false;
+
         $timeout(function() {
           vm.chosenAnnie = choice.PC_Text;
         }, pc_Text_Timer);
@@ -346,14 +248,8 @@
           vm.choiceDelay = true;
         }, 1200);
       }
-
-
-
-
-//isssue is with 1) missing text output in view 2) tracked it down to undefined "orignal node"  regardless of sending it or not
-
+//works -  new methods ----
       function showNode(nodeType, choice){ //momentary for testing
-        console.log("show node has been reached");
         audioService.playAudio("UIbuttonclick-option2.wav");
         var codeNode = choice.code; //in both 2 and 3
 
@@ -374,14 +270,12 @@
 
     function adjustNodeandReturnBranch(nodecContent, nodeType, choice ,choiceNumber){
       var orignalNode = nodecContent;
-      console.log("orignalNode"+ orignalNode);//works
       if(nodeType == 3){
           vm.choice3 = orignalNode;//change this to vm.node+1 and have it as an array ?
       }else {
         vm.choice2 =orignalNode;
       }
       randomChoices = shuffle(orignalNode); //issue ?
-
       return  choice.code.charAt(choiceNumber);
      }
 
@@ -391,8 +285,8 @@
       vm.node3Hidden = node3; //show choice if clicked
 
     }
-    function dataTracking(Branch, choice, number ){
-              var num = number.toString();
+    function dataTracking(Branch, choice, number ){ //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
+              var num = number.toString();//node 3 had the same thing
               userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", num, vm.main.failedConvos[vm.main.currentConversation]);
               userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", Branch, choice.PC_Text);
 
@@ -405,33 +299,3 @@
   } //end of controller
   }
 })();
-/*
-
-var originalNodeThree = dialogRoot.node3[codeNode3];
-vm.choice3 = originalNodeThree; //send them to the dom
-var currenBranch = choice.code.charAt(1);
-
-
-			function showNextNode(choice){
-				if(node != lastNode){
-					// Hide/show neccessary items
-					put in a loop or just use a global varible reset after continue is clicked
-					set node[i]Hidden = true node[i-1]Hidden = true
-					vm.node3Hidden = !vm.node3Hidden;
-					vm.node2Hidden = !vm.node2Hidden;
-
-					vm.node2Response = choice;
-					// Get button code
-					var codeNode3 = choice.code;
-					// Get choices for next round
-					var originalNodeThree = dialogRoot.node3[codeNode3];
-					shuffle(originalNodeThree); //shuffle them
-					vm.choice3 = originalNodeThree; //send them to the dom
-					// Set animation information
-					vm.main.animationTitle = choice.animation;
-					loadResponses(choice);
-				}else{
-						showContinue();
-				}
-			}
-*/
