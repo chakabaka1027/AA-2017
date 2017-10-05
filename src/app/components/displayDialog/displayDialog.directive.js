@@ -37,15 +37,17 @@
       vm.choiceDelay = true;
       vm.main.totalConvoPoints = 0; //q whsats the point of msin controller then ?
       vm.showContinue = false;
+      vm.chosenAnnie = "";
+      vm.npcResponse = "";
+
+      vm.currentNodeIndex = 1;
+      vm.currentNodeChoices = [];
+
+      vm.node3Response = true;
+
       vm.clickContinue = clickContinue;
       vm.showNode = showNode; //instead of shownode2,3
       vm.showNode3Response = showNode3Response;
-      vm.chosenAnnie = "";
-      vm.npcResponse = "";
-      vm.node1Hidden = false;
-      vm.node2Hidden = true;
-      vm.node3Hidden = true; // vm.hiddenNodes ={ node1: false, node2:true, node3: true - holds same in memeory just reads better --- thoughts?  } //or array of bools?
-      vm.node3Response = true;
 
       // for debugging in testbed...
       vm.main.branchHistory = [];
@@ -89,7 +91,16 @@
           vm.choice = originalNodeOne;
           vm.choice2 = dialogRoot.node2;
           vm.choice3 = dialogRoot.node3;
+
+
+          // vm.choices = [null, originalNodeOne, dialogRoot.node2, dialogRoot.node3]
+          // later... vm.currentNodeChoice = vm.choices[vm.currentodeIndex]; or something like that...
+
           vm.main.isLinearDialog = vm.choice.length === 1;
+
+          vm.currentNodeIndex = 1;
+          vm.currentNodeChoices = vm.choice;
+
         });
         if (angular.isUndefined(vm.main.failedConvos[vm.main.currentConversation])) {
           vm.main.failedConvos[vm.main.currentConversation] = 0;
@@ -174,6 +185,7 @@
       function loadResponses(choice) {
         // for debugging purposes, added by chas...
         vm.main.currentChoiceInfo = choice;
+
         vm.npcResponse = ""; // clear response before showing next
         vm.choiceDelay = false;
 
@@ -229,20 +241,38 @@
           vm.choiceDelay = true;
         }, 1200);
       }
+
+
       //works -  new methods ----
-      function showNode(nodeType, choice) { //momentary for testing
+      // suggest combine with adjustNodeandReturnBranch...
+      function showNode(choice) { //momentary for testing
+
+        if (vm.currentNodeIndex == 3) {
+          showNode3Response(choice);
+          return;
+        }
+
         audioService.playAudio("UIbuttonclick-option2.wav");
         var codeNode = choice.code; //in both 2 and 3
-        if (nodeType == 2) {
-          HideNodes(true, false, true);
+        if (vm.currentNodeIndex == 1) {
           vm.npcResponse = "";
           var currenBranch = adjustNodeandReturnBranch(dialogRoot.node2[codeNode], 2, choice, 0);
           dataTracking(currenBranch, choice, 1);
-        } else if (nodeType == 3) {
-          HideNodes(true, true, false);
+
+          // vm.currentNodeIndex += 1;
+          // vm.currentNodeChoices = vm.choice2; // vm['choice2']
+          // vm.currentNodeChoices = vm.['choice'+vm.currentNodeIndex];
+
+        } else if (vm.currentNodeIndex == 2) {
           var currenBranch = adjustNodeandReturnBranch(dialogRoot.node3[codeNode], 3, choice, 1);
           dataTracking(currenBranch, choice, 2);
+          
+          // vm.currentNodeChoices = vm.choice3;
+          // vm.currentNodeIndex += 1;
         }
+        vm.currentNodeIndex += 1;
+        vm.currentNodeChoices = shuffle(vm.['choice'+vm.currentNodeIndex]);
+        
         loadResponses(choice);
         trackBranches(currenBranch);
       }
@@ -256,12 +286,6 @@
         }
         randomChoices = shuffle(orignalNode); //issue ?
         return choice.code.charAt(choiceNumber);
-      }
-
-      function HideNodes(node1, node2, node3) {
-        vm.node1Hidden = node1;
-        vm.node2Hidden = node2;
-        vm.node3Hidden = node3;
       }
 
       function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff

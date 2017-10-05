@@ -1,28 +1,13 @@
 <!-- dialog Choices -->
 <div class="playerChoices">
-	<div ng-if="!vm.node1Hidden">
-		<div class="choices" ng-repeat="choice in vm.choice">
-			<!-- we can use the same function isnduead of repeating choice 1,2,3, -->
-			<!-- <input class="btn" type="button" name="{{choice.code}}" value="{{choice.PC_Text?choice.PC_Text:'Missing text'}}" ng-click="vm.showNode(2,choice)"> -->
-			<input class="btn" type="button" name="{{choice.code}}" value="{{choice.PC_Text?choice.PC_Text:'Missing text'}}" ng-click="vm.showNode(2,choice)">
 
+	<div ng-if="vm.choiceDelay && !vm.showContinue">
+		<div class="choices" ng-repeat="choice in vm.currentNodeChoices">
+			<input class="btn" type="button" name="{{choice.code}}" value="{{choice.PC_Text?choice.PC_Text:'Missing text'}}" ng-click="vm.showNode(choice)">
 			<br><br>
 		</div>
 	</div>
 
-	<div ng-if="!vm.node2Hidden && vm.choiceDelay">
-		<div class="choices" ng-repeat="choice2 in vm.choice2">
-			<input class="btn" type="button" name="{{choice2.code}}" value="{{choice2.PC_Text?choice2.PC_Text:'Missing text'}}" ng-click="vm.showNode(3,choice2)">
-			<br><br>
-		</div>
-	</div>
-
-	<div ng-if="!vm.node3Hidden && vm.choiceDelay" >
-		<div class="choices" ng-repeat="choice3 in vm.choice3">
-			<input class="btn" type="button" name="{{choice3.code}}" value="{{choice3.PC_Text?choice3.PC_Text:'Missing text'}}" ng-click="vm.showNode3Response(choice3)">
-			<br><br>
-		</div>
-	</div>
 	<br/>
 	<p ng-if="vm.choiceDelay &&!vm.showContinue">Please select an option above for what you want Annie to say.</p>
 
