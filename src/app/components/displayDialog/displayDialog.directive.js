@@ -38,7 +38,7 @@
       vm.main.totalConvoPoints = 0; //q whsats the point of msin controller then ?
       vm.showContinue = false;
       vm.clickContinue = clickContinue;
-      vm.showNode = showNode;  //instead of shownode2,3
+      vm.showNode = showNode; //instead of shownode2,3
       vm.showNode3Response = showNode3Response;
       vm.chosenAnnie = "";
       vm.npcResponse = "";
@@ -70,7 +70,7 @@
         vm.showContinue = false;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
-        HideNodes(false,true,true );
+        HideNodes(false, true, true);
         vm.node3Response = true;
       }
 
@@ -91,50 +91,39 @@
           vm.choice3 = dialogRoot.node3;
           vm.main.isLinearDialog = vm.choice.length === 1;
         });
-        // vm.main.failedConvos[vm.main.currentConversation];
         if (angular.isUndefined(vm.main.failedConvos[vm.main.currentConversation])) {
           vm.main.failedConvos[vm.main.currentConversation] = 0;
         }
       }
-
-//this is the script that needs refactoring
-//line 108
       /*=============== Button operations =================*/
 
       function showNode3Response(choice) { //choice parameter
         audioService.playAudio("UIbuttonclick-option2.wav");
         vm.node3Hidden = true;
-        // vm.main.animationTitle = choice.animation;
-        // hasAnimation(choice);
-        vm.npcResponse = ""; // clear response before showing next
+        vm.npcResponse = "";
         loadResponses(choice);
         vm.showContinue = true;
 
-        // check success
         if (!vm.isTestBed) {
           if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) {
             vm.main.completedConvos.push(vm.main.currentConversation);
-            // Calculate score
             vm.main.totalConvoPoints = 0;
             for (var i in choice.code) {
               vm.main.totalConvoPoints += scores[choice.code[i]];
             }
-
             vm.main.lastConversationSuccessful = true;
           } else {
             vm.main.failedConvos[vm.main.currentConversation] += 1;
             vm.main.lastConversationSuccessful = false;
           }
         }
-        // Data
         var currenBranch = choice.code.charAt(2);
         trackBranches(currenBranch);
-        dataTracking(currenBranch,choice, 3 );
+        dataTracking(currenBranch, choice, 3);
         decisionPath = choice.code;
       }
 
       function trackBranches(currentBranch) {
-
         vm.main.branchHistory.push(currentBranch);
       }
 
@@ -149,7 +138,7 @@
         vm.showContinue = false;
         vm.main.animationTitle = "";
 
-        // End of convo data
+        // End of convo data - clean up this block - add a set up methof for strings that change
         if (!vm.isTestBed) {
           if (vm.main.lastConversationSuccessful) {
             userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_result", vm.main.totalConvoPoints, decisionPath);
@@ -168,7 +157,6 @@
           userDataService.postData(); //Post data after convo is over
           chooseDialogScript();
         }
-
         // for debugging in testbed...
         vm.main.branchHistory = [];
         vm.main.currentChoiceInfo = {};
@@ -186,7 +174,6 @@
       function loadResponses(choice) {
         // for debugging purposes, added by chas...
         vm.main.currentChoiceInfo = choice;
-
         vm.npcResponse = ""; // clear response before showing next
         vm.choiceDelay = false;
 
@@ -218,23 +205,17 @@
             //displays responses in the test bed when dialog is complete for awkward convos
             if (vm.isTestBed) {
               latestChoice = choice;
-              audioService.playAudio("UIbuttonclick-option1.wav");
-              vm.npcResponse = choice.NPC_Response;
-              delayChoiceDisplay();
+              temp(choice);
               watchPromise(); //get's rid of previously created $watch
             }
             vm.main.animationDone = false; //reset
           } else if (vm.main.animationTitle && vm.main.animationTitle.indexOf("mild") >= 0) { //if mild expression
             $timeout(function() {
-              audioService.playAudio("UIbuttonclick-option1.wav");
-              vm.npcResponse = choice.NPC_Response;
-              delayChoiceDisplay();
+              temp(choice);
             }, mild_Animation_Timer);
           } else { //if no animation
             $timeout(function() {
-              audioService.playAudio("UIbuttonclick-option1.wav");
-              vm.npcResponse = choice.NPC_Response;
-              delayChoiceDisplay();
+              temp(choice);
             }, noExpression_Timer);
           }
           // return;
@@ -248,54 +229,57 @@
           vm.choiceDelay = true;
         }, 1200);
       }
-//works -  new methods ----
-      function showNode(nodeType, choice){ //momentary for testing
+      //works -  new methods ----
+      function showNode(nodeType, choice) { //momentary for testing
         audioService.playAudio("UIbuttonclick-option2.wav");
         var codeNode = choice.code; //in both 2 and 3
-
-        if(nodeType == 2){
-          HideNodes(true,false,true );
+        if (nodeType == 2) {
+          HideNodes(true, false, true);
           vm.npcResponse = "";
-          var currenBranch = adjustNodeandReturnBranch(dialogRoot.node2[codeNode], 2 , choice, 0);
+          var currenBranch = adjustNodeandReturnBranch(dialogRoot.node2[codeNode], 2, choice, 0);
           dataTracking(currenBranch, choice, 1);
-        }
-        else if (nodeType == 3){
-          HideNodes(true,true, false );
-          var currenBranch = adjustNodeandReturnBranch(dialogRoot.node3[codeNode], 3,choice, 1);
+        } else if (nodeType == 3) {
+          HideNodes(true, true, false);
+          var currenBranch = adjustNodeandReturnBranch(dialogRoot.node3[codeNode], 3, choice, 1);
           dataTracking(currenBranch, choice, 2);
         }
         loadResponses(choice);
         trackBranches(currenBranch);
-    }
-
-    function adjustNodeandReturnBranch(nodecContent, nodeType, choice ,choiceNumber){
-      var orignalNode = nodecContent;
-      if(nodeType == 3){
-          vm.choice3 = orignalNode;//change this to vm.node+1 and have it as an array ?
-      }else {
-        vm.choice2 =orignalNode;
       }
-      randomChoices = shuffle(orignalNode); //issue ?
-      return  choice.code.charAt(choiceNumber);
-     }
 
-    function HideNodes(node1, node2, node3){
-      vm.node1Hidden = node1;              //maybe  I added this for now
-      vm.node2Hidden = node2;
-      vm.node3Hidden = node3; //show choice if clicked
+      function adjustNodeandReturnBranch(nodecContent, nodeType, choice, choiceNumber) {
+        var orignalNode = nodecContent;
+        if (nodeType == 3) {
+          vm.choice3 = orignalNode; //change this to vm.node+1 and have it as an array ?
+        } else {
+          vm.choice2 = orignalNode;
+        }
+        randomChoices = shuffle(orignalNode); //issue ?
+        return choice.code.charAt(choiceNumber);
+      }
 
+      function HideNodes(node1, node2, node3) {
+        vm.node1Hidden = node1;
+        vm.node2Hidden = node2;
+        vm.node3Hidden = node3;
+      }
+
+      function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
+        var num = number.toString(); //node 3 had the same thing
+        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", num, vm.main.failedConvos[vm.main.currentConversation]);
+        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", Branch, choice.PC_Text);
+        if (!vm.isTestBed) {
+          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[Branch], randomChoices.indexOf(choice) + 1);
+        }
+        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
+      }
+
+      function temp(choice) { //not sure why it is used thw way it is up there - for now just moving it here to avoid repeating it
+        audioService.playAudio("UIbuttonclick-option1.wav"); //even has the same exact values above
+        vm.npcResponse = choice.NPC_Response;
+        delayChoiceDisplay();
+      }
     }
-    function dataTracking(Branch, choice, number ){ //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
-              var num = number.toString();//node 3 had the same thing
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", num, vm.main.failedConvos[vm.main.currentConversation]);
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", Branch, choice.PC_Text);
-
-              if (!vm.isTestBed) {
-                userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[Branch], randomChoices.indexOf(choice) + 1);
-              }
-
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
-    }
-  } //end of controller
+    //end of controller
   }
 })();
