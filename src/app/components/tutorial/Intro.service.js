@@ -14,7 +14,6 @@
       loadTutorialData:loadTutorialData,
       t2:t2
        };
-       console.log("hello world 1");
 
 
        return service;
@@ -56,7 +55,6 @@
 
       }
       function t2(){
-        console.log("><><"+service.test);
 
       }
     })();

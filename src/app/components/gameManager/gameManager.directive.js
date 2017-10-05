@@ -410,9 +410,9 @@
                   conversationResetBubble.visible = false;
                   resetArrowTimer();
                 }, 2000);
-                conversationResetBubble.position.x = lastCharCollidedInto.position.x + 5;
-                conversationResetBubble.position.y = lastCharCollidedInto.position.y - 140;
-                conversationResetBubble.visible = true;
+                //inside the ifSttetment
+                resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
+
               } else { //if convo was successful
                 showPointsBubble = true;
                 $timeout(function() {
@@ -476,6 +476,14 @@
           vm.updateWalkDirection();
 
         }; //end of draw function
+
+
+        function resetBubble(xVal, yVal, boolVal){
+          conversationResetBubble.position.x =xVal + 5;
+          conversationResetBubble.position.y = yVal - 140;
+          conversationResetBubble.visible = boolVal;
+
+        }
 
         /*=================== Check when key is released and stop walking ===============================================*/
         room.keyReleased = function(event) {
@@ -598,6 +606,7 @@
       /*================================== If collided with a door =========================================*/
       // If collided with a door, then load level and check game stats
       function handleDoorCollision(furnitureItem) {
+        console.log("collided with "+ furnitureItem);
           var getNextRoom = mappingService[currentRoomKey][furnitureItem];
           previousRoom = currentRoomKey;
           createRoom(getNextRoom);

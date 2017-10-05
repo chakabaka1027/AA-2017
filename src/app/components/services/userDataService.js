@@ -55,7 +55,7 @@
 				moment().format('HH:mm:ss')
 			];
 			// var u = $location.url(); //same issue gives me an undefined game type
-			console.log("testing... version: "+service.version + " gamt ype "+service.gameType + " user ID is "+service.userID+" action is '"+action+"'");
+			// console.log("testing... version: "+service.version + " gamt ype "+service.gameType + " user ID is "+service.userID+" action is '"+action+"'");
 
 
 			if (angular.isUndefined(data1) || data1 === null) data1 = '';
