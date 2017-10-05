@@ -5,7 +5,7 @@
     .directive('initializeGame', initializeGame);
 
   /** @ngInject */
-  function initializeGame($log, $q, $http, $state, $location, userDataService, $stateParams, dialogService, gameConfig, userGameInfo, levelDataHandler, IntroService) {
+  function initializeGame($log, $q, $http, $state, $location, userDataService, $stateParams, dialogService, gameConfig, userGameInfo, levelDataHandler) {
 
     return {
       restrict: 'E',
@@ -42,7 +42,6 @@
           //
           //this may take time - consider moving elsewhere...
           dialogService.loadFromServer(gameType);
-          IntroService.loadTutorialData(gameType);//for introfuctionText
           // console.log("not yet deffered "+IntroService.dataTest);
 
           // other stuff.....

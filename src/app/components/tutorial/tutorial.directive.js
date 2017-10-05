@@ -5,7 +5,7 @@
     .directive('simpleTutorial', simpleTutorial);
 
 
-  function simpleTutorial($log, $timeout, audioService, $http, IntroService, userGameInfo) {
+  function simpleTutorial($log, $timeout, audioService, $http, TutorialService, userGameInfo) {
 
     return {
       restrict: 'E',
@@ -29,7 +29,7 @@
       vm.resetState = resetState;
       delayDialog();
 
-      IntroService.loadTutorialData().then(function() {
+      TutorialService.loadTutorialData().then(function() {
         vm.resetState();
       });
       $scope.$on("$destroy", onDestroy);
@@ -41,7 +41,7 @@
           pcText: pcOption.text
         });
         vm.curStateName = pcOption.nextState;
-        vm.curState = IntroService.data[vm.curStateName];
+        vm.curState = TutorialService.data[vm.curStateName];
         delayDialog();
         vm.showingNPCtext = false;
         vm.showingDialogOptions = false;
@@ -57,7 +57,7 @@
       } //end of method
 
       function resetState() {
-        vm.curState = IntroService.data.start; 
+        vm.curState = TutorialService.data.start;
         vm.curStateName = 'start';
       }
 
