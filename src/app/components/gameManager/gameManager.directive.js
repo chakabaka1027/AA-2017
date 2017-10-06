@@ -395,13 +395,24 @@
         	Draw
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.draw = function() {
+          
           room.background(bg);
+
           collisionswithFurniture(annieSprite, furniture);
           // Set door collision checks seperately
           for (var i in npcSprites) {
             annieSprite.collide(npcSprites[i], dialogTriggered);
           }
+          
           // Big step
+          // replace with something like...
+          /*
+          $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
+            if (newVal && !oldVal) {
+              // the code below...
+            }
+          });
+          */
           if (vm.main.hideDialog) { //annie not talking
             if (annie_Talking) {
               showArrows = false;
@@ -417,11 +428,13 @@
                 showPointsBubble = true;
                 $timeout(function() {
                   showPointsBubble = false;
+
                   /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                   if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
                     vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
                     vm.main.nextLevelData();
                   }
+
                 }, 2000);
                 resetArrowTimer();
               }
@@ -441,10 +454,9 @@
               handleDoorCollision("lower_left_door");
             }
           }
-          //room.drawSprites();
+
           AnnieController();
           drawFurnitureBehind();
-          // drawNPCs();
           drawNPCsBehind();
 
           /*=================== Draw UI elements ===============================================*/
