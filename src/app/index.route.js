@@ -41,7 +41,7 @@
       });
     $stateProvider
       .state('awkwardAnnieGame', {
-        //url: '/awkwardAnnieGame',
+        // url: '/awkwardAnnieGame',
         // url: '/{gameType}',
         template: '<awkward-annie-game></awkward-annie-game>',
         controller: 'MainController', //throws away old main and recreates it

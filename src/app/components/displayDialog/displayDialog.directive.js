@@ -72,7 +72,6 @@
         vm.showContinue = false;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
-        HideNodes(false, true, true);
         vm.node3Response = true;
       }
 
@@ -142,7 +141,7 @@
         vm.main.hideDialog = true;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
-        HideNodes(false, true, true);
+
         vm.showNPCbubbleText = true;
         vm.NPC_responseHidden = true;
         vm.node3Response = true;
@@ -271,7 +270,7 @@
           // vm.currentNodeIndex += 1;
         }
         vm.currentNodeIndex += 1;
-        vm.currentNodeChoices = shuffle(vm.['choice'+vm.currentNodeIndex]);
+        vm.currentNodeChoices = shuffle(vm['choice'+vm.currentNodeIndex]);
         
         loadResponses(choice);
         trackBranches(currenBranch);

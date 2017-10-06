@@ -444,7 +444,8 @@
           //room.drawSprites();
           AnnieController();
           drawFurnitureBehind();
-          drawNPCs();
+          // drawNPCs();
+          drawNPCsBehind();
 
           /*=================== Draw UI elements ===============================================*/
           //If annie is !walking, !talking, start timer
@@ -467,6 +468,7 @@
 
           room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
 
+          drawNPCsInFront();
           drawFurnitureInFront();
           if (conversationResetBubble.visible) {
             room.drawSprite(conversationResetBubble);
@@ -518,6 +520,22 @@
         function drawNPCs() {
           npcSprites.forEach(function(sprite) {
             room.drawSprite(sprite);
+          });
+        }
+
+        function drawNPCsBehind() {
+          npcSprites.forEach(function(sprite) {
+            if (sprite.position.y < annieSprite.position.y) {
+              room.drawSprite(sprite);
+            }
+          });
+        }
+
+        function drawNPCsInFront() {
+          npcSprites.forEach(function(sprite) {
+            if (sprite.position.y >= annieSprite.position.y) {
+              room.drawSprite(sprite);
+            }
           });
         }
 
@@ -578,6 +596,8 @@
         }
       }; //end of current room object
 
+      var lastGoodAnniePos = {x:0,y:0};
+
       var myp5 = new p5(currentRoom); // Create p5 object
       trackRoomEntry();
 
@@ -594,19 +614,30 @@
       }
       /*================================== Check for collisions with furniture =========================================*/
       function collisionswithFurniture(sprite, furnitureList) {
-        for (var furnitureItem in furnitureList) {
-          sprite.collide(furnitureList[furnitureItem].data, function(spriteA, spriteB) {
+        var hasCollidedWithNonDoor = false;
+        angular.forEach(furnitureList, function(furnitureItem) {
+          sprite.collide(furnitureItem.data, function() {
+            $log.log('bump '+furnitureItem.name);
             vm.walkingInfo.walking = false;
-            if (furnitureItem.indexOf('_door')>=0) {
-              handleDoorCollision(furnitureList[furnitureItem].name);
+            if (furnitureItem.name.indexOf('_door')>=0) {
+              handleDoorCollision(furnitureItem.name);
+            } else {
+              hasCollidedWithNonDoor = true;
             }
           }); //collide(sprite,function)
+        });
+        if (!hasCollidedWithNonDoor) {
+          lastGoodAnniePos.x = annieSprite.position.x;
+          lastGoodAnniePos.y = annieSprite.position.y;
+        } else {
+          annieSprite.position.x = lastGoodAnniePos.x;
+          annieSprite.position.y = lastGoodAnniePos.y;
         }
       }
       /*================================== If collided with a door =========================================*/
       // If collided with a door, then load level and check game stats
       function handleDoorCollision(furnitureItem) {
-        console.log("collided with "+ furnitureItem);
+          console.log("collided with "+ furnitureItem);
           var getNextRoom = mappingService[currentRoomKey][furnitureItem];
           previousRoom = currentRoomKey;
           createRoom(getNextRoom);

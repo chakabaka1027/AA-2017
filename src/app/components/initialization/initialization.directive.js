@@ -42,10 +42,12 @@
           //
           //this may take time - consider moving elsewhere...
           dialogService.loadFromServer(gameType);
-          // console.log("not yet deffered "+IntroService.dataTest);
+
+          //  .then(function(){$state.go('awkwardAnnieGame')});
+          // return;
+          // uncomment above to skip intro stuff....
 
           // other stuff.....
-
 
           if (userGameInfo.userForwarded) {
             userDataService.resetData();
