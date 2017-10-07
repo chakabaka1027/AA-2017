@@ -240,69 +240,58 @@
           vm.choiceDelay = true;
         }, 1200);
       }
-
-
       //works -  new methods ----
       // suggest combine with adjustNodeandReturnBranch...
       function showNode(choice) { //momentary for testing
+            audioService.playAudio("UIbuttonclick-option2.wav");
+            var codeNode = choice.code; //in both 2 and 3
+            var orignalNode;
+            var currenBranch;
+            if (vm.currentNodeIndex == 3) {
+              showNode3Response(choice);
+              return;
+            }
+            if (vm.currentNodeIndex == 1) {
+              vm.npcResponse = "";
+              vm.choice2  = dialogRoot.node2[codeNode];
+              currenBranch =  choice.code.charAt(0);
+              dataTracking(currenBranch, choice, 1);
 
-        if (vm.currentNodeIndex == 3) {
-          showNode3Response(choice);
-          return;
+            } else if (vm.currentNodeIndex == 2) {
+              vm.choice3  = dialogRoot.node3[codeNode];
+              currenBranch =  choice.code.charAt(1);
+              dataTracking(currenBranch, choice, 2);
+            }
+            vm.currentNodeIndex += 1;
+            vm.currentNodeChoices = shuffle(vm['choice'+vm.currentNodeIndex]);
+            loadResponses(choice);
+            trackBranches(currenBranch);
+          }
+          //rename it to set data track if approved - and name the other to data tracking
+          function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
+            var num = number.toString(); //node 3 had the same thing
+            var str = ["convo_state","convo_user","convo_system","convo_NPC"];
+            var pram3 = [num,Branch,scores[Branch],choice.animation];
+            var pram4 = [vm.main.failedConvos[vm.main.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
+            setTrackAction(str, pram3, pram4);
+
+          }
+          //not sure if this is required ? --- a long workaround for the same thing
+          function setTrackAction(strings, parm3, parm4){ //saves about 3 lines above - thoughts ? sample use below in comments
+            var stringArr = strings;     // exampme this will be substritued by strings
+            var thirdParmValues = parm3; //var stringArr = ["test1","2","3","4"]; sample use ---
+            var forthPramValues = parm4;
+            for (var i = 0; i < stringArr.length; i++){
+              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
+          }
         }
 
-        audioService.playAudio("UIbuttonclick-option2.wav");
-        var codeNode = choice.code; //in both 2 and 3
-        if (vm.currentNodeIndex == 1) {
-          vm.npcResponse = "";
-          var currenBranch = adjustNodeandReturnBranch(dialogRoot.node2[codeNode], 2, choice, 0);
-          dataTracking(currenBranch, choice, 1);
-
-          // vm.currentNodeIndex += 1;
-          // vm.currentNodeChoices = vm.choice2; // vm['choice2']
-          // vm.currentNodeChoices = vm.['choice'+vm.currentNodeIndex];
-
-        } else if (vm.currentNodeIndex == 2) {
-          var currenBranch = adjustNodeandReturnBranch(dialogRoot.node3[codeNode], 3, choice, 1);
-          dataTracking(currenBranch, choice, 2);
-          
-          // vm.currentNodeChoices = vm.choice3;
-          // vm.currentNodeIndex += 1;
+          function temp(choice) { //not sure why it is used thw way it is up there - for now just moving it here to avoid repeating it
+            audioService.playAudio("UIbuttonclick-option1.wav"); //even has the same exact values above
+            vm.npcResponse = choice.NPC_Response;
+            delayChoiceDisplay();
+          }
         }
-        vm.currentNodeIndex += 1;
-        vm.currentNodeChoices = shuffle(vm['choice'+vm.currentNodeIndex]);
-        
-        loadResponses(choice);
-        trackBranches(currenBranch);
+        //end of controller
       }
-
-      function adjustNodeandReturnBranch(nodecContent, nodeType, choice, choiceNumber) {
-        var orignalNode = nodecContent;
-        if (nodeType == 3) {
-          vm.choice3 = orignalNode; //change this to vm.node+1 and have it as an array ?
-        } else {
-          vm.choice2 = orignalNode;
-        }
-        randomChoices = shuffle(orignalNode); //issue ?
-        return choice.code.charAt(choiceNumber);
-      }
-
-      function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
-        var num = number.toString(); //node 3 had the same thing
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", num, vm.main.failedConvos[vm.main.currentConversation]);
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", Branch, choice.PC_Text);
-        if (!vm.isTestBed) {
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[Branch], randomChoices.indexOf(choice) + 1);
-        }
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
-      }
-
-      function temp(choice) { //not sure why it is used thw way it is up there - for now just moving it here to avoid repeating it
-        audioService.playAudio("UIbuttonclick-option1.wav"); //even has the same exact values above
-        vm.npcResponse = choice.NPC_Response;
-        delayChoiceDisplay();
-      }
-    }
-    //end of controller
-  }
-})();
+    })();

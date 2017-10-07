@@ -241,6 +241,8 @@
         }
       });
 
+
+
       /*===================================================================
       	Controller Functions
       ===================================================================*/
@@ -258,6 +260,7 @@
           /*========== Tracking Room Enter ===================================*/
           var talkingNPCs = [], npcNames = [];
           for (var spriteName in vm.main.roomData) {
+            console.log("--"+spriteName);
             if (checkRoomDialogs(spriteName)) {
               talkingNPCs.push(spriteName);
               npcNames.push(spriteName);
@@ -266,6 +269,10 @@
           userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Room_Enter", npcNames, talkingNPCs.join(' '));
           userDataService.postData(); //room change, post data
       }
+
+      //scope. wtach (watch what - i this case new val and old val ){}
+
+
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       	P5 SKETCH STARTS HERE:
@@ -296,6 +303,45 @@
 
         levelRequiredConvos = "";
         showArrows = false;
+
+
+
+
+        //
+        // $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
+        //   $log.log( "is annie talking?"+ annie_Talking);
+        //
+        //   if (newVal && !oldVal) {
+        //     $log.log("new value is "+ newVal +"and not old val"+ !oldVal);
+        //     if (annie_Talking) {
+        //       showArrows = false;
+        //       if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
+        //         $timeout(function() {
+        //           conversationResetBubble.visible = false;
+        //           resetArrowTimer();
+        //         }, 2000);
+        //         //inside the ifSttetment - resetBubble is inside createroom
+        //         resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
+        //
+        //       } else { //if convo was successful
+        //         showPointsBubble = true;
+        //         $timeout(function() {
+        //           showPointsBubble = false;
+        //
+        //           /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        //           if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
+        //             vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
+        //             vm.main.nextLevelData();
+        //           }
+        //
+        //         }, 2000);
+        //         resetArrowTimer();
+        //       }
+        //     }
+        //      annie_Talking = false;
+        //   }
+        // });
+
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         	Preload
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -395,7 +441,7 @@
         	Draw
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.draw = function() {
-          
+
           room.background(bg);
 
           collisionswithFurniture(annieSprite, furniture);
@@ -403,16 +449,10 @@
           for (var i in npcSprites) {
             annieSprite.collide(npcSprites[i], dialogTriggered);
           }
-          
+
           // Big step
           // replace with something like...
-          /*
-          $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
-            if (newVal && !oldVal) {
-              // the code below...
-            }
-          });
-          */
+
           if (vm.main.hideDialog) { //annie not talking
             if (annie_Talking) {
               showArrows = false;
@@ -454,10 +494,11 @@
               handleDoorCollision("lower_left_door");
             }
           }
-
           AnnieController();
           drawFurnitureBehind();
-          drawNPCsBehind();
+          drawNPCs();
+
+          // drawNPCsBehind();
 
           /*=================== Draw UI elements ===============================================*/
           //If annie is !walking, !talking, start timer
@@ -466,6 +507,7 @@
           }
           /*=================== Draw NPC dialog bubble===============================================*/
           npcSprites.forEach(function(character) {
+            console.log("charecter inside for each "+character.name );
             if (checkRoomDialogs(character.name)) {
               if (character !== lastCharCollidedInto && !showPointsBubble) { //always draw bubble
                 drawBubble(character);
@@ -480,7 +522,7 @@
 
           room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
 
-          drawNPCsInFront();
+          // drawNPCsInFront();
           drawFurnitureInFront();
           if (conversationResetBubble.visible) {
             room.drawSprite(conversationResetBubble);
@@ -724,9 +766,10 @@
         vm.main.setRoomData(currentRoomKey);
         $scope.$apply(); //In case html isn't updating and variable is
       }
-
+//issue happens here
       function checkRoomDialogs(character) {
-        var characterDialog = vm.main.roomData[character];
+        var characterDialog = vm.main.roomData[character]; //charecter send is undefined .fran is undefined
+        // console.log("charecter is "+ character );     //gives error but game is incridibly slow
         if (characterDialog && characterDialog.dialogKey) {
           if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
             if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {

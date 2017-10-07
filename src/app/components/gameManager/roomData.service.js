@@ -3,14 +3,14 @@
 
 	angular
 		.module('awkwardAnnie')
-		.service('roomData', roomData);
+		.service('roomData', roomData); //room data here - 
 
 	/** @ngInject */
 	function roomData(){
 		var roomData = {
 			anniesOffice: { //Annie's Office
 				bg: "assets/images/rooms/Annie-Room-Bkgd.jpg",
-				furniture:{ 
+				furniture:{
 					plant_1:{
 						posX: 865, posY: 360,
 						collider_width: 64, collider_height: 154,
@@ -62,7 +62,7 @@
 						collider_width: 91, collider_height: 141,
 						collider_X_offset: 0, collider_Y_offset: 0
 					}
-				} 
+				}
 			},
 			mikesOffice: {   //mike's office
 				bg: "assets/images/rooms/Mike-Room-Bkgd.jpg",
@@ -158,7 +158,7 @@
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
 					small_cabinet:{
-						posX: 320.5, posY: 176.5, 
+						posX: 320.5, posY: 176.5,
 						collider_width: 99, collider_height: 161,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
@@ -188,7 +188,7 @@
 						collider_X_offset: 0, collider_Y_offset: 40,
 						canDrawOnTop: true
 					},
-					
+
 					couch1:{
 						posX: 482, posY: 169.5,
 						collider_width: 236, collider_height: 117,
@@ -242,7 +242,7 @@
 						collider_width: 40, collider_height: 350,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
-					foldingChair_1:{ 
+					foldingChair_1:{
 						posX: 600, posY: 200,
 						collider_width: 70, collider_height: 90,
 						collider_X_offset: 0, collider_Y_offset: 0
@@ -358,4 +358,4 @@
 		fransOffice
 		lobby
 		breakRoom
-*/ 
+*/
