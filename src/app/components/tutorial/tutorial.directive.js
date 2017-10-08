@@ -61,9 +61,7 @@
         vm.curStateName = 'start';
       }
 
-
       function delayDialog() {
-
         $timeout.cancel(showTimer);
         showTimer = $timeout(function() {
           vm.showingNPCtext = true;
@@ -74,9 +72,8 @@
         hideTimer = $timeout(function() {
           vm.showingDialogOptions = true;
         }, 2500);
-
       }
-
+      
       function onDestroy() {
         $timeout.cancel(showTimer);
         $timeout.cancel(hideTimer);

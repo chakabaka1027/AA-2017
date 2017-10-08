@@ -65,7 +65,7 @@
 
     //Is there any dialog in this room, if yes, what are they.
     //Later on check if they've been completed
-    function getRoomDialogs(levelKey, roomKey) {
+    function getRoomDialogs(levelKey, roomKey) { //example level 1. rooms
       var currentRoomCheck = service.levels[levelKey].rooms[roomKey];
       var dialogs = [];
       if (!currentRoomCheck) // not{

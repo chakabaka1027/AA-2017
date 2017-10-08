@@ -450,6 +450,7 @@
             annieSprite.collide(npcSprites[i], dialogTriggered);
           }
 
+
           // Big step
           // replace with something like...
 
@@ -507,7 +508,12 @@
           }
           /*=================== Draw NPC dialog bubble===============================================*/
           npcSprites.forEach(function(character) {
-            console.log("charecter inside for each "+character.name );
+            // console.log("charecter inside for each "+character.name );
+            // console.log("the charecter is "+ character.name);
+            // var characterDialog = vm.main.roomData['fran']; //retuend true but charecter was object of object
+            //   var characterDialog = vm.main.roomData['character'];   //this was used in the methof checkDailigs but it is always undefined
+            // console.log(" main.room data - check if undefined"+ vm.main.roomData['mike']); //this is underfined -1 //this causes an issue when it is fran and the next one is mike ?
+            // //todo so if a charecter is not in the room it returns undefined -  the issue seems as if it is checking for fran but fran is undefined
             if (checkRoomDialogs(character.name)) {
               if (character !== lastCharCollidedInto && !showPointsBubble) { //always draw bubble
                 drawBubble(character);
@@ -613,9 +619,10 @@
         }
 
         function getDoorStatus() {
-          angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {
+          angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {//what is a lining toom in this annanomus function - it should be a key ?
             var markDoor = false;
-            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + vm.main.levelCount, linkingRoom);
+            var roomDialogs = levelDataHandler.getRoomDialogs("level_".concat(vm.main.levelCount), linkingRoom);
+            console.log("testing concat level   as string : "+ "level_" + vm.main.levelCount); //ir does jump to level 3 - thsi gets executed //so the level is not an issue?
             if (!vm.main.areDialogsCompleted(roomDialogs, vm.main.completedConvos)) {
               markDoor = true;
             }
@@ -767,23 +774,28 @@
         $scope.$apply(); //In case html isn't updating and variable is
       }
 //issue happens here
+//if this is enabled after skipping level 2 or drawing a bubble on next charecter it stops rendering all toons
       function checkRoomDialogs(character) {
-        var characterDialog = vm.main.roomData[character]; //charecter send is undefined .fran is undefined
-        // console.log("charecter is "+ character );     //gives error but game is incridibly slow
-        if (characterDialog && characterDialog.dialogKey) {
-          if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
-            if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
+        if(typeof vm.main.roomData != 'undefined'){
+        var characterDialog = vm.main.roomData[character]; //charecter send is undefined .fran is undefined - but it foesnt get deleed
+        // console.log("charecter is "+ character );     //gives error and  but game is incridibly slow
+          if (characterDialog && characterDialog.dialogKey) {
+            console.log("works?");
+            if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
+              if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
+                showNPCDialogBubble = true;
+                return true;
+              }
+            } else { //if first convo
               showNPCDialogBubble = true;
               return true;
             }
-          } else { //if first convo
-            showNPCDialogBubble = true;
-            return true;
+          } else {
+            return false;
           }
-        } else {
-          return false;
         }
       }
+
 
       $scope.$watch(function() {
         return showPointsBubble;

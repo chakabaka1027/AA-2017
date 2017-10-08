@@ -92,6 +92,7 @@
                 	adjustDialogWorksheetKeys();
                 	adjustNegativePositiveLinearKeys(gameType);
                 	adjustFeedbackAnimations(gameType);
+									print();
 									service.deferred.resolve();
 
                 })
@@ -122,6 +123,12 @@
 					else{
 							console.log("negative value");
 						}
+
+					 }
+					function  print(){
+						console.log("this wotks it changes to positive or normal - just for checking :_) ");
+						console.log(service.dialogWorksheetKeys['fran_Linear']);
+
 					 }
 
         function adjustFeedbackAnimations(gameType) {

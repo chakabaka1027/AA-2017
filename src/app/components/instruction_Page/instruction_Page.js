@@ -6,7 +6,7 @@
     .directive('instructionPage', instructionPage);
 
   /** @ngInject */
-  function instructionPage($location, userDataService, $log, $state, dialogService) { //$log parameter goes in here
+  function instructionPage($location, userDataService, $log, $state, dialogService, userGameInfo) { //$log parameter goes in here
     var directive = {
       restrict: 'E',
       templateUrl: "app/components/instruction_Page/instruction_Page.html",
@@ -33,16 +33,11 @@
       });
 
       function getVersion() {
-        var path = $location.path();
-        var p = path.toString();
-        if (p.includes("negative")) {
-
-          return 10;
+        if (userGameInfo.gameType.indexOf("positive") === 0) {
+          return false;
         } else {
-
-          return -10;
-        }
-      }
+          return true;
+        }    }
 
       function next() {
         vm.clickCounter += 1;

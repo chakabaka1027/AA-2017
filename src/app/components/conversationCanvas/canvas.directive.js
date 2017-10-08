@@ -44,13 +44,14 @@
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       var dialogCanvas = function(insetWindow) {
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	PRELOAD
-        		Load images or sounds before used
+        	PRELOAD// TODO !noteToSelfcheck this image to disable sounds -look here next week:  //thi oneh as niversal 00 it might be used by other animations agh
+        		Load images or sounds before used //!noteToSelfcheck this image to disable sounds -look here next week
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        //TODO still wotking on it - seems to be working so far
         insetWindow.preload = function() {
-          universalSurprised = insetWindow.loadSound("assets/sounds/UniversalSurpriseCartoon-option1.wav");
-          universalConfused = insetWindow.loadSound("assets/sounds/UniversalConfusedCartoon-option1.wav");
-          universalAnnoyed = insetWindow.loadSound("assets/sounds/UniversalAnnoyed.wav");
+          universalSurprised =""//insetWindow.loadSound("assets/sounds/UniversalSurpriseCartoon-option1.wav");
+          universalConfused = ""//insetWindow.loadSound("assets/sounds/UniversalConfusedCartoon-option1.wav");
+          universalAnnoyed =  ""//insetWindow.loadSound("assets/sounds/UniversalAnnoyed.wav");
         };
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         	SETUP
@@ -102,25 +103,25 @@
 
       newDialogCanvas = new p5(dialogCanvas);
 
-      // Only called when title changes, not every draw
-      $scope.$watch(function() {
-        return vm.main.animationTitle
-      }, function(newVal, oldVal) {
-        switch (vm.main.animationTitle) {
-          case "surprised_bold":
-            universalSurprised.play();
-            universalSurprised.setVolume(0.2);
-            break;
-          case "confused_bold":
-            universalConfused.play();
-            universalConfused.setVolume(0.2);
-            break;
-          case "annoyed_bold":
-            universalAnnoyed.play();
-            universalAnnoyed.setVolume(0.2);
-            break;
-        }
-      });
+      //Only called when title changes, not every draw
+      // $scope.$watch(function() {
+      //   return vm.main.animationTitle
+      // }, function(newVal, oldVal) {
+      //   switch (vm.main.animationTitle) {
+      //     case "surprised_bold":
+      //       universalSurprised.play();
+      //       universalSurprised.setVolume(0.2);
+      //       break;
+      //     case "confused_bold":
+      //       universalConfused.play();
+      //       universalConfused.setVolume(0.2);
+      //       break;
+      //     case "annoyed_bold":
+      //       universalAnnoyed.play();
+      //       universalAnnoyed.setVolume(0.2);
+      //       break;
+      //   }
+      // });
 
       // Add animation to character sprite from p5 sketck
       function addAnimationsToChar(characterDefinition, characterSprite) { //Char deffinition is from ConversationP5Data service
