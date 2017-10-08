@@ -307,40 +307,7 @@
 
 
 
-        //
-        // $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
-        //   $log.log( "is annie talking?"+ annie_Talking);
-        //
-        //   if (newVal && !oldVal) {
-        //     $log.log("new value is "+ newVal +"and not old val"+ !oldVal);
-        //     if (annie_Talking) {
-        //       showArrows = false;
-        //       if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
-        //         $timeout(function() {
-        //           conversationResetBubble.visible = false;
-        //           resetArrowTimer();
-        //         }, 2000);
-        //         //inside the ifSttetment - resetBubble is inside createroom
-        //         resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
-        //
-        //       } else { //if convo was successful
-        //         showPointsBubble = true;
-        //         $timeout(function() {
-        //           showPointsBubble = false;
-        //
-        //           /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-        //           if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
-        //             vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
-        //             vm.main.nextLevelData();
-        //           }
-        //
-        //         }, 2000);
-        //         resetArrowTimer();
-        //       }
-        //     }
-        //      annie_Talking = false;
-        //   }
-        // });
+
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         	Preload
@@ -454,34 +421,34 @@
           // Big step
           // replace with something like...
 
-          if (vm.main.hideDialog) { //annie not talking
-            if (annie_Talking) {
-              showArrows = false;
-              if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
-                $timeout(function() {
-                  conversationResetBubble.visible = false;
-                  resetArrowTimer();
-                }, 2000);
-                //inside the ifSttetment
-                resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
-
-              } else { //if convo was successful
-                showPointsBubble = true;
-                $timeout(function() {
-                  showPointsBubble = false;
-
-                  /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-                  if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
-                    vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
-                    vm.main.nextLevelData();
-                  }
-
-                }, 2000);
-                resetArrowTimer();
-              }
-            }
-            annie_Talking = false;
-          }
+          // if (vm.main.hideDialog) { //annie not talking
+          //   if (annie_Talking) {
+          //     showArrows = false;
+          //     if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
+          //       $timeout(function() {
+          //         conversationResetBubble.visible = false;
+          //         resetArrowTimer();
+          //       }, 2000);
+          //       //inside the ifSttetment
+          //       resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
+          //
+          //     } else { //if convo was successful
+          //       showPointsBubble = true;
+          //       $timeout(function() {
+          //         showPointsBubble = false;
+          //
+          //         /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+          //         if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
+          //           vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
+          //           vm.main.nextLevelData();
+          //         }
+          //
+          //       }, 2000);
+          //       resetArrowTimer();
+          //     }
+          //   }
+          //   annie_Talking = false;
+          // }
 
           // if there's a room on the lower right
           if (currentRoomKey === "mikesOffice" || currentRoomKey === "conferenceRoom" || currentRoomKey === "lobby") {
@@ -774,11 +741,11 @@
         $scope.$apply(); //In case html isn't updating and variable is
       }
 //issue happens here
-//if this is enabled after skipping level 2 or drawing a bubble on next charecter it stops rendering all toons
+
       function checkRoomDialogs(character) {
         if(typeof vm.main.roomData != 'undefined'){
-        var characterDialog = vm.main.roomData[character]; //charecter send is undefined .fran is undefined - but it foesnt get deleed
-        // console.log("charecter is "+ character );     //gives error and  but game is incridibly slow
+        var characterDialog = vm.main.roomData[character]; // at some point - the value is undefiend - this happens untill we move to a new room and send in new "Active"charecters -
+                                                          // as far as i can tell - otheer than this a work  around could be  adding a flag after we enter a new room - thoughts?
           if (characterDialog && characterDialog.dialogKey) {
             console.log("works?");
             if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
@@ -825,6 +792,44 @@
           }
         }
       });
+
+
+
+      $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
+        $log.log( "is annie talking?"+ annie_Talking);
+
+        if (newVal && !oldVal) {
+          if (annie_Talking) {
+            showArrows = false;
+            if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
+              $timeout(function() {
+                conversationResetBubble.visible = false;
+                resetArrowTimer();
+              }, 2000);
+              //inside the ifSttetment - resetBubble is inside createroom
+              resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
+
+            } else { //if convo was successful
+              showPointsBubble = true;
+              $timeout(function() {
+                showPointsBubble = false;
+
+                /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+                if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
+                  vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
+                  vm.main.nextLevelData();
+                }
+
+              }, 2000);
+              resetArrowTimer();
+            }
+          }
+           annie_Talking = false;
+        }
+      });
+
+
+
 //////*****************************  new functions     *************************************/////////
 //////*****************************  &helper functions  ************************************/////////
 //////******************************** related to annie only - *****************************************************/////////

@@ -29,3 +29,7 @@
   }
 
 })();
+
+
+/*work around that may fix the chrome dome error - but not sure if needed, most of the posts online suggest it is a chrome bug - does not affect the game as far as I can tell 
+https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error*/
