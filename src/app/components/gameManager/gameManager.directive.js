@@ -181,6 +181,8 @@
       var lastCharCollidedInto = null;
       var pointsBubble;
       var showPointsBubble = false;
+      var canDraw = false;
+
       // Data
       var levelRequiredConvos,
         convoMean,
@@ -204,11 +206,6 @@
 
 
       vm.flipDialogs = (userDataService.userID === 'flip');
-
-
-      // vm.main.beginingOfLevel2 = false; //used for ets's level transition comment
-
-      //window.keyUp
 
 
       $scope.$on('$destroy', function() {
@@ -260,7 +257,6 @@
           /*========== Tracking Room Enter ===================================*/
           var talkingNPCs = [], npcNames = [];
           for (var spriteName in vm.main.roomData) {
-            console.log("--"+spriteName);
             if (checkRoomDialogs(spriteName)) {
               talkingNPCs.push(spriteName);
               npcNames.push(spriteName);
@@ -303,12 +299,6 @@
 
         levelRequiredConvos = "";
         showArrows = false;
-
-
-
-
-
-
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         	Preload
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -340,16 +330,14 @@
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.setup = function() {
 
+          // room.noLoop();
           room.frameRate(30);
           myCanvas = room.createCanvas(950, 500);
-
           // ************* this is where the canvas element gets attached to the DOM
           myCanvas.parent(angular.element.find("game-manager")[0]); // equivalent of $($element)[0]);
           // *************
-
           setFurniture(currentRoomData); //Set up furniture based on
           resetArrowTimer();
-
           /*==================================================================================
           	Create characters and add animations
           ==================================================================================*/
@@ -408,6 +396,7 @@
         	Draw
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.draw = function() {
+          // console.log(" fps is "+ room.frameRate());
 
           room.background(bg);
 
@@ -417,40 +406,6 @@
             annieSprite.collide(npcSprites[i], dialogTriggered);
           }
 
-
-          // Big step
-          // replace with something like...
-
-          // if (vm.main.hideDialog) { //annie not talking
-          //   if (annie_Talking) {
-          //     showArrows = false;
-          //     if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
-          //       $timeout(function() {
-          //         conversationResetBubble.visible = false;
-          //         resetArrowTimer();
-          //       }, 2000);
-          //       //inside the ifSttetment
-          //       resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
-          //
-          //     } else { //if convo was successful
-          //       showPointsBubble = true;
-          //       $timeout(function() {
-          //         showPointsBubble = false;
-          //
-          //         /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-          //         if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
-          //           vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
-          //           vm.main.nextLevelData();
-          //         }
-          //
-          //       }, 2000);
-          //       resetArrowTimer();
-          //     }
-          //   }
-          //   annie_Talking = false;
-          // }
-
-          // if there's a room on the lower right
           if (currentRoomKey === "mikesOffice" || currentRoomKey === "conferenceRoom" || currentRoomKey === "lobby") {
             if (annieSprite.position.x >= 700 && annieSprite.position.x <= 840 && annieSprite.position.y > 419) {
               handleDoorCollision("lower_right_door");
@@ -464,9 +419,9 @@
           }
           AnnieController();
           drawFurnitureBehind();
-          drawNPCs();
+          // drawNPCs();
 
-          // drawNPCsBehind();
+          drawNPCsBehind();
 
           /*=================== Draw UI elements ===============================================*/
           //If annie is !walking, !talking, start timer
@@ -475,12 +430,6 @@
           }
           /*=================== Draw NPC dialog bubble===============================================*/
           npcSprites.forEach(function(character) {
-            // console.log("charecter inside for each "+character.name );
-            // console.log("the charecter is "+ character.name);
-            // var characterDialog = vm.main.roomData['fran']; //retuend true but charecter was object of object
-            //   var characterDialog = vm.main.roomData['character'];   //this was used in the methof checkDailigs but it is always undefined
-            // console.log(" main.room data - check if undefined"+ vm.main.roomData['mike']); //this is underfined -1 //this causes an issue when it is fran and the next one is mike ?
-            // //todo so if a charecter is not in the room it returns undefined -  the issue seems as if it is checking for fran but fran is undefined
             if (checkRoomDialogs(character.name)) {
               if (character !== lastCharCollidedInto && !showPointsBubble) { //always draw bubble
                 drawBubble(character);
@@ -495,7 +444,7 @@
 
           room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
 
-          // drawNPCsInFront();
+          drawNPCsInFront();
           drawFurnitureInFront();
           if (conversationResetBubble.visible) {
             room.drawSprite(conversationResetBubble);
@@ -503,22 +452,25 @@
 
           vm.anniePosition = annieSprite.position;
           vm.updateWalkDirection();
-
         }; //end of draw function
 
+//is this a good idea? used to stop drawing when dailog windows are open 9 i.e. annie is tlaking  doesnt do much but at least stops looping when canvas is up - check quesitons on notes
+        $scope.$watch(function(){ return annie_Talking; }, function(newVal, oldVal) {
+          // gives this issue - p5 related - angular.js:14199 TypeError: Cannot read property 'resetMatrix' of undefined -- only issue this cayse
+          //22 min and one occation reached 12 - (but one point then goes back smoothly )
+            if( annie_Talking){
+              room.noLoop();
+            }else {
+              room.loop();
+            } });
 
-        function resetBubble(xVal, yVal, boolVal){
-          conversationResetBubble.position.x =xVal + 5;
-          conversationResetBubble.position.y = yVal - 140;
-          conversationResetBubble.visible = boolVal;
-
-        }
 
         /*=================== Check when key is released and stop walking ===============================================*/
         room.keyReleased = function(event) {
           vm.annie_Walking = false;
           vm.walkingInfo.walking = false;
         };
+
 
         function AnnieController(){          //rename it - testing
 
@@ -588,8 +540,8 @@
         function getDoorStatus() {
           angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {//what is a lining toom in this annanomus function - it should be a key ?
             var markDoor = false;
-            var roomDialogs = levelDataHandler.getRoomDialogs("level_".concat(vm.main.levelCount), linkingRoom);
-            console.log("testing concat level   as string : "+ "level_" + vm.main.levelCount); //ir does jump to level 3 - thsi gets executed //so the level is not an issue?
+            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + vm.main.levelCount, linkingRoom);
+            // console.log("testing concat level   as string : "+ "level_" + vm.main.levelCount); //ir does jump to level 3 - thsi gets executed //so the level is not an issue? //or .concat (vm..)
             if (!vm.main.areDialogsCompleted(roomDialogs, vm.main.completedConvos)) {
               markDoor = true;
             }
@@ -645,7 +597,6 @@
         var hasCollidedWithNonDoor = false;
         angular.forEach(furnitureList, function(furnitureItem) {
           sprite.collide(furnitureItem.data, function() {
-            $log.log('bump '+furnitureItem.name);
             vm.walkingInfo.walking = false;
             if (furnitureItem.name.indexOf('_door')>=0) {
               handleDoorCollision(furnitureItem.name);
@@ -665,7 +616,7 @@
       /*================================== If collided with a door =========================================*/
       // If collided with a door, then load level and check game stats
       function handleDoorCollision(furnitureItem) {
-          console.log("collided with "+ furnitureItem);
+          // console.log("collided with "+ furnitureItem);
           var getNextRoom = mappingService[currentRoomKey][furnitureItem];
           previousRoom = currentRoomKey;
           createRoom(getNextRoom);
@@ -738,16 +689,14 @@
         }
 
         vm.main.setRoomData(currentRoomKey);
-        $scope.$apply(); //In case html isn't updating and variable is
+        $scope.$apply();
       }
-//issue happens here
 
-      function checkRoomDialogs(character) {
+      function checkRoomDialogs(character) { //called constantnly - can we reduce # of calls ? - ask about loop - no loop p5
         if(typeof vm.main.roomData != 'undefined'){
-        var characterDialog = vm.main.roomData[character]; // at some point - the value is undefiend - this happens untill we move to a new room and send in new "Active"charecters -
+        var characterDialog = vm.main.roomData[character]; // at some point - the value is undefiend - this happens untill we move to a new room and send in new "Active"charecters - fixed with flag
                                                           // as far as i can tell - otheer than this a work  around could be  adding a flag after we enter a new room - thoughts?
           if (characterDialog && characterDialog.dialogKey) {
-            console.log("works?");
             if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
               if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
                 showNPCDialogBubble = true;
@@ -762,8 +711,6 @@
           }
         }
       }
-
-
       $scope.$watch(function() {
         return showPointsBubble;
       }, function(newVal, oldVal) {
@@ -791,25 +738,25 @@
             }
           }
         }
-      });
+      });//end of watch
 
 
 
       $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
-        $log.log( "is annie talking?"+ annie_Talking);
 
         if (newVal && !oldVal) {
           if (annie_Talking) {
+            // room.noLoop(); //Attempt to reduce calls to atleast when we are outside the convo
             showArrows = false;
             if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
               $timeout(function() {
                 conversationResetBubble.visible = false;
                 resetArrowTimer();
               }, 2000);
-              //inside the ifSttetment - resetBubble is inside createroom
+              //moved reset bubble to outer scope
               resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
 
-            } else { //if convo was successful
+            } else {
               showPointsBubble = true;
               $timeout(function() {
                 showPointsBubble = false;
@@ -825,11 +772,10 @@
             }
           }
            annie_Talking = false;
+          //  room.Loop();
+
         }
       });
-
-
-
 //////*****************************  new functions     *************************************/////////
 //////*****************************  &helper functions  ************************************/////////
 //////******************************** related to annie only - *****************************************************/////////
@@ -888,6 +834,12 @@
               }
             }
         }//end of else if
+      }
+      function resetBubble(xVal, yVal, boolVal){
+        conversationResetBubble.position.x =xVal + 5;
+        conversationResetBubble.position.y = yVal - 140;
+        conversationResetBubble.visible = boolVal;
+
       }
 
       function moveAnnieManagment( animation,  mirrorValue, Xvelocity, yVelocity ){

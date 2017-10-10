@@ -66,7 +66,7 @@
 		service.loadedPromise = deferred.promise;
 
 		if (deferred ==="undefined"){
-			console.log("!!!UNDEFINED");
+			$log.log("!!!UNDEFINED");
 		}
 		return service;
 
