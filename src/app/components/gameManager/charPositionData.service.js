@@ -96,7 +96,7 @@
 			},
 			charlie: {
 				breakRoom:{
-					startLeftX: 330, startLeftY: 380,
+					startLeftX: 330, startLeftY: 380, //was 330
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 					mirror: "yes"

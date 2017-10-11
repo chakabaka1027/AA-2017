@@ -184,7 +184,6 @@
       function loadResponses(choice) {
         // for debugging purposes, added by chas...
         vm.main.currentChoiceInfo = choice;
-
         vm.npcResponse = ""; // clear response before showing next
         vm.choiceDelay = false;
 
@@ -211,9 +210,7 @@
                 delayChoiceDisplay();
                 watchPromise(); //get's rid of previously created $watch
               }
-            });
-
-            //displays responses in the test bed when dialog is complete for awkward convos
+            }); //end of watch one
             if (vm.isTestBed) {
               latestChoice = choice;
               temp(choice);
@@ -221,19 +218,21 @@
             }
             vm.main.animationDone = false; //reset
           } else if (vm.main.animationTitle && vm.main.animationTitle.indexOf("mild") >= 0) { //if mild expression
-            $timeout(function() {
-              temp(choice);
-            }, mild_Animation_Timer);
-          } else { //if no animation
-            $timeout(function() {
-              temp(choice);
-            }, noExpression_Timer);
+            employSpecficTimeOut (mild_Animation_Timer, choice); //scope choice isnt avaible outside -
           }
+           else { //if no animation
+             employSpecficTimeOut (noExpression_Timer, choice);
+           }
           // return;
         }, pc_npc_timer); //wait after PC text is shown + extra
         vm.chosenAnnie = "";
         vm.npcResponse = "";
-      }
+      }//end of load responces
+
+      function employSpecficTimeOut(timer, choice) {
+        $timeout(function() {
+          temp(choice);
+        }, timer); }
 
       function delayChoiceDisplay() {
         $timeout(function() {
@@ -242,7 +241,7 @@
       }
       //works -  new methods ----
       // suggest combine with adjustNodeandReturnBranch...
-      function showNode(choice) { //momentary for testing
+      function showNode(choice) { //momentary for testing //---combined
             audioService.playAudio("UIbuttonclick-option2.wav");
             var codeNode = choice.code; //in both 2 and 3
             var orignalNode;
@@ -267,9 +266,9 @@
             loadResponses(choice);
             trackBranches(currenBranch);
           }
-          //rename it to set data track if approved - and name the other to data tracking
+          //rename it to set data track if approved and move below to dataTracking - or should this be a method in user data service?- and name the other to data tracking
           function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
-            var num = number.toString(); //node 3 had the same thing
+            var num = number.toString();
             var str = ["convo_state","convo_user","convo_system","convo_NPC"];
             var pram3 = [num,Branch,scores[Branch],choice.animation];
             var pram4 = [vm.main.failedConvos[vm.main.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
@@ -285,13 +284,11 @@
               userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
           }
         }
-
           function temp(choice) { //not sure why it is used thw way it is up there - for now just moving it here to avoid repeating it
             audioService.playAudio("UIbuttonclick-option1.wav"); //even has the same exact values above
             vm.npcResponse = choice.NPC_Response;
             delayChoiceDisplay();
           }
-        }
-        //end of controller
+        } //end of controller
       }
     })();

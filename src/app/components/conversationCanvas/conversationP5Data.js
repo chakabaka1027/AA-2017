@@ -85,7 +85,7 @@
 
 					"confused_mild": ["assets/images/Characters/Charlie/Charlie_Confused_Mild.png"],
 					"confused_bold": ["assets/images/Characters/Charlie/Charlie_Confused_Mild.png"],
-
+					////suprised_mild
 					"surprised_mild": ["assets/images/Characters/Charlie/Charlie_Surprised_Mild.png"],
 					"surprised_bold": ["assets/images/Characters/Charlie/Charlie_Surprised_Mild.png"],
 

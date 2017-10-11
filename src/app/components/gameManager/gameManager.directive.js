@@ -420,15 +420,51 @@
           AnnieController();
           drawFurnitureBehind();
           // drawNPCs();
-
           drawNPCsBehind();
-
           /*=================== Draw UI elements ===============================================*/
           //If annie is !walking, !talking, start timer
           if (showArrows) {
             drawDoorArrows();
           }
           /*=================== Draw NPC dialog bubble===============================================*/
+          manageBubble();
+
+          room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
+          drawNPCsInFront();
+          drawFurnitureInFront();
+          if (conversationResetBubble.visible) {
+            room.drawSprite(conversationResetBubble);
+          }
+          vm.anniePosition = annieSprite.position;
+          vm.updateWalkDirection();
+        }; //end of draw function
+
+
+        //is this a good idea? used to stop drawing when dailog windows are open 9 i.e. annie is tlaking  doesnt do much but at least stops looping when canvas is up - check quesitons on notes
+        $scope.$watch(function(){ return annie_Talking; }, function(newVal, oldVal) {
+          // gives this issue - p5 related - angular.js:14199 TypeError: Cannot read property 'resetMatrix' of undefined -- only issue this cayse
+          //22 min and one occation reached 12 - (but one point then goes back smoothly )
+            if( annie_Talking){
+              // room.noLoop();
+            }else {
+              // room.loop(); // causes issue with resetMatrix() but doesn't stop the game -
+              // also causes an issue with charlie - draws ontop when resuming the loop and causes collisions forever ( like corner bug )
+            } });
+
+
+        /*=================== Check when key is released and stop walking ===============================================*/
+        room.keyReleased = function(event) {
+          vm.annie_Walking = false;
+          vm.walkingInfo.walking = false;
+        };
+
+        function AnnieController(){          //rename it - testing
+
+          moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ); //declared it out of scope hence sending them - also no need for set up ? works without it ( left it in incase it breaks anything )
+          moveAnnie(walking_Speed);
+
+        }
+        function manageBubble(){
           npcSprites.forEach(function(character) {
             if (checkRoomDialogs(character.name)) {
               if (character !== lastCharCollidedInto && !showPointsBubble) { //always draw bubble
@@ -441,44 +477,7 @@
           if (showPointsBubble) { // draw bubble
             drawPointsBubble(vm.main.totalConvoPoints, lastCharCollidedInto); //lastCharCollidedInto
           }
-
-          room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
-
-          drawNPCsInFront();
-          drawFurnitureInFront();
-          if (conversationResetBubble.visible) {
-            room.drawSprite(conversationResetBubble);
-          }
-
-          vm.anniePosition = annieSprite.position;
-          vm.updateWalkDirection();
-        }; //end of draw function
-
-//is this a good idea? used to stop drawing when dailog windows are open 9 i.e. annie is tlaking  doesnt do much but at least stops looping when canvas is up - check quesitons on notes
-        $scope.$watch(function(){ return annie_Talking; }, function(newVal, oldVal) {
-          // gives this issue - p5 related - angular.js:14199 TypeError: Cannot read property 'resetMatrix' of undefined -- only issue this cayse
-          //22 min and one occation reached 12 - (but one point then goes back smoothly )
-            if( annie_Talking){
-              room.noLoop();
-            }else {
-              room.loop();
-            } });
-
-
-        /*=================== Check when key is released and stop walking ===============================================*/
-        room.keyReleased = function(event) {
-          vm.annie_Walking = false;
-          vm.walkingInfo.walking = false;
-        };
-
-
-        function AnnieController(){          //rename it - testing
-
-          moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ); //declared it out of scope hence sending them - also no need for set up ? works without it ( left it in incase it breaks anything )
-          moveAnnie(walking_Speed);
-
         }
-
 
         function drawFurnitureInFront() {
           furniture.forEach(function(item) {
@@ -517,7 +516,6 @@
             }
           });
         }
-
         //position and create furniture, need to use room so function has to be in a different scope
         function setFurniture(currentRoom) {
           for (var item in currentRoom.furniture) {
@@ -541,7 +539,6 @@
           angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {//what is a lining toom in this annanomus function - it should be a key ?
             var markDoor = false;
             var roomDialogs = levelDataHandler.getRoomDialogs("level_" + vm.main.levelCount, linkingRoom);
-            // console.log("testing concat level   as string : "+ "level_" + vm.main.levelCount); //ir does jump to level 3 - thsi gets executed //so the level is not an issue? //or .concat (vm..)
             if (!vm.main.areDialogsCompleted(roomDialogs, vm.main.completedConvos)) {
               markDoor = true;
             }
@@ -640,7 +637,6 @@
       // Show dialog
       function dialogTriggered(spriteA, spriteB) {
         vm.walkingInfo.walking = false;
-
         var characters = vm.main.roomData;
         lastCharCollidedInto = spriteB;
         if (conversationResetBubble.visible) { //&& spriteB === lastCharCollidedInto
@@ -648,16 +644,13 @@
         }
         if (characters && characters[spriteB.name]) { // if character exists
           var character = characters[spriteB.name];
-
           //flip annie and npc inset position depending on the direction annie talks to npc
           if (annieSprite.position.x > spriteB.position.x) {
             vm.main.flipDialogs = false;
 
           } else {
             vm.main.flipDialogs = true;
-
           }
-
           if (character.dialogKey && !annie_Talking) {
             var numOfNPCConvos = vm.main.convoCounter[spriteB.name] += 1;
             vm.main.convoAttemptsTotal += 1;
@@ -721,7 +714,7 @@
       // Want to play correct sounds after the player clicks coninue, so it doesn't play over animation sounds
       // It works for the first conversation, and then gives me an error for the rest
       $scope.$watch(function() {
-        return vm.main.hideDialog
+        return vm.main.hideDialog;
       }, function(newVal, oldVal) { //except for initialization
         if (currentRoom) {
           if (vm.main.hideDialog !== oldVal && newVal) { //don't play when it opens
@@ -739,41 +732,30 @@
           }
         }
       });//end of watch
-
-
-
       $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
-
         if (newVal && !oldVal) {
           if (annie_Talking) {
-            // room.noLoop(); //Attempt to reduce calls to atleast when we are outside the convo
             showArrows = false;
             if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
               $timeout(function() {
                 conversationResetBubble.visible = false;
                 resetArrowTimer();
               }, 2000);
-              //moved reset bubble to outer scope
               resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
-
             } else {
               showPointsBubble = true;
               $timeout(function() {
                 showPointsBubble = false;
-
                 /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                 if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
                   vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
-                  vm.main.nextLevelData();
+                  vm.main.nextLevelData(); //maybe add a level count check 0
                 }
-
               }, 2000);
               resetArrowTimer();
             }
           }
            annie_Talking = false;
-          //  room.Loop();
-
         }
       });
 //////*****************************  new functions     *************************************/////////

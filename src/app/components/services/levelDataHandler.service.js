@@ -24,17 +24,7 @@
       getRoomDialogs: getRoomDialogs
     };
 
-    // return $http.get(dialogJsonPaths[dialogKey]).then(function(response){
-    // 	return response.data;
-
     return service;
-    //get the right file
-    //then do ** that is currenly in the function
-
-
-    // $http.get(levelsPath)
-
-    //evrything here is under the .then of the promise
     function setUpForGameType(gameType) { //adding return genearates a promise and then we say .then it also genrates a promise - maybe in initlization code - maybe ( not for this one) - go get these configuration files then there are some decg i need to make
 
       var levelsPath = "assets/LevelJson/levels.json";
@@ -111,8 +101,5 @@
       // not found!
       return [];
     }
-
-
-
   } //end of controller
 })();
