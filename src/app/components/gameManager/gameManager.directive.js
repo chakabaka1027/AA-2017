@@ -223,7 +223,7 @@
         levelRequiredConvos = vm.main.arrayToString(vm.main.levelConvosNeeded);
         userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_State", levelRequiredConvos);
 
-        if (vm.main.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/
+        if (vm.main.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/ //so this still gets empliminted but so does the check below
           userDataService.trackAction("Game end", vm.main.roomKey, "Game_End", vm.main.playerScore, "0");
           userDataService.postData(); //end game post data, after conversation is done
           userGameInfo.playerScore = vm.main.playerScore;
@@ -536,7 +536,8 @@
         }
 
         function getDoorStatus() {
-          angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {//what is a lining toom in this annanomus function - it should be a key ?
+          // if(!levelDataHandler.lastLevel) {   //  if(vm.main.levelCount <= levelDataHandler.maxLevel){//temporary
+            angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {//what is a lining toom in this annanomus function - it should be a key ?
             var markDoor = false;
             var roomDialogs = levelDataHandler.getRoomDialogs("level_" + vm.main.levelCount, linkingRoom);
             if (!vm.main.areDialogsCompleted(roomDialogs, vm.main.completedConvos)) {
@@ -544,6 +545,7 @@
             }
             doorArrows[doorKey] = markDoor;
           });
+
         }
 
         function drawDoorArrows() {
@@ -748,8 +750,12 @@
                 showPointsBubble = false;
                 /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                 if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
-                  vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
-                  vm.main.nextLevelData(); //maybe add a level count check 0
+                      vm.main.levelCount += 1;
+                  if(  vm.main.levelCount <= levelDataHandler.maxLevel ){ //here
+                     //long work around but this was not used before - why is it an issue here? added a temp boolian to methods that accsess undefined data
+                     /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
+                    vm.main.nextLevelData(); //maybe add a level count check 0
+                  }
                 }
               }, 2000);
               resetArrowTimer();

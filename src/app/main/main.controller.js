@@ -31,6 +31,7 @@
     vm.convoAttemptsTotal = 0;
 
 
+    var currentLevel;
     vm.flipDialogs = (userDataService.userID==='flip');
     $log.log('player id is "'+userDataService.userID+'" '+vm.flipDialogs);
 
@@ -42,7 +43,7 @@
       vm.currentConversation = vm.roomData[talkingWith].dialogKey;
     }
 
-    function nextLevelData(){ //is the problem for single rooms that it increases the counter - but that wasnt an issue before 
+    function nextLevelData(){ //is the problem for single rooms that it increases the counter - but that wasnt an issue before
       var currentLevel = "level_"+vm.levelCount;
       console.log("current level " + currentLevel); // i think this happens as it ggos to the next level there isnt one - so it is undefined - add a check for last level - // single level
       console.log("levelDataHandler.levels[currentLevel].requiredConversations" +  levelDataHandler.levels[currentLevel].requiredConversations);

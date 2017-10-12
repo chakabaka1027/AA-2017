@@ -1,5 +1,6 @@
 (function(){
   'use strict';
+  //TODO not yet used - should we implement this or delete it ?
 
   angular.module('awkwardAnnie')
   .service('NextLevelRequirments', NextLevelRequirments);
@@ -25,8 +26,8 @@
     return service;
 
 //needed for next methods
-    function nextLevelData(){
-      var currentLevel = "level_"+ GenralInfoHnadler.levelCount;
+    function nextLevelData(){//TODO check this one out == for room data
+      var currentLevel = "level_"+ GenralInfoHnadler.levelCount; //is this always one ?
       levelConvosNeeded = levelDataHandler[currentLevel].requiredConversations;
       roomData = levelDataHandler[currentLevel].rooms[roomKey];
     }

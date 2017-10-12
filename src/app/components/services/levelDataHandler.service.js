@@ -21,7 +21,8 @@
       //FULL GAME POS AND NEG
       //dealing with a rpomice - intilization needs to say wait intull promice has been resolved - how httlp works a little bit
       setUpForGameType: setUpForGameType,
-      getRoomDialogs: getRoomDialogs
+      getRoomDialogs: getRoomDialogs,
+      lastlevel: false
     };
 
     return service;
@@ -56,23 +57,24 @@
     //Is there any dialog in this room, if yes, what are they.
     //Later on check if they've been completed
     function getRoomDialogs(levelKey, roomKey) { //example level 1. rooms
-      var currentRoomCheck = service.levels[levelKey].rooms[roomKey];
-      var dialogs = [];
-      if (!currentRoomCheck) // not{
-      {
-        return dialogs;
-      }
+        var currentRoomCheck = service.levels[levelKey].rooms[roomKey];
+        var dialogs = [];
+        if (!currentRoomCheck) // not{
+        {
+          return dialogs;
+        }
 
-      angular.forEach(currentRoomCheck, function(characterData, characterName) {
-        if (characterData.dialogKey) {
-          dialogs.push(characterData.dialogKey);
-        }
-        //second convo - come back  if we chaneg this later
-        if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
-          dialogs.push(characterData.secondConvo.dialogKey);
-        }
-      });
-      return dialogs;
+        angular.forEach(currentRoomCheck, function(characterData, characterName) {
+          if (characterData.dialogKey) {
+            dialogs.push(characterData.dialogKey);
+          }
+          //second convo - come back  if we chaneg this later
+          if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
+            dialogs.push(characterData.secondConvo.dialogKey);
+          }
+        });
+        return dialogs;
+
     }
 
     function getSuccessPaths(dialogKey) {

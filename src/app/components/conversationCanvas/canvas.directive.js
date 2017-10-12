@@ -31,9 +31,9 @@
       var dialogSprite;
       var annieDialogSprite;
       var newDialogCanvas;
-      var universalSurprised,
-        universalConfused,
-        universalAnnoyed;
+      // var universalSurprised,
+      //   universalConfused,
+      //   universalAnnoyed;
 
       $scope.$on('$destroy', function() {
         newDialogCanvas.remove();
@@ -49,9 +49,9 @@
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         //TODO still wotking on it - seems to be working so far
         insetWindow.preload = function() {
-          universalSurprised =""//insetWindow.loadSound("assets/sounds/UniversalSurpriseCartoon-option1.wav");
-          universalConfused = ""//insetWindow.loadSound("assets/sounds/UniversalConfusedCartoon-option1.wav");
-          universalAnnoyed =  ""//insetWindow.loadSound("assets/sounds/UniversalAnnoyed.wav");
+          // universalSurprised =""//insetWindow.loadSound("assets/sounds/UniversalSurpriseCartoon-option1.wav");
+          // universalConfused = ""//insetWindow.loadSound("assets/sounds/UniversalConfusedCartoon-option1.wav");
+          // universalAnnoyed =  ""//insetWindow.loadSound("assets/sounds/UniversalAnnoyed.wav");
         };
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         	SETUP
