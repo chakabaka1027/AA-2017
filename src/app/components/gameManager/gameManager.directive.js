@@ -183,6 +183,8 @@
       var showPointsBubble = false;
       var canDraw = false;
 
+      var roomEntryCount = 0;
+
       // Data
       var levelRequiredConvos,
         convoMean,
@@ -232,10 +234,13 @@
             $state.go("endScreen");
             //$location.path("/endScreen");
           }, 1000);
+          return;
         }
+
         if (currentRoom && newVal != oldVal) { //make sure there's a room before you check and draw the appropriate guiding arrows
           currentRoom.getDoorStatus();
         }
+
       });
 
 
@@ -299,10 +304,14 @@
 
         levelRequiredConvos = "";
         showArrows = false;
+
+        $log.log('ROOM ENTRY (currentRoom constructor)', roomEntryCount);
+
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         	Preload
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.preload = function() {
+          $log.log('ROOM ENTRY (room.preload)', roomEntryCount);
           bg = room.loadImage(currentRoomData.bg); //Background changes based on room
           // Sounds
           doorTransitionSound = room.loadSound("assets/sounds/SceneTransition.wav");
@@ -329,6 +338,9 @@
         		adds animations after creating a character sprite
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.setup = function() {
+
+          roomEntryCount += 1;
+          $log.log('ROOM ENTRY (room.setup)', roomEntryCount);
 
           // room.noLoop();
           room.frameRate(30);
@@ -706,6 +718,10 @@
           }
         }
       }
+
+      $log.log('controller adding watches...', roomEntryCount);
+
+
       $scope.$watch(function() {
         return showPointsBubble;
       }, function(newVal, oldVal) {
