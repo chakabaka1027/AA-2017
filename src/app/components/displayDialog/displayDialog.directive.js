@@ -200,9 +200,7 @@
           }
           if (vm.main.animationTitle && vm.main.animationTitle.indexOf("bold") >= 0) { //if it has an animated expression, wait until it's done.
             // var npc_vt_anim_timer = vm.main.numberOfFrames * 100; //length of animation
-            var watchPromise = $scope.$watch(function() {
-              return vm.main.animationDone;
-            }, function() {
+            var watchPromise = $scope.$watch(function() {return vm.main.animationDone;},function() {
               if (vm.main.animationDone) {
                 latestChoice = choice;
                 audioService.playAudio("UIbuttonclick-option1.wav");
@@ -213,7 +211,7 @@
             }); //end of watch one
             if (vm.isTestBed) {
               latestChoice = choice;
-              temp(choice);
+              setUpDelayChoiceDisplay(choice);
               watchPromise(); //get's rid of previously created $watch
             }
             vm.main.animationDone = false; //reset
@@ -229,10 +227,10 @@
         vm.npcResponse = "";
       }//end of load responces
 
-      function employSpecficTimeOut(timer, choice) {
+      function employSpecficTimeOut(timeOut, choice) {
         $timeout(function() {
-          temp(choice);
-        }, timer); }
+          setUpDelayChoiceDisplay(choice);
+        }, timeOut); }
 
       function delayChoiceDisplay() {
         $timeout(function() {
@@ -266,9 +264,10 @@
             loadResponses(choice);
             trackBranches(currenBranch);
           }
+          //pit thrdr in one method  0---  use foreach - angularforeach ---
           //rename it to set data track if approved and move below to dataTracking - or should this be a method in user data service?- and name the other to data tracking
           function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
-            var num = number.toString();
+            var num = number.toString(); //2D array -
             var str = ["convo_state","convo_user","convo_system","convo_NPC"];
             var pram3 = [num,Branch,scores[Branch],choice.animation];
             var pram4 = [vm.main.failedConvos[vm.main.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
@@ -284,8 +283,9 @@
               userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
           }
         }
-          function temp(choice) { //not sure why it is used thw way it is up there - for now just moving it here to avoid repeating it
-            audioService.playAudio("UIbuttonclick-option1.wav"); //even has the same exact values above
+        //
+          function setUpDelayChoiceDisplay(choice) { //not sure why it is used thw way it is up there - for now just moving it here to avoid repeating it
+            audioService.playAudio("UIbuttonclick-option1.wav");
             vm.npcResponse = choice.NPC_Response;
             delayChoiceDisplay();
           }

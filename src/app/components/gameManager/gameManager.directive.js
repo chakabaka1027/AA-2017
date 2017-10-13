@@ -274,7 +274,7 @@
       //scope. wtach (watch what - i this case new val and old val ){}
 
 
-
+//good comment
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       	P5 SKETCH STARTS HERE:
       	creates a room with the appropriate characters, furniture and npcs
@@ -408,10 +408,7 @@
         	Draw
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.draw = function() {
-          // console.log(" fps is "+ room.frameRate());
-
           room.background(bg);
-
           collisionswithFurniture(annieSprite, furniture);
           // Set door collision checks seperately
           for (var i in npcSprites) {
@@ -451,19 +448,6 @@
           vm.updateWalkDirection();
         }; //end of draw function
 
-
-        //is this a good idea? used to stop drawing when dailog windows are open 9 i.e. annie is tlaking  doesnt do much but at least stops looping when canvas is up - check quesitons on notes
-        $scope.$watch(function(){ return annie_Talking; }, function(newVal, oldVal) {
-          // gives this issue - p5 related - angular.js:14199 TypeError: Cannot read property 'resetMatrix' of undefined -- only issue this cayse
-          //22 min and one occation reached 12 - (but one point then goes back smoothly )
-            if( annie_Talking){
-              // room.noLoop();
-            }else {
-              // room.loop(); // causes issue with resetMatrix() but doesn't stop the game -
-              // also causes an issue with charlie - draws ontop when resuming the loop and causes collisions forever ( like corner bug )
-            } });
-
-
         /*=================== Check when key is released and stop walking ===============================================*/
         room.keyReleased = function(event) {
           vm.annie_Walking = false;
@@ -471,7 +455,6 @@
         };
 
         function AnnieController(){          //rename it - testing
-
           moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ); //declared it out of scope hence sending them - also no need for set up ? works without it ( left it in incase it breaks anything )
           moveAnnie(walking_Speed);
 
@@ -635,6 +618,7 @@
       /*================================== Create Room Function =========================================*/
       function createRoom(roomKey) {
         myp5.remove(); //this is the culprit, moving this into a timer creates more than 1 canvas
+        myp5 = null;
         $timeout(function() {
           // currentRoomKey = vm.main.roomKey; //To be set by the level manager
           vm.walkingInfo.walking = false;
