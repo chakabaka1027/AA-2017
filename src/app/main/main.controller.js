@@ -6,6 +6,9 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
+  //TODO make this into a service --- overall
+  //TODO add a reset - going back to ---
+  //would be alomst empty ---
   function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService) {
     var vm = this;
     vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
@@ -46,8 +49,6 @@
     //TODO move this to datalevel hanler =====
     function nextLevelData(){ //is the problem for single rooms that it increases the counter - but that wasnt an issue before
       var currentLevel = "level_"+vm.levelCount;
-      console.log("current level " + currentLevel); // i think this happens as it ggos to the next level there isnt one - so it is undefined - add a check for last level - // single level
-      console.log("levelDataHandler.levels[currentLevel].requiredConversations" +  levelDataHandler.levels[currentLevel].requiredConversations);
       vm.levelConvosNeeded = levelDataHandler.levels[currentLevel].requiredConversations;
       vm.roomData = levelDataHandler.levels[currentLevel].rooms[vm.roomKey];
     }
@@ -66,7 +67,7 @@
         return true;
     }
 
-//TODO must die 
+//TODO must die
     function arrayToString(array){
         var stringConcat = "";
         for(var index in array){

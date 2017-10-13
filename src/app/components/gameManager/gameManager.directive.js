@@ -21,8 +21,8 @@
       bindToController: true,
       link: link,
       //template: ['<div class="debugContainer">',
-      //				'<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Click</input>',
-      //			'</div>'].join("")
+      //        '<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Click</input>',
+      //      '</div>'].join("")
       template: ''
     };
     return directive;
@@ -181,7 +181,6 @@
       var lastCharCollidedInto = null;
       var pointsBubble;
       var showPointsBubble = false;
-      var canDraw = false;
 
       var roomEntryCount = 0;
 
@@ -246,7 +245,7 @@
 
 
       /*===================================================================
-      	Controller Functions
+        Controller Functions
       ===================================================================*/
 
       function resetArrowTimer() {
@@ -276,8 +275,8 @@
 
 //good comment
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      	P5 SKETCH STARTS HERE:
-      	creates a room with the appropriate characters, furniture and npcs
+        P5 SKETCH STARTS HERE:
+        creates a room with the appropriate characters, furniture and npcs
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       var currentRoom = function(room) { //room is just myp5
         var bg;
@@ -308,7 +307,7 @@
         $log.log('ROOM ENTRY (currentRoom constructor)', roomEntryCount);
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	Preload
+          Preload
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.preload = function() {
           $log.log('ROOM ENTRY (room.preload)', roomEntryCount);
@@ -332,10 +331,10 @@
         };
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	Setup
-        		creates canvas
-        		sets up all appropriate chracters in the room for the current level
-        		adds animations after creating a character sprite
+          Setup
+            creates canvas
+            sets up all appropriate chracters in the room for the current level
+            adds animations after creating a character sprite
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.setup = function() {
 
@@ -351,7 +350,7 @@
           setFurniture(currentRoomData); //Set up furniture based on
           resetArrowTimer();
           /*==================================================================================
-          	Create characters and add animations
+            Create characters and add animations
           ==================================================================================*/
 
           npcSprites = [];
@@ -372,7 +371,7 @@
           }
 
           /*====================
-          		Create Annie
+              Create Annie
           ======================*/
           annieSprite = room.createSprite(annieStartX, annieStartY);
           annieSprite.setCollider("rectangle", positionData.annie.colliderXoffset, positionData.annie.colliderYoffset, positionData.annie.colliderWidth, positionData.annie.colliderHeight);
@@ -405,7 +404,7 @@
         }; //end of setup
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	Draw
+          Draw
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.draw = function() {
           room.background(bg);
@@ -576,7 +575,7 @@
       trackRoomEntry();
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      	No room/p5 dependencies but need to happen after the p5 object is defined ^
+        No room/p5 dependencies but need to happen after the p5 object is defined ^
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       /*=============== add all animations: Parameters(character definition from the char animation service, global characterSprite) ============== */
       function addAnimations(characterDefinition, characterSprite) {
@@ -610,7 +609,6 @@
       /*================================== If collided with a door =========================================*/
       // If collided with a door, then load level and check game stats
       function handleDoorCollision(furnitureItem) {
-          // console.log("collided with "+ furnitureItem);
           var getNextRoom = mappingService[currentRoomKey][furnitureItem];
           previousRoom = currentRoomKey;
           createRoom(getNextRoom);
@@ -684,7 +682,8 @@
       }
 
       function checkRoomDialogs(character) { //called constantnly - can we reduce # of calls ? - ask about loop - no loop p5
-        if(typeof vm.main.roomData != 'undefined'){
+        if(typeof vm.main.roomData != 'undefined'){  //TODO belwo  in angular
+          // if(angular.isUndefined( vm.main.r roomData)){ return } --- no need to countunie just have this in one line - return false
         var characterDialog = vm.main.roomData[character]; // at some point - the value is undefiend - this happens untill we move to a new room and send in new "Active"charecters - fixed with flag
                                                           // as far as i can tell - otheer than this a work  around could be  adding a flag after we enter a new room - thoughts?
           if (characterDialog && characterDialog.dialogKey) {

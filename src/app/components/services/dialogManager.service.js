@@ -6,10 +6,10 @@
 
 	/** @ngInject */
 	function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
-			var defaultUrl = {
-				positive:	'assets/AwkwardAnnieDialogContent_all.xlsx',
-        negative: 'assets/AwkwardAnnieDialogContent_all.xlsx'
-			};
+			// var defaultUrl = {
+			// 	positive:	'assets/AwkwardAnnieDialogContent_all.xlsx',
+      //   negative: 'assets/AwkwardAnnieDialogContent_all.xlsx'
+			// };
 
 		var boolianValTest;
 		var dialogWorksheetKeys = {};
@@ -92,7 +92,6 @@
                 	adjustDialogWorksheetKeys();
                 	adjustNegativePositiveLinearKeys(gameType);
                 	adjustFeedbackAnimations(gameType);
-									print();
 									service.deferred.resolve();
 
                 })
@@ -121,13 +120,8 @@
 						service.dialogWorksheetKeys['mike_Linear'] = 'MM.Linear.positive';
 					}
 					else{
-							console.log("negative value");
+							$log.log("negative value");
 						}
-
-					 }
-					function  print(){
-						console.log("this wotks it changes to positive or normal - just for checking :_) ");
-						console.log(service.dialogWorksheetKeys['fran_Linear']);
 
 					 }
 

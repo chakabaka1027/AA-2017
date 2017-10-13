@@ -57,8 +57,6 @@
                 return true;
               }
             }
-
-
           }
 
         }
@@ -70,14 +68,14 @@
         if (!$scope.main.levelCount) {
           return;
         }
-        
+
         var nextLevel = levelDataHandler.levels["level_" + $scope.main.levelCount];
-        if (!nextLevel) { 
+        if (!nextLevel) {
           $log.log('reached end of levels...');
           return;
         }
 
-        vm.level = nextLevel; 
+        vm.level = nextLevel;
         vm.roomConversations = {};
         vm.rooms = vm.level.rooms;
         angular.forEach(vm.roomKeys, function(roomKey) {

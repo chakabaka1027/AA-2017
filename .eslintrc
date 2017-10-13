@@ -15,6 +15,13 @@
     "moment": true
   },
   "rules":{
-    "no-unused-vars": 1
+    "no-mixed-spaces-and-tabs": 1,
+    "no-unused-vars": 1,
+    "no-cond-assign": 0,
+    "no-constant-condition": 0,
+    "comma-dangle": 0,
+    "no-undef": 1,
+    "angular/controller-name": 0,
+    "angular/typecheck-array": 0,
   }
 }
