@@ -8,7 +8,7 @@
 	function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
 			// var defaultUrl = {
 			// 	positive:	'assets/AwkwardAnnieDialogContent_all.xlsx',
-      //   negative: 'assets/AwkwardAnnieDialogContent_all.xlsx'
+			//   negative: 'assets/AwkwardAnnieDialogContent_all.xlsx'
 			// };
 
 		var boolianValTest;
@@ -49,18 +49,14 @@
 			Luna_RQ_01:"assets/json/LL.RQ.01.json",
 			Luna_RQ_02:"assets/json/LL.RQ.02.json"
 
-
-
 		};
-
+//TODO change this ?
 		for (var dialogKey in dialogJsonPaths) {
 			var p = dialogJsonPaths[dialogKey].split('/');
 			var jfn = p[p.length-1];
 			var worksheetKey = jfn.replace('.json', '');
 			dialogWorksheetKeys[dialogKey] = worksheetKey;
 }
-
-
 		var deferred = $q.defer();
 		service.deferred = deferred;
 		service.loadedPromise = deferred.promise;
@@ -130,12 +126,10 @@
           var ispos = getGameType(gameType);
 					function chaseTree (node){
 						if(!Array.isArray(node)){
-
 							angular.forEach(node , function(subNode){
 									chaseTree(subNode );
 							})
 						}
-
 						else{
 							angular.forEach(node, function(step){
 								if(angular.isUndefined(step.animation)){
@@ -164,7 +158,6 @@
 					if (spreadsheetContent) {
 						return spreadsheetContent;
 					}
-
 					$log.warn(':::Falling back to JSON file "'+dialogJsonPaths[dialogKey]+'"');
 
 					return $http.get(dialogJsonPaths[dialogKey]).then(function(response){

@@ -17,20 +17,15 @@
       successPaths: ["ACC", "CAC", "CCA", "BBC", "BCB", "CBB", "BCC", "CBC", "CCB", "CCC"],
       legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
       maxLevel: 7,
-
-      //FULL GAME POS AND NEG
-      //dealing with a rpomice - intilization needs to say wait intull promice has been resolved - how httlp works a little bit
       setUpForGameType: setUpForGameType,
       getRoomDialogs: getRoomDialogs,
       lastlevel: false
     };
 
     return service;
-    function setUpForGameType(gameType) { //adding return genearates a promise and then we say .then it also genrates a promise - maybe in initlization code - maybe ( not for this one) - go get these configuration files then there are some decg i need to make
-
+    function setUpForGameType(gameType) {
       var levelsPath = "assets/LevelJson/levels.json";
       var otherLevelsPath = "assets/LevelJson/otherlevels.json";
-
       if (gameType.indexOf("positive") === 0) {
         service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];
         service.choiceScores = {
@@ -42,24 +37,22 @@
 
       if (gameType === "negative" || gameType === "positive") {
         return $http.get(levelsPath).then(function(response) {
-          service.levels = response.data; //parsed
+          service.levels = response.data;
         })
       } else {
         service.maxLevel = 1;
         return $http.get(otherLevelsPath).then(function(response) {
           service.levels = response.data[gameType];
-          //service.levels.level_1 - to acsess
+          //service.levels.level_1 - to acsess data
         });
       }
     } //end of setUp
 
 
-    //Is there any dialog in this room, if yes, what are they.
-    //Later on check if they've been completed
-    function getRoomDialogs(levelKey, roomKey) { //example level 1. rooms
+    function getRoomDialogs(levelKey, roomKey) {
         var currentRoomCheck = service.levels[levelKey].rooms[roomKey];
         var dialogs = [];
-        if (!currentRoomCheck) // not{
+        if (!currentRoomCheck)
         {
           return dialogs;
         }
@@ -68,13 +61,11 @@
           if (characterData.dialogKey) {
             dialogs.push(characterData.dialogKey);
           }
-          //second convo - come back  if we chaneg this later
           if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
             dialogs.push(characterData.secondConvo.dialogKey);
           }
         });
         return dialogs;
-
     }
 
     function getSuccessPaths(dialogKey) {
@@ -86,11 +77,9 @@
             var roomInfo = levelInfo.rooms[roomKey];
             for (var charKey in roomInfo.characters) {
               var charInfo = roomInfo.characters[charKey];
-
               if (charInfo.dialogKey === dialogKey) {
                 return charInfo.successPaths;
               }
-
               if (charInfo.secondConvo && charInfo.secondConvo.dialogKey === dialogKey) {
                 return charInfo.secondConvo.successPaths;
               }
@@ -99,7 +88,6 @@
           }
         }
       }
-
       // not found!
       return [];
     }

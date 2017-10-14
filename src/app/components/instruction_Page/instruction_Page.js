@@ -26,8 +26,6 @@
       vm.clickCounter = 0;
       vm.getVersion = getVersion;
 
-
-      //setting promice flasg to ttru e
       vm.isLoading = true;
       dialogService.loadedPromise.then(function() { //if thi swas sesolved vmloading = true else false immeditly
         vm.isLoading = false;
@@ -52,6 +50,6 @@
           $state.go("awkwardAnnieGame");
         }
       }
-    } //introController
+    } // end of introController
   }
 })();

@@ -3,7 +3,7 @@
 
 <div class="map-background"> <!-- include this as attribute along with commented code below for enlarged minimap functionality: ng-click = "show = !show" -->
 	<div ng-repeat="roomKey in gameMap.roomKeys"
-		ng-class="{ 
+		ng-class="{
 		'conversation-room': gameMap.roomHasConversation(roomKey),
 
 		'current-room': main.roomKey === roomKey,
@@ -14,74 +14,8 @@
 		'mikesOffice': roomKey === 'mikesOffice',
 		'fransOffice': roomKey === 'fransOffice',
 		'breakRoom': roomKey === 'breakRoom'}"
-		
+
 		class="game-map-room game-room">
 
-		<!-- display chat bubble icon in minimap-->
-		<img src="assets/images/UI/asterisk.png">
-		
-
-	<!-- enlarged map
-	</div>
-
-		<div ng-if = "show" class = "enlarged-map-background"> <div class = "enlarged-map-title">Office Map</div>
-
-
-			<div ng-repeat = "roomKey in gameMap.roomKeys"
-				ng-if = "show"
-
-				ng-class = "{ 
-				'conversation-room': gameMap.roomHasConversation(roomKey), 
-				'enlarged-conversation-room-overlay': main.roomKey === roomKey,
-
-				'enlarged-lobby': roomKey === 'lobby',
-				'enlarged-conferenceRoom': roomKey === 'conferenceRoom',
-				'enlarged-anniesOffice': roomKey === 'anniesOffice',
-				'enlarged-mikesOffice': roomKey === 'mikesOffice',
-				'enlarged-fransOffice': roomKey === 'fransOffice',
-				'enlarged-breakRoom': roomKey === 'breakRoom'}"
-						
-				class = "enlarged-game-map-room enlarged-game-room">
-
-				<div ng-class = "{'enlarged-current-room-overlay': main.roomKey === roomKey}"></div>
-				<img src= "assets/images/UI/speechIcon.png">
-
-			</div>
-
-		</div>
-	-->
-
+<!-- display chat bubble icon in minimap-->		<img src="assets/images/UI/asterisk.png">	
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- place this inside ng-class to have it change background color when convo is in room 
-	'conversation-room': gameMap.roomHasConversation(roomKey), 
--->
-
-
-
-<!--
-<div class = "vertical-line"> </div>
-
--->
-
-<!-- show enlarged map -->
-
-
-
-
-
-
-
-
-

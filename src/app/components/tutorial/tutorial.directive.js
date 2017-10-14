@@ -34,7 +34,7 @@
       });
       $scope.$on("$destroy", onDestroy);
 
-      function gotoState (pcOption) {
+      function gotoState(pcOption) {
         audioService.playAudio("UIbuttonclick-option2.wav");
         vm.textRows.push({
           npcText: vm.curState.npcText,
@@ -73,7 +73,7 @@
           vm.showingDialogOptions = true;
         }, 2500);
       }
-      
+
       function onDestroy() {
         $timeout.cancel(showTimer);
         $timeout.cancel(hideTimer);

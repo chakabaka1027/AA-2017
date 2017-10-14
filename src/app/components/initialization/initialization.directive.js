@@ -21,7 +21,6 @@
       gameConfig.fetchConfig()
         .then(function() {
 
-
           gameType = $stateParams.gameType || 'negative';
 
           if (levelDataHandler.legalLevels.indexOf(gameType) < 0) {
@@ -32,22 +31,15 @@
 
           var userID = $location.search().userID; //user ID is a qury param -  (--rul > key=value)
 
-          if (userID) { //if it is in the dictionary
+          if (userID) {
             userGameInfo.userForwarded = true;
             userGameInfo.userID = userID;
           } else {
             userGameInfo.userForwarded = false;
           }
-          levelDataHandler.setUpForGameType(gameType);//.then ()///dialougservice.loadfromservice
-          //
-          //this may take time - consider moving elsewhere...
+          levelDataHandler.setUpForGameType(gameType);
           dialogService.loadFromServer(gameType);
 
-          //  .then(function(){$state.go('awkwardAnnieGame')});
-          // return;
-          // uncomment above to skip intro stuff....
-
-          // other stuff.....
 
           if (userGameInfo.userForwarded) {
             userDataService.resetData();

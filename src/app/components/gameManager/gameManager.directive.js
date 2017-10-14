@@ -39,9 +39,7 @@
 
       $('html').on('keydown', trackKeys);
 
-      scope.$watch(function() {
-        return ctlr.walkingInfo.walking;
-      }, function() {
+      scope.$watch(function() {return ctlr.walkingInfo.walking;}, function() {
         if (!ctlr.walkingInfo.walking) {
           elm.off("mousemove", mouseMove);
         }
@@ -54,7 +52,7 @@
         //    up key        down key         right key    left key
         if (code === 38 || code === 40 || code === 39 || code === 37) {
           ctlr.walkingInfo.wasMouseTriggered = false;
-          ctlr.annie_Walking = true; //set to true when we press on the key - sets to false if off of key ?
+          ctlr.annie_Walking = true;
           ctlr.walkingInfo.walking = true;
           switch (code) {
             case 38:
@@ -71,9 +69,6 @@
               break;
           }
 
-          // showArrows = false; //Uncomment if ETS changes mind
-          //annieWalkingCode = code;
-
         }
       }
 
@@ -82,26 +77,19 @@
         if (!ctlr.walkingInfo.allowMouseHold) {
           elm.on("mousemove", mouseMove);
         }
-
         mouseAnchorX = evt.offsetX;
         mouseAnchorY = evt.offsetY;
-
         ctlr.walkingInfo.walking = true;
         ctlr.walkingInfo.wasMouseTriggered = true;
-
         updateWalkDirection();
 
       }
 
       function mouseUp(evt) {
-
         elm.off("mousemove", mouseMove);
-
         if (!ctlr.walkingInfo.allowMouseHold) {
           ctlr.walkingInfo.walking = false;
         }
-
-
       }
 
       function mouseMove(evt) {
@@ -132,7 +120,6 @@
           var isAboveLine1 = (ym < xm + b1);
           var isAboveLine2 = (ym < -xm + b2);
 
-
           var udrl;
           if (isAboveLine1 && isAboveLine2) {
             udrl = "up";
@@ -145,7 +132,6 @@
           }
 
           ctlr.walkingInfo.direction = udrl;
-
 
         }
       }
@@ -205,21 +191,17 @@
         allowMouseHold: true
       };
 
-
       vm.flipDialogs = (userDataService.userID === 'flip');
 
-
       $scope.$on('$destroy', function() {
-        $('html').off('keydown'); //removes event listeners for key down
+        $('html').off('keydown');
         myp5.remove();
-        if (timerPromise) { //make sure timer is destroyed with the room
+        if (timerPromise) {
           $timeout.cancel(timerPromise);
         }
       });
 
-      $scope.$watch(function() {
-        return vm.main.levelCount;
-      }, function(newVal, oldVal) { // need to redraw arrows after each convo
+      $scope.$watch(function() {return vm.main.levelCount;}, function(newVal, oldVal) {
         userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_Setup", vm.main.levelCount, "0/3/5");
         levelRequiredConvos = vm.main.arrayToString(vm.main.levelConvosNeeded);
         userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_State", levelRequiredConvos);

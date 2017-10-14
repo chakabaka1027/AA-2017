@@ -5,8 +5,7 @@
   .module('awkwardAnnie')
   .service('userGameInfo', userGameInfo);
   var postURL ="http://researchtech1.ets.org/C3.Net/launch/GameComplete.aspx";
-  //paste the url here ---
-  //same as static const
+
   /** @ngInject */
   function userGameInfo(gameConfig){
     var service = {
@@ -23,8 +22,6 @@
       return gameConfig.postURL;
       //returns a url string
     }
-
   }
-
 
 })();

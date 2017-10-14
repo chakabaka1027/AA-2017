@@ -7,7 +7,6 @@
   function parseAAContentService($log, xlsxService) {
     var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
 
-    var localBoolean;
     var service = {
       parsedContent: {},
 

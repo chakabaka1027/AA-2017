@@ -12,8 +12,6 @@
     var service = {
       loadTutorialData: loadTutorialData,
     };
-
-
     return service;
 
     function loadTutorialData(gameType) {
@@ -21,13 +19,11 @@
       var negativePath = "assets/tutorialJson/negativeIntro.json";
       var path;
 
-
       if (userGameInfo.gameType.indexOf("positive") === 0) {
         path = positivePath;
       } else {
         path = negativePath;
       }
-
       return $http.get(path).then(function(response) {
         var data = response.data;
         service.data = data;
@@ -38,5 +34,4 @@
     } //end of method
 
   }
-
 })();

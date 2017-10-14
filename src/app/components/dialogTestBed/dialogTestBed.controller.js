@@ -12,21 +12,19 @@
     vm.talkingWith = "fran";
     vm.hasLoaded = false;
     vm.loadFromFile = loadFromFile;
-    vm.currentSource = "Website"
+    vm.currentSource = "Website";
     vm.animationValid = true;
     vm.successPaths = [];
     vm.flipDialog = true;
 
-    //dialogService.loadedPromise.then(activate);
     dialogService.loadFromServer($stateParams.gameType).then(
       function() {
         dialogService.deferred.resolve();
         activate();
-
       });
 
     function activate() {
-      vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
+      vm.levelCount = 1;
       vm.levelUp = false;
       vm.failedConvos = [];
       vm.dialogList = dialogService.getDialogKeys()
@@ -40,22 +38,16 @@
       vm.hasLoaded = true;
       vm.currentChoiceInfo = {};
 
-      $scope.$watch(function() {
-          return vm.currentConversation;
-        },
-        function(newVal, oldVal) {
-          vm.branchHistory = [];
-          vm.talkingWith = vm.currentConversation.split("_")[0];
-          vm.displayCharacters = false;
-          $timeout(function() {
-            vm.displayCharacters = true
-          }, 0);
-        }
-      );
+      $scope.$watch(function() {return vm.currentConversation;}, function(newVal, oldVal) {
+        vm.branchHistory = [];
+        vm.talkingWith = vm.currentConversation.split("_")[0];
+        vm.displayCharacters = false;
+        $timeout(function() {
+          vm.displayCharacters = true;
+        }, 0);
+      });
 
-      $scope.$watch(function() {
-        return vm.currentChoiceInfo;
-      }, function() {
+      $scope.$watch(function() {return vm.currentChoiceInfo; }, function() {
         if (!vm.currentChoiceInfo.animation) {
           vm.animationValid = true;
         } else {
@@ -63,16 +55,12 @@
         }
 
         vm.isSuccessfulPath = levelDataHandler.successPaths.indexOf(vm.currentChoiceInfo.code) >= 0;
-
       });
-
-
     }
 
     function loadFromFile(fileObject) {
-
       if (fileObject.name.indexOf(".xlsx") < 0) {
-        alert("Sorry, but " + fileObject.name + " is not an XLSX Excel File!")
+        alert("Sorry, but " + fileObject.name + " is not an XLSX Excel File!");
         return;
       }
 
@@ -80,7 +68,6 @@
 
       vm.status = "Loading from file '" + fileObject.name + "' ...";
       vm.currentSource = fileObject.name + ' (local)';
-
       parseAAContentService.parseContentFromFile(fileObject)
         .then(function(parsedContent) {
           vm.status = "Loaded from file '" + fileObject.name + "'.";
@@ -88,7 +75,6 @@
           vm.hasLoaded = true;
         });
     }
-
 
   }
 

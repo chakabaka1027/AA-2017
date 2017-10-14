@@ -35,30 +35,25 @@
       var successfulConvos;
       var scores = levelDataHandler.choiceScores;
       vm.choiceDelay = true;
-      vm.main.totalConvoPoints = 0; //q whsats the point of msin controller then ?
+      vm.main.totalConvoPoints = 0;
       vm.showContinue = false;
       vm.chosenAnnie = "";
       vm.npcResponse = "";
-
       vm.currentNodeIndex = 1;
       vm.currentNodeChoices = [];
-
       vm.node3Response = true;
 
       vm.clickContinue = clickContinue;
-      vm.showNode = showNode; //instead of shownode2,3
+      vm.showNode = showNode;
       vm.showNode3Response = showNode3Response;
 
       // for debugging in testbed...
       vm.main.branchHistory = [];
       vm.main.currentChoiceInfo = {};
 
-      $scope.$watch(function() {
-        return vm.main.currentConversation;
-      }, function() {
+      $scope.$watch(function() {return vm.main.currentConversation;}, function() {
         resetDialog();
         chooseDialogScript();
-
       });
 
       function resetDialog() {
@@ -78,25 +73,15 @@
       function chooseDialogScript() {
         npc = vm.main.talkingWith;
         vm.main.animationTitle = "";
-        //Get branching conversation data
         var dialog = vm.main.currentConversation;
         dialogService.getDialogs(dialog).then(function(data) {
           dialogRoot = data;
-          // save choices to an array
           var originalNodeOne = dialogRoot.node1;
-          // Shuffle node one, can't shuffle others until
           randomChoices = shuffle(originalNodeOne);
-          // Give new array to DOM
           vm.choice = originalNodeOne;
           vm.choice2 = dialogRoot.node2;
           vm.choice3 = dialogRoot.node3;
-
-
-          // vm.choices = [null, originalNodeOne, dialogRoot.node2, dialogRoot.node3]
-          // later... vm.currentNodeChoice = vm.choices[vm.currentodeIndex]; or something like that...
-
           vm.main.isLinearDialog = vm.choice.length === 1;
-
           vm.currentNodeIndex = 1;
           vm.currentNodeChoices = vm.choice;
 
@@ -107,7 +92,7 @@
       }
       /*=============== Button operations =================*/
 
-      function showNode3Response(choice) { //choice parameter
+      function showNode3Response(choice) {
         audioService.playAudio("UIbuttonclick-option2.wav");
         vm.node3Hidden = true;
         vm.npcResponse = "";
@@ -148,7 +133,6 @@
         vm.showContinue = false;
         vm.main.animationTitle = "";
 
-        // End of convo data - clean up this block - add a set up methof for strings that change
         if (!vm.isTestBed) {
           if (vm.main.lastConversationSuccessful) {
             userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_result", vm.main.totalConvoPoints, decisionPath);
@@ -161,16 +145,13 @@
           var progressBarInfo = Math.round((vm.main.completedConvos.length / vm.main.totalConvosAvailable) * 100);
 
           userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Player_State", vm.main.playerScore + vm.main.totalConvoPoints, progressBarInfo);
-
           successfulConvos = vm.main.completedConvos.length;
           userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_convo", successfulConvos, vm.main.convoAttemptsTotal);
           userDataService.postData(); //Post data after convo is over
           chooseDialogScript();
         }
-        // for debugging in testbed...
         vm.main.branchHistory = [];
         vm.main.currentChoiceInfo = {};
-
       }
 
       /*=============== Functions =================*/
@@ -182,9 +163,8 @@
       }
 
       function loadResponses(choice) {
-        // for debugging purposes, added by chas...
         vm.main.currentChoiceInfo = choice;
-        vm.npcResponse = ""; // clear response before showing next
+        vm.npcResponse = "";
         vm.choiceDelay = false;
 
         $timeout(function() {
@@ -198,31 +178,31 @@
             $log.warn('there is no animation "' + choice.animation + '" for character ' + vm.main.talkingWith);
             vm.main.animationTitle = '';
           }
-          if (vm.main.animationTitle && vm.main.animationTitle.indexOf("bold") >= 0) { //if it has an animated expression, wait until it's done.
-            // var npc_vt_anim_timer = vm.main.numberOfFrames * 100; //length of animation
-            var watchPromise = $scope.$watch(function() {return vm.main.animationDone;},function() {
-              if (vm.main.animationDone) {
+          if (vm.main.animationTitle && vm.main.animationTitle.indexOf("bold") >= 0) {
+            var watchPromise = $scope.$watch(function() {
+                  return vm.main.animationDone;
+                }, function() {              if (vm.main.animationDone) {
                 latestChoice = choice;
                 audioService.playAudio("UIbuttonclick-option1.wav");
                 vm.npcResponse = choice.NPC_Response;
                 delayChoiceDisplay();
-                watchPromise(); //get's rid of previously created $watch
+                watchPromise();
               }
-            }); //end of watch one
+            });
             if (vm.isTestBed) {
               latestChoice = choice;
               setUpDelayChoiceDisplay(choice);
-              watchPromise(); //get's rid of previously created $watch
+              watchPromise();
             }
             vm.main.animationDone = false; //reset
-          } else if (vm.main.animationTitle && vm.main.animationTitle.indexOf("mild") >= 0) { //if mild expression
-            employSpecficTimeOut (mild_Animation_Timer, choice); //scope choice isnt avaible outside -
+          } else if (vm.main.animationTitle && vm.main.animationTitle.indexOf("mild") >= 0) {
+            employSpecficTimeOut (mild_Animation_Timer, choice);
           }
            else { //if no animation
              employSpecficTimeOut (noExpression_Timer, choice);
            }
           // return;
-        }, pc_npc_timer); //wait after PC text is shown + extra
+        }, pc_npc_timer);
         vm.chosenAnnie = "";
         vm.npcResponse = "";
       }//end of load responces
@@ -237,11 +217,10 @@
           vm.choiceDelay = true;
         }, 1200);
       }
-      //works -  new methods ----
-      // suggest combine with adjustNodeandReturnBranch...
-      function showNode(choice) { //momentary for testing //---combined
+
+      function showNode(choice) {
             audioService.playAudio("UIbuttonclick-option2.wav");
-            var codeNode = choice.code; //in both 2 and 3
+            var codeNode = choice.code;
             var orignalNode;
             var currenBranch;
             if (vm.currentNodeIndex == 3) {
@@ -264,27 +243,27 @@
             loadResponses(choice);
             trackBranches(currenBranch);
           }
-          //pit thrdr in one method  0---  use foreach - angularforeach ---
-          //rename it to set data track if approved and move below to dataTracking - or should this be a method in user data service?- and name the other to data tracking
-          function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed - they looked the same to me but need to verify as l 161 os diff
-            var num = number.toString(); //2D array -
+
+          //TODO combine methods -
+          function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed -
+            var num = number.toString();
             var str = ["convo_state","convo_user","convo_system","convo_NPC"];
             var pram3 = [num,Branch,scores[Branch],choice.animation];
             var pram4 = [vm.main.failedConvos[vm.main.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
             setTrackAction(str, pram3, pram4);
 
           }
-          //not sure if this is required ? --- a long workaround for the same thing
-          function setTrackAction(strings, parm3, parm4){ //saves about 3 lines above - thoughts ? sample use below in comments
-            var stringArr = strings;     // exampme this will be substritued by strings
-            var thirdParmValues = parm3; //var stringArr = ["test1","2","3","4"]; sample use ---
+
+          function setTrackAction(strings, parm3, parm4){
+            var stringArr = strings;
+            var thirdParmValues = parm3;
             var forthPramValues = parm4;
             for (var i = 0; i < stringArr.length; i++){
               userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
           }
         }
-        //
-          function setUpDelayChoiceDisplay(choice) { //not sure why it is used thw way it is up there - for now just moving it here to avoid repeating it
+        
+          function setUpDelayChoiceDisplay(choice) {
             audioService.playAudio("UIbuttonclick-option1.wav");
             vm.npcResponse = choice.NPC_Response;
             delayChoiceDisplay();
