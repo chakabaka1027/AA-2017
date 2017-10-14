@@ -5,7 +5,7 @@
 		.directive('loadXlsxFile', xlsxFile);
 
 	/** @ngInject */
-	function xlsxFile($log) {
+	function xlsxFile() {
 		return {
 			restrict: 'A',
 			scope: {
@@ -14,7 +14,7 @@
 			link: link
 		};
 
-		function link(scope, elm, attrs) {
+		function link(scope, elm) {
 
 			elm.on('click', function() {
 				$(elm)[0].value = null; // so that we get a change event...

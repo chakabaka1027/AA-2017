@@ -6,7 +6,7 @@
     .directive('logInManager', logInManager)
 
   /** @ngInject */
-  function logInManager($location, userDataService, userGameInfo, $log, dialogService, levelDataHandler) { //$log parameter goes in here
+  function logInManager($location, userDataService, userGameInfo, $log, dialogService) { //$log parameter goes in here
 
     var directive = {
       restrict: 'AE',
@@ -19,7 +19,6 @@
       bindToController: true
     };
     return directive;
-    //levelDataHandler.legalLevels.indexOf
     /** @ngInject */
     function introController($timeout, $location, $state) {
       var vm = this;

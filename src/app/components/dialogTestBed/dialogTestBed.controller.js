@@ -69,7 +69,7 @@
       vm.status = "Loading from file '" + fileObject.name + "' ...";
       vm.currentSource = fileObject.name + ' (local)';
       parseAAContentService.parseContentFromFile(fileObject)
-        .then(function(parsedContent) {
+        .then(function() {
           vm.status = "Loaded from file '" + fileObject.name + "'.";
           vm.lastFileObject = fileObject;
           vm.hasLoaded = true;

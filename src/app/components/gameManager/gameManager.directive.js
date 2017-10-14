@@ -78,7 +78,7 @@
         updateWalkDirection();
       }
 
-      function mouseUp(evt) {
+      function mouseUp() {
         elm.off("mousemove", mouseMove);
         if (!ctlr.walkingInfo.allowMouseHold) {
           ctlr.walkingInfo.walking = false;
@@ -134,7 +134,7 @@
     }//end of link
 
     /** @ngInject */
-    function controller($state, $scope, $timeout, $window) {
+    function controller($state, $scope, $timeout) {
       var vm = this;
       var myCanvas;
       var currentRoomKey = vm.main.roomKey;
@@ -149,21 +149,14 @@
         annieStartY;
       var showArrows = false;
       var timerPromise;
-      var showNPCDialogBubble = false;
       var bubbleHeight = 150;
       var conversationResetBubble;
       var lastCharCollidedInto = null;
       var pointsBubble;
       var showPointsBubble = false;
-      var canDraw = false;
       var roomEntryCount = 0;
-      var levelRequiredConvos,
-        convoMean,
-        convoCounter;
-      var doorTransitionSound,
-        successfulConvo,
-        unsuccessfulConvo;
-
+      var levelRequiredConvos;
+      var doorTransitionSound;
       vm.anniePosition = {
         x: 0,
         y: 0
@@ -222,12 +215,8 @@
           maxWidth = 905,
           minHeight = 100,
           maxHeight = 420;
-        var dialogUpArrow, dialogDownArrow, dialogLeftArrow, dialogRightArrow;
-        var upArrow, downArrow, leftArrow, rightArrow;
         var npcHasDialogBubble;
-        var emptyBubble;
         var arrowImages;
-        var thoughtBubbleImages;
         var doorArrows = {};
         var npcSprites = [];
         levelRequiredConvos = "";
@@ -337,7 +326,7 @@
         }; //end of main draw loop
 
 
-        room.keyReleased = function(event) {
+        room.keyReleased = function() {
           vm.annie_Walking = false;
           vm.walkingInfo.walking = false;
         };
@@ -589,7 +578,6 @@
             vm.main.flipDialogs = true;
           }
           if (character.dialogKey && !annie_Talking) {
-            var numOfNPCConvos = vm.main.convoCounter[spriteB.name] += 1;
             vm.main.convoAttemptsTotal += 1;
             if (vm.main.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
               if (character.secondConvo && vm.main.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
@@ -628,11 +616,9 @@
           if (characterDialog && characterDialog.dialogKey) {
             if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
               if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
-                showNPCDialogBubble = true;
                 return true;
               }
             } else { //if first convo
-              showNPCDialogBubble = true;
               return true;
             }
           } else {

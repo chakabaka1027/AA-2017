@@ -6,7 +6,7 @@
     .directive('navBar', navBar);
 
   /** @ngInject */
-  function navBar($log) {
+  function navBar() {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',
@@ -22,8 +22,7 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController($scope) {
-      var vm = this;
+    function NavbarController() {
     }
   }
 })();

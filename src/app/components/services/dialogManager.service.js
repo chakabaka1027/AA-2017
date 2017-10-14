@@ -5,13 +5,8 @@
   .service('dialogService', dialogContentService);
 
   /** @ngInject */
-  function dialogContentService($log, $http, $q, parseAAContentService, $timeout){
-      // var defaultUrl = {
-      //   positive:  'assets/AwkwardAnnieDialogContent_all.xlsx',
-      //   negative: 'assets/AwkwardAnnieDialogContent_all.xlsx'
-      // };
+  function dialogContentService($log, $http, $q, parseAAContentService){
 
-    var boolianValTest;
     var dialogWorksheetKeys = {};
 
     var service = {
@@ -73,12 +68,11 @@
     function loadFromServer(gameType) {
 
       gameType = gameType || "negative";
-      boolianValTest = gameType;
       var prefix = gameType.split("-")[0];
       $log.log("Loading from url '"+prefix+"' ...");
 
             return parseAAContentService.parseContentFromGameType(prefix)
-                .then(function(parsedContent) {
+                .then(function() {
                     $log.log("Test Loaded from url '"+prefix+"'.");
                     $log.log('Success!');
 

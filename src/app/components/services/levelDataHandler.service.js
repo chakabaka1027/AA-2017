@@ -57,7 +57,7 @@
           return dialogs;
         }
 
-        angular.forEach(currentRoomCheck, function(characterData, characterName) {
+        angular.forEach(currentRoomCheck, function(characterData) {
           if (characterData.dialogKey) {
             dialogs.push(characterData.dialogKey);
           }
@@ -68,6 +68,8 @@
         return dialogs;
     }
 
+
+//TODO this is never used????
     function getSuccessPaths(dialogKey) {
       $log.error("are you sure you wanna be using this - should not return paths ");
       for (var levelKey in service) {

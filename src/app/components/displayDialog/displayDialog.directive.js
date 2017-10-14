@@ -28,8 +28,6 @@
       var pc_npc_timer = pc_Text_Timer + 400;
       var mild_Animation_Timer = 1000;
       var noExpression_Timer = 700;
-      var latestChoice = {};
-      var npc = "";
       var decisionPath = "";
       var randomChoices = [];
       var successfulConvos;
@@ -57,7 +55,6 @@
       });
 
       function resetDialog() {
-        npc = "";
         decisionPath = "";
         randomChoices = [];
         successfulConvos;
@@ -71,7 +68,6 @@
       }
 
       function chooseDialogScript() {
-        npc = vm.main.talkingWith;
         vm.main.animationTitle = "";
         var dialog = vm.main.currentConversation;
         dialogService.getDialogs(dialog).then(function(data) {
@@ -181,8 +177,7 @@
           if (vm.main.animationTitle && vm.main.animationTitle.indexOf("bold") >= 0) {
             var watchPromise = $scope.$watch(function() {
                   return vm.main.animationDone;
-                }, function() {              if (vm.main.animationDone) {
-                latestChoice = choice;
+                }, function() { if (vm.main.animationDone) {
                 audioService.playAudio("UIbuttonclick-option1.wav");
                 vm.npcResponse = choice.NPC_Response;
                 delayChoiceDisplay();
@@ -190,7 +185,6 @@
               }
             });
             if (vm.isTestBed) {
-              latestChoice = choice;
               setUpDelayChoiceDisplay(choice);
               watchPromise();
             }
@@ -221,7 +215,6 @@
       function showNode(choice) {
             audioService.playAudio("UIbuttonclick-option2.wav");
             var codeNode = choice.code;
-            var orignalNode;
             var currenBranch;
             if (vm.currentNodeIndex == 3) {
               showNode3Response(choice);
@@ -262,7 +255,7 @@
               userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
           }
         }
-        
+
           function setUpDelayChoiceDisplay(choice) {
             audioService.playAudio("UIbuttonclick-option1.wav");
             vm.npcResponse = choice.NPC_Response;
