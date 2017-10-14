@@ -6,7 +6,7 @@
 		.directive('popUpDialogManager', popUpDialogManager);
 
 	/** @ngInject */
-	function popUpDialogManager(conversationP5Data, $log) {
+	function popUpDialogManager(conversationP5Data) {
 		var directive = {
 			restrict: "E",
 			controller: controller,
@@ -24,7 +24,7 @@
 		return directive;
 
 		/** @ngInject */
-		function controller($scope, $element, $timeout) {
+		function controller($scope, $element) {
 			var vm = this;
 
 			var myCanvas;

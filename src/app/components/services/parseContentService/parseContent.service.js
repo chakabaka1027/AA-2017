@@ -43,7 +43,7 @@
       var d = {
         'code': code,
         'PC_Text': utfClean(row[col]),
-        'NPC_Response': utfClean(row[col + 2]),
+        'NPC_Response': utfClean(row[col + 2])
 
       };
       if (!isLinear) { //check line 53 -
@@ -176,7 +176,7 @@
         // it's a 'linear' exchange...
         row = sheetRow(hdrIndexes[0] + 1);
 
-        if (fileObject[0] = "q") {
+        if (fileObject[0] == "q") {
           for (i = 0, code = 'C'; i < 4; i++, code += 'C') {
             if (i === 0) {
               parsed['node' + (i + 1)] = [createBlock(row, 5 * i, code)];
@@ -187,7 +187,7 @@
             }
           }
         }
-        if (fileObject[0] = "assets/AwkwardAnnieDialogContent_positive.xlsx") {
+        if (fileObject[0] == "assets/AwkwardAnnieDialogContent_positive.xlsx") {
           for (i = 0, code = 'A'; i < 4; i++, code += 'A') {
             if (i === 0) {
               parsed['node' + (i + 1)] = [createBlock(row, 5 * i, code)];

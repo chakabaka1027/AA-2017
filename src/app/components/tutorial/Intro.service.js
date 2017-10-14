@@ -10,7 +10,7 @@
   function TutorialService($log, $stateParams, $http, $location, $q, userGameInfo) {
     var LocalGt;
     var service = {
-      loadTutorialData: loadTutorialData,
+      loadTutorialData: loadTutorialData
     };
     return service;
 

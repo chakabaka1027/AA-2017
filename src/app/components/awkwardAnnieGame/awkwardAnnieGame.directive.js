@@ -5,7 +5,7 @@
 		.directive('awkwardAnnieGame', awkwardAnnieGame);
 
 	/** @ngInject */
-	function awkwardAnnieGame($log) {
+	function awkwardAnnieGame() {
 		return {
 			restrict: 'E',
 			controller: controller,
@@ -14,8 +14,8 @@
 
 	}
 
-	function controller($log) {
+	function controller() {
 
 	}
-	
+
 })();

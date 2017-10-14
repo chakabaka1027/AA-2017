@@ -9,7 +9,7 @@
   //TODO make this into a service --- overall
   //TODO add a reset - going back to ---
   //would be alomst empty ---
-  function MainController(levelDataHandler, $scope, $location, userDataService, $log, dialogService) {
+  function MainController(levelDataHandler, $scope, $location, userDataService, $log) {
     var vm = this;
     vm.levelCount = 1; //will only go up if dialogs are successfully completed and show up in nav
     vm.levelUp = false;
@@ -34,7 +34,6 @@
     vm.convoAttemptsTotal = 0;
 
 
-    var currentLevel;
     vm.flipDialogs = (userDataService.userID==='flip');
     $log.log('player id is "'+userDataService.userID+'" '+vm.flipDialogs);
 

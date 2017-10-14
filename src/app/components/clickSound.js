@@ -14,7 +14,7 @@
 		return directive;
 
 		/** @ngInject */
-		function link(scope, elm, attrs){
+		function link(scope, elm){
 			elm.on("click", function(){
 				audioService.playAudio("Click.wav");
 			})

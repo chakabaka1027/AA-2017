@@ -206,8 +206,8 @@
           userDataService.postData(); //room change, post data
       }
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      	P5 SKETCH STARTS HERE:
-      	creates a room with the appropriate characters, furniture and npcs
+        P5 SKETCH STARTS HERE:
+        creates a room with the appropriate characters, furniture and npcs
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       var currentRoom = function(room) { //room is just myp5
         var bg;
@@ -254,7 +254,7 @@
 
         };
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	   Setup - creates canvas - sets up all appropriate chracters in the room for the current level
+             Setup - creates canvas - sets up all appropriate chracters in the room for the current level
                         - adds animations after creating a character sprite
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.setup = function() {
@@ -302,7 +302,7 @@
           getDoorStatus();
           doorTransitionSound.play();
         }; //end of setup
-        	  /*~~~~~~~~~~~~~~~~~~~~~~~~ main draw loop ~~~~~~~~~~~~~~~~~~~~~~*/
+            /*~~~~~~~~~~~~~~~~~~~~~~~~ main draw loop ~~~~~~~~~~~~~~~~~~~~~~*/
         room.draw = function() {
           room.background(bg);
           collisionswithFurniture(annieSprite, furniture);
