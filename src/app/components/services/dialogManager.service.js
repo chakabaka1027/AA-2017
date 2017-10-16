@@ -18,34 +18,32 @@
 
     var dialogJsonPaths = {
 
-      charlie_01: "assets/json/CC.STwGr.01.json",
-      charlie_02: "assets/json/CC.RQ.02.json",
-      fran_Linear:"assets/json/FF.Linear.json", //there
-      fran_GR_01:"assets/json/FF.GR.01.json",    //there
-      fran_GR_02:"assets/json/FF.GR.02.json",
-      fran_SmallTk_01:"assets/json/FF.ST.01.json", //there
-      fran_SmallTk_02:"assets/json/FF.ST.02.json", //there
-      fran_RQ_01:"assets/json/FF.RQ.01.json",
-      fran_RQ_02:"assets/json/FF.RQ.02.json",     //there
-      luna_01: "assets/json/LL.STwGr.01.json",      //there
-      luna_02: "assets/json/LL.STwGR.02.json",      //there
-      mike_Linear:"assets/json/MM.Linear.json",     //there
-      mike_GR_01:"assets/json/MM.GR.01.json",      //there
-      mike_GR_02:"assets/json/MM.GR.02.json",
-      mike_SmallTk_01:"assets/json/MM.ST.01.json",   //there
-      mike_SmallTk_02:"assets/json/MM.ST.02.json",     //there
-      mike_RQ_01:"assets/json/MM.RQ.01.json",        //there
-      mike_RQ_02:"assets/json/MM.RQ.02.json",       //there
 
-//new ones
-      charly_SmallTalk_02:"assets/json/CC.ST.02.json",
+      fran_Linear:"assets/json/FF.Linear.json",
+      fran_GR_01:"assets/json/FF.GR.01.json",
+      fran_GR_02:"assets/json/FF.GR.02.json",
+      fran_ST_01:"assets/json/FF.ST.01.json",
+      fran_ST_02:"assets/json/FF.ST.02.json",
+      fran_RQ_01:"assets/json/FF.RQ.01.json",
+      fran_RQ_02:"assets/json/FF.RQ.02.json",
+      luna_STwGR_01: "assets/json/LL.STwGr.01.json",
+      luna_STwGR_02: "assets/json/LL.STwGR.02.json",
+      mike_Linear:"assets/json/MM.Linear.json",
+      mike_GR_01:"assets/json/MM.GR.01.json",
+      mike_GR_02:"assets/json/MM.GR.02.json",
+      mike_ST_01:"assets/json/MM.ST.01.json",
+      mike_ST_02:"assets/json/MM.ST.02.json",
+      mike_RQ_01:"assets/json/MM.RQ.01.json",
+      mike_RQ_02:"assets/json/MM.RQ.02.json",
+      charlie_STwGR_01: "assets/json/CC.STwGr.01.json",
+      charlie_ST_02:"assets/json/CC.ST.02.json",
       charlie_RQwGr_02:"assets/json/CC.RQwGr.02.json",
       charlie_RQ_02:"assets/json/CC.RQ.02.json",
       Luna_RQ_01:"assets/json/LL.RQ.01.json",
       Luna_RQ_02:"assets/json/LL.RQ.02.json"
 
     };
-//TODO change this ?
+//TODO change this or leave it incase it changes to json?
     for (var dialogKey in dialogJsonPaths) {
       var p = dialogJsonPaths[dialogKey].split('/');
       var jfn = p[p.length-1];

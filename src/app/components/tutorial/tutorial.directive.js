@@ -5,7 +5,7 @@
     .directive('simpleTutorial', simpleTutorial);
 
 
-  function simpleTutorial($log, $timeout, audioService, $http, TutorialService, userGameInfo) {
+  function simpleTutorial($log, $timeout, audioService, $http, TutorialService) {
 
     return {
       restrict: 'E',
@@ -15,7 +15,7 @@
       templateUrl: 'app/components/tutorial/tutorial.html'
     };
 
-    function controller($scope, $stateParams) {
+    function controller($scope) {
       var vm = this;
       var scrollTimer;
       var showTimer;

@@ -11,7 +11,7 @@
     var service = {
     playerScore: 0,
     totalConvos: 0,
-    postURL: "",
+    postURL: "", //TODO is this used anywhere
     redirectURL:redirectURL,
     userForwarded: false
     };

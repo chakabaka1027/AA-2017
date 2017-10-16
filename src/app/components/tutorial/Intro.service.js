@@ -8,13 +8,12 @@
 
   /** @ngInject */
   function TutorialService($log, $stateParams, $http, $location, $q, userGameInfo) {
-    var LocalGt;
     var service = {
       loadTutorialData: loadTutorialData
     };
     return service;
 
-    function loadTutorialData(gameType) {
+    function loadTutorialData() {
       var positivePath = "assets/tutorialJson/positiveIntro.json";
       var negativePath = "assets/tutorialJson/negativeIntro.json";
       var path;

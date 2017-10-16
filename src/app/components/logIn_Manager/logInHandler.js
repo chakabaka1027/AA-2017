@@ -6,7 +6,7 @@
     .directive('logInManager', logInManager)
 
   /** @ngInject */
-  function logInManager($location, userDataService, userGameInfo, $log, dialogService) { //$log parameter goes in here
+  function logInManager($location, userDataService, userGameInfo, $log) { //$log parameter goes in here
 
     var directive = {
       restrict: 'AE',

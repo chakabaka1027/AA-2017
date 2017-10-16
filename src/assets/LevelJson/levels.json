@@ -21,13 +21,13 @@
     },
     "level_2": {
         "requiredConversations": [
-            "fran_SmallTk_01"
+            "fran_ST_01"
         ],
         "startingRoom": "conferenceRoom",
         "rooms": {
             "lobby": {
                 "fran": {
-                    "dialogKey": "fran_SmallTk_01"
+                    "dialogKey": "fran_ST_01"
                 }
             },
             "conferenceRoom": {
@@ -68,8 +68,8 @@
             "mike_GR_02",
             "fran_GR_01",
             "fran_RQ_01",
-            "charlie_01",
-            "luna_01"
+            "charlie_STwGR_01",
+            "luna_STwGR_01"
         ],
         "rooms": {
             "mikesOffice": {
@@ -87,26 +87,26 @@
             },
             "breakRoom": {
                 "charlie": {
-                    "dialogKey": "charlie_01"
+                    "dialogKey": "charlie_STwGR_01"
                 },
                 "luna": {
-                    "dialogKey": "luna_01"
+                    "dialogKey": "luna_STwGR_01"
                 }
             }
         }
     },
     "level_5": {
         "requiredConversations": [
-            "mike_SmallTk_01",
+            "mike_ST_01",
             "mike_RQ_01",
             "fran_GR_02",
-            "luna_02",
+            "luna_STwGR_02",
             "charlie_RQwGr_02"
         ],
         "rooms": {
             "mikesOffice": {
                 "mike": {
-                    "dialogKey": "mike_SmallTk_01",
+                    "dialogKey": "mike_ST_01",
                     "secondConvo": {
                         "dialogKey": "mike_RQ_01"
                     }
@@ -122,15 +122,15 @@
                     "dialogKey": "charlie_RQwGr_02"
                 },
                 "luna": {
-                    "dialogKey": "luna_02"
+                    "dialogKey": "luna_STwGR_02"
                 }
             }
         }
     },
     "level_6": {
         "requiredConversations": [
-            "mike_SmallTk_02",
-            "fran_SmallTk_02",
+            "mike_ST_02",
+            "fran_ST_02",
             "charlie_RQ_02",
             "Luna_RQ_01"
         ],
@@ -138,12 +138,12 @@
         "rooms": {
             "mikesOffice": {
                 "mike": {
-                    "dialogKey": "mike_SmallTk_02"
+                    "dialogKey": "mike_ST_02"
                 }
             },
             "fransOffice": {
                 "fran": {
-                    "dialogKey": "fran_SmallTk_02"
+                    "dialogKey": "fran_ST_02"
                 }
             },
             "breakRoom": {
@@ -160,7 +160,7 @@
         "requiredConversations": [
             "mike_RQ_02",
             "fran_RQ_02",
-            "charly_SmallTalk_02",
+            "charlie_ST_02",
             "Luna_RQ_02"
         ],
         "startingRoom": "lobby",
@@ -175,7 +175,7 @@
                     "dialogKey": "fran_RQ_02"
                 },
                 "charlie": {
-                    "dialogKey": "charly_SmallTalk_02"
+                    "dialogKey": "charlie_ST_02"
                 },
                 "luna": {
                     "dialogKey": "Luna_RQ_02"
