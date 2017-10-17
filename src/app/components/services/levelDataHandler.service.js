@@ -69,7 +69,7 @@
     }
 
 
-//TODO this is really never used???? - can;t find it anywhere as a service method
+//TODO this is really never used???? - can;t find it anywhere as a service method - verify with chas - 
     function getSuccessPaths(dialogKey) {
       $log.error("are you sure you wanna be using this - should not return paths ");
       for (var levelKey in service) {

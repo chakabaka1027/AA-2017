@@ -14,7 +14,7 @@
 				main: "=",
 				animationTitle: "=",
 				animationDone: "=",
-				numberOfFrames: "=",
+				// numberOfFrames: "=",
 				talkingWith: "=",
 				hideDialog: "="
 			},

@@ -24,15 +24,14 @@
     vm.totalConvoPoints = 0;
     vm.completedConvos = [];
     vm.hideDialog = true;
-    vm.numberOfFrames = 0;
-    vm.beginingOfLevel2 = false;
+    // vm.numberOfFrames = 0;
+    // vm.beginingOfLevel2 = false;
     vm.lastConversationSuccessful = false;
     vm.animationDone = true;
     vm.failedConvos  = {};
     vm.convoCounter = {};
     vm.totalConvosAvailable = 18;
     vm.convoAttemptsTotal = 0;
-
 
     vm.flipDialogs = (userDataService.userID==='flip');
     $log.log('player id is "'+userDataService.userID+'" '+vm.flipDialogs);

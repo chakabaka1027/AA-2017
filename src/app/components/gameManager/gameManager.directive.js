@@ -558,7 +558,7 @@
           myp5 = new p5(currentRoom);
           trackRoomEntry();
         }, 500);
-        vm.main.beginingOfLevel2 = false;
+        // vm.main.beginingOfLevel2 = false;
       }
 
       /*================================== dialog functions   =========================================*/
