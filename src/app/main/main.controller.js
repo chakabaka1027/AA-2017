@@ -43,6 +43,8 @@
     function setConversation(talkingWith){
       vm.talkingWith = talkingWith;
       vm.currentConversation = vm.roomData[talkingWith].dialogKey;
+      console.log(",,,,currentConversation is "+typeof(vm.currentConversation));
+
     }
 
     //TODO move this to datalevel hanler =====
@@ -50,11 +52,14 @@
       var currentLevel = "level_"+vm.levelCount;
       vm.levelConvosNeeded = levelDataHandler.levels[currentLevel].requiredConversations;
       vm.roomData = levelDataHandler.levels[currentLevel].rooms[vm.roomKey];
+      console.log(",,,,levelConvosNeeded is "+typeof(vm.levelConvosNeeded));
+
     }
 
     function setRoomData(roomKey){
         var currentLevel = "level_"+vm.levelCount;
         vm.roomData = levelDataHandler.levels[currentLevel].rooms[roomKey];
+        console.log(",,,,,room data is "+typeof(vm.roomData));
     }
 
     function areDialogsCompleted(possibleConvos){//, completedConvos

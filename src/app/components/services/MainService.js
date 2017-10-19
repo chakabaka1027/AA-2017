@@ -20,13 +20,16 @@
       completedConvos:[],
       failedConvos  :{},
       convoCounter : {},
+      levelConvosNeeded:{},
+      currentConversation:"",
       totalConvosAvailable :18,
       convoAttemptsTotal : 0,
-      // setConversation:setConversation,
+      roomData:{},
+      setConversation:setConversation,
       nextLevelData:nextLevelData,
       setRoomData:setRoomData,
-      areDialogsCompleted:areDialogsCompleted,
-      levelConvosNeeded:0
+      areDialogsCompleted:areDialogsCompleted
+
     };
 
 
@@ -36,10 +39,10 @@
 return service;
 
 
-// function setConversation(talkingWith){
-//   service.talkingWith = talkingWith;
-//   service.currentConversation = service.roomData[talkingWith].dialogKey;
-// }
+function setConversation(talkingWith){
+  service.talkingWith = talkingWith;
+  service.currentConversation = service.roomData[talkingWith].dialogKey;
+}
 
 //TODO move this to datalevel hanler =====
 function nextLevelData(){ //is the problem for single rooms that it increases the counter - but that wasnt an issue before
