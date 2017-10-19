@@ -40,6 +40,9 @@
           levelDataHandler.setUpForGameType(gameType);
           dialogService.loadFromServer(gameType);
 
+          ///TODO - check this with chas fix for slow in chrome - not cpu tho
+          localStorage.clear();
+          sessionStorage.clear();
 
           if (userGameInfo.userForwarded) {
             userDataService.resetData();

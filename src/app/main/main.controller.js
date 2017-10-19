@@ -17,7 +17,7 @@
     vm.nextLevelData = nextLevelData;
     vm.setRoomData = setRoomData;
     vm.areDialogsCompleted = areDialogsCompleted;
-    vm.arrayToString = arrayToString;
+    // vm.arrayToString = arrayToString;
     vm.roomKey = "lobby";
     vm.animationTitle = "";
     vm.playerScore = 0; // Main controller controls score, what characters were spoken too
@@ -32,6 +32,7 @@
     vm.convoCounter = {};
     vm.totalConvosAvailable = 18;
     vm.convoAttemptsTotal = 0;
+    vm.levelConvosNeeded=0;//new
 
     vm.flipDialogs = (userDataService.userID==='flip');
     $log.log('player id is "'+userDataService.userID+'" '+vm.flipDialogs);
@@ -56,25 +57,38 @@
         vm.roomData = levelDataHandler.levels[currentLevel].rooms[roomKey];
     }
 
-    function areDialogsCompleted(possibleConvos, completedConvos){
+    function areDialogsCompleted(possibleConvos){//, completedConvos
         for(var i=0; i<possibleConvos.length; i++){
-            if(completedConvos.indexOf(possibleConvos[i]) < 0){
+            if(vm.completedConvos.indexOf(possibleConvos[i]) < 0){
                 return false;
             }
         }
         return true;
     }
 
-//TODO must die
-    function arrayToString(array){
-        var stringConcat = "";
-        for(var index in array){
-            stringConcat += array[index];
-            if(array.length >= 1 && array.length-1 != index){
-              stringConcat += " ";
-            }
-        }
-        return stringConcat;
-    }
+
+
+    // function areDialogsCompleted(possibleConvos, completedConvos){
+    //     for(var i=0; i<possibleConvos.length; i++){
+    //         if(completedConvos.indexOf(possibleConvos[i]) < 0){//is this the array ot the service
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
+//TODO
+
+//works ok without check - verify with chas
+  //   function arrayToString(array){
+  //
+  //       var stringConcat = "";
+  //       for(var index in array){
+  //           stringConcat += array[index];
+  //           if(array.length >= 1 && array.length-1 != index){
+  //             stringConcat += " ";
+  //           }
+  //       }
+  //       return stringConcat;
+  //   }
   }
 })();

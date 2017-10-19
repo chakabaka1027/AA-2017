@@ -396,7 +396,7 @@
             angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {
             var markDoor = false;
             var roomDialogs = levelDataHandler.getRoomDialogs("level_" + vm.main.levelCount, linkingRoom);
-            if (!vm.main.areDialogsCompleted(roomDialogs, vm.main.completedConvos)) {
+            if (!vm.main.areDialogsCompleted(roomDialogs)) {//, vm.main.completedConvos
               markDoor = true;
             }
             doorArrows[doorKey] = markDoor;
@@ -675,7 +675,7 @@
               $timeout(function() {
                 showPointsBubble = false;
                 /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-                if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) {
+                if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded)) {//, vm.main.completedConvos
                       vm.main.levelCount += 1;
                   if(  vm.main.levelCount <= levelDataHandler.maxLevel ){
                     vm.main.nextLevelData();
@@ -692,7 +692,10 @@
 //TODO is it ok to move this here - ? from what I can see there isnt anything much but a small delay after winning the game --
       $scope.$watch(function() { return vm.main.levelCount;}, function(newVal, oldVal) {
         userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_Setup", vm.main.levelCount, "0/3/5");
-        levelRequiredConvos = vm.main.arrayToString(vm.main.levelConvosNeeded);
+        // levelRequiredConvos = vm.main.arrayToString(vm.main.levelConvosNeeded);
+        levelRequiredConvos = vm.main.levelConvosNeeded;
+        levelRequiredConvos.toString();
+        console.log(":"+levelRequiredConvos);
         userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_State", levelRequiredConvos);
         if (vm.main.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/
           userDataService.trackAction("Game end", vm.main.roomKey, "Game_End", vm.main.playerScore, "0");
