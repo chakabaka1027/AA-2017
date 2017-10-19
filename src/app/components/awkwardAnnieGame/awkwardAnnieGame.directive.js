@@ -14,9 +14,11 @@
 
 	}
 
-	function controller($scope, mainInformationHandler ) {
+	function controller($scope, mainInformationHandler, dialogOptions ) {
 
 		$scope.main = mainInformationHandler;
+
+		$scope.dialogOptions = dialogOptions;
 	}
 
 })();

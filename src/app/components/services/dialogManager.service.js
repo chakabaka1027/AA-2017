@@ -143,7 +143,7 @@
 
 
     function getDialogs(dialogKey){
-
+      $log.log('getDialogs "'+dialogKey+'"');
       return service.loadedPromise
         .then(function() {
           var spreadsheetContent = parseAAContentService.parsedContent[dialogWorksheetKeys[dialogKey]];

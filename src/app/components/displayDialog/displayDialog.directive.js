@@ -6,7 +6,7 @@
     .directive('displayDialog', displayDialog);
 
   /** @ngInject */
-  function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler, mainInformationHandler) {
+  function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler, mainInformationHandler, dialogOptions) {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/displayDialog/displayDialog.html',
@@ -71,6 +71,7 @@
         mainInformationHandler.animationTitle = "";
         var dialog = mainInformationHandler.currentConversation;
         dialogService.getDialogs(dialog).then(function(data) {
+          $log.log('dialogRoot', data);
           dialogRoot = data;
           var originalNodeOne = dialogRoot.node1;
           randomChoices = shuffle(originalNodeOne);
@@ -119,7 +120,7 @@
       }
 
       function clickContinue() {
-        mainInformationHandler.hideDialog = true;
+        dialogOptions.hideDialog = true;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
 
@@ -154,8 +155,8 @@
       function shuffle(choices) {
         if (!vm.isTestBed) {
           for (var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
-          return choices;
         }
+        return choices;
       }
 
       function loadResponses(choice) {

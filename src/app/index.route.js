@@ -36,7 +36,7 @@
                   //TODO put those in the main ( score / level count --- but service things / model things ---- have a cotnroller but it si a simple controller -- put in a directive )
       .state('instructions', {
         //url: '/instructions',
-        template: "<div class='gameContainer'><nav-bar player-score='main.playerScore' level-count='main.levelCount'></nav-bar><instruction_page click-sound></instruction_page></div>",
+        template: "<div class='gameContainer'><nav-bar></nav-bar><instruction_page click-sound></instruction_page></div>",
         // controller: 'MainController', //throws away old main and recreates it
         // controllerAs: 'main'
       });

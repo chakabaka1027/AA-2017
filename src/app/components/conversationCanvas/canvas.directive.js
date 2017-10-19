@@ -6,17 +6,21 @@
 		.directive('popUpDialogManager', popUpDialogManager);
 
 	/** @ngInject */
-	function popUpDialogManager(conversationP5Data, mainInformationHandler) {
+	function popUpDialogManager(conversationP5Data, mainInformationHandler, dialogOptions) {
 		var directive = {
 			restrict: "E",
 			controller: controller,
 			scope: {
+
+/*
 				main: "=",
 				animationTitle: "=",
 				animationDone: "=",
 				// numberOfFrames: "=",
 				talkingWith: "=",
 				hideDialog: "="
+*/
+
 			},
 			controllerAs: 'vm',
 			bindToController: true

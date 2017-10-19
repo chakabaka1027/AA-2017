@@ -6,14 +6,11 @@
     .directive('navBar', navBar);
 
   /** @ngInject */
-  function navBar() {
+  function navBar(mainInformationHandler) {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',
       scope: {
-        main: '=',
-        playerScore: "=",
-        levelCount: "="
       },
       controller: NavbarController,
       controllerAs: 'vm',
@@ -22,7 +19,14 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController() {
+    function NavbarController($scope) {
+      var vm = this;
+      
+      $scope.$watch(function(){return mainInformationHandler.playerScore+','+mainInformationHandler.levelCount;},
+        function() {
+          vm.playerScore = mainInformationHandler.playerScore;
+          vm.levelCount = mainInformationHandler.levelCount;
+        })
     }
   }
 })();

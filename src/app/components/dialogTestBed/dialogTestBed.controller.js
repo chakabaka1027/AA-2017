@@ -6,7 +6,8 @@
     .controller('displayDialogTestBed', displayDialogTestBed);
 
   /** @ngInject */
-  function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService, conversationP5Data, levelDataHandler, $stateParams) {
+  function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService, 
+                                  conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler) {
     var vm = this;
     vm.currentConversation = "fran_Linear";
     vm.talkingWith = "fran";
@@ -17,9 +18,15 @@
     vm.successPaths = [];
     vm.flipDialog = true;
 
+    $scope.main = mainInformationHandler;
+
+    $log.log('Ensure dialog service is loaded...');
+
     dialogService.loadFromServer($stateParams.gameType).then(
       function() {
-        dialogService.deferred.resolve();
+        $log.log('loaded');
+        dialogService.deferred.resolve(); // required?
+        $log.log('resolved');
         activate();
       });
 
@@ -39,9 +46,12 @@
       vm.currentChoiceInfo = {};
 
       $scope.$watch(function() {return vm.currentConversation;}, function(newVal, oldVal) {
+        
         vm.branchHistory = [];
         vm.talkingWith = vm.currentConversation.split("_")[0];
         vm.displayCharacters = false;
+        mainInformationHandler.currentConversation = vm.currentConversation;
+        mainInformationHandler.talkingWith = vm.talkingWith;
         $timeout(function() {
           vm.displayCharacters = true;
         }, 0);
@@ -56,6 +66,8 @@
 
         vm.isSuccessfulPath = levelDataHandler.successPaths.indexOf(vm.currentChoiceInfo.code) >= 0;
       });
+
+      $log.log('end activate');
     }
 
     function loadFromFile(fileObject) {

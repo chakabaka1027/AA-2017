@@ -58,7 +58,7 @@
 
 <div class="gameContainer" ng-class="{'chas-flipped': dialogTest.flipDialog}" ng-if="dialogTest.hasLoaded"> 
 	
-	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
+	<nav-bar></nav-bar>
 	<div class="main-pane">
 
 		<div class="conversationContainer testbed-cc"> 
@@ -67,7 +67,8 @@
 
 			<pop-up-dialog-manager 
 				ng-if="dialogTest.displayCharacters"
-				main="dialogTest">
+				main="dialogTest"
+				>
 			</pop-up-dialog-manager>
 
 

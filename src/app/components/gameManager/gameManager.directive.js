@@ -7,7 +7,7 @@
   /** @ngInject */
   function gameManager(charPositionData, animationData, roomData, furnitureData,
     levelDataHandler, mappingService, arrowData, audioService, userDataService, userGameInfo,
-    $location, $log, mainInformationHandler) {
+    $location, $log, mainInformationHandler, dialogOptions) {
 
     var directive = {
       restrict: 'E',
@@ -297,7 +297,7 @@
           room.background(bg);
           collisionswithFurniture(annieSprite, furniture);
           for (var i in npcSprites) {
-            annieSprite.collide(npcSprites[i], dialogTriggered);
+            annieSprite.collide(npcSprites[i], handleCharacterCollision);
           }
           if (currentRoomKey === "mikesOffice" || currentRoomKey === "conferenceRoom" || currentRoomKey === "lobby") {
             if (annieSprite.position.x >= 700 && annieSprite.position.x <= 840 && annieSprite.position.y > 419) {
@@ -564,42 +564,48 @@
 
       /*================================== dialog functions   =========================================*/
 
-      function dialogTriggered(spriteA, spriteB) {
+      function handleCharacterCollision(spriteA, spriteB) {
         vm.walkingInfo.walking = false;
         var characters = mainInformationHandler.roomData;
+        if (!characters) { return; }
         lastCharCollidedInto = spriteB;
         if (conversationResetBubble.visible) {
           return;
         }
-        if (characters && characters[spriteB.name]) {
-          var character = characters[spriteB.name];
-          if (annieSprite.position.x > spriteB.position.x) {
-            vm.main.flipDialogs = false;
-          } else {
-            vm.main.flipDialogs = true;
-          }
-          if (character.dialogKey && !annie_Talking) {
-            mainInformationHandler.convoAttemptsTotal += 1;
-            if (mainInformationHandler.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
-              if (character.secondConvo && mainInformationHandler.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
-                mainInformationHandler.currentConversation = character.secondConvo.dialogKey;
-                mainInformationHandler.talkingWith = spriteB.name;
-                mainInformationHandler.hideDialog = false;
-                annie_Talking = true;
-                userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_State", spriteB.name); //mainInformationHandler.convoCounter[spriteB.name]
-                userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_start", mainInformationHandler.currentConversation);
-              }
-            } else { //if first convo
-              mainInformationHandler.setConversation(spriteB.name);
-              mainInformationHandler.hideDialog = false;
-              annie_Talking = true;
-              userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_State", spriteB.name); //mainInformationHandler.convoCounter[spriteB.name]
-              userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_start", mainInformationHandler.currentConversation);
+        var character = characters[spriteB.name];
+        if (!character) { return; }
+
+        if (character.dialogKey && !annie_Talking) {
+          mainInformationHandler.convoAttemptsTotal += 1;
+
+          if (mainInformationHandler.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
+            if (character.secondConvo && mainInformationHandler.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
+            
+              mainInformationHandler.currentConversation = character.secondConvo.dialogKey;
+              mainInformationHandler.talkingWith = spriteB.name;
+              dialogOptions.hideDialog = false;
+            
+            } else {
+              // already had first conversation; and there is no second conversation...
+              return;
             }
+          } else { //if first convo
+            
+            mainInformationHandler.setConversation(spriteB.name);
+            dialogOptions.hideDialog = false;
           }
-        } else {
-          return;
         }
+
+        annie_Talking = true;
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_State", spriteB.name); //mainInformationHandler.convoCounter[spriteB.name]
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_start", mainInformationHandler.currentConversation);
+
+        if (annieSprite.position.x > spriteB.position.x) {
+          vm.main.flipDialogs = false;
+        } else {
+          vm.main.flipDialogs = true;
+        }
+        
         if (annie_Talking) {
           if (timerPromise) {
             $timeout.cancel(timerPromise);
