@@ -8,6 +8,20 @@
   function mainInformationHandler( levelDataHandler, $log ){
 
     var service ={
+      setConversation:setConversation,
+      nextLevelData:nextLevelData,
+      setRoomData:setRoomData,
+      areDialogsCompleted:areDialogsCompleted,
+      reset: reset
+    };
+
+
+    reset();
+
+return service;
+
+function reset() {
+  angular.extend(service, {
       levelCount:1,
       playerScore:0,
       lastConversationSuccessful:false,
@@ -25,18 +39,8 @@
       totalConvosAvailable :18,
       convoAttemptsTotal : 0,
       roomData:{},
-      setConversation:setConversation,
-      nextLevelData:nextLevelData,
-      setRoomData:setRoomData,
-      areDialogsCompleted:areDialogsCompleted
-
-    };
-
-
-
-
-return service;
-
+  });
+}
 
 function setConversation(talkingWith){
   service.talkingWith = talkingWith;
