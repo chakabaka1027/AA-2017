@@ -6,7 +6,7 @@
 
   /** @ngInject */
   function gameManager(charPositionData, animationData, roomData, furnitureData,
-    levelDataHandler, mappingService, arrowData, audioService, userDataService, userGameInfo,
+    levelDataHandler, mappingService, arrowData, audioService, mainInformationHandler, userDataService, userGameInfo,
     $location, $log) {
 
     var directive = {
@@ -137,7 +137,7 @@
     function controller($state, $scope, $timeout) {
       var vm = this;
       var myCanvas;
-      var currentRoomKey = vm.main.roomKey;
+      var currentRoomKey = mainInformationHandler.roomKey;
       var arrowDelay = 1250;
       var annie_Talking = false;
       var annieFaceOtherWay = false;
@@ -189,13 +189,13 @@
 
       function trackRoomEntry() {
           var talkingNPCs = [], npcNames = [];
-          for (var spriteName in vm.main.roomData) {
+          for (var spriteName in mainInformationHandler.roomData) {
             if (checkRoomDialogs(spriteName)) {
               talkingNPCs.push(spriteName);
               npcNames.push(spriteName);
             }
           }
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Room_Enter", npcNames, talkingNPCs.join(' '));
+          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Room_Enter", npcNames, talkingNPCs.join(' '));
           userDataService.postData(); //room change, post data
       }
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -256,10 +256,10 @@
           resetArrowTimer();
           //Create characters and add animations
           npcSprites = [];
-          for (var spriteName in vm.main.roomData) {
+          for (var spriteName in mainInformationHandler.roomData) {
             var spriteInfo = positionData[spriteName][currentRoomKey];
-            if (angular.isUndefined(vm.main.convoCounter[spriteName])) {
-              vm.main.convoCounter[spriteName] = 0;
+            if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
+              mainInformationHandler.convoCounter[spriteName] = 0;
             }
             var npcSprite = room.createSprite(spriteInfo.startLeftX, spriteInfo.startLeftY);
             npcSprite.name = spriteName;
@@ -393,10 +393,10 @@
         /*  ~~~~~~~~~~~~~~ get status  ~~~~~~~~~~~~~~~~*/
 
         function getDoorStatus() {
-            angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {
+            angular.forEach(mappingService[mainInformationHandler.roomKey], function(linkingRoom, doorKey) {
             var markDoor = false;
-            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + vm.main.levelCount, linkingRoom);
-            if (!vm.main.areDialogsCompleted(roomDialogs)) {//, vm.main.completedConvos
+            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom);
+            if (!mainInformationHandler.areDialogsCompleted(roomDialogs)) {//, mainInformationHandler.completedConvos
               markDoor = true;
             }
             doorArrows[doorKey] = markDoor;
@@ -430,7 +430,7 @@
             }
           });
           if (showPointsBubble) {
-            drawPointsBubble(vm.main.totalConvoPoints, lastCharCollidedInto);
+            drawPointsBubble(mainInformationHandler.totalConvoPoints, lastCharCollidedInto);
           }
         }
 
@@ -552,9 +552,9 @@
         $timeout(function() {
           vm.walkingInfo.walking = false;
           newRoom = roomKey;
-          currentRoomKey = vm.main.roomKey = roomKey;
+          currentRoomKey = mainInformationHandler.roomKey = roomKey;
           currentRoomData = roomData[roomKey];
-          vm.main.setRoomData(roomKey);
+          mainInformationHandler.setRoomData(roomKey);
           myp5 = new p5(currentRoom);
           trackRoomEntry();
         }, 500);
@@ -565,7 +565,7 @@
 
       function dialogTriggered(spriteA, spriteB) {
         vm.walkingInfo.walking = false;
-        var characters = vm.main.roomData;
+        var characters = mainInformationHandler.roomData;
         lastCharCollidedInto = spriteB;
         if (conversationResetBubble.visible) {
           return;
@@ -578,22 +578,22 @@
             vm.main.flipDialogs = true;
           }
           if (character.dialogKey && !annie_Talking) {
-            vm.main.convoAttemptsTotal += 1;
-            if (vm.main.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
-              if (character.secondConvo && vm.main.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
-                vm.main.currentConversation = character.secondConvo.dialogKey;
-                vm.main.talkingWith = spriteB.name;
-                vm.main.hideDialog = false;
+            mainInformationHandler.convoAttemptsTotal += 1;
+            if (mainInformationHandler.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
+              if (character.secondConvo && mainInformationHandler.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
+                mainInformationHandler.currentConversation = character.secondConvo.dialogKey;
+                mainInformationHandler.talkingWith = spriteB.name;
+                mainInformationHandler.hideDialog = false;
                 annie_Talking = true;
-                userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "NPC_State", spriteB.name); //vm.main.convoCounter[spriteB.name]
-                userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_start", vm.main.currentConversation);
+                userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_State", spriteB.name); //mainInformationHandler.convoCounter[spriteB.name]
+                userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_start", mainInformationHandler.currentConversation);
               }
             } else { //if first convo
-              vm.main.setConversation(spriteB.name);
-              vm.main.hideDialog = false;
+              mainInformationHandler.setConversation(spriteB.name);
+              mainInformationHandler.hideDialog = false;
               annie_Talking = true;
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "NPC_State", spriteB.name); //vm.main.convoCounter[spriteB.name]
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_start", vm.main.currentConversation);
+              userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_State", spriteB.name); //mainInformationHandler.convoCounter[spriteB.name]
+              userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_start", mainInformationHandler.currentConversation);
             }
           }
         } else {
@@ -605,17 +605,17 @@
           }
         }
 
-        vm.main.setRoomData(currentRoomKey);
+        mainInformationHandler.setRoomData(currentRoomKey);
         $scope.$apply();
       }
 
       function checkRoomDialogs(character) {
-        if(typeof vm.main.roomData != 'undefined'){  //TODO in angular
+        if(typeof mainInformationHandler.roomData != 'undefined'){  //TODO in angular
           // if(angular.isUndefined( vm.main.r roomData)){ return } then else --- no need
-        var characterDialog = vm.main.roomData[character];
+        var characterDialog = mainInformationHandler.roomData[character];
           if (characterDialog && characterDialog.dialogKey) {
-            if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
-              if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
+            if (mainInformationHandler.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
+              if (characterDialog.secondConvo && mainInformationHandler.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
                 return true;
               }
             } else { //if first convo
@@ -641,14 +641,14 @@
 
       $scope.$watch(function() {return showPointsBubble;  }, function(newVal, oldVal) {
         if (newVal != oldVal) {
-          currentRoom.drawPointsBubble(vm.main.totalConvoPoints, lastCharCollidedInto);
+          currentRoom.drawPointsBubble(mainInformationHandler.totalConvoPoints, lastCharCollidedInto);
         }
       });
-      $scope.$watch(function() {return vm.main.hideDialog;  }, function(newVal, oldVal) {
+      $scope.$watch(function() {return mainInformationHandler.hideDialog;  }, function(newVal, oldVal) {
         if (currentRoom) {
-          if (vm.main.hideDialog !== oldVal && newVal) {
-            vm.main.playerScore += vm.main.totalConvoPoints;
-            switch (vm.main.lastConversationSuccessful) {
+          if (mainInformationHandler.hideDialog !== oldVal && newVal) {
+            mainInformationHandler.playerScore += mainInformationHandler.totalConvoPoints;
+            switch (mainInformationHandler.lastConversationSuccessful) {
               case true:
                 audioService.playAudio("UIrightanswer.wav");
                 break;
@@ -660,11 +660,11 @@
         }
       });//end of watch
 
-      $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
+      $scope.$watch(function(){ return mainInformationHandler.hideDialog;}, function(newVal, oldVal) {
         if (newVal && !oldVal) {
           if (annie_Talking) {
             showArrows = false;
-            if (!vm.main.lastConversationSuccessful) {
+            if (!mainInformationHandler.lastConversationSuccessful) {
               $timeout(function() {
                 conversationResetBubble.visible = false;
                 resetArrowTimer();
@@ -675,10 +675,10 @@
               $timeout(function() {
                 showPointsBubble = false;
                 /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-                if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded)) {//, vm.main.completedConvos
-                      vm.main.levelCount += 1;
-                  if(  vm.main.levelCount <= levelDataHandler.maxLevel ){
-                    vm.main.nextLevelData();
+                if (mainInformationHandler.areDialogsCompleted(mainInformationHandler.levelConvosNeeded)) {//, mainInformationHandler.completedConvos
+                      mainInformationHandler.levelCount += 1;
+                  if(  mainInformationHandler.levelCount <= levelDataHandler.maxLevel ){
+                    mainInformationHandler.nextLevelData();
                   }
                 }
               }, 2000);
@@ -690,18 +690,18 @@
       });
 
 //TODO is it ok to move this here - ? from what I can see there isnt anything much but a small delay after winning the game --
-      $scope.$watch(function() { return vm.main.levelCount;}, function(newVal, oldVal) {
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_Setup", vm.main.levelCount, "0/3/5");
-        // levelRequiredConvos = vm.main.arrayToString(vm.main.levelConvosNeeded);
-        levelRequiredConvos = vm.main.levelConvosNeeded;
+      $scope.$watch(function() { return mainInformationHandler.levelCount;}, function(newVal, oldVal) {
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_Setup", mainInformationHandler.levelCount, "0/3/5");
+        // levelRequiredConvos = vm.main.arrayToString(mainInformationHandler.levelConvosNeeded);
+        levelRequiredConvos = mainInformationHandler.levelConvosNeeded;
         levelRequiredConvos.toString();
         console.log(":"+levelRequiredConvos);
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_State", levelRequiredConvos);
-        if (vm.main.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/
-          userDataService.trackAction("Game end", vm.main.roomKey, "Game_End", vm.main.playerScore, "0");
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_State", levelRequiredConvos);
+        if (mainInformationHandler.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/
+          userDataService.trackAction("Game end", mainInformationHandler.roomKey, "Game_End", mainInformationHandler.playerScore, "0");
           userDataService.postData();
-          userGameInfo.playerScore = vm.main.playerScore;
-          userGameInfo.totalConvos = vm.main.completedConvos.length;
+          userGameInfo.playerScore = mainInformationHandler.playerScore;
+          userGameInfo.totalConvos = mainInformationHandler.completedConvos.length;
           $timeout(function() {
             $state.go("endScreen");
           }, 1000);

@@ -2,10 +2,10 @@
   'use strict';
 
   angular.module('awkwardAnnie')
-  .service('MainInformationHandler', MainInformationHandler);
+  .service('mainInformationHandler', mainInformationHandler);
 
   /** @ngInject */
-  function MainInformationHandler( levelDataHandler, $log ){
+  function mainInformationHandler( levelDataHandler, $log ){
 
     var service ={
       levelCount:1,
@@ -33,7 +33,6 @@
     };
 
 
-    service.nextLevelData();
 
 
 return service;
@@ -63,6 +62,10 @@ function areDialogsCompleted(possibleConvos){//, completedConvos
         }
     }
     return true;
+}
+//TODO
+function reset(){
+
 }
 
     }//end of controller

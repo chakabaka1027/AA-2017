@@ -3,7 +3,7 @@
 
   angular
     .module('awkwardAnnie')
-    .controller('MainController', MainController);
+    .controller('x', MainController);
 
   /** @ngInject */
   //TODO make this into a service --- overall

@@ -20,13 +20,13 @@ function showNode2(choice) { //first click
   trackBranches(currenBranch);
 
 
-  userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", "1", vm.main.failedConvos[vm.main.currentConversation]);
-  userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", currenBranch, choice.PC_Text);
+  userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_state", "1", mainInformationHandler.failedConvos[mainInformationHandler.currentConversation]);
+  userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_user", currenBranch, choice.PC_Text);
 
   if (!vm.isTestBed) {
-    userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[currenBranch], randomChoices.indexOf(choice) + 1);
+    userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_system", scores[currenBranch], randomChoices.indexOf(choice) + 1);
   }
-  userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
+  userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
   randomChoices = shuffle(originalNodeTwo); //shuffle next choices
 } //end of showNode2
 
@@ -44,7 +44,7 @@ function showNode3(choice) {
   var originalNodeThree = dialogRoot.node3[codeNode3];
   vm.choice3 = originalNodeThree; //send them to the dom
   // Set animation information
-  // vm.main.animationTitle = choice.animation;
+  // mainInformationHandler.animationTitle = choice.animation;
   loadResponses(choice);
   // Data
   var currenBranch = choice.code.charAt(1);
@@ -54,14 +54,14 @@ function showNode3(choice) {
   trackBranches(currenBranch);
 
 
-  userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", "2", vm.main.failedConvos[vm.main.currentConversation]);
-  userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", currenBranch, choice.PC_Text);
+  userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_state", "2", mainInformationHandler.failedConvos[mainInformationHandler.currentConversation]);
+  userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_user", currenBranch, choice.PC_Text);
 
   if (!vm.isTestBed) {
-    userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[currenBranch], randomChoices.indexOf(choice) + 1);
+    userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_system", scores[currenBranch], randomChoices.indexOf(choice) + 1);
   }
 
-  userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
+  userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
   randomChoices = shuffle(originalNodeThree); //shuffle them
 } //end of showNode3
 
@@ -136,12 +136,12 @@ vm.node3Hidden = node3; //show choice if clicked
 
 function dataTracking(Branch, choice, number ){
         var num = number.toString();
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_state", num, vm.main.failedConvos[vm.main.currentConversation]);
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_user", Branch, choice.PC_Text);
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_state", num, mainInformationHandler.failedConvos[mainInformationHandler.currentConversation]);
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_user", Branch, choice.PC_Text);
 
         if (!vm.isTestBed) {
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_system", scores[Branch], randomChoices.indexOf(choice) + 1);
+          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_system", scores[Branch], randomChoices.indexOf(choice) + 1);
         }
 
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_NPC", choice.animation, choice.NPC_Response); //text_position
 }

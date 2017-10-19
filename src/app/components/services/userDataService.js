@@ -5,7 +5,7 @@
     .service('userDataService', userDataService);
 
   /** @ngInject */
-  function userDataService($http, $log) {
+  function userDataService($http, $log, mainInformationHandler) {
 
     var hostBaseAddress = "awkwardBackend";
     var rowHeaders = [
@@ -20,6 +20,7 @@
       sessionID: moment().unix(),
       dataRows: [],
       trackAction: trackAction,
+      //trackGameAction:trackGameAction,
       postData: postData,
       resetData: resetData
     };
@@ -47,6 +48,17 @@
       service.dataRows.push(row);
 
     }
+
+
+    // function trackGameAction( data1, data2) {
+    //MainInformationHandler.levelCount, MainInformationHandler.roomKey
+    // trackAction(MainInformationHandler.levelCount, MainInformationHandler.roomKey, data1, data2)
+
+    // }
+
+
+
+
 
     function postData() {
       var csvRows = [rowHeaders].concat(service.dataRows);

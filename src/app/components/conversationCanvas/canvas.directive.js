@@ -6,7 +6,7 @@
 		.directive('popUpDialogManager', popUpDialogManager);
 
 	/** @ngInject */
-	function popUpDialogManager(conversationP5Data) {
+	function popUpDialogManager(conversationP5Data, mainInformationHandler) {
 		var directive = {
 			restrict: "E",
 			controller: controller,
@@ -68,8 +68,8 @@
 					annieDialogSprite = insetWindow.createSprite(conversationP5Data.annie.positionX, conversationP5Data.annie.positionY);
 					addAnimationsToChar(conversationP5Data.annie, annieDialogSprite);
 
-					dialogSprite = insetWindow.createSprite(conversationP5Data[vm.main.talkingWith].positionX, conversationP5Data[vm.main.talkingWith].positionY);
-					addAnimationsToChar(conversationP5Data[vm.main.talkingWith], dialogSprite);
+					dialogSprite = insetWindow.createSprite(conversationP5Data[mainInformationHandler.talkingWith].positionX, conversationP5Data[mainInformationHandler.talkingWith].positionY);
+					addAnimationsToChar(conversationP5Data[mainInformationHandler.talkingWith], dialogSprite);
 				};
 				/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					DRAW
@@ -79,12 +79,12 @@
 				insetWindow.draw = function() {
 					insetWindow.background('#dae7b9');
 					// if sprite has animation for the choice, change it
-					if (vm.main.animationTitle !== "") {
-						dialogSprite.changeAnimation(vm.main.animationTitle);
-						if (vm.main.animationTitle.indexOf("bold") > 0) {
+					if (mainInformationHandler.animationTitle !== "") {
+						dialogSprite.changeAnimation(mainInformationHandler.animationTitle);
+						if (mainInformationHandler.animationTitle.indexOf("bold") > 0) {
 							if (dialogSprite.animation.getFrame() === dialogSprite.animation.getLastFrame()) {
-								if (!vm.main.animationDone) {
-									vm.main.animationDone = true;
+								if (!mainInformationHandler.animationDone) {
+									mainInformationHandler.animationDone = true;
 									$scope.$apply();
 								}
 							}
@@ -104,8 +104,8 @@
 			/*     uncomment this section if you want to have sounds inside dialougs      */
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 						Only called when title changes, not every draw
-						$scope.$watch(function() {return vm.main.animationTitle}, function(newVal, oldVal) {
-							switch (vm.main.animationTitle) {
+						$scope.$watch(function() {return mainInformationHandler.animationTitle}, function(newVal, oldVal) {
+							switch (mainInformationHandler.animationTitle) {
 								case "surprised_bold":
 									universalSurprised.play();
 									universalSurprised.setVolume(0.2);

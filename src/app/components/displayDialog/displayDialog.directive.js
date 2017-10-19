@@ -6,7 +6,7 @@
     .directive('displayDialog', displayDialog);
 
   /** @ngInject */
-  function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler) {
+  function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler, mainInformationHandler) {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/displayDialog/displayDialog.html',
@@ -33,7 +33,7 @@
       var successfulConvos;
       var scores = levelDataHandler.choiceScores;
       vm.choiceDelay = true;
-      vm.main.totalConvoPoints = 0;
+      mainInformationHandler.totalConvoPoints = 0;
       vm.showContinue = false;
       vm.chosenAnnie = "";
       vm.npcResponse = "";
@@ -49,7 +49,7 @@
       vm.main.branchHistory = [];
       vm.main.currentChoiceInfo = {};
 
-      $scope.$watch(function() {return vm.main.currentConversation;}, function() {
+      $scope.$watch(function() {return mainInformationHandler.currentConversation;}, function() {
         resetDialog();
         chooseDialogScript();
       });
@@ -60,7 +60,7 @@
         successfulConvos;
         scores = levelDataHandler.choiceScores;
         vm.choiceDelay = true;
-        vm.main.totalConvoPoints = 0;
+        mainInformationHandler.totalConvoPoints = 0;
         vm.showContinue = false;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
@@ -68,8 +68,8 @@
       }
 
       function chooseDialogScript() {
-        vm.main.animationTitle = "";
-        var dialog = vm.main.currentConversation;
+        mainInformationHandler.animationTitle = "";
+        var dialog = mainInformationHandler.currentConversation;
         dialogService.getDialogs(dialog).then(function(data) {
           dialogRoot = data;
           var originalNodeOne = dialogRoot.node1;
@@ -82,8 +82,8 @@
           vm.currentNodeChoices = vm.choice;
 
         });
-        if (angular.isUndefined(vm.main.failedConvos[vm.main.currentConversation])) {
-          vm.main.failedConvos[vm.main.currentConversation] = 0;
+        if (angular.isUndefined(mainInformationHandler.failedConvos[mainInformationHandler.currentConversation])) {
+          mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] = 0;
         }
       }
       /*=============== Button operations =================*/
@@ -97,15 +97,15 @@
 
         if (!vm.isTestBed) {
           if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) {
-            vm.main.completedConvos.push(vm.main.currentConversation);
-            vm.main.totalConvoPoints = 0;
+            mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation);
+            mainInformationHandler.totalConvoPoints = 0;
             for (var i in choice.code) {
-              vm.main.totalConvoPoints += scores[choice.code[i]];
+              mainInformationHandler.totalConvoPoints += scores[choice.code[i]];
             }
-            vm.main.lastConversationSuccessful = true;
+            mainInformationHandler.lastConversationSuccessful = true;
           } else {
-            vm.main.failedConvos[vm.main.currentConversation] += 1;
-            vm.main.lastConversationSuccessful = false;
+            mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1;
+            mainInformationHandler.lastConversationSuccessful = false;
           }
         }
         var currenBranch = choice.code.charAt(2);
@@ -119,7 +119,7 @@
       }
 
       function clickContinue() {
-        vm.main.hideDialog = true;
+        mainInformationHandler.hideDialog = true;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
 
@@ -127,22 +127,22 @@
         vm.NPC_responseHidden = true;
         vm.node3Response = true;
         vm.showContinue = false;
-        vm.main.animationTitle = "";
+        mainInformationHandler.animationTitle = "";
 
         if (!vm.isTestBed) {
-          if (vm.main.lastConversationSuccessful) {
-            userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_result", vm.main.totalConvoPoints, decisionPath);
-            userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_end", vm.main.currentConversation, "Success");
+          if (mainInformationHandler.lastConversationSuccessful) {
+            userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_result", mainInformationHandler.totalConvoPoints, decisionPath);
+            userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_end", mainInformationHandler.currentConversation, "Success");
           } else {
-            userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_result", vm.main.totalConvoPoints, decisionPath);
-            userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_end", vm.main.currentConversation, "Fail");
+            userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_result", mainInformationHandler.totalConvoPoints, decisionPath);
+            userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_end", mainInformationHandler.currentConversation, "Fail");
           }
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "NPC_state", vm.main.talkingWith);
-          var progressBarInfo = Math.round((vm.main.completedConvos.length / vm.main.totalConvosAvailable) * 100);
+          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_state", mainInformationHandler.talkingWith);
+          var progressBarInfo = Math.round((mainInformationHandler.completedConvos.length / mainInformationHandler.totalConvosAvailable) * 100);
 
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Player_State", vm.main.playerScore + vm.main.totalConvoPoints, progressBarInfo);
-          successfulConvos = vm.main.completedConvos.length;
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_convo", successfulConvos, vm.main.convoAttemptsTotal);
+          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Player_State", mainInformationHandler.playerScore + mainInformationHandler.totalConvoPoints, progressBarInfo);
+          successfulConvos = mainInformationHandler.completedConvos.length;
+          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_convo", successfulConvos, mainInformationHandler.convoAttemptsTotal);
           userDataService.postData(); //Post data after convo is over
           chooseDialogScript();
         }
@@ -168,16 +168,16 @@
         }, pc_Text_Timer);
 
         $timeout(function() {
-          if (choice.animation === '' || conversationP5Data[vm.main.talkingWith].animations[choice.animation]) {
-            vm.main.animationTitle = choice.animation;
+          if (choice.animation === '' || conversationP5Data[mainInformationHandler.talkingWith].animations[choice.animation]) {
+            mainInformationHandler.animationTitle = choice.animation;
           } else {
-            $log.warn('there is no animation "' + choice.animation + '" for character ' + vm.main.talkingWith);
-            vm.main.animationTitle = '';
+            $log.warn('there is no animation "' + choice.animation + '" for character ' + mainInformationHandler.talkingWith);
+            mainInformationHandler.animationTitle = '';
           }
-          if (vm.main.animationTitle && vm.main.animationTitle.indexOf("bold") >= 0) {
+          if (mainInformationHandler.animationTitle && mainInformationHandler.animationTitle.indexOf("bold") >= 0) {
             var watchPromise = $scope.$watch(function() {
-                  return vm.main.animationDone;
-                }, function() { if (vm.main.animationDone) {
+                  return mainInformationHandler.animationDone;
+                }, function() { if (mainInformationHandler.animationDone) {
                 audioService.playAudio("UIbuttonclick-option1.wav");
                 vm.npcResponse = choice.NPC_Response;
                 delayChoiceDisplay();
@@ -188,8 +188,8 @@
               setUpDelayChoiceDisplay(choice);
               watchPromise();
             }
-            vm.main.animationDone = false; //reset
-          } else if (vm.main.animationTitle && vm.main.animationTitle.indexOf("mild") >= 0) {
+            mainInformationHandler.animationDone = false; //reset
+          } else if (mainInformationHandler.animationTitle && mainInformationHandler.animationTitle.indexOf("mild") >= 0) {
             employSpecficTimeOut (mild_Animation_Timer, choice);
           }
            else { //if no animation
@@ -242,7 +242,7 @@
             var num = number.toString();
             var str = ["convo_state","convo_user","convo_system","convo_NPC"];
             var pram3 = [num,Branch,scores[Branch],choice.animation];
-            var pram4 = [vm.main.failedConvos[vm.main.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
+            var pram4 = [mainInformationHandler.failedConvos[mainInformationHandler.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
             setTrackAction(str, pram3, pram4);
 
           }
@@ -252,7 +252,7 @@
             var thirdParmValues = parm3;
             var forthPramValues = parm4;
             for (var i = 0; i < stringArr.length; i++){
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
+              userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
           }
         }
 
