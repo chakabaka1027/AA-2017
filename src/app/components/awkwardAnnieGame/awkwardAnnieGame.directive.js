@@ -14,8 +14,9 @@
 
 	}
 
-	function controller() {
+	function controller($scope, mainInformationHandler ) {
 
+		$scope.main = mainInformationHandler;
 	}
 
 })();

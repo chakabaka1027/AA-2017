@@ -51,7 +51,7 @@ function setConversation(talkingWith){
 function nextLevelData(){ //is the problem for single rooms that it increases the counter - but that wasnt an issue before
   var currentLevel = "level_"+service.levelCount;
   service.levelConvosNeeded = levelDataHandler.levels[currentLevel].requiredConversations;
-  service.roomData = levelDataHandler.levels[currentLevel].rooms[MainInformationHandler.roomKey];
+  service.roomData = levelDataHandler.levels[currentLevel].rooms[service.roomKey];
 }//  vm.roomData
 
 function setRoomData(roomKey){
@@ -66,10 +66,6 @@ function areDialogsCompleted(possibleConvos){//, completedConvos
         }
     }
     return true;
-}
-//TODO
-function reset(){
-
 }
 
     }//end of controller

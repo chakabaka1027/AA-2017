@@ -6,8 +6,8 @@
     <game-manager main="main" room="main.roomKey">  </game-manager>
 
     <game-map name="{{ 'level_'+ main.levelCount }}"> {{ gameMap.levels }} </game-map>
- 
-    <div ng-if="!main.hideDialog" class="conversationContainer">
+
+    <div ng-if="!main.hideDialog" class="conversationContainer"> 
       <display-dialog main="main"></display-dialog>
       <pop-up-dialog-manager main="main"></pop-up-dialog-manager>
     </div>

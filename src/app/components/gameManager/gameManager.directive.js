@@ -6,8 +6,8 @@
 
   /** @ngInject */
   function gameManager(charPositionData, animationData, roomData, furnitureData,
-    levelDataHandler, mappingService, arrowData, audioService, mainInformationHandler, userDataService, userGameInfo,
-    $location, $log) {
+    levelDataHandler, mappingService, arrowData, audioService, userDataService, userGameInfo,
+    $location, $log, mainInformationHandler) {
 
     var directive = {
       restrict: 'E',
@@ -39,7 +39,8 @@
           elm.off("mousemove", mouseMove);
         }
       })
-
+      mainInformationHandler.reset();
+      mainInformationHandler.nextLevelData();
       scope.$on('$destroy', releaseBindings);
 
       function trackKeys(e) {
