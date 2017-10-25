@@ -573,7 +573,7 @@
           return;
         }
         var character = characters[spriteB.name];
-        if (!character) { return; }
+        if (!character || !character.dialogKey) { return; }
 
         if (character.dialogKey && !annie_Talking) {
           mainInformationHandler.convoAttemptsTotal += 1;
@@ -595,6 +595,8 @@
             dialogOptions.hideDialog = false;
           }
         }
+
+        $log.log('I think we\'re talking');
 
         annie_Talking = true;
         userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_State", spriteB.name); //mainInformationHandler.convoCounter[spriteB.name]
