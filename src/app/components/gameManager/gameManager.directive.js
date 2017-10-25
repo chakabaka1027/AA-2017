@@ -651,9 +651,9 @@
           currentRoom.drawPointsBubble(mainInformationHandler.totalConvoPoints, lastCharCollidedInto);
         }
       });
-      $scope.$watch(function() {return mainInformationHandler.hideDialog;  }, function(newVal, oldVal) {
+      $scope.$watch(function() {return dialogOptions.hideDialog;  }, function(newVal, oldVal) {
         if (currentRoom) {
-          if (mainInformationHandler.hideDialog !== oldVal && newVal) {
+          if (dialogOptions.hideDialog !== oldVal && newVal) {
             mainInformationHandler.playerScore += mainInformationHandler.totalConvoPoints;
             switch (mainInformationHandler.lastConversationSuccessful) {
               case true:
@@ -667,7 +667,7 @@
         }
       });//end of watch
 
-      $scope.$watch(function(){ return mainInformationHandler.hideDialog;}, function(newVal, oldVal) {
+      $scope.$watch(function(){ return dialogOptions.hideDialog;}, function(newVal, oldVal) {
         if (newVal && !oldVal) {
           if (annie_Talking) {
             showArrows = false;
