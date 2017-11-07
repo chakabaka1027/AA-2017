@@ -582,7 +582,7 @@
             if (character.secondConvo && mainInformationHandler.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
 
               mainInformationHandler.currentConversation = character.secondConvo.dialogKey;
-              mainInformationHandler.talkingWith = spriteB.name;
+              dialogOptions.talkingWith = spriteB.name;
               dialogOptions.hideDialog = false;
 
             } else {

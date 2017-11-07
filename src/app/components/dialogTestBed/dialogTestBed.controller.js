@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService,
-                                  conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler) {
+                                  conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler,dialogOptions) {
     var vm = this;
     vm.currentConversation = "fran_Linear";
     vm.talkingWith = "fran";
@@ -50,7 +50,7 @@
         vm.talkingWith = vm.currentConversation.split("_")[0];
         vm.displayCharacters = false;
         mainInformationHandler.currentConversation = vm.currentConversation;
-        mainInformationHandler.talkingWith = vm.talkingWith;
+        dialogOptions.talkingWith = vm.talkingWith;
         $timeout(function() {
           vm.displayCharacters = true;
         }, 0);

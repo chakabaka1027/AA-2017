@@ -5,7 +5,7 @@
   .service('mainInformationHandler', mainInformationHandler);
 
   /** @ngInject */
-  function mainInformationHandler( levelDataHandler ){
+  function mainInformationHandler( levelDataHandler, dialogOptions ){
 
     var service ={
       setConversation:setConversation,
@@ -26,10 +26,6 @@ function reset() {
       playerScore:0,
       lastConversationSuccessful:false,
       roomKey: "lobby",
-      animationTitle:"",
-      animationDone :true,
-      hideDialog:true,
-      talkingWith:"",
       totalConvoPoints:0,
       completedConvos:[],
       failedConvos  :{},
@@ -43,8 +39,8 @@ function reset() {
 }
 
 function setConversation(talkingWith){
-  service.talkingWith = talkingWith;
-  service.currentConversation = service.roomData[talkingWith].dialogKey;
+  dialogOptions.talkingWith = talkingWith;
+  service.currentConversation = service.roomData[dialogOptions.talkingWith].dialogKey;
 }
 
 //TODO move this to datalevel hanler =====
