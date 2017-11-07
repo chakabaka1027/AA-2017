@@ -6,7 +6,7 @@
 		.directive('popUpDialogManager', popUpDialogManager);
 
 	/** @ngInject */
-	function popUpDialogManager(conversationP5Data, mainInformationHandler, dialogOptions) {
+	function popUpDialogManager(conversationP5Data, mainInformationHandler) {// add this here - dialogOptions
 		var directive = {
 			restrict: "E",
 			controller: controller,
@@ -24,12 +24,12 @@
 			},
 			controllerAs: 'vm',
 			bindToController: true
-		}; 
+		};
 		return directive;
 
 		/** @ngInject */
 		function controller($scope, $element) {
-			var vm = this;
+			// var vm = this;
 
 			var myCanvas;
 			var dialogSprite;

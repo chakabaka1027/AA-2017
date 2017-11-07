@@ -5,7 +5,7 @@
   .service('mainInformationHandler', mainInformationHandler);
 
   /** @ngInject */
-  function mainInformationHandler( levelDataHandler, $log ){
+  function mainInformationHandler( levelDataHandler ){
 
     var service ={
       setConversation:setConversation,
@@ -38,7 +38,7 @@ function reset() {
       currentConversation:"",
       totalConvosAvailable :18,
       convoAttemptsTotal : 0,
-      roomData:{},
+      roomData:{}
   });
 }
 

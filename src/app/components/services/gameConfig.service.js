@@ -5,8 +5,8 @@
     .service('gameConfig', gameConfig);
 
   /** @ngInject */
-  function gameConfig($http, $log, $q) {
-    var deferred = $q.defer();
+  function gameConfig($http ) {//q
+    // var deferred = $q.defer(); //TODO double check this - says it is unused I couldn't find a resolve for it
 
     var service = {
       version: 0,

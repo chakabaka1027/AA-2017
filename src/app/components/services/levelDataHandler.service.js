@@ -67,31 +67,5 @@
         });
         return dialogs;
     }
-
-
-//TODO this is really never used???? - can;t find it anywhere as a service method - verify with chas - 
-    function getSuccessPaths(dialogKey) {
-      $log.error("are you sure you wanna be using this - should not return paths ");
-      for (var levelKey in service) {
-        if (levelKey.indexOf('level_') === 0) {
-          var levelInfo = service[levelKey];
-          for (var roomKey in levelInfo.rooms) {
-            var roomInfo = levelInfo.rooms[roomKey];
-            for (var charKey in roomInfo.characters) {
-              var charInfo = roomInfo.characters[charKey];
-              if (charInfo.dialogKey === dialogKey) {
-                return charInfo.successPaths;
-              }
-              if (charInfo.secondConvo && charInfo.secondConvo.dialogKey === dialogKey) {
-                return charInfo.secondConvo.successPaths;
-              }
-
-            }
-          }
-        }
-      }
-      // not found!
-      return [];
-    }
   } //end of controller
 })();

@@ -580,17 +580,17 @@
 
           if (mainInformationHandler.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
             if (character.secondConvo && mainInformationHandler.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
-            
+
               mainInformationHandler.currentConversation = character.secondConvo.dialogKey;
               mainInformationHandler.talkingWith = spriteB.name;
               dialogOptions.hideDialog = false;
-            
+
             } else {
               // already had first conversation; and there is no second conversation...
               return;
             }
           } else { //if first convo
-            
+
             mainInformationHandler.setConversation(spriteB.name);
             dialogOptions.hideDialog = false;
           }
@@ -607,7 +607,7 @@
         } else {
           vm.main.flipDialogs = true;
         }
-        
+
         if (annie_Talking) {
           if (timerPromise) {
             $timeout.cancel(timerPromise);
@@ -704,7 +704,6 @@
         // levelRequiredConvos = vm.main.arrayToString(mainInformationHandler.levelConvosNeeded);
         levelRequiredConvos = mainInformationHandler.levelConvosNeeded;
         levelRequiredConvos.toString();
-        console.log(":"+levelRequiredConvos);
         userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_State", levelRequiredConvos);
         if (mainInformationHandler.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/
           userDataService.trackAction("Game end", mainInformationHandler.roomKey, "Game_End", mainInformationHandler.playerScore, "0");

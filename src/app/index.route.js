@@ -36,7 +36,7 @@
                   //TODO put those in the main ( score / level count --- but service things / model things ---- have a cotnroller but it si a simple controller -- put in a directive )
       .state('instructions', {
         //url: '/instructions',
-        template: "<div class='gameContainer'><nav-bar></nav-bar><instruction_page click-sound></instruction_page></div>",
+        template: "<div class='gameContainer'><nav-bar></nav-bar><instruction_page click-sound></instruction_page></div>"
         // controller: 'MainController', //throws away old main and recreates it
         // controllerAs: 'main'
       });
@@ -44,7 +44,7 @@
       .state('awkwardAnnieGame', {
         // url: '/awkwardAnnieGame',
         // url: '/{gameType}',
-        template: '<awkward-annie-game></awkward-annie-game>',
+        template: '<awkward-annie-game></awkward-annie-game>'
         // controller: 'MainController', //throws away old main and recreates it
         // controllerAs: 'main'
       });
