@@ -13,9 +13,8 @@
       template: '<div><h1>I am initializing!!!!</h1><div ng-click="clickMe()">Click me!!!</div></div>'
     };
 
-    function controller($scope) {
-      var configData;
-
+    function controller() {
+      // var configData;
       var gameType;
 
       gameConfig.fetchConfig()

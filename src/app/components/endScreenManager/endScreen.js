@@ -20,7 +20,7 @@
     return directive;
 
     /** @ngInject */
-    function controller($scope, $log) {
+    function controller() {//scope
       var vm = this;
       vm.quit = quit;
       vm.userID = userDataService.userID;

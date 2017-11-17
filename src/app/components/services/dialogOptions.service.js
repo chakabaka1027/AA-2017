@@ -5,7 +5,7 @@
 		.service('dialogOptions', dialogOptions);
 
 	/** @ngInject */
-	function dialogOptions($log) {
+	function dialogOptions() {
 		var service = {
 			hideDialog: true,
 			animationTitle:"",
@@ -15,7 +15,8 @@
 		};
 
 		return service;
-		
+
 	}
+
 
 })();

@@ -6,8 +6,8 @@
     .controller('displayDialogTestBed', displayDialogTestBed);
 
   /** @ngInject */
-  function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService, 
-                                  conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler) {
+  function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService,
+                                  conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler,dialogOptions) {
     var vm = this;
     vm.currentConversation = "fran_Linear";
     vm.talkingWith = "fran";
@@ -17,8 +17,7 @@
     vm.animationValid = true;
     vm.successPaths = [];
     vm.flipDialog = true;
-
-    $scope.main = mainInformationHandler;
+    // $scope.main = mainInformationHandler;
 
     $log.log('Ensure dialog service is loaded...');
 
@@ -45,13 +44,13 @@
       vm.hasLoaded = true;
       vm.currentChoiceInfo = {};
 
-      $scope.$watch(function() {return vm.currentConversation;}, function(newVal, oldVal) {
-        
+      $scope.$watch(function() {return vm.currentConversation;}, function() {
+
         vm.branchHistory = [];
         vm.talkingWith = vm.currentConversation.split("_")[0];
         vm.displayCharacters = false;
         mainInformationHandler.currentConversation = vm.currentConversation;
-        mainInformationHandler.talkingWith = vm.talkingWith;
+        dialogOptions.talkingWith = vm.talkingWith;
         $timeout(function() {
           vm.displayCharacters = true;
         }, 0);

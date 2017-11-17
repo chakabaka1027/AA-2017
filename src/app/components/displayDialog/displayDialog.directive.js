@@ -68,7 +68,7 @@
       }
 
       function chooseDialogScript() {
-        mainInformationHandler.animationTitle = "";
+        dialogOptions.animationTitle = "";
         var dialog = mainInformationHandler.currentConversation;
         dialogService.getDialogs(dialog).then(function(data) {
           $log.log('dialogRoot', data);
@@ -128,7 +128,7 @@
         vm.NPC_responseHidden = true;
         vm.node3Response = true;
         vm.showContinue = false;
-        mainInformationHandler.animationTitle = "";
+        dialogOptions.animationTitle = "";
 
         if (!vm.isTestBed) {
           if (mainInformationHandler.lastConversationSuccessful) {
@@ -138,7 +138,7 @@
             userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_result", mainInformationHandler.totalConvoPoints, decisionPath);
             userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_end", mainInformationHandler.currentConversation, "Fail");
           }
-          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_state", mainInformationHandler.talkingWith);
+          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_state", dialogOptions.talkingWith);
           var progressBarInfo = Math.round((mainInformationHandler.completedConvos.length / mainInformationHandler.totalConvosAvailable) * 100);
 
           userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Player_State", mainInformationHandler.playerScore + mainInformationHandler.totalConvoPoints, progressBarInfo);
@@ -169,16 +169,16 @@
         }, pc_Text_Timer);
 
         $timeout(function() {
-          if (choice.animation === '' || conversationP5Data[mainInformationHandler.talkingWith].animations[choice.animation]) {
-            mainInformationHandler.animationTitle = choice.animation;
+          if (choice.animation === '' || conversationP5Data[dialogOptions.talkingWith].animations[choice.animation]) {
+            dialogOptions.animationTitle = choice.animation;
           } else {
-            $log.warn('there is no animation "' + choice.animation + '" for character ' + mainInformationHandler.talkingWith);
-            mainInformationHandler.animationTitle = '';
+            $log.warn('there is no animation "' + choice.animation + '" for character ' + dialogOptions.talkingWith);
+            dialogOptions.animationTitle = '';
           }
-          if (mainInformationHandler.animationTitle && mainInformationHandler.animationTitle.indexOf("bold") >= 0) {
+          if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("bold") >= 0) {
             var watchPromise = $scope.$watch(function() {
-                  return mainInformationHandler.animationDone;
-                }, function() { if (mainInformationHandler.animationDone) {
+                  return dialogOptions.animationDone;
+                }, function() { if (dialogOptions.animationDone) {
                 audioService.playAudio("UIbuttonclick-option1.wav");
                 vm.npcResponse = choice.NPC_Response;
                 delayChoiceDisplay();
@@ -189,8 +189,8 @@
               setUpDelayChoiceDisplay(choice);
               watchPromise();
             }
-            mainInformationHandler.animationDone = false; //reset
-          } else if (mainInformationHandler.animationTitle && mainInformationHandler.animationTitle.indexOf("mild") >= 0) {
+            dialogOptions.animationDone = false; //reset
+          } else if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("mild") >= 0) {
             employSpecficTimeOut (mild_Animation_Timer, choice);
           }
            else { //if no animation

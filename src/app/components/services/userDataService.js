@@ -5,7 +5,7 @@
     .service('userDataService', userDataService);
 
   /** @ngInject */
-  function userDataService($http, $log, mainInformationHandler) {
+  function userDataService($http, $log) { //mainInformationHandler was used for tracking method below
 
     var hostBaseAddress = "awkwardBackend";
     var rowHeaders = [
@@ -80,7 +80,7 @@
         var url = hostBaseAddress + '/awkwardData.php';
         $log.log('Posting to: ' + hostBaseAddress + '/data/' + data.fname + '.csv');
         $http.post(url, data)
-          .then(function(response) {
+          .then(function() {
               $log.log('Success writing data!');
             },
             function() {
