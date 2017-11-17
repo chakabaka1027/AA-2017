@@ -13,6 +13,12 @@
 //or add it as a new state? ---
 
     $stateProvider
+      .state('test', {
+        url: '/test',
+        template: '<chastest></chastest>'
+      });
+
+    $stateProvider
       .state('initialization', {
         url: '/{gameType}',
         template: '<initialize-game></initialize-game>'
