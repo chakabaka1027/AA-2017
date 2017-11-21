@@ -17,6 +17,11 @@
         url: '/test',
         template: '<chastest></chastest>'
       });
+      $stateProvider
+        .state('newTest', {
+          url: '/newTest',
+          template: '<rjtest></rjtest>'
+        });
 
     $stateProvider
       .state('initialization', {
