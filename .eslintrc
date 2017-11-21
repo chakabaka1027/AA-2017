@@ -3,7 +3,8 @@
   "plugins": ["angular"],
   "env": {
     "browser": true,
-    "jasmine": true
+    "jasmine": true,
+    "es6": true    
   },
   "globals": {
     "angular": true,
