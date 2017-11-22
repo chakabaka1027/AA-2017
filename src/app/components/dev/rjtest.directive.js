@@ -9,11 +9,40 @@
   function rjtest($log, parseAAContentService, Nodeservice) {
     return {
       restrict: 'E',
-      controller: controller
+      controller: controller,
+      controllerAs: "dm",
+      bindToController:true ,
+      template: `
+        <div class="PCText">annie: {{dm.curNode.pcText}}</div>
+          <div class="NPCText">fran:{{dm.curNode.npcText}}</div>
+          <div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.pcText}} {{option.choice}} annie </div>
+          <div ng-if="dm.options.length==0"> the end </div><!-- add ng click - displays scope +=curnode. score -->
+  `
     };
-
+//dm = vm.options inside the options
     function controller($scope) {
       ///what about a "Trie" data structur ?
+      var vm = this;
+      console.log(Nodeservice.dialogTrees.test);//.test will be ['fran_GR_01']
+      vm.curNode = Nodeservice.dialogTrees.test.rootNode;
+      vm.clickOnChoice = clickOnChoice; // same as saying public funcitn click on choice
+      setupForNode();
+      function setupForNode() {
+        vm.options = [];
+        angular.forEach(vm.curNode.children, function(child) {
+          vm.options.push({choice:child.choiceCode, node: child});
+        });}
+
+      function clickOnChoice(choice) {
+    		var chosenNode = vm.curNode.children[choice];
+        console.log("clicked on chooice!");
+    		// maybe some scoring....
+
+    		vm.curNode = chosenNode;
+        setupForNode();
+    	}
+
+
     } //end of controller
   }
 
@@ -22,144 +51,81 @@
   function nodeservice($log) {
     console.log(testNewStructure);
 
-    class Tree {
-      constructor (){
-        this.rootNode = null;
-        this.rootNode  = new NodeTest(null);
-        console.log(this.rootNode);//when we create the ree - add a roto and make it null
 
+    class NodeTest { //code, isFinal, //node Class
+
+      constructor (data){
+        this.parent = null;
+        this.children = {};
+        this.isRoot = true;
+        if (data != null) { //if it is not the root node then add all the properties
+          angular.extend(this, {
+            pcText: data.PC_Text,
+            npcText: data.NPC_Response,
+            animationNegative: data.animationNegative,
+            animationPositive: data.animationPositive
+            //exampel score element here for flex other wise set ased on sent code
+          });
+          this.isRoot = false;
+          this.code = data.code; //what we will use to triverse the tree
+          this.choiceCode = data.code[data.code.length - 1];
+        }
+      }//end of constuctor
+
+      addChild(childNode){
+        this.children[childNode.choiceCode] = childNode;
       }
-      //intresting way to define functions / classes ---
-      addNodeToTree(data) {//TODO problem need to know the length but that can be fixed by reading and getting the max length of code - prep arrays for that length
-        if(data.code.length ==1 ){// if it is of length 1 make the parent have this as aits child
-          console.log(data.code);
-          this.rootNode.children.push(new NodeTest(data));
-        }if( data.code.length ==2){    //TODO make this a function and call it recusrvly when we are at level 3 - and this is to sort level two nodes
-/////////////////make this into a function and call it at level 3 recusrivly
-            //aa or ab or ac -- append it to child of child of root node
-            if(data.code.charAt(0)=="A"){
-                // console.log("node code:  "+ data.code +" it's parent is: "+   this.rootNode.children[0].code);
-                this.rootNode.children[0].children.push(new NodeTest(data));
-            }if(data.code.charAt(0)=="B"){
-              // console.log("node code:  "+ data.code +" it's parent is: "+   this.rootNode.children[1].code);
-              this.rootNode.children[1].children.push(new NodeTest(data));
-            }else {
-              // console.log("node code:  "+ data.code +" it's parent is: "+   this.rootNode.children[2].code); //children willl be based on length - for testing
-              this.rootNode.children[2].children.push(new NodeTest(data));
 
-            }
-        }//end of level two
+    }//end of node
 
-        else { //TODO change it as a recursive call to above level three function///REDO THIS NOT GOOD JUST FOR POC
-          if(data.code.charAt(0)== "A")//call this above
-            {
-              if( data.code.charAt(1)=="A"){ //where are pointers when you need them - sigh  - does js have pointers //TODO check this out
-                this.rootNode.children[0].children[0].children.push(new NodeTest(data));
-              }
-              if( data.code.charAt(1)=="B"){
-                this.rootNode.children[0].children[1].children.push(new NodeTest(data));
-              }
-              if( data.code.charAt(1)=="C"){
-                this.rootNode.children[0].children[2].children.push(new NodeTest(data));
+    class Tree {
 
-              }
+      constructor(treeData, nodeArray) {
+        // do some stuff...
+        this.setupTree(nodeArray);
+      }
 
-            }
-            if(data.code.charAt(0)== "B")//call this above
-              {
-                if( data.code.charAt(1)=="A"){ //where are pointers when you need them - sigh  - does js have pointers //TODO check this out
-                  this.rootNode.children[1].children[0].children.push(new NodeTest(data));
-                }
-                if( data.code.charAt(1)=="B"){
-                  this.rootNode.children[1].children[1].children.push(new NodeTest(data));
-                }
-                if( data.code.charAt(1)=="C"){
-                  this.rootNode.children[1].children[2].children.push(new NodeTest(data));
+      findParent(code) {
+        return this.nodeDict[code.substr(0, code.length - 1)];
+      }
 
-                }
+      setupTree(nodeArray) {
+        this.rootNode = new NodeTest(null);
+        this.rootNode.code = "";
+        this.nodeDict = {
+          '': this.rootNode
+        };
 
-              }
-              if(data.code.charAt(0)== "C")//call this above
-                {
-                  if( data.code.charAt(1)=="A"){ //where are pointers when you need them - sigh  - does js have pointers //TODO check this out
-                    this.rootNode.children[2].children[0].children.push(new NodeTest(data));
-                  }
-                  if( data.code.charAt(1)=="B"){
-                    this.rootNode.children[2].children[1].children.push(new NodeTest(data));
-                  }
-                  if( data.code.charAt(1)=="C"){
-                    this.rootNode.children[2].children[2].children.push(new NodeTest(data));
-                  }  }
+        nodeArray.forEach(data => {
+          var node = new NodeTest(data);
+          this.nodeDict[node.code] = node;
+        });
 
-        }//end of else
-
-
-          }//end of add method
-
-          printTree(){
-            // for(var i = 0 ; i < this.rootNode.children.length ;i ++){
-            //   for(var j = 0 ; j <=i ;j ++){
-            //     for(var k = 0 ; k <=j ;k ++){
-            //       console.log("-:"+this.rootNode.children[i].code);
-            //       console.log("--:"+this.rootNode.children[i].children[j].code);
-            //       console.log("---:"+this.rootNode.children[i].children[j].children[k].code);
-            //     }
-            //   }
-            // }
-
-
+        angular.forEach(this.nodeDict, (node, nodeCode) => {
+          var parent = this.findParent(node.code);
+          if (parent) {
+            node.parent = parent;
+            parent.addChild(node);
+          } else if (node !== this.rootNode) {
+            $log.error('something is wrong!!!');
           }
-
-      compareCharecters(char) {
-            if (char.length == 1) {
-              if (char.toLowerCase() < "c") { //if iit is lower than c then the charecter is either a or b
-              }
-            }
-          }//compare end
-
-      fixTreeOrder() {  }
-    }//end of tree
+        });
+      }
+    }
 
     ////////////////////for data sample 2 elements - example 2 as with one would require adding cases as far as I can see but if we are reading them by code values and no code is the same in the same file why not index them by that value
-    var testTree = new Tree();
-    for (var i = 0; i < testNewStructure.Values.length; i++) {
+    var testTree = new Tree([], testNewStructure.Values);
+    // console.log(testTree);
+    // console.log(testTree.nodeDict[""]);
 
-      testTree.addNodeToTree(testNewStructure.Values[i]);
-
-
-      // console.log(testNewStructure.Values[i]);
-
-    }
-    testTree.printTree();
-    console.log(testTree);
+     var service = {
+       dialogTrees : {"test":testTree}
+     }
+     return service;
 
 
-    function NodeTest(data) { //code, isFinal, //node Class
-
-      this.parent = null;
-      this.children = [];
-      this.isRoot = true;
-      if (data != null) { //if it is not the root node then add all the properties
-        this.properties = {
-          pcText: data.pcText,
-          npcText: data.NPC_Response,
-          animationNegative: data.animationNegative,
-          animationPositive: data.animationPositive
-          //exampel score element here for flex other wise set ased on sent code
-        };
-        this.isRoot = false;
-        this.code = data.code; //what we will use to triverse the tree
-      }
-    }
-
-
-
-    var p = NodeTest.prototype;
-
-    p.addChild = function(childNode) {
-      this.children[childNode.choiceCode] = childNode;
-    }
-    return NodeTest;
+    // testTree.printTree();
+    // console.log(testTree);
 
   } //end of service
 
@@ -202,12 +168,23 @@
         "animationPositive": "agree_mild"
       },
       {
-        "code": "AC",
+        "code": "AC",///////fixthis
         "PC_Text": "Thanks! Can you drive to Coffee Max and buy me a cappuccino? Just use your mug- I don't trust their travel cups.",
         "NPC_Response": "What's wrong with their cups?",
         "animationNegative": "confused_mild",
         "animationPositive": ""
+      //  "score": if there is a score use this if not use the matrix -- the score will the this data structures priblem
+      //when we add the node the node itself figures out the score - or the tree class looks up the manual scope ---
+      //eother from a tab;e or based on each npde
+      //the trees job to construct the score -- look ay sketch notes line 76 
       },
+      // {
+      //   "code": "X",///////fixthis
+      //   "PC_Text": "Thanks! Can you drive to Coffee Max and buy me a cappuccino? Just use your mug- I don't trust their travel cups.",
+      //   "NPC_Response": "What's wrong with their cups?",
+      //   "animationNegative": "confused_mild",
+      //   "animationPositive": ""
+      // },
       {
         "code": "BA",
         "PC_Text": "When you go, can you also grab me a coffee? I'm sorry to ask but you know I am always running late in the mornings!",

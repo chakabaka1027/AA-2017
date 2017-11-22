@@ -12,9 +12,9 @@ class Tree() {
 	}
 
 	setupTree(nodeArray) {
-		
+
 		this.nodeDict = {'': rootNode};
-		
+
 		nodeArray.forEach(function(data) {
 			var node = new NodeTest(data);
 			this.nodeDict[node.code] = node;
@@ -67,7 +67,6 @@ function controller() {
 /* html for dialog */
 
 <div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.PC_Text}}</div>
-
 <div class="NPCText">{{dm.curNode.NPC_Text}}</div>
 <div class="PCText">{{dm.curNode.PC_Text}}</div>
 
@@ -83,14 +82,3 @@ dialogTrees['fran_GR_01'] = new DialogTree({
 	scoringMatrix: [[1,4,5]],
 	rootNode: undefined
 }, arrayOfNodesThatWePutTogetherSomehow);
-
-
-
-
-
-
-
-
-
-
-

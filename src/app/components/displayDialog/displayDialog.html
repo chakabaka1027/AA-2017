@@ -1,12 +1,12 @@
 <div class="playerChoices">
   <div ng-if="vm.choiceDelay && !vm.showContinue">
-    <div class="choices" ng-repeat="choice in vm.currentNodeChoices">
+    <div class="choices" ng-repeat="choice in vm.currentNodeChoices"><!--choices like the options in rjtest -->
       <input class="btn" type="button" name="{{choice.code}}" value="{{choice.PC_Text?choice.PC_Text:'Missing text'}}" ng-click="vm.showNode(choice)">
       <br><br>
     </div>
   </div>
   <br/>
-  <p ng-if="vm.choiceDelay &&!vm.showContinue">Please select an option above for what you want Annie to say.</p>
+  <p ng-if="vm.choiceDelay &&!vm.showContinue">Please select an option above for what you want Annie to say.</p><!--of length of options = 0 show countue in rjtets -->
 
   <div class="blue-continue" ng-click="vm.clickContinue()" ng-if="vm.showContinue && vm.choiceDelay"></div>
 </div>
