@@ -12,12 +12,10 @@
       controller: controller,
       controllerAs: "dm",
       bindToController:true ,
-      template: `
-        <div class="PCText">annie: {{dm.curNode.pcText}}</div>
-          <div class="NPCText">fran:{{dm.curNode.npcText}}</div>
-          <div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.pcText}} {{option.choice}} annie </div>
-          <div ng-if="dm.options.length==0"> the end </div><!-- add ng click - displays scope +=curnode. score -->
-  `
+      template: ['<div class="PCText">annie: {{dm.curNode.pcText}}</div>',
+          '<div class="NPCText">fran:{{dm.curNode.npcText}}</div>',
+          '<div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.pcText}} {{option.choice}} annie </div>',
+          '<div ng-if="dm.options.length==0"> the end </div><!-- add ng click - displays scope +=curnode. score -->'].join('\n')
     };
 //dm = vm.options inside the options
     function controller($scope) {
@@ -51,10 +49,7 @@
   function nodeservice($log) {
     console.log(testNewStructure);
 
-
-    class NodeTest { //code, isFinal, //node Class
-
-      constructor (data){
+    function NodeTest(data){
         this.parent = null;
         this.children = {};
         this.isRoot = true;
@@ -72,46 +67,45 @@
         }
       }//end of constuctor
 
-      addChild(childNode){
-        this.children[childNode.choiceCode] = childNode;
-      }
+    var pnt = NodeTest.prototype;
 
-    }//end of node
+    pnt.addChild = function(childNode){
+      this.children[childNode.choiceCode] = childNode;
+    };
 
-    class Tree {
-
-      constructor(treeData, nodeArray) {
-        // do some stuff...
-        this.setupTree(nodeArray);
-      }
-
-      findParent(code) {
-        return this.nodeDict[code.substr(0, code.length - 1)];
-      }
-
-      setupTree(nodeArray) {
-        this.rootNode = new NodeTest(null);
-        this.rootNode.code = "";
-        this.nodeDict = {
-          '': this.rootNode
-        };
-
-        nodeArray.forEach(data => {
-          var node = new NodeTest(data);
-          this.nodeDict[node.code] = node;
-        });
-
-        angular.forEach(this.nodeDict, (node, nodeCode) => {
-          var parent = this.findParent(node.code);
-          if (parent) {
-            node.parent = parent;
-            parent.addChild(node);
-          } else if (node !== this.rootNode) {
-            $log.error('something is wrong!!!');
-          }
-        });
-      }
+    function Tree(treeData, nodeArray) {
+      // do some stuff...
+      this.setupTree(nodeArray);
     }
+
+    var pt = Tree.prototype;
+
+    pt.findParent = function(code) {
+      return this.nodeDict[code.substr(0, code.length - 1)];
+    };
+
+    pt.setupTree = function(nodeArray) {
+      this.rootNode = new NodeTest(null);
+      this.rootNode.code = "";
+      this.nodeDict = {
+        '': this.rootNode
+      };
+
+      nodeArray.forEach(data => {
+        var node = new NodeTest(data);
+        this.nodeDict[node.code] = node;
+      });
+
+      angular.forEach(this.nodeDict, (node, nodeCode) => {
+        var parent = this.findParent(node.code);
+        if (parent) {
+          node.parent = parent;
+          parent.addChild(node);
+        } else if (node !== this.rootNode) {
+          $log.error('something is wrong!!!');
+        }
+      });
+    };
 
     ////////////////////for data sample 2 elements - example 2 as with one would require adding cases as far as I can see but if we are reading them by code values and no code is the same in the same file why not index them by that value
     var testTree = new Tree([], testNewStructure.Values);
