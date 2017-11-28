@@ -6,21 +6,28 @@
     .service('Nodeservice', nodeservice);
 
   /** @ngInject */
-  function rjtest($log, parseAAContentService, Nodeservice) {
+  function rjtest($log, parseAAContentService, Nodeservice, dialogService) {
     return {
       restrict: 'E',
       controller: controller,
       controllerAs: "dm",
       bindToController:true ,
-      template: ['<div class="PCText">annie: {{dm.curNode.pcText}}</div>',
+      template: ['<select ng-model="dm.dialogKey" ng-options="option for option in dm.dialogKeyOptions"></select>',
+          '<div class="PCText">annie: {{dm.curNode.pcText}}</div>',
           '<div class="NPCText">fran:{{dm.curNode.npcText}}</div>',
           '<div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.pcText}} {{option.choice}} annie </div>',
           '<div ng-if="dm.options.length==0"> the end </div><!-- add ng click - displays scope +=curnode. score -->'].join('\n')
     };
-//dm = vm.options inside the options
+
+  //dm = vm.options inside the options
     function controller($scope) {
       ///what about a "Trie" data structur ?
       var vm = this;
+
+      vm.dialogKey = "someDefault";
+      vm.dialogKeyOptions = Object.keys(dialogService.dialogWorksheetKeys);
+      $log.log(vm.dialogKeyOptions);
+
       console.log(Nodeservice.dialogTrees.test);//.test will be ['fran_GR_01']
       vm.curNode = Nodeservice.dialogTrees.test.rootNode;
       vm.clickOnChoice = clickOnChoice; // same as saying public funcitn click on choice
@@ -30,6 +37,11 @@
         angular.forEach(vm.curNode.children, function(child) {
           vm.options.push({choice:child.choiceCode, node: child});
         });}
+
+      $scope.$watch(function(){return vm.dialogKey;}, function() {
+        vm.curTree = Nodeservice.parseFromDialogTree(vm.dialogKey);
+        vm.curNode = vm.curTree.rootNode;
+      });
 
       function clickOnChoice(choice) {
     		var chosenNode = vm.curNode.children[choice];
@@ -46,7 +58,7 @@
 
 
   /** @ngInject */
-  function nodeservice($log) {
+  function nodeservice($log, dialogService) {
     console.log(testNewStructure);
 
     function NodeTest(data){
@@ -91,31 +103,51 @@
         '': this.rootNode
       };
 
-      nodeArray.forEach(data => {
+      var that = this;
+
+      nodeArray.forEach(function(data) {
         var node = new NodeTest(data);
-        this.nodeDict[node.code] = node;
+        that.nodeDict[node.code] = node;
       });
 
-      angular.forEach(this.nodeDict, (node, nodeCode) => {
-        var parent = this.findParent(node.code);
+      angular.forEach(this.nodeDict, function(node, nodeCode) {
+        var parent = that.findParent(node.code);
         if (parent) {
           node.parent = parent;
           parent.addChild(node);
-        } else if (node !== this.rootNode) {
+        } else if (node !== that.rootNode) {
           $log.error('something is wrong!!!');
         }
       });
     };
 
     ////////////////////for data sample 2 elements - example 2 as with one would require adding cases as far as I can see but if we are reading them by code values and no code is the same in the same file why not index them by that value
+
     var testTree = new Tree([], testNewStructure.Values);
     // console.log(testTree);
     // console.log(testTree.nodeDict[""]);
 
      var service = {
-       dialogTrees : {"test":testTree}
-     }
+       dialogTrees : {"test":testTree},
+       parseNewStructure: parseNewStructure,
+       parseFromDialogTree: parseFromDialogTree
+     };
+
      return service;
+
+     function parseFromDialogTree(dialogKey) {
+        var oldStyleContent = dialogService.getDialogs(dialogKey);
+
+        // your job: convert old style to Array style newStyleContent, like testNewStructure...
+
+        return parseNewStructure(newStyleContent);
+     }
+
+     function parseNewStructure(nodeArray) {
+        var testTree = new Tree([], nodeArray);
+
+        return testTree;
+     }
 
 
     // testTree.printTree();
