@@ -24,11 +24,13 @@
       ///what about a "Trie" data structur ?
       var vm = this;
 
-      vm.dialogKey = "someDefault";
+      dialogService.loadFromServer('negative').then(function(){console.log("finished");});
+
+      vm.dialogKey = "";
       vm.dialogKeyOptions = Object.keys(dialogService.dialogWorksheetKeys);
       $log.log(vm.dialogKeyOptions);
 
-      console.log(Nodeservice.dialogTrees.test);//.test will be ['fran_GR_01']
+      // console.log(Nodeservice.dialogTrees.test);//.test will be ['fran_GR_01']
       vm.curNode = Nodeservice.dialogTrees.test.rootNode;
       vm.clickOnChoice = clickOnChoice; // same as saying public funcitn click on choice
       setupForNode();
@@ -39,13 +41,22 @@
         });}
 
       $scope.$watch(function(){return vm.dialogKey;}, function() {
-        vm.curTree = Nodeservice.parseFromDialogTree(vm.dialogKey);
-        vm.curNode = vm.curTree.rootNode;
+        console.log("in watch ",vm.dialogKey);
+
+        if(vm.dialogKey){//was commented 
+          Nodeservice.parseFromDialogTree(vm.dialogKey).then(function(curTree){
+            console.log("-------- did this happen ",curTree);
+            vm.curTree = curTree;
+            vm.curNode = vm.curTree.rootNode;
+            setupForNode();
+        });
+      }
+
       });
 
       function clickOnChoice(choice) {
     		var chosenNode = vm.curNode.children[choice];
-        console.log("clicked on chooice!");
+        // console.log("clicked on chooice!");
     		// maybe some scoring....
 
     		vm.curNode = chosenNode;
@@ -59,7 +70,7 @@
 
   /** @ngInject */
   function nodeservice($log, dialogService) {
-    console.log(testNewStructure);
+    // console.log(testNewStructure);
 
     function NodeTest(data){
         this.parent = null;
@@ -136,11 +147,14 @@
      return service;
 
      function parseFromDialogTree(dialogKey) {
-        var oldStyleContent = dialogService.getDialogs(dialogKey);
+        return dialogService.getDialogs(dialogKey).then(function(oldStyleContent){
+          // console.log(oldStyleContent);
+          var newStyleContent = changeIntoArray(oldStyleContent);
+          // console.log(newStyleContent);
+          console.log(parseNewStructure(newStyleContent));
+          return parseNewStructure(newStyleContent);
+        });
 
-        // your job: convert old style to Array style newStyleContent, like testNewStructure...
-
-        return parseNewStructure(newStyleContent);
      }
 
      function parseNewStructure(nodeArray) {
@@ -148,6 +162,35 @@
 
         return testTree;
      }
+
+//////////////////////////////////
+function changeIntoArray(obj){
+  var NewArr = [];
+  for ( var key in obj){ //looping through main keys
+    if(Array.isArray( obj[key])){ //child is an array
+      loopAndAdd(obj[key], NewArr);
+    }
+    else {
+      for( var key2 in obj[key]){
+        var newKey = obj[key];
+        loopAndAdd(newKey[key2], NewArr);
+
+      }
+    }
+  }
+  return NewArr;
+
+}
+  function loopAndAdd (arr, NewArr){
+    for (var i = 0; i < arr.length; i++) {
+      NewArr.push(arr[i]);
+  }
+
+}
+// console.log("my array has ",  NewArr);
+
+
+
 
 
     // testTree.printTree();
@@ -202,7 +245,7 @@
       //  "score": if there is a score use this if not use the matrix -- the score will the this data structures priblem
       //when we add the node the node itself figures out the score - or the tree class looks up the manual scope ---
       //eother from a tab;e or based on each npde
-      //the trees job to construct the score -- look ay sketch notes line 76 
+      //the trees job to construct the score -- look ay sketch notes line 76
       },
       // {
       //   "code": "X",///////fixthis
