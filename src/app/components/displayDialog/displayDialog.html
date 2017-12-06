@@ -1,7 +1,7 @@
 <div class="playerChoices">
   <div ng-if="vm.choiceDelay && !vm.showContinue">
     <div class="choices" ng-repeat="choice in vm.currentNodeChoices"><!--choices like the options in rjtest -->
-      <input class="btn" type="button" name="{{choice.code}}" value="{{choice.PC_Text?choice.PC_Text:'Missing text'}}" ng-click="vm.showNode(choice)">
+      <input class="btn" type="button" name="{{choice.code}}" value="{{choice.node.pcText?choice.node.pcText:'Missing text'}}" ng-click="vm.showNode(choice.choice)">
       <br><br>
     </div>
   </div>
@@ -12,8 +12,8 @@
 </div>
 
 <div class="pc-bubble">
-  <p id="pcBubbleText"> {{vm.chosenAnnie}}</p>
+  <p id="pcBubbleText"> {{vm.curNode.pcText}}</p>
 </div>
-<div class="npc-bubble" ng-if="vm.npcResponse">
-  <p id="npcBubbleText">{{vm.npcResponse}}</p>
+<div class="npc-bubble" ng-if="vm.curNode.npcText">
+  <p id="npcBubbleText">{{vm.curNode.npcText}}</p>
 </div>

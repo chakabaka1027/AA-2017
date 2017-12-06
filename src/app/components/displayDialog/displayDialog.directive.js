@@ -3,7 +3,7 @@
 
   angular
     .module('awkwardAnnie')
-    .directive('displayDialog', displayDialog);
+    .directive('displayDialogOld', displayDialog);
 
   /** @ngInject */
   function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler, mainInformationHandler, dialogOptions) {
