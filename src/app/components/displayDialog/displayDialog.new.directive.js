@@ -5,7 +5,7 @@
     .directive('displayDialog', displayDialog);
 
   /** @ngInject */
-  function displayDialog($log, conversationP5Data, parseAAContentService, nodeDataService, dialogService, audioService, mainInformationHandler, dialogOptions, userDataService, userGameInfo, levelDataHandler) {
+  function displayDialog($log, conversationP5Data, parseAAContentService, nodeDataService, dialogService, audioService, mainInformationHandler, dialogOptions, userDataService, levelDataHandler) {
     return {
       restrict: 'E',
       controller: controller,
@@ -28,13 +28,16 @@
       vm.curNode = undefined;
       vm.showNode = vm.clickOnChoice = clickOnChoice; // same as saying public funcitn click on choice
       vm.clickContinue = clickContinue;
+      vm.chosenAnnie = "";
+      vm.npcResponse = "";
 
-      var decisionPath = "";
-      var successfulConvos;
       var pc_Text_Timer = 350;
       var pc_npc_timer = pc_Text_Timer + 400;
       var mild_Animation_Timer = 1000;
       var noExpression_Timer = 700;
+
+      var decisionPath = "";
+      var successfulConvos;
       var scores = levelDataHandler.choiceScores;
       mainInformationHandler.totalConvoPoints = 0;
 
@@ -47,10 +50,13 @@
           angular.forEach(vm.curNode.children, function(child) {
             vm.currentNodeChoices.push({choice:child.choiceCode, node: child});
           });
+          shuffle(vm.currentNodeChoices);
           vm.showContinue = vm.currentNodeChoices.length===0;
           if (vm.showContinue) {
             $log.log('---Success: '+vm.curNode.success+'; Score '+vm.curNode.score); //here calculate score
-          if(vm.curNode.success ){mainInformationHandler.totalConvoPoints += vm.curNode.score;}
+          if(vm.curNode.success ){
+            mainInformationHandler.totalConvoPoints += vm.curNode.score; //TODO - mark as completed convo here
+          }
           }
         }
       }
@@ -89,13 +95,36 @@
     	}//end of clickOnChoicechoice
 
 
-      function employSpecficTimeOut(timeOut, choice) {
-        $timeout(function() {
-          console.log("timer in play! for "+ timeOut);
-          // setUpDelayChoiceDisplay(choice);
-          delayChoiceDisplay()
-        }, timeOut);
+      function setUpDelayChoiceDisplay(choice) {
+        audioService.playAudio("UIbuttonclick-option1.wav");
+        vm.npcResponse = choice.npcText;
+        delayChoiceDisplay();
       }
+
+
+
+      // function employSpecficTimeOut(animationTitle, choice) {
+      //
+      //   var pc_Text_Timer = 350;
+      //   var pc_npc_timer = pc_Text_Timer + 400;
+      //   var mild_Animation_Timer = 1000;
+      //   var noExpression_Timer = 700;
+      //
+      //   var timeOut = noExpression_Timer;
+      //
+      //   if (animationTitle.indexOf("mild") >= 0){
+      //     timeOut = mild_Animation_Timer;
+      //   }
+      //   else if  (animationTitle.indexOf("bold") >= 0){
+      //     timeOut = mild_Animation_Timer;
+      //   }
+      //
+      //   $timeout(function() {
+      //     console.log("timer in play! for "+ timeOut);
+      //     // setUpDelayChoiceDisplay(choice);
+      //     delayChoiceDisplay()
+      //   }, timeOut);
+      // }
 
       function clickContinue() { //move this ?
           dialogOptions.hideDialog = true;
@@ -116,59 +145,72 @@
 //get game type and do it for postive andnegative --- below just for testing fow now - pr another way?
 
   function loadResponses(choice) { //log way of doing this not sure if We should do it this way? as they are seprate now and not a single animaiton property of node
-    var anim ;
-    if(userGameInfo.gameType.indexOf("positive") === 0){
-      anim = choice.animationPositive;
-    } else {
-      anim = choice.animationNegative;
-    }
-    vm.main.currentChoiceInfo = choice;
-    vm.choiceDelay = false;
-    $timeout(function() {
-    }, pc_Text_Timer);
-    $timeout(function() {
+      vm.main.currentChoiceInfo = choice;
+      vm.npcResponse = "";
+      vm.choiceDelay = false;
 
-      if (anim === '' || conversationP5Data[dialogOptions.talkingWith].animations[anim]) {
-        dialogOptions.animationTitle = anim;
-        console.log("----",dialogOptions.animationTitle);
-      }
-      else {
-        $log.warn('there is no animation "' + anim + '" for character ' + dialogOptions.talkingWith);
-        dialogOptions.animationTitle = '';
-      }
-      if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("bold") >= 0) {
-        var watchPromise = $scope.$watch(function() {
-              return dialogOptions.animationDone;
-            }, function() { if (dialogOptions.animationDone) {
-            audioService.playAudio("UIbuttonclick-option1.wav");
-            employSpecficTimeOut (mild_Animation_Timer, choice);
-            // setUpDelayChoiceDisplay(choice);
-            // delayChoiceDisplay();
+      $timeout(function() {
+        vm.chosenAnnie = choice.pcText;
+      }, pc_Text_Timer);
+
+      $timeout(function() {
+        if (choice.animation === '' || conversationP5Data[dialogOptions.talkingWith].animations[choice.animation]) {
+          dialogOptions.animationTitle = choice.animation;
+        } else {
+          $log.warn('there is no animation "' + choice.animation + '" for character ' + dialogOptions.talkingWith);
+          dialogOptions.animationTitle = '';
+        }
+        if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("bold") >= 0) {
+          var watchPromise = $scope.$watch(function() {
+                return dialogOptions.animationDone;
+              }, function() { if (dialogOptions.animationDone) {
+              audioService.playAudio("UIbuttonclick-option1.wav");
+              vm.npcResponse = choice.npcText;
+              delayChoiceDisplay();
+              watchPromise();
+            }
+          });
+          if (vm.isTestBed) {
+            setUpDelayChoiceDisplay(choice);
             watchPromise();
           }
-        });
-        if (vm.isTestBed) {
-          // setUpDelayChoiceDisplay(choice);
+          dialogOptions.animationDone = false; //reset
+        } else if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("mild") >= 0) {
           employSpecficTimeOut (mild_Animation_Timer, choice);
-          watchPromise();
         }
-        dialogOptions.animationDone = false; //reset
-      } else if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("mild") >= 0) { //this worked - now need to show next button
-        employSpecficTimeOut (mild_Animation_Timer, choice);
-      }
-       else { //if no animation
-         employSpecficTimeOut (noExpression_Timer, choice);
-       }
-      // return;
-    }, pc_npc_timer);
-  }//end of load responces
+         else { //if no animation
+           employSpecficTimeOut (noExpression_Timer, choice);
+         }
+        // return;
+      }, pc_npc_timer);
+      vm.chosenAnnie = "";
+      vm.npcResponse = "";
+    }//end of load responces
 
+    function employSpecficTimeOut(timeOut, choice) {
+      $timeout(function() {
+        setUpDelayChoiceDisplay(choice);
+      }, timeOut); }
+
+    function delayChoiceDisplay() {
+      $timeout(function() {
+        vm.choiceDelay = true;
+      }, 1200);
+    }
 
 
   function delayChoiceDisplay() {
     $timeout(function() {
       vm.choiceDelay = true;
     }, 1200);
+  }
+
+  function shuffle(choices) {
+
+    if (!vm.isTestBed) {
+      for (var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
+    }
+    return choices;
   }
 
     function resetDialog() {

@@ -5,7 +5,7 @@
 		.service('nodeDataService', nodeDataService);
 
 	/** @ngInject */
-	function nodeDataService($log, dialogService, levelDataHandler) {
+	function nodeDataService($log, dialogService, levelDataHandler, userGameInfo) {
 		// console.log(testNewStructure);
 
 		function DialogNode(data){
@@ -17,9 +17,8 @@
 				angular.extend(this, {
 		            pcText: data.PC_Text,
 		            npcText: data.NPC_Response,
-		            animationNegative: data.animationNegative,
-		            animationPositive: data.animationPositive
-	            	//exampel score element here for flex other wise set ased on sent code
+								animation: (userGameInfo.gameType.indexOf("positive") === 0 ? data.animationPositive:data.animationNegative)
+
 				});
 	          	this.isRoot = false;
 	          	this.code = data.code; //what we will use to triverse the tree
@@ -90,11 +89,10 @@
 			        	node.success = true;
 			        } else {
 								node.success = false; // it is undefined but for testing purposes so I can see it better
-
 							}
 			        node.score = 0;
 			        for (var i=0; i<nodeCode.length; i++) {
-			        	node.score += levelDataHandler.choiceScores[nodeCode[i]]; // i sthis in place of scores 
+			        	node.score += levelDataHandler.choiceScores[nodeCode[i]]; // i sthis in place of scores
 			        }
 	    		}
 	    	});
