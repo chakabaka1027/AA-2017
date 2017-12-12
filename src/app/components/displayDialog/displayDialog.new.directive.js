@@ -17,7 +17,10 @@
       bindToController:true,
       templateUrl: 'app/components/displayDialog/displayDialog.html'
     };
-//TODO   //do animations! next
+//TODO   //do animations- done - timers - done - tracking on my way
+// score ( mini is done but not global need to add it - level progression needed ! next
+// sucsess done on a small scale ( not on global )
+//remove redundency 
 
     function controller($scope, $timeout) {
       var vm = this;
@@ -43,8 +46,6 @@
       //check if needed -
       vm.main.currentChoiceInfo = {};
 
-
-
       setupForNode();
       function setupForNode() {
         vm.currentNodeChoices = [];
@@ -54,15 +55,7 @@
           });
           vm.showContinue = vm.currentNodeChoices.length===0;
           if (vm.showContinue) {
-            $log.log('---Success: '+vm.curNode.success+'; Score '+vm.curNode.score);  ///// here is where it should calcualte the score ---
-
-            // if(vm.curNode.success){
-            //   mainInformationHandler.lastConversationSuccessful = true;  //but this is insde set up! revise your thinking self!
-            // } else {
-            //   mainInformationHandler.lastConversationSuccessful = true;
-            //
-            // }
-
+            $log.log('---Success: '+vm.curNode.success+'; Score '+vm.curNode.score);  ///// here is where it should calcualte the score --- //TODO
           }
         }
       }
@@ -84,32 +77,23 @@
 
       function clickOnChoice(choice) {
         // scoring, tracking etc. happens; then...
-        // console.log("clicked on a choice!", choice);
     		var chosenNode = vm.curNode.children[choice];
     		vm.curNode = chosenNode;
         console.log("clicked on a choice!", chosenNode.code);
         audioService.playAudio("UIbuttonclick-option2.wav");
-        decisionPath = chosenNode.code; //have to reset this later 0 this will be wrong - how can i acsess the node itself - NOICE 0 got it chosenNode - gotta love 2 am coding and talking to myself :)
-
+        decisionPath = chosenNode.code; //have to reset this later 0 this will be wrong - how can i acsess the node itself - NOICE 0 got it 'chosenNode' do bot forget  - gotta love 2 am coding and talking to myself :)
         //sucsess or failure -
         if(vm.curNode.success){
           console.log("WOOT");
-          mainInformationHandler.lastConversationSuccessful = true;  //but this is insde set up! revise your thinking self!
+          mainInformationHandler.lastConversationSuccessful = true;
         } else {
           mainInformationHandler.lastConversationSuccessful = false;
           mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1;
         }
         loadResponses(chosenNode);
-        // or something silimar - redo next part
-        // if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("mild") >= 0) {
-        //   employSpecficTimeOut (mild_Animation_Timer, choice);
-        // }
-        //  else { //if no animation
-        //    employSpecficTimeOut (noExpression_Timer, choice);
-        //  }
-        setupForNode(); //calls set up so did the true/ false in there or here ?
+        setupForNode(); //calls set up so did the true/ false in this method - should i move it ?
 
-    	}//end of click o choice
+    	}//end of clickOnChoicechoice
 
 
       function employSpecficTimeOut(timeOut, choice) {
@@ -133,8 +117,9 @@
 //npcText
 //pcText
 //get game type and do it for postive andnegative --- below just for testing fow now - pr another way?
-//aniamtion sample for negative done 
+//aniamtion sample for negative done
   function loadResponses(choice) {
+    //TODO var choiceAnim = animationNegative or animationPositive based on game type and then compare below with choiceAnim
     vm.main.currentChoiceInfo = choice;
     vm.npcResponse = "";
     vm.choiceDelay = false;
@@ -160,7 +145,6 @@
             // vm.npcResponse = choice.NPC_Response;
             employSpecficTimeOut (mild_Animation_Timer, choice);
             // setUpDelayChoiceDisplay(choice);
-
             // delayChoiceDisplay();
             watchPromise();
           }
