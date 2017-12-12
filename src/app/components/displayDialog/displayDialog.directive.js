@@ -39,7 +39,6 @@
       var mild_Animation_Timer = 1000;
       var noExpression_Timer = 700;
 
-
       var decisionPath = "";
       var randomChoices = [];
       var successfulConvos;
@@ -110,7 +109,7 @@
         vm.showContinue = true;
 
         if (!vm.isTestBed) {
-          if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) { // this is done inside node code now
+          if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) { //TODO this is missing --- this is done inside node code now
             mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation); // === where should htis one be ?
             mainInformationHandler.totalConvoPoints = 0;
             for (var i in choice.code) {

@@ -108,7 +108,7 @@
             service.dialogWorksheetKeys['mike_Linear'] = 'MM.Linear.positive';
           }
           else{
-              $log.log("negative value");
+              // $log.log("negative value");
             }
 
            }
