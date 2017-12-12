@@ -75,7 +75,7 @@
 		        }
 		    });
 
-	    	// now can find the 'leaves' of the tree...
+	    	// now can find the 'leaves' of the tree... //// this right here image refrence!
 	    	angular.forEach(this.nodeDict, function(node, nodeCode) {
 	    		if (Object.keys(node.children).length===0) {
 	    			// this is a leaf
@@ -84,12 +84,17 @@
 	    			node.score = 15; // actually, figure this out !!!!!!!!
 
 			        // for now, grab this from the existing parse via levelDataHandler
-			        if (levelDataHandler.successPaths.indexOf(nodeCode)>=0) {
+							console.log("testing: ", levelDataHandler.successPaths.indexOf(nodeCode) ); //gives - 1  i.e. false - i.e. does not exusut in the sucsess paths - got it!
+			        if (levelDataHandler.successPaths.indexOf(nodeCode)>=0) { 								//liner will always be false ? because the new path is not a sucsess path ( xxxxxx)
+								console.log("this was true!");
 			        	node.success = true;
-			        }
+			        } else {
+								node.success = false; // it is undefined but for testing purposes so I can see it better
+
+							}
 			        node.score = 0;
 			        for (var i=0; i<nodeCode.length; i++) {
-			        	node.score += levelDataHandler.choiceScores[nodeCode[i]];
+			        	node.score += levelDataHandler.choiceScores[nodeCode[i]]; // i sthis in place of scores 
 			        }
 	    		}
 	    	});

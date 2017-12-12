@@ -7,6 +7,14 @@
 
   /** @ngInject */
   function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler, mainInformationHandler, dialogOptions) {
+// need to move - services:  userDataService for tracking action
+//audioService for audio - also note ths may or maynot be used as is because of the audio should be toggled on and off for emotions
+////conversationP5Data - for animations
+//levelDataHandler for scoring - will this be used  the same or are indivisua scores calcuated
+//mainInformationHandler for convo points
+/// need to fix countune so it actually moves on
+//dialogOptions
+
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/displayDialog/displayDialog.html',
@@ -24,10 +32,14 @@
     function displayDialogController($scope, $timeout) {
       var vm = this;
       var dialogRoot;
+
+      //all of these timers ----
       var pc_Text_Timer = 350;
       var pc_npc_timer = pc_Text_Timer + 400;
       var mild_Animation_Timer = 1000;
       var noExpression_Timer = 700;
+
+
       var decisionPath = "";
       var randomChoices = [];
       var successfulConvos;
@@ -45,7 +57,7 @@
       vm.showNode = showNode;
       vm.showNode3Response = showNode3Response;
 
-      // for debugging in testbed...
+      // for debugging in testbed... //modify this
       vm.main.branchHistory = [];
       vm.main.currentChoiceInfo = {};
 
@@ -70,7 +82,7 @@
       function chooseDialogScript() {
         dialogOptions.animationTitle = "";
         var dialog = mainInformationHandler.currentConversation;
-        dialogService.getDialogs(dialog).then(function(data) {
+        dialogService.getDialogs(dialog).then(function(data) {//not needed as far as i can see ( or most of it - check getDailigs )
           $log.log('dialogRoot', data);
           dialogRoot = data;
           var originalNodeOne = dialogRoot.node1;
@@ -78,11 +90,12 @@
           vm.choice = originalNodeOne;
           vm.choice2 = dialogRoot.node2;
           vm.choice3 = dialogRoot.node3;
-          vm.main.isLinearDialog = vm.choice.length === 1;
+          vm.main.isLinearDialog = vm.choice.length === 1; //specfic case - fixed for now by adding it to the dailoug scuscess paths
           vm.currentNodeIndex = 1;
           vm.currentNodeChoices = vm.choice;
 
         });
+        //wull beed tgis
         if (angular.isUndefined(mainInformationHandler.failedConvos[mainInformationHandler.currentConversation])) {
           mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] = 0;
         }
@@ -97,11 +110,11 @@
         vm.showContinue = true;
 
         if (!vm.isTestBed) {
-          if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) {
-            mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation);
+          if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) { // this is done inside node code now
+            mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation); // === where should htis one be ?
             mainInformationHandler.totalConvoPoints = 0;
             for (var i in choice.code) {
-              mainInformationHandler.totalConvoPoints += scores[choice.code[i]];
+              mainInformationHandler.totalConvoPoints += scores[choice.code[i]]; ////score is also there --- :/
             }
             mainInformationHandler.lastConversationSuccessful = true;
           } else {
@@ -109,7 +122,7 @@
             mainInformationHandler.lastConversationSuccessful = false;
           }
         }
-        var currenBranch = choice.code.charAt(2);
+        var currenBranch = choice.code.charAt(2); // subce ut us a tree we wob't need any of this fake  branch :P
         trackBranches(currenBranch);
         dataTracking(currenBranch, choice, 3);
         decisionPath = choice.code;
@@ -119,15 +132,14 @@
         vm.main.branchHistory.push(currentBranch);
       }
 
-      function clickContinue() {
+      function clickContinue() { //move this ?
         dialogOptions.hideDialog = true;
         vm.chosenAnnie = "";
         vm.npcResponse = "";
-
         vm.showNPCbubbleText = true;
         vm.NPC_responseHidden = true;
         vm.node3Response = true;
-        vm.showContinue = false;
+        vm.showContinue = false; //reset it ok -
         dialogOptions.animationTitle = "";
 
         if (!vm.isTestBed) {
@@ -142,6 +154,7 @@
           var progressBarInfo = Math.round((mainInformationHandler.completedConvos.length / mainInformationHandler.totalConvosAvailable) * 100);
 
           userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Player_State", mainInformationHandler.playerScore + mainInformationHandler.totalConvoPoints, progressBarInfo);
+///this
           successfulConvos = mainInformationHandler.completedConvos.length;
           userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_convo", successfulConvos, mainInformationHandler.convoAttemptsTotal);
           userDataService.postData(); //Post data after convo is over
