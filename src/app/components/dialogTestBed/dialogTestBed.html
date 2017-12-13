@@ -30,10 +30,20 @@
 					: dialogTest.currentChoiceInfo.animation)}}&nbsp;
 		</div>
 
+		<!-- Some notes for TTD!!! -->
+		<div style="font-size:12px;">
+			<div><b>Using the new Node data structure, we can now say things like:</b></div>
+			<div>Cur Node name is "{{dialogTest.curNode.code}}"; which (depth-wise) I guess could be called "Node{{dialogTest.curNode.code.length+1}}".</div>
+			<div>The "Navigation Hints" would be:</div>
+			<div><span ng-repeat="node in dialogTest.curNode.children">{{node.code}}-PC, </span></div>
+			<div>And so on and so forth...</div>
+		</div>
+		</br>
+
 		<div ng-if="dialogTest.branchHistory.length<3">
 			Node{{(dialogTest.branchHistory.length+1)}} PC options :
 		</div>
-		<div ng-if="dialogTest.branchHistory.length>=3">
+		<div ng-if="true || dialogTest.branchHistory.length>=3">
 			Done; Outcome: 
 			<span ng-if="dialogTest.isSuccessfulPath" style="color: green"><b>Success</b></span>
 			<span ng-if="!dialogTest.isSuccessfulPath" style="color: red"><b>Failure</b></span>
@@ -48,8 +58,8 @@
 				{{dialogTest.branchHistory.join('')+'C-PC'}}
 			</div>
 			
-			<div class="npc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-NPC'}}</div>
-			<div class="pc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-PC'}}</div>
+			<div class="npc-label" ng-if="true || dialogTest.branchHistory.length>0">{{dialogTest.curNode.code+'-NPC'}}</div>
+			<div class="pc-label" ng-if="true || dialogTest.branchHistory.length>0">{{dialogTest.curNode.code+'-PC'}}</div>
 
 		</div>
 	</div>

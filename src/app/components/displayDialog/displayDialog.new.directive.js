@@ -45,6 +45,12 @@
 
 
       function setupForNode() {
+        
+        if (vm.isTestBed) {
+          // for extra feedback when using dialogTestBed...
+          vm.main.curNode = vm.curNode;
+        }
+        
         vm.currentNodeChoices = [];
         if (vm.curNode) {
           angular.forEach(vm.curNode.children, function(child) {
