@@ -13,6 +13,7 @@
 	        this.children = {};
 	        this.isRoot = true;
 	        this.score = 0;
+					this.currentScore = 0;
 	        if (data != null) { //if it is not the root node then add all the properties
 				angular.extend(this, {
 		            pcText: data.PC_Text,
@@ -81,7 +82,6 @@
 	    			$log.log('Node '+nodeCode+' is a leaf');
 
 	    			node.score = 15; // actually, figure this out !!!!!!!!
-
 			        // for now, grab this from the existing parse via levelDataHandler
 							console.log("testing: ", levelDataHandler.successPaths.indexOf(nodeCode) ); //gives - 1  i.e. false - i.e. does not exusut in the sucsess paths - got it!
 			        if (levelDataHandler.successPaths.indexOf(nodeCode)>=0) { 								//liner will always be false ? because the new path is not a sucsess path ( xxxxxx)
@@ -93,6 +93,10 @@
 			        node.score = 0;
 			        for (var i=0; i<nodeCode.length; i++) {
 			        	node.score += levelDataHandler.choiceScores[nodeCode[i]]; // i sthis in place of scores
+								node.currentScore  += node.score ;
+								console.log("Valueees"+ node.currentScore);
+
+
 			        }
 	    		}
 	    	});

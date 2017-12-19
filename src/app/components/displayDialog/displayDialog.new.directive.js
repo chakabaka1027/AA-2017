@@ -18,7 +18,7 @@
       templateUrl: 'app/components/displayDialog/displayDialog.html'
     };
 //TODO   //do animations- done - timers - done - tracking on my way
-// score ( mini is done - done - but one issue remains-  level progression needed ! next
+// done - score ( mini is done - done - but one issue remains-  level progression needed ! next
 //remove redundency
 
     function controller($scope, $timeout) {
@@ -37,38 +37,60 @@
       var noExpression_Timer = 700;
 
       var decisionPath = "";
-      var successfulConvos;
+      // var successfulConvos; not needed
       var scores = levelDataHandler.choiceScores;
       mainInformationHandler.totalConvoPoints = 0;
+
+
+
+      //for data tracking - not sure if really required by ETS or for keepsaking somehwere
+      vm.main.branchHistory = [];
+      var randomChoices = [];
+
 
       setupForNode();
 
 
       function setupForNode() {
-        
+
         if (vm.isTestBed) {
           // for extra feedback when using dialogTestBed...
           vm.main.curNode = vm.curNode;
         }
-        
+
         vm.currentNodeChoices = [];
         if (vm.curNode) {
           angular.forEach(vm.curNode.children, function(child) {
             vm.currentNodeChoices.push({choice:child.choiceCode, node: child});
+
           });
-          shuffle(vm.currentNodeChoices);
+         shuffle(vm.currentNodeChoices);
+         randomChoices =   shuffle(vm.currentNodeChoices); //TODO double check
           vm.showContinue = vm.currentNodeChoices.length===0;
-          if (vm.showContinue) {
-            $log.log('---Success: '+vm.curNode.success+'; Score '+vm.curNode.score); //here calculate score
-          if(vm.curNode.success ){
-            mainInformationHandler.totalConvoPoints += vm.curNode.score; //TODO - mark as completed convo here
-          }
+            if (vm.showContinue) {
+              $log.log('---Success: '+vm.curNode.success+'; Score '+vm.curNode.score); //here calculate score
+            if(vm.curNode.success ){
+              mainInformationHandler.totalConvoPoints += vm.curNode.score; //TODO - mark as completed convo here
+            } else {/////////~~~~~~~~~~~~~~~~~~~~~``
+              console.log("FAILED----- NEEDS TO GO HERE "); //TODO this is repeated on each node ( for each convo called per number of nodes should that be the case? or is it based off of a single convo ?)
+              mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
+              mainInformationHandler.lastConversationSuccessful = false;
+
+            }
           }
         }
       }
 
+      //TODO double check if required - or just reset the failoug under another watch  $scope.$watch(function() {return mainInformationHandler.currentConversation;}, function() {
+      //   resetDialog();
+      //   setupForNode();
+      // });
+
       $scope.$watch(function(){return vm.main.currentConversation;}, function() {
         vm.dialogKey = vm.main.currentConversation;
+        if (angular.isUndefined(mainInformationHandler.failedConvos[vm.dialogKey])) {
+     mainInformationHandler.failedConvos[vm.dialogKey] = 0;
+   }
         console.log("in watch ",vm.dialogKey);
 
         if(vm.dialogKey){
@@ -86,17 +108,28 @@
         // scoring, tracking etc. happens; then...
     		var chosenNode = vm.curNode.children[choice];
     		vm.curNode = chosenNode;
+ // dataTracking(chosenNode.choiceCode, choice, chosenNode.code.length);
+
+
         console.log("clicked on a choice!", chosenNode.code);
         audioService.playAudio("UIbuttonclick-option2.wav");
         decisionPath = chosenNode.code; //have to reset this later 0 this will be wrong - how can i acsess the node itself - NOICE 0 got it 'chosenNode' do bot forget  - gotta love 2 am coding and talking to myself :)
         if(vm.curNode.success){         //sucsess or failure -
           console.log("WOOT");
           mainInformationHandler.lastConversationSuccessful = true;
-        } else {
-          mainInformationHandler.lastConversationSuccessful = false;
-          mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1;
+          //TODO MOVED THIS HERE - LOGICALLY WORKS BUT DOUBLE CHECK - as this happens once at the end of a convo ( old script in node 3 )
+          mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation); // === where should htis one be ?
+          mainInformationHandler.totalConvoPoints = 0;
         }
+        //  else {
+        //   // //TODO verify this - if move is ok
+        //   // mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
+        //   // mainInformationHandler.lastConversationSuccessful = false;
+        // }
         loadResponses(chosenNode);
+        trackBranches(chosenNode.code);
+        console.log("testing values for data tracking " + chosenNode.code + " " +chosenNode +" " + chosenNode.code.length );
+        dataTracking(chosenNode.code,chosenNode,chosenNode.code.length+1 );
         setupForNode();
     	}//end of clickOnChoicechoice
 
@@ -106,31 +139,6 @@
         vm.npcResponse = choice.npcText;
         delayChoiceDisplay();
       }
-
-
-
-      // function employSpecficTimeOut(animationTitle, choice) {
-      //
-      //   var pc_Text_Timer = 350;
-      //   var pc_npc_timer = pc_Text_Timer + 400;
-      //   var mild_Animation_Timer = 1000;
-      //   var noExpression_Timer = 700;
-      //
-      //   var timeOut = noExpression_Timer;
-      //
-      //   if (animationTitle.indexOf("mild") >= 0){
-      //     timeOut = mild_Animation_Timer;
-      //   }
-      //   else if  (animationTitle.indexOf("bold") >= 0){
-      //     timeOut = mild_Animation_Timer;
-      //   }
-      //
-      //   $timeout(function() {
-      //     console.log("timer in play! for "+ timeOut);
-      //     // setUpDelayChoiceDisplay(choice);
-      //     delayChoiceDisplay()
-      //   }, timeOut);
-      // }
 
       function clickContinue() { //move this ?
           dialogOptions.hideDialog = true;
@@ -147,6 +155,9 @@
   } // end of click countue
 
 //to use uf needed : npcText
+//TO ADD -> decisionPath = chosenNode.code;
+
+
 //        pcText
 //get game type and do it for postive andnegative --- below just for testing fow now - pr another way?
 
@@ -205,12 +216,6 @@
     }
 
 
-  function delayChoiceDisplay() {
-    $timeout(function() {
-      vm.choiceDelay = true;
-    }, 1200);
-  }
-
   function shuffle(choices) {
 
     if (!vm.isTestBed) {
@@ -221,8 +226,8 @@
 
     function resetDialog() {
       decisionPath = "";
-      // randomChoices = [];
-      successfulConvos;
+      randomChoices = [];
+      var successfulConvos;
       scores = levelDataHandler.choiceScores;
       vm.choiceDelay = true;
       mainInformationHandler.totalConvoPoints = 0;
@@ -240,10 +245,33 @@
       userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_state", dialogOptions.talkingWith);
       var progressBarInfo = Math.round((mainInformationHandler.completedConvos.length / mainInformationHandler.totalConvosAvailable) * 100);
       userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Player_State", mainInformationHandler.playerScore + mainInformationHandler.totalConvoPoints, progressBarInfo);
-      successfulConvos = mainInformationHandler.completedConvos.length; //remove var and define above
+      var successfulConvos = mainInformationHandler.completedConvos.length; //remove var and define above
       userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_convo", successfulConvos, mainInformationHandler.convoAttemptsTotal);
       userDataService.postData(); //Post data after convo is over
     }
+
+    function trackBranches(currentBranch) {
+      vm.main.branchHistory.push(currentBranch);
+    }
+
+    function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed -
+      var num = number.toString();
+      var str = ["convo_state","convo_user","convo_system","convo_NPC"];
+      var pram3 = [num,Branch,scores[Branch],choice.animation];
+      var pram4 = [mainInformationHandler.failedConvos[mainInformationHandler.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
+      setTrackAction(str, pram3, pram4);
+    }
+
+    function setTrackAction(strings, parm3, parm4){
+      var stringArr = strings;
+      var thirdParmValues = parm3;
+      var forthPramValues = parm4;
+      for (var i = 0; i < stringArr.length; i++){
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
+    }
+  }
+
+
 }//end of controller
 }
 })();

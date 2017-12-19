@@ -9,6 +9,7 @@
   function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService,
                                   conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler,dialogOptions) {
     var vm = this;
+    vm.levelData = levelDataHandler.choiceScores;
     vm.currentConversation = "fran_Linear";
     vm.talkingWith = "fran";
     vm.hasLoaded = false;
@@ -62,8 +63,10 @@
         } else {
           vm.animationValid = conversationP5Data[vm.talkingWith].animations[vm.currentChoiceInfo.animation];
         }
-
         vm.isSuccessfulPath = levelDataHandler.successPaths.indexOf(vm.currentChoiceInfo.code) >= 0;
+ //gives c - cc - ccc
+
+        // have to acsess code value f last element
       });
 
       $log.log('end activate');
