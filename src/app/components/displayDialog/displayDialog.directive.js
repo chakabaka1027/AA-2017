@@ -56,7 +56,6 @@
       vm.showNode = showNode;
       vm.showNode3Response = showNode3Response;
 
-      // for debugging in testbed... //modify this
       vm.main.branchHistory = [];
       vm.main.currentChoiceInfo = {};
 

@@ -56,6 +56,9 @@
         if (vm.isTestBed) {
           // for extra feedback when using dialogTestBed...
           vm.main.curNode = vm.curNode;
+          vm.main.testValues = levelDataHandler.choiceScores;
+          vm.main.count = 0;
+          console.log("~~~~~~~~~~~~~",vm.main.testValues );//[vm.main.curNode.choiceCode]
         }
 
         vm.currentNodeChoices = [];
@@ -127,10 +130,13 @@
         //   // mainInformationHandler.lastConversationSuccessful = false;
         // }
         loadResponses(chosenNode);
-        trackBranches(chosenNode.code);
-        console.log("testing values for data tracking " + chosenNode.code + " " +chosenNode +" " + chosenNode.code.length );
-        dataTracking(chosenNode.code,chosenNode,chosenNode.code.length+1 );
         setupForNode();
+        if(!vm.main.isTestBed){
+          trackBranches(chosenNode.code);
+          // console.log("testing values for data tracking " + chosenNode.code + " " +chosenNode +" " + chosenNode.code.length );
+          dataTracking(chosenNode.code,chosenNode,chosenNode.code.length+1 );
+        }
+
     	}//end of clickOnChoicechoice
 
 
