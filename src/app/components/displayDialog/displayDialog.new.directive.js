@@ -114,7 +114,7 @@
         console.log("clicked on a choice!", chosenNode.code);
         audioService.playAudio("UIbuttonclick-option2.wav");
         decisionPath = chosenNode.code; //have to reset this later 0 this will be wrong - how can i acsess the node itself - NOICE 0 got it 'chosenNode' do bot forget  - gotta love 2 am coding and talking to myself :)
-        if(vm.curNode.success){         //sucsess or failure -
+        if(vm.curNode.success && !vm.isTestBed){         //sucsess or failure -
           console.log("WOOT");
           mainInformationHandler.lastConversationSuccessful = true;
           //TODO MOVED THIS HERE - LOGICALLY WORKS BUT DOUBLE CHECK - as this happens once at the end of a convo ( old script in node 3 )
@@ -148,6 +148,7 @@
           // vm.showNPCbubbleText = true;
           // vm.NPC_responseHidden = true;
           //data tracking -
+          if(!vm.isTestBed)
         trackDataAtEndofConvo();
         // chooseDialogScript();
       // vm.main.branchHistory = [];
