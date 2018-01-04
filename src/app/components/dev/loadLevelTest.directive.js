@@ -3,7 +3,6 @@
 
 	angular.module('awkwardAnnie')
 		.directive('loadLevelTest', loadLevelTest);
-
 	/** @ngInject */
 	function loadLevelTest($log, parseLevelsService) {
 		return {
@@ -13,7 +12,11 @@
 		};
 
 		function controller($scope) {
-			$log.log(angular.toJson(parseLevelsService,4);
+			// $log.log(angular.toJson(parseLevelsService,4));
+
 		}
 	}
+
+	////parseAAContentService //parseLevelsService
+
 })();

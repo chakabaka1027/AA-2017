@@ -6,6 +6,7 @@
   /** @ngInject */
   function parseAAContentService($log, xlsxService) {
     var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
+    var templatesSample = [];
 
     var service = {
       parsedContent: {},
@@ -17,10 +18,16 @@
       parseAllSheets: parseAllSheets,
       parseSheet: parseSheet,
       findSectionHeaders: findSectionHeaders
+      // templateSample: templateSample
+
+
 
     };
 
     return service;
+
+
+
 
     function findSectionHeaders(sheet) {
       var hdrIndexes = [];
@@ -32,7 +39,7 @@
         }
       }
       return hdrIndexes;
-    }
+    }//end of findsectionHeaders
 
     function utfClean(s) {
       return s.trim();
@@ -62,7 +69,7 @@
       return d;
     }
 
-    function parseSheet(sheet, gameType) {
+    function parseSheet(sheet, gameType) { //reached this poiint
 
       var hdrIndexes = findSectionHeaders(sheet);
 
@@ -150,12 +157,72 @@
 
       return parsed;
 
-
       function sheetRow(rowIx) {
         return xlsxService.sheetRow(sheet, rowIx);
       }
 
+    }// end of parseSheet
+
+
+  function   parseTemplateSheet (sheet, gameType){ //for the sake of testing - duplicated some aspects at this point
+    // console.log("sample values ", xlsxService.cellValue(sheet, 2, 11));
+    var numRows = xlsxService.findSheetSize(sheet).r;
+    var startRow = 0;
+
+    console.log("ssize is - ", numRows);
+    for(var r = 0; r < numRows ; r++){ //or manually add it in ---
+      if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'level') {
+            startRow = r + 1;
+      }
+  }
+  // var rowDefintion = {
+  //   'level': 0,
+  //   'charecter': '',
+  //   'convo':'',
+  //   'room': '',
+  //   'room_pos': 0
+  // };
+
+  var templateRows =[]; //works
+  for (var r = startRow; r < numRows ; r++){
+    if(xlsxService.cellValue(sheet, 0, r)!=''){
+      templateRows[r-10] = {
+        level : xlsxService.cellValue(sheet, 0, r),
+        charecter : xlsxService.cellValue(sheet, 1, r),
+        convo : xlsxService.cellValue(sheet, 2, r),
+        room : xlsxService.cellValue(sheet, 3, r),
+        room_pos : xlsxService.cellValue(sheet, 4, r)
+          }
+
     }
+
+
+
+      // console.log(templateSample);
+    // }
+  }
+
+  console.log(templateRows);
+  return templateRows;
+
+
+// templatesSample.push(templateSample);
+// console.log("template",rowDefintion);
+// console.log("template",templatesSample);
+
+  // console.log(xlsxService.cellValue(sheet, 0, startRow));
+  // console.log(xlsxService.cellValue(sheet, 1, startRow));
+  // console.log(xlsxService.cellValue(sheet, 2, startRow));
+  // console.log(xlsxService.cellValue(sheet, 3, startRow));
+
+
+  }
+
+  function pushToArray (template){
+
+    templatesSample.push(template);
+    console.log(templatesSample);
+  }
 
 
     function parseSheetFromFile(sheet, fileObject) {
@@ -251,6 +318,8 @@
 
     function parseAllSheets(book, gameType) {
       var parsed = {};
+      var TemplateSheetsTest= {};
+      var ParsedTemplates =[];
       var sheetNames = book.SheetNames;
       sheetNames.forEach(function(sheetName) {
         if (sheetName !== 'Template') {
@@ -258,19 +327,31 @@
           var sheetParsed = parseSheet(sheet, gameType);
           if (sheetParsed) {
             parsed[sheetName] = sheetParsed;
+            // console.log("sheet being patsed  parsed[sheetName]", parsed[sheetName]);
+          } //this is just for proof of concept for now
 
-          } else {
+           else {
+              if(sheetName == "TestA" || sheetName == "TestB"){
+                console.log("was trueeeeeee");
+                console.log(sheetName + ': the needed sheet ');
+                console.log("!!!---", sheet); //reached here -
+                // var sheetParsed = parseTemplateSheet(sheet, gameType);
+                ParsedTemplates.push(parseTemplateSheet(sheet, gameType));
+
+                TemplateSheetsTest[sheetName] = sheetParsed; //TODO here
+              }
             $log.warn(sheetName + ': unparseable');
           }
-        } else {
+        }//end of not notplate
+         else { // it is a template - maybe add this here later defind as tempkate then do this -
           $log.log(sheetName + ': skipping');
         }
       });
-
+      console.log(ParsedTemplates);
       return parsed;
     }
 
-    function parseAllSheetsFromFile(book, fileObject) {
+    function parseAllSheetsFromFile(book, fileObject) { //not being used
       var parsed = {};
       var sheetNames = book.SheetNames;
       sheetNames.forEach(function(sheetName) {
@@ -281,10 +362,10 @@
             parsed[sheetName] = sheetParsed;
 
           } else {
-            $log.warn(sheetName + ': unparseable');
+            $log.warn(sheetName + ':is this being used or the other  unparseable');
           }
         } else {
-          $log.log(sheetName + ': skipping');
+          $log.log(sheetName + ':is this being used or the other   skipping');
         }
       });
       return parsed;
