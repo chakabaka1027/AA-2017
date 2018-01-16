@@ -23,6 +23,7 @@
     };
 
     return service;
+    
     function setUpForGameType(gameType) {
       var levelsPath = "assets/LevelJson/levels.json";
       var otherLevelsPath = "assets/LevelJson/otherlevels.json";

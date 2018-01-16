@@ -20,14 +20,9 @@
       parseSheet: parseSheet,
       findSectionHeaders: findSectionHeaders
       // templateSample: templateSample
-
-
-
     };
 
     return service;
-
-
 
     function findSectionHeaders(sheet) {
       var hdrIndexes = [];
@@ -164,54 +159,90 @@
     }// end of parseSheet
 
 
-  function   parseTemplateSheet (sheet, gameType){ //for the sake of testing - duplicated some aspects at this point
-    // console.log("sample values ", xlsxService.cellValue(sheet, 2, 11));
-    var numRows = xlsxService.findSheetSize(sheet).r;
-    var startRow = 0;
+    function   parseTemplateSheet (sheet, gameType){ //for the sake of testing - duplicated some aspects at this point
+      // console.log("sample values ", xlsxService.cellValue(sheet, 2, 11));
 
-    // console.log("ssize is - ", numRows);
-    for(var r = 0; r < numRows ; r++){ //or manually add it in ---
-      if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'level') {
-            startRow = r + 1;
+
+      var levelData = {};
+      var gameCaseData = {
+        levelData: levelData,
+        audioSetting: true,
+        display: true
+      };
+
+      var numRows = xlsxService.findSheetSize(sheet).r;
+      var startRow = 0, r = 0;
+
+      /*
+      for (var r = 0; r < numRows ; r++) { //or manually add it in ---
+        if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'level') {
+              startRow = r + 1;
+        }
       }
-  }
-  // var rowDefintion = {
-  //   'level': 0,
-  //   'charecter': '',
-  //   'convo':'',
-  //   'room': '',
-  //   'room_pos': 0
-  // };
+      */
 
-  var templateRows =[]; //works
-  for (var r = startRow; r < numRows ; r++){
-    if(xlsxService.cellValue(sheet, 0, r)!=''){//where 0,1,2,3,4 corresuponds to level - cahr ...etc in excel
-      templateRows[r-10] = {
-        level : xlsxService.cellValue(sheet, 0, r),
-        charecter : xlsxService.cellValue(sheet, 1, r),
-        convo : xlsxService.cellValue(sheet, 2, r),
-        room : xlsxService.cellValue(sheet, 3, r),
-        room_pos : xlsxService.cellValue(sheet, 4, r)
+      var inHead = true;
+      while (r<numRows && inHead) {
+        var rowKey = ('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase();
+        $log.log('Row Key "'+rowKey+'"');
+        switch (rowKey) {
+          case 'audio setting':
+            gameCaseData.audioSetting = xlsxService.cellValue(sheet, 1, r)==='on';
+            break;
+          case 'display':
+            gameCaseData.display = xlsxService.cellValue(sheet, 1, r)==='on';
+            break;
+          case 'level':
+            inHead = false;
+            break;
+        }
+        r += 1;
+      }
+
+      var templateRows = []; //works
+      for (; r < numRows ; r++){
+        if (xlsxService.cellValue(sheet, 0, r)!='') {//where 0,1,2,3,4 corresuponds to level - cahr ...etc in excel
+          var templateRow = {
+            level : 'level_'+xlsxService.cellValue(sheet, 0, r),
+            character : xlsxService.cellValue(sheet, 1, r),
+            convo : xlsxService.cellValue(sheet, 2, r),
+            room : xlsxService.cellValue(sheet, 3, r),
+            room_pos : xlsxService.cellValue(sheet, 4, r)
+          };
+
+          if (angular.isUndefined(levelData[templateRow.level])) {
+            levelData[templateRow.level] = {
+              requiredConversations: [],
+              rooms: {}
+            };
           }
 
+          var roomsData = levelData[templateRow.level].rooms;
+          if (angular.isUndefined(roomsData[templateRow.room])) {
+            roomsData[templateRow.room] = {};
+          }
+
+          var roomData = roomsData[templateRow.room];
+          if (angular.isUndefined(roomData[templateRow.character])) {
+            roomData[templateRow.character] = {dialogInfo: []};
+          }
+
+          roomData[templateRow.character].dialogInfo.push({
+            position: templateRow.room_pos,
+            key: templateRow.convo
+          });
+
+          if (templateRow.convo !== '') {
+            levelData[templateRow.level].requiredConversations.push(templateRow.convo);
+          }
+
+        }
+      }
+
+      // console.log(templateRows);
+      return gameCaseData;
+
     }
-  }
-
-  // console.log(templateRows);
-  return templateRows;
-
-
-// templatesSample.push(templateSample);
-// console.log("template",rowDefintion);
-// console.log("template",templatesSample);
-
-  // console.log(xlsxService.cellValue(sheet, 0, startRow));
-  // console.log(xlsxService.cellValue(sheet, 1, startRow));
-  // console.log(xlsxService.cellValue(sheet, 2, startRow));
-  // console.log(xlsxService.cellValue(sheet, 3, startRow));
-
-
-  }
 
 
 
@@ -308,54 +339,48 @@
 
     function parseAllSheets(book, gameType) {
       var parsed = {};
-      var TemplateSheetsTest= {};
-      var ParsedTemplates =[];
+      var parsedLevelData ={};
+
       var sheetNames = book.SheetNames;
       sheetNames.forEach(function(sheetName) {
         if (sheetName !== 'Template') {
           var sheet = book.Sheets[sheetName];
           var sheetParsed = parseSheet(sheet, gameType);
           if (sheetParsed) {
+
             parsed[sheetName] = sheetParsed;
             // console.log("sheet being patsed  parsed[sheetName]", parsed[sheetName]);
-          } //this is just for proof of concept for now
 
-           else {
-              // if(sheetName == "TestA" || sheetName == "TestB"){
-              //   // console.log("was trueeeeeee");
-              //   // console.log(sheetName + ': the needed sheet ');
-              //   // console.log("!!!---", sheet); //reached here -
-              //   // // var sheetParsed = parseTemplateSheet(sheet, gameType);
-              //   // ParsedTemplates.push(parseTemplateSheet(sheet, gameType));
-              //   TemplateSheetsTest[sheetName] = sheetParsed; //TODO here
-              // }
-               if(sheetName.toLowerCase().includes("temp")){
-                 $log.warn(sheetName + ': template file parsing ');
-                 var sheetParsed = parseTemplateSheet(sheet, gameType);
-                 ParsedTemplates.push(parseTemplateSheet(sheet, gameType));
-                 service.TemplateSheets.push(sheetName);
+          } else {
 
-               }else {
-                 $log.warn(sheetName + ': unparseable');
+            if(sheetName.toLowerCase().includes("temp")){
+              $log.warn(sheetName + ': template file parsing ');
+              var sheetParsed = parseTemplateSheet(sheet, gameType);
+              parsedLevelData[sheetName] = sheetParsed;
 
-               }
+              service.TemplateSheets.push(sheetName);
+
+            } else {
+              $log.warn(sheetName + ': unparseable');
+            }
 
           }
-        }//end of not notplate
-         else { // it is a template - maybe add this here later defind as tempkate then do this -
+      
+        } else { // it is a template - maybe add this here later defind as tempkate then do this -
           $log.log(sheetName + ': skipping');
         }
+
       });
-      console.log(ParsedTemplates);
+
+      console.log(parsedLevelData);
       console.log("parsed Sheets", service.TemplateSheets);
-      orgnizeNamesWithcontent(service.TemplateSheets, ParsedTemplates);
+      orgnizeNamesWithContent(service.TemplateSheets, parsedLevelData);
       return parsed;
     }
 
-    function orgnizeNamesWithcontent(namesArray, contentArrays){
-
-
+    function orgnizeNamesWithContent(namesArray, contentArrays){
     }
+
     function parseAllSheetsFromFile(book, fileObject) { //not being used
       var parsed = {};
       var sheetNames = book.SheetNames;
