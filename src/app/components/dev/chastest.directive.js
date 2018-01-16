@@ -13,106 +13,106 @@
 		};
 
 		function controller($scope) {
-			/*
-			parseAAContentService.parseContentFromGameType('positive')
-				.then(function() {
-					$log.log(parseAAContentService.parsedContent);
-
-					$log.log(angular.toJson(parseAAContentService.parsedContent['FF.RQ.01'], 4));
-
-					var a = new DialogNode('A', false);
-					a.addChild(new DialogNode('AB', true))
-					a.addChild(new DialogNode('AC'), false);
-				});
-			*/
-
-			// var foo = new DialogNode('ABC');
-			//implementing a tree
-
-///what about a "Trie" data structur ?
-
-
-
-
-
-			var testingTree = new createTree();
-
-			function createTree(){ //scope issue ifoutsode controller - undefined if i used dailognode
-				var rootNode = new DialogNode(null) ;
-				addNodeToTree(rootNode); //adds a null node / root node
-			}
-
-			function addNodeToTree(node){
-				//check length of code value ( 1 for a,b,c 2 for aa,bb.... 3 for aaa... )
-				if(!node.isRoot ){ // if it is not the root and if we are the first letter index (a,b.c ) add this as children of root
-					if( node.code.length==1 ){
-						//first element node - all at height 1
-						//make the root its parent
-
-					}else { //if the size of it is greater than oen (aa or aaa)
-						//if the size is 2 / length is 2
-						//set the parent to node of size one if it starts with  the same letter (aa ab ac the patent is the node with a )
-						//else if starts with b the parent is the node with code value b
-						//ekse it is a C value
-
-						//else if it is  > 2 ( node of level 3 ) check the second or third element ( recursive )
-						// on second if a mark it / flag it
-						// if third (aaa) then mark the thid element as  ---- or just chekc the second element if it is an a ???
-					}	}
-					}
-
-			function compareCharecters(char){
-				if(char.length == 1){
-					if( char.toLowerCase() < "c" ){ //if iit is lower than c then the charecter is either a or b
-					}
-				}
-			}
-
-			function fixTreeOrder(){
-
-			}
-
-
-
-
-
-
-
-
-
-
-//testing - ------ this works can acsess data this way now to move each one as a node and triverse the tree
-// console.log(testingFile);
-console.log(testNewStructure);
-//if this is u sed for the first structur ---  but why not read them based on code value ? see example 2
-
-		for(var x in testingFile){
-			// console.log("last index "+x[x.length-1]);
-			// console.log("testing key as "+testingFile[x] );
-		//	if(x[x.length-1]=="1"){ //it is of type node 1
-				// console.log("entered");
-				for(var i =0; i< testingFile[x].length; i++ ){//triverses one node
-					console.log("code value "+ testingFile["node1"][i].code ); //to acsess any eleemnt
-					var foo = new DialogNode(testingFile["node1"][i].code);//send in the whole data and orgnize it by code value
-				//}//
-			}	//else {
-			// for( var x in testingFile){// 	if( x[x.length-1]!="1"){//restructure for pther indexd elements	// 	}	// }
-				// console.log("testing"+ "x is " + x + " and the index"+ testingFile[x]["A"]);//["A"][0].code //add a check if it undefined
-				}
-				// console.log("testing node 2 DATA"+ testingFile["node2"]["A"][0].code);		console.log("testing node 3 DATA"+ testingFile["node3"]["AA"][0].code);
-//******************************
-//****************************//
-				//app 2
-				////////////////////for data sample 2 elements - example 2 as with one would require adding cases as far as I can see but if we are reading them by code values and no code is the same in the same file why not index them by that value
-					for ( var i = 0 ; i<testNewStructure.Values.length; i++  ){
-						// console.log("testing "+testNewStructure.Values[i].code);
-						var testNode = new DialogNode(testNewStructure.Values[i]);//send in the whole data and orgnize it by code value
-
-						// testingTree.addNodeToTree(testNode);
-							addNodeToTree (testNode);
-						// console.log(testNode.code);
-					}
-
+// 			/*
+// 			parseAAContentService.parseContentFromGameType('positive')
+// 				.then(function() {
+// 					$log.log(parseAAContentService.parsedContent);
+//
+// 					$log.log(angular.toJson(parseAAContentService.parsedContent['FF.RQ.01'], 4));
+//
+// 					var a = new DialogNode('A', false);
+// 					a.addChild(new DialogNode('AB', true))
+// 					a.addChild(new DialogNode('AC'), false);
+// 				});
+// 			*/
+//
+// 			// var foo = new DialogNode('ABC');
+// 			//implementing a tree
+//
+// ///what about a "Trie" data structur ?
+//
+//
+//
+//
+//
+// 			var testingTree = new createTree();
+//
+// 			function createTree(){ //scope issue ifoutsode controller - undefined if i used dailognode
+// 				var rootNode = new DialogNode(null) ;
+// 				addNodeToTree(rootNode); //adds a null node / root node
+// 			}
+//
+// 			function addNodeToTree(node){
+// 				//check length of code value ( 1 for a,b,c 2 for aa,bb.... 3 for aaa... )
+// 				if(!node.isRoot ){ // if it is not the root and if we are the first letter index (a,b.c ) add this as children of root
+// 					if( node.code.length==1 ){
+// 						//first element node - all at height 1
+// 						//make the root its parent
+//
+// 					}else { //if the size of it is greater than oen (aa or aaa)
+// 						//if the size is 2 / length is 2
+// 						//set the parent to node of size one if it starts with  the same letter (aa ab ac the patent is the node with a )
+// 						//else if starts with b the parent is the node with code value b
+// 						//ekse it is a C value
+//
+// 						//else if it is  > 2 ( node of level 3 ) check the second or third element ( recursive )
+// 						// on second if a mark it / flag it
+// 						// if third (aaa) then mark the thid element as  ---- or just chekc the second element if it is an a ???
+// 					}	}
+// 					}
+//
+// 			function compareCharecters(char){
+// 				if(char.length == 1){
+// 					if( char.toLowerCase() < "c" ){ //if iit is lower than c then the charecter is either a or b
+// 					}
+// 				}
+// 			}
+//
+// 			function fixTreeOrder(){
+//
+// 			}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// //testing - ------ this works can acsess data this way now to move each one as a node and triverse the tree
+// // console.log(testingFile);
+// console.log(testNewStructure);
+// //if this is u sed for the first structur ---  but why not read them based on code value ? see example 2
+//
+// 		for(var x in testingFile){
+// 			// console.log("last index "+x[x.length-1]);
+// 			// console.log("testing key as "+testingFile[x] );
+// 		//	if(x[x.length-1]=="1"){ //it is of type node 1
+// 				// console.log("entered");
+// 				for(var i =0; i< testingFile[x].length; i++ ){//triverses one node
+// 					console.log("code value "+ testingFile["node1"][i].code ); //to acsess any eleemnt
+// 					var foo = new DialogNode(testingFile["node1"][i].code);//send in the whole data and orgnize it by code value
+// 				//}//
+// 			}	//else {
+// 			// for( var x in testingFile){// 	if( x[x.length-1]!="1"){//restructure for pther indexd elements	// 	}	// }
+// 				// console.log("testing"+ "x is " + x + " and the index"+ testingFile[x]["A"]);//["A"][0].code //add a check if it undefined
+// 				}
+// 				// console.log("testing node 2 DATA"+ testingFile["node2"]["A"][0].code);		console.log("testing node 3 DATA"+ testingFile["node3"]["AA"][0].code);
+// //******************************
+// //****************************//
+// 				//app 2
+// 				////////////////////for data sample 2 elements - example 2 as with one would require adding cases as far as I can see but if we are reading them by code values and no code is the same in the same file why not index them by that value
+// 					for ( var i = 0 ; i<testNewStructure.Values.length; i++  ){
+// 						// console.log("testing "+testNewStructure.Values[i].code);
+// 						var testNode = new DialogNode(testNewStructure.Values[i]);//send in the whole data and orgnize it by code value
+//
+// 						// testingTree.addNodeToTree(testNode);
+// 							addNodeToTree (testNode);
+// 						// console.log(testNode.code);
+// 					}
+//
 
 
 

@@ -258,12 +258,12 @@
           //Create characters and add animations
           npcSprites = [];
           for (var spriteName in mainInformationHandler.roomData) {
-            var spriteInfo = positionData[spriteName][currentRoomKey];
+            var spriteInfo = positionData[spriteName][currentRoomKey]; //is this for all other sprites
             if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
               mainInformationHandler.convoCounter[spriteName] = 0;
             }
             var npcSprite = room.createSprite(spriteInfo.startLeftX, spriteInfo.startLeftY);
-            npcSprite.name = spriteName;
+            npcSprite.name = spriteName;//TODO here 
             npcSprite.setCollider("rectangle", spriteInfo.colliderXoffset, spriteInfo.colliderYoffset, spriteInfo.colliderWidth, spriteInfo.colliderHeight);
             addAnimations(animationData[spriteName], npcSprite);
             if (spriteInfo.mirror) {

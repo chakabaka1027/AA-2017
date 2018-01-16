@@ -73,6 +73,13 @@
         templateUrl: 'app/components/endScreenManager/endScreen.html'
       });
 
+      $stateProvider
+        .state('templateTest', {
+          url: '/templateTest',
+          template: '<A></A>'
+        });
+
+
     $stateProvider
       .state('tutorial', {
         url: '/tutorial',

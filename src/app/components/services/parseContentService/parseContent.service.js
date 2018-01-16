@@ -10,6 +10,7 @@
 
     var service = {
       parsedContent: {},
+      TemplateSheets:[],
 
       parseContentFromGameType: parseContentFromGameType,
       parseContentFromFile: parseContentFromFile,
@@ -25,7 +26,6 @@
     };
 
     return service;
-
 
 
 
@@ -169,7 +169,7 @@
     var numRows = xlsxService.findSheetSize(sheet).r;
     var startRow = 0;
 
-    console.log("ssize is - ", numRows);
+    // console.log("ssize is - ", numRows);
     for(var r = 0; r < numRows ; r++){ //or manually add it in ---
       if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'level') {
             startRow = r + 1;
@@ -185,7 +185,7 @@
 
   var templateRows =[]; //works
   for (var r = startRow; r < numRows ; r++){
-    if(xlsxService.cellValue(sheet, 0, r)!=''){
+    if(xlsxService.cellValue(sheet, 0, r)!=''){//where 0,1,2,3,4 corresuponds to level - cahr ...etc in excel
       templateRows[r-10] = {
         level : xlsxService.cellValue(sheet, 0, r),
         charecter : xlsxService.cellValue(sheet, 1, r),
@@ -195,14 +195,9 @@
           }
 
     }
-
-
-
-      // console.log(templateSample);
-    // }
   }
 
-  console.log(templateRows);
+  // console.log(templateRows);
   return templateRows;
 
 
@@ -218,11 +213,6 @@
 
   }
 
-  function pushToArray (template){
-
-    templatesSample.push(template);
-    console.log(templatesSample);
-  }
 
 
     function parseSheetFromFile(sheet, fileObject) {
@@ -331,16 +321,25 @@
           } //this is just for proof of concept for now
 
            else {
-              if(sheetName == "TestA" || sheetName == "TestB"){
-                console.log("was trueeeeeee");
-                console.log(sheetName + ': the needed sheet ');
-                console.log("!!!---", sheet); //reached here -
-                // var sheetParsed = parseTemplateSheet(sheet, gameType);
-                ParsedTemplates.push(parseTemplateSheet(sheet, gameType));
+              // if(sheetName == "TestA" || sheetName == "TestB"){
+              //   // console.log("was trueeeeeee");
+              //   // console.log(sheetName + ': the needed sheet ');
+              //   // console.log("!!!---", sheet); //reached here -
+              //   // // var sheetParsed = parseTemplateSheet(sheet, gameType);
+              //   // ParsedTemplates.push(parseTemplateSheet(sheet, gameType));
+              //   TemplateSheetsTest[sheetName] = sheetParsed; //TODO here
+              // }
+               if(sheetName.toLowerCase().includes("temp")){
+                 $log.warn(sheetName + ': template file parsing ');
+                 var sheetParsed = parseTemplateSheet(sheet, gameType);
+                 ParsedTemplates.push(parseTemplateSheet(sheet, gameType));
+                 service.TemplateSheets.push(sheetName);
 
-                TemplateSheetsTest[sheetName] = sheetParsed; //TODO here
-              }
-            $log.warn(sheetName + ': unparseable');
+               }else {
+                 $log.warn(sheetName + ': unparseable');
+
+               }
+
           }
         }//end of not notplate
          else { // it is a template - maybe add this here later defind as tempkate then do this -
@@ -348,9 +347,15 @@
         }
       });
       console.log(ParsedTemplates);
+      console.log("parsed Sheets", service.TemplateSheets);
+      orgnizeNamesWithcontent(service.TemplateSheets, ParsedTemplates);
       return parsed;
     }
 
+    function orgnizeNamesWithcontent(namesArray, contentArrays){
+
+
+    }
     function parseAllSheetsFromFile(book, fileObject) { //not being used
       var parsed = {};
       var sheetNames = book.SheetNames;

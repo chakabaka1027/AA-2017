@@ -29,6 +29,22 @@
 			}
 		};
 
+		//just for testing
+		var costumePosSet ={
+			pos1:{
+				startLeftX: 430, startLeftY: 190,
+				colliderXoffset: -2, colliderYoffset: 60,
+				colliderWidth: 60, colliderHeight: 60,
+				mirror:"yes"
+			},
+			pos2:{
+				startLeftX: 400, startLeftY: 160,
+				colliderXoffset: -2, colliderYoffset: 60,
+				colliderWidth: 60, colliderHeight: 60,
+				mirror:"no"
+			}
+		};
+
 		var gameCharacterData = {
 			annie: {
 				startingX: 750, startingY: 260,

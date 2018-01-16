@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('awkwardAnnie')
-		.directive('parseLevelsService', parseLevelsService);
+  .service('parseLevelsService', parseLevelsService);
 	/** @ngInject */
 	function parseLevelsService($log, parseAAContentService ) {
 		return {
@@ -13,11 +13,9 @@
 
 		function controller($scope) {
 			// $log.log(angular.toJson(parseLevelsService,4);
+			console.log("omsode parseLevelServive",parseAAContentService.TemplateSheets);
 		}
 	}
 
 
 })();
-
-
-//goal - change level structure to that of json object file
