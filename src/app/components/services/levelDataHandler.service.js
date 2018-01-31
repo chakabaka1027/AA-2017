@@ -60,8 +60,8 @@
         }
 
         angular.forEach(currentRoomCheck, function(characterData) {// dialogInfo[key]
-                  //try and acsess the array here //fran ismNecer acconted 4... 
-                  console.log("}}} currentRoomCheck in 4loop ||||||",currentRoomCheck); //characterData holds postion and key... was this the case before? but both empty
+                  //try and acsess the array here //fran ismNecer acconted 4...
+                  console.log("TT___TT) currentRoomCheck in 4loop ||||||",currentRoomCheck); //characterData holds postion and key... was this the case before? but both empty
 
           console.log("}}}leangth of array convos a ||||||",characterData.dialogInfo.length); //characterData holds postion and key... was this the case before? but both empty
 
