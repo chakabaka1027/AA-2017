@@ -8,7 +8,6 @@
   function mainInformationHandler( levelDataHandler, dialogOptions ){
 
     var service ={
-      setConversation:setConversation,
       nextLevelData:nextLevelData,
       setRoomData:setRoomData,
       areDialogsCompleted:areDialogsCompleted,
@@ -38,11 +37,7 @@ function reset() {
   });
 }
 
-function setConversation(talkingWith){
-  dialogOptions.talkingWith = talkingWith;
-  service.currentConversation = service.roomData[dialogOptions.talkingWith].dialogKey;
-  console.log(",,,,,,,,,",  service.currentConversation);
-}
+
 
 //TODO move this to datalevel hanler =====
 function nextLevelData(){ //is the problem for single rooms that it increases the counter - but that wasnt an issue before

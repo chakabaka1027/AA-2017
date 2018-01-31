@@ -400,8 +400,8 @@
         function getDoorStatus() {
             angular.forEach(mappingService[mainInformationHandler.roomKey], function(linkingRoom, doorKey) {
             var markDoor = false; //this one sends in the wrong info ?//TODO check here
-            console.log("{{=====}}",linkingRoom); //gave me all rooms correct
-            console.log("{{{=====}}}",levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom));
+            // console.log("{{=====}}",linkingRoom); //gave me all rooms correct
+            // console.log("{{{=====}}}",levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom));
             var roomDialogs = levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom);
             if (!mainInformationHandler.areDialogsCompleted(roomDialogs)) {//, mainInformationHandler.completedConvos
               markDoor = true;
@@ -413,7 +413,7 @@
   /*==================================  bubble functions    =========================================*/
 
         function drawBubble(characterSprite) {
-          console.log("-----> draw bubble was called");
+          // console.log("-----> draw bubble was called");
           room.image(npcHasDialogBubble, characterSprite.position.x - 40, characterSprite.position.y - characterSprite.height - bubbleHeight);
         }
 
@@ -520,9 +520,9 @@
       /*=============== add all animations: Parameters(character definition from the char animation service, global characterSprite) ============== */
       function addAnimations(characterDefinition, characterSprite) {
         //characterDefinition undefined
-        console.log("-----> characterDefinition ",characterDefinition );
+        // console.log("-----> characterDefinition ",characterDefinition );
         for (var animationKey in characterDefinition.animations) {
-          console.log("-----> animaion key",animationKey );
+          // console.log("-----> animaion key",animationKey );
           var frames = [animationKey];
           frames = frames.concat(characterDefinition.animations[animationKey]);
           characterSprite.addAnimation.apply(characterSprite, frames);
@@ -582,28 +582,16 @@
         if (conversationResetBubble.visible) {
           return;
         }
+        var dialogKey =  getNextConversationKey(spriteB.name);
+        // console.log("(===========annie_Talking)",annie_Talking);
         var character = characters[spriteB.name];
-        if (!character || !character.dialogKey) { return; }
+        if (!character || !dialogKey) { return; }
 
-        if (character.dialogKey && !annie_Talking) {
+        if (dialogKey && !annie_Talking) {
           mainInformationHandler.convoAttemptsTotal += 1;
-
-          if (mainInformationHandler.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
-            if (character.secondConvo && mainInformationHandler.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
-
-              mainInformationHandler.currentConversation = character.secondConvo.dialogKey;
-              dialogOptions.talkingWith = spriteB.name;
-              dialogOptions.hideDialog = false;
-
-            } else {
-              // already had first conversation; and there is no second conversation...
-              return;
-            }
-          } else { //if first convo
-
-            mainInformationHandler.setConversation(spriteB.name);
-            dialogOptions.hideDialog = false;
-          }
+          mainInformationHandler.currentConversation = dialogKey;
+          dialogOptions.talkingWith = spriteB.name;
+          dialogOptions.hideDialog = false;
         }
 
         $log.log('I think we\'re talking');
@@ -628,22 +616,34 @@
         $scope.$apply();
       }
 
-      function checkRoomDialogs(character) {
-        if(typeof mainInformationHandler.roomData != 'undefined'){  //TODO in angular
-          // if(angular.isUndefined( vm.main.r roomData)){ return } then else --- no need
-        var characterDialog = mainInformationHandler.roomData[character];
-          if (characterDialog && characterDialog.dialogKey) {
-            if (mainInformationHandler.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
-              if (characterDialog.secondConvo && mainInformationHandler.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
-                return true;
-              }
-            } else { //if first convo
-              return true;
-            }
-          } else {
-            return false;
-          }
+      function getNextConversationKey(character){
+        // console.log("(===========)",character);
+
+        if(angular.isUndefined(mainInformationHandler.roomData)){
+          return "";
         }
+        var characterDialog = mainInformationHandler.roomData[character];
+          if (characterDialog && characterDialog.dialogInfo) {
+
+          for(var i = 0; i < characterDialog.dialogInfo.length ; i++ ){
+            if(!characterDialog.dialogInfo[i].key){
+              return "";
+            }
+            if (mainInformationHandler.completedConvos.indexOf(characterDialog.dialogInfo[i].dialogKey)<0){
+              return characterDialog.dialogInfo[i].key;
+            }
+          }//END of for loop
+        }
+        return "";
+
+
+      }
+
+      function checkRoomDialogs(character) {
+        // console.log("(==== New getNextConversationKey)",getNextConversationKey(character));
+        // console.log("(==== New character)",character);
+
+        return (getNextConversationKey(character)!=="");
       }
 
       function resetBubble(xVal, yVal, boolVal){

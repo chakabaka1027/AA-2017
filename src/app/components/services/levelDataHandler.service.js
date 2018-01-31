@@ -61,19 +61,19 @@
 
         angular.forEach(currentRoomCheck, function(characterData) {// dialogInfo[key]
                   //try and acsess the array here //fran ismNecer acconted 4...
-                  console.log("TT___TT) currentRoomCheck in 4loop ||||||",currentRoomCheck); //characterData holds postion and key... was this the case before? but both empty
+                  // console.log("TT___TT) currentRoomCheck in 4loop ||||||",currentRoomCheck); //characterData holds postion and key... was this the case before? but both empty
 
-          console.log("}}}leangth of array convos a ||||||",characterData.dialogInfo.length); //characterData holds postion and key... was this the case before? but both empty
+          // console.log("}}}leangth of array convos a ||||||",characterData.dialogInfo.length); //characterData holds postion and key... was this the case before? but both empty
 
-          console.log("}}}foreachacalled  characterData.dialogInfo ||||||",characterData.dialogInfo ); //characterData holds postion and key... was this the case before? but both empty
+          // console.log("}}}foreachacalled  characterData.dialogInfo ||||||",characterData.dialogInfo ); //characterData holds postion and key... was this the case before? but both empty
           // if (characterData.dialogKey) { //current room is charly and luna no fran...
 
 
 //change 0 to index instead - maybe change to 4loop since need an index or add a var and add checks
           if (characterData.dialogInfo[0].key) { //current room is charly and luna no fran...
-              console.log("{{------is thiis ever true ?",dialogs);
+              // console.log("{{------is thiis ever true ?",dialogs);
             dialogs.push(characterData.dialogInfo[0].key);
-            console.log("{{------dialogs",dialogs);
+            // console.log("{{------dialogs",dialogs);
             // dialogs.push(characterData.dialogKey);
             //TODO possible fix here
 
@@ -81,7 +81,7 @@
           // if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
           if (characterData.dialogInfo.length>1) { //i/e second convo
             dialogs.push(characterData.dialogInfo[1].key);
-            console.log("{{------dialogs on >1 ",dialogs);
+            // console.log("{{------dialogs on >1 ",dialogs);
 
           }
         });
