@@ -378,10 +378,10 @@
       });
 
       // console.log("parsed Levels ", parsedLevelData);
-      console.log("levelData parser info :  ", service.levelDataInformation.template2.levelData);
+      // console.log("levelData parser info :  ", service.levelDataInformation.template2.levelData);
       if(service.levelDataInformation.template2.levelData != undefined){
         service.templateSampleForTestingOnly = service.levelDataInformation.template2.levelData;
-        console.log("hello world ",  service.templateSampleForTestingOnly);
+        // console.log("hello world ",  service.templateSampleForTestingOnly);
       }
 
 

@@ -17,7 +17,7 @@
 			fran:{
 				positionX: 155,
 				positionY: 325,
-				animations:{
+				animations:{ //TODO !!!new Add other emotions here 
 					"normal": ["assets/images/Characters/Fran/Fran-Inset-Final.png"],
 
 					//negative emotes

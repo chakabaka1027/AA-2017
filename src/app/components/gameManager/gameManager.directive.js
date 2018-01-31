@@ -257,16 +257,19 @@
           resetArrowTimer();
           //Create characters and add animations
           npcSprites = [];
-        $log.log("--------->",mainInformationHandler);
-          for (var spriteName in mainInformationHandler.roomData) {
-            var spriteInfo = positionData[spriteName][currentRoomKey]; //is this for all other sprites
+        $log.log("--------->",positionData['fran']['lobby']);
+          for (var spriteName in mainInformationHandler.roomData) { //TODO this whole issue was because it is was capital letter smh- seriosly!!!
+            //charecters are capiral while here they need to be lower as sprite names
+            $log.log("--------->", spriteName);
+
+            var spriteInfo = positionData[spriteName.toLowerCase()][currentRoomKey]; //is this for all other sprites
             if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
               mainInformationHandler.convoCounter[spriteName] = 0;
             }
             var npcSprite = room.createSprite(spriteInfo.startLeftX, spriteInfo.startLeftY);
             npcSprite.name = spriteName;//TODO here
             npcSprite.setCollider("rectangle", spriteInfo.colliderXoffset, spriteInfo.colliderYoffset, spriteInfo.colliderWidth, spriteInfo.colliderHeight);
-            addAnimations(animationData[spriteName], npcSprite);
+            addAnimations(animationData[spriteName.toLowerCase()], npcSprite);//TODO not sure if it is needed as upper anywhere else ? if not make it to lower when parsing instead of here 
             if (spriteInfo.mirror) {
               npcSprite.mirrorX(-1);
             }
@@ -513,7 +516,10 @@
       }
       /*=============== add all animations: Parameters(character definition from the char animation service, global characterSprite) ============== */
       function addAnimations(characterDefinition, characterSprite) {
+        //characterDefinition undefined
+        console.log("-----> characterDefinition ",characterDefinition );
         for (var animationKey in characterDefinition.animations) {
+          console.log("-----> animaion key",animationKey );
           var frames = [animationKey];
           frames = frames.concat(characterDefinition.animations[animationKey]);
           characterSprite.addAnimation.apply(characterSprite, frames);
