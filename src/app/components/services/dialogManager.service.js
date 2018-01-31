@@ -149,6 +149,12 @@
           var spreadsheetContent = parseAAContentService.parsedContent[dialogWorksheetKeys[dialogKey]];
           if (spreadsheetContent) {
             return spreadsheetContent;
+          } else {
+            $log.warn(':::try raw key "'+dialogKey+'"');
+            spreadsheetContent = parseAAContentService.parsedContent[dialogKey];
+            if (spreadsheetContent) {
+              return spreadsheetContent;
+            }
           }
           $log.warn(':::Falling back to JSON file "'+dialogJsonPaths[dialogKey]+'"');
 
