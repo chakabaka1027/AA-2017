@@ -4,13 +4,16 @@
     .service('parseAAContentService', parseAAContentService);
 
   /** @ngInject */
-  function parseAAContentService($log, xlsxService) {
+  function parseAAContentService($log, xlsxService, $q) {
     var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
     var templatesSample = [];
 
     var service = {
       parsedContent: {},
       TemplateSheets:[],
+      levelDataInformation:{}, //test only 1
+      templateSampleForTestingOnly:{},
+
 
       parseContentFromGameType: parseContentFromGameType,
       parseContentFromFile: parseContentFromFile,
@@ -18,7 +21,9 @@
       // mostly internal; exposed for testing...
       parseAllSheets: parseAllSheets,
       parseSheet: parseSheet,
-      findSectionHeaders: findSectionHeaders
+      findSectionHeaders: findSectionHeaders,
+      testingNewTemplates:testingNewTemplates
+      // TestAndgetSampleTemplatValuewillchangename:TestAndgetSampleTemplatValuewillchangename
       // templateSample: templateSample
     };
 
@@ -355,9 +360,9 @@
 
             if(sheetName.toLowerCase().includes("temp")){
               $log.warn(sheetName + ': template file parsing ');
-              var sheetParsed = parseTemplateSheet(sheet, gameType);
+              var sheetParsed = parseTemplateSheet(sheet, gameType);  //TODO-new  parsedLevelDatause this instead of json levels
               parsedLevelData[sheetName] = sheetParsed;
-
+              service.levelDataInformation[sheetName] = sheetParsed;
               service.TemplateSheets.push(sheetName);
 
             } else {
@@ -365,21 +370,51 @@
             }
 
           }
-      
+
         } else { // it is a template - maybe add this here later defind as tempkate then do this -
           $log.log(sheetName + ': skipping');
         }
 
       });
 
-      console.log(parsedLevelData);
-      console.log("parsed Sheets", service.TemplateSheets);
-      orgnizeNamesWithContent(service.TemplateSheets, parsedLevelData);
+      // console.log("parsed Levels ", parsedLevelData);
+      console.log("levelData parser info :  ", service.levelDataInformation.template2.levelData);
+      if(service.levelDataInformation.template2.levelData != undefined){
+        service.templateSampleForTestingOnly = service.levelDataInformation.template2.levelData;
+        console.log("hello world ",  service.templateSampleForTestingOnly);
+      }
+
+
+      // console.log("parsed Sheets", service.TemplateSheets);
+      // orgnizeNamesWithContent(service.TemplateSheets, parsedLevelData);
       return parsed;
     }
 
-    function orgnizeNamesWithContent(namesArray, contentArrays){
+    function testingNewTemplates(){
+      var q = $q.defer();
+      if(service.levelDataInformation.template2.levelData!= undefined){
+        q.resolve(service.levelDataInformation.template2.levelData);
+      } else {
+        console.warn("promise failed to resolve");
+      }
+      return q.promise;
+
+        // return service.levelDataInformation; //returns a whole ds of parsed data
     }
+    //
+    // function TestAndgetSampleTemplatValuewillchangename(){
+    //
+    //   // I know this is wrong but a temp fix --- tried it with another method written here but did not work - promises gha
+    //   return xlsxService.loadWorkbookFromUrl(defaultUrl)
+    //     .then(function(book) {
+    //       // service.parsedContent = parseAllSheets(book, gameType);
+    //       return service.levelDataInformation; //returns a whole ds of parsed data
+    //     });
+    //
+    // }
+
+    // function orgnizeNamesWithContent(namesArray, contentArrays){
+    // }
 
     function parseAllSheetsFromFile(book, fileObject) { //not being used
       var parsed = {};
@@ -410,6 +445,8 @@
           return service.parsedContent; //returns a whole ds of parsed data
         });
     }
+
+
 
 
     function parseContentFromFile(fileObject) {

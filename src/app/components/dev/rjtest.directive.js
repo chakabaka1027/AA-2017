@@ -12,12 +12,17 @@
       controller: controller,
       controllerAs: "dm",
       bindToController:true ,
-      template: ['<select ng-model="dm.dialogKey" ng-options="option for option in dm.dialogKeyOptions"></select>',
-          '<div class="PCText">annie: {{dm.curNode.pcText}}</div>',
-          '<div class="NPCText">fran:{{dm.curNode.npcText}}</div>',
-          '<div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.pcText}} {{option.choice}} annie </div>',
-          '<div ng-if="dm.options.length==0"> the end </div><!-- add ng click - displays scope +=curnode. score -->'].join('\n')
+      templateUrl: 'app/components/dev/devTest.html'
     };
+    //   template: ['<select ng-model="dm.dialogKey" ng-options="option for option in dm.dialogKeyOptions"></select>',
+    //       '<div class="PCText">annie: {{dm.curNode.pcText}}</div>',
+    //       '<div class="NPCText">fran:{{dm.curNode.npcText}}</div>',
+    //       '<div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.pcText}} {{option.choice}} annie </div>',
+    //       '<div ng-if="dm.options.length==0"> the end </div><!-- add ng click - displays scope +=curnode. score -->'].join('\n')
+    // };
+
+
+
 
   //dm = vm.options inside the options
     function controller($scope) {
@@ -43,7 +48,7 @@
       $scope.$watch(function(){return vm.dialogKey;}, function() {
         console.log("in watch ",vm.dialogKey);
 
-        if(vm.dialogKey){//was commented 
+        if(vm.dialogKey){//was commented
           Nodeservice.parseFromDialogTree(vm.dialogKey).then(function(curTree){
             console.log("-------- did this happen ",curTree);
             vm.curTree = curTree;
@@ -222,7 +227,16 @@ function changeIntoArray(obj){
         "NPC_Response": "What?!",
         "animationNegative": "surprised_mild",
         "animationPositive": ""
-      }, {
+      },
+      {
+        "code": "D", //third node
+        "PC_Text": "option D ",
+        "NPC_Response": "fran's response for option D!",
+        "animationNegative": "surprised_mild",
+        "animationPositive": ""
+      },
+
+      {
         "code": "AA",
         "PC_Text": "I forgot mine and I can't start my day without a hot cup of tea! Can I have one of your herbal teas?",
         "NPC_Response": "Sure, you should try a green tea. The caffeine will help if you're tired!",
@@ -246,6 +260,13 @@ function changeIntoArray(obj){
       //when we add the node the node itself figures out the score - or the tree class looks up the manual scope ---
       //eother from a tab;e or based on each npde
       //the trees job to construct the score -- look ay sketch notes line 76
+      },
+      {
+        "code": "AD",
+        "PC_Text": "node AD! click me ",
+        "NPC_Response": "rspponce ",
+        "animationNegative": "",
+        "animationPositive": "agree_mild"
       },
       // {
       //   "code": "X",///////fixthis
@@ -296,8 +317,59 @@ function changeIntoArray(obj){
         "animationNegative": "confused_mild",
         "animationPositive": ""
       },
+      /// New for preview only
+      {
+        "code": "DA",
+        "PC_Text": "Option A  ",
+        "NPC_Response": "response of D then A.",
+        "animationNegative": "",
+        "animationPositive": "amused_mild"
+      },
+      {
+        "code": "DB",
+        "PC_Text": "Option B  ",
+        "NPC_Response": "response of D then B.",
+        "animationNegative": "annoyed_mild",
+        "animationPositive": ""
+      },
+      {
+        "code": "DE",
+        "PC_Text": "Option E  ",
+        "NPC_Response": "response of D then E --- this is a terminal node example - ends here .",
+        "animationNegative": "confused_mild",
+        "animationPositive": ""
+      },
+
       {
         "code": "AAA",
+        "PC_Text": "Oh that would be great. Could I try the pomegranate green tea that you love? It sounds exotic!",
+        "NPC_Response": "Sure, it's one of my favorites!",
+        "animationNegative": "",
+        "animationPositive": "agree_bold"
+      },
+      {
+        "code": "AAAA",
+        "PC_Text": "Oh that would be great. Could I try the pomegranate green tea that you love? It sounds exotic!",
+        "NPC_Response": "Sure, it's one of my favorites!",
+        "animationNegative": "",
+        "animationPositive": "agree_bold"
+      },
+      {
+        "code": "AAAB",
+        "PC_Text": "Oh that would be great. Could I try the pomegranate green tea that you love? It sounds exotic!",
+        "NPC_Response": "Sure, it's one of my favorites!",
+        "animationNegative": "",
+        "animationPositive": "agree_bold"
+      },
+      {
+        "code": "AAAC",
+        "PC_Text": "Oh that would be great. Could I try the pomegranate green tea that you love? It sounds exotic!",
+        "NPC_Response": "Sure, it's one of my favorites!",
+        "animationNegative": "",
+        "animationPositive": "agree_bold"
+      },
+      {
+        "code": "AAAD",
         "PC_Text": "Oh that would be great. Could I try the pomegranate green tea that you love? It sounds exotic!",
         "NPC_Response": "Sure, it's one of my favorites!",
         "animationNegative": "",
@@ -487,7 +559,45 @@ function changeIntoArray(obj){
         "NPC_Response": "I don't think brownies are going to help and I am not going to sweet talk Mike for you so you can ask for a raise!",
         "animationNegative": "annoyed_bold",
         "animationPositive": ""
-      }
+      },  {
+          "code": "DAA",
+          "PC_Text": "Option A for this node  ",
+          "NPC_Response": "response of DA then  A.",
+          "animationNegative": "annoyed_bold",
+          "animationPositive": ""
+        },  {
+            "code": "DAB",
+            "PC_Text": "Option B for this node  ",
+            "NPC_Response": "response of DA then  B.",
+            "animationNegative": "annoyed_bold",
+            "animationPositive": ""
+          },
+          {
+             "code": "DAE",
+             "PC_Text": "Option E for this node  ",
+             "NPC_Response": "response of DA then  E.",
+                "animationNegative": "annoyed_bold",
+             "animationPositive": ""
+           }, {
+              "code": "DAAA",
+              "PC_Text": "Option A for this node  ",
+              "NPC_Response": "response of DAA then  A.",
+                 "animationNegative": "annoyed_bold",
+              "animationPositive": ""
+            },
+            {
+              "code": "DAAAA",
+              "PC_Text": "Option A for this node  ",
+              "NPC_Response": "response of DAAA then  A. and now this is a terminal node ",
+                 "animationNegative": "annoyed_bold",
+              "animationPositive": ""
+            },
+
+
+
+
+
+
     ]
 
   };

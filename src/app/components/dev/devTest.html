@@ -1,0 +1,82 @@
+
+<nav-bar></nav-bar>
+
+
+<div style="	background-color: #92aec4;">
+
+ <div class="main-pane">
+
+
+ <div style=" font-family: marker-felt;
+  font-size: 15pt;
+  line-height: 0.3em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-image: url(../assets/images/conversation_items/thought_bubble.png);
+  box-sizing: border-box;
+  width: 253px;
+  height: 186px;
+  padding: 10px;
+  padding-top: 0px;
+  top: 55px;
+  right: 30px;
+  font-size: 14pt;
+  line-height: 1.1em;
+  ">
+  annie: {{dm.curNode.pcText}}</div>
+
+  <div class="NPCText" style="font-family: marker-felt;
+   font-size: 15pt;
+   line-height: 0.3em;
+   position: absolute;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   background-image: url(../assets/images/conversation_items/thought_bubble.png);
+   box-sizing: border-box;
+   width: 253px;
+   height: 186px;
+   padding: 10px;
+   padding-top: 0px;
+   top: 55px;
+   right: 325px;
+   font-size: 14pt;
+   line-height: 1.1em;
+  "  >fran:{{dm.curNode.npcText}}</div>
+   <div style="   top: 180px;
+    right: 30px; width: 253px;  height: 400px; background-repeat:no-repeat; position: absolute; background-image:url(../assets/images/Characters/Annie/annie_inset.png);" > </div>
+    <div style="   top: 170px;
+     right: 400px; width: 253px;  height: 400px; background-repeat:no-repeat; position: absolute; background-image:url(../assets/images/Characters/Fran/Fran-Inset-Final.png);" > </div>
+    <!--img tag fifnts work-->
+
+   <!--img tag fifnts work-->
+   <!-- <div style="   top: 150px;
+    right: 325px; width: 253px;  height: 400px; background-repeat:no-repeat; position: absolute; background-image:url(../assets/images/Characters/Fran/Satisfied
+/Fran_Satisfied_01.png);" > </div> -->
+
+ <!-- <div style="font-size:24px; text-align: center ;color:black; text ; ">annie: {{dm.curNode.pcText}}</div> -->
+ <div class="playerChoices">
+
+     <div class="choices" ng-repeat="option in dm.options"><!--choices like the options in rjtest -->
+       <input class="btn" type="button" name="{{option.choice}}" value="{{option.node.pcText:option.node.pcText}}" ng-click="dm.clickOnChoice(option.choice)">
+       <br><br>
+     </div>
+   </div>
+   <br/>
+   <div class="conversationContainer testbed-cc">
+
+ <div class="pc-bubble">
+   <p id="pcBubbleText"> {{dm.curNode.pcText}}</p>
+ </div>
+ <div style ="background-image: url(../assets/images/conversation_items/thought_bubble.png)" class="npc-bubble" ng-if="vm.curNode.npcText">
+   <p id="npcBubbleText">{{dm.curNode.npcText}}</p>
+ </div>
+</div>
+</div>
+</div>
+</div>
+</div>

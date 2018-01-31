@@ -63,7 +63,7 @@
           return;
         }
 
-        var nextLevel = levelDataHandler.levels["level_" + $scope.main.levelCount];
+        var nextLevel = levelDataHandler.levels["level_" + $scope.main.levelCount];////TODO !!! NEW CHANGE HERE 
         if (!nextLevel) {
           $log.log('reached end of levels...');
           return;

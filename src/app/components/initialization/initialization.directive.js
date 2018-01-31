@@ -38,19 +38,23 @@
           }
           levelDataHandler.setUpForGameType(gameType);
 
-          dialogService.loadFromServer(gameType);
+          dialogService.loadFromServer(gameType).then(function(){
 
-          ///TODO - check this with chas fix for slow in chrome - not cpu tho
-          localStorage.clear();
-          sessionStorage.clear();
+            ///TODO - check this with chas fix for slow in chrome - not cpu tho
+            localStorage.clear();
+            sessionStorage.clear();
 
-          if (userGameInfo.userForwarded) {
-            userDataService.resetData();
-            userDataService.trackAction(0, "Start", "Game_Start", "Game Start");
-            $state.go('instructions');
-          } else {
-            $state.go('GameStart');
-          }
+            if (userGameInfo.userForwarded) {
+              userDataService.resetData();
+              userDataService.trackAction(0, "Start", "Game_Start", "Game Start");
+              $state.go('instructions');
+            } else {
+              $state.go('GameStart');
+            }
+            
+          });//TODO !!!new
+
+
         })
 
 

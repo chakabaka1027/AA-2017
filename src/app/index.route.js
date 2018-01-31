@@ -29,13 +29,23 @@
         template: '<initialize-game></initialize-game>'
       });
 
-    $stateProvider
-      .state('dialogTestBed', {
-        url: '/dialogTestBed/:gameType?',//
-        templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
-        controller: 'displayDialogTestBed', //throws away old main and recreates it
-        controllerAs: "dialogTest"
-      });
+
+      $stateProvider
+        .state('dialogTestBed', {
+          url: '/dialogTestBed/:gameType?',//
+          templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
+          controller: 'displayDialogTestBed', //throws away old main and recreates it
+          controllerAs: "dialogTest"
+        });
+
+        $stateProvider
+          .state('setDialogTest', {
+            url: '/setDialogTest/:gameType?',//
+            templateUrl: 'app/components/dialogTestBed/setDialogTest.html',
+            controller: 'setDialogTest', //throws away old main and recreates it
+            controllerAs: "dialogTest"
+          });
+
 
     $stateProvider
       .state('GameStart', {
