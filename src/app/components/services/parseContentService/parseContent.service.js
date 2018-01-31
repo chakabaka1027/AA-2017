@@ -209,7 +209,7 @@
         if (xlsxService.cellValue(sheet, 0, r)!='') {//where 0,1,2,3,4 corresuponds to level - cahr ...etc in excel
           var templateRow = {
             level : 'level_'+xlsxService.cellValue(sheet, 0, r),
-            character : xlsxService.cellValue(sheet, 1, r),
+            character : xlsxService.cellValue(sheet, 1, r).toLowerCase(),
             convo : xlsxService.cellValue(sheet, 2, r),
             room : xlsxService.cellValue(sheet, 3, r),
             room_pos : xlsxService.cellValue(sheet, 4, r)
