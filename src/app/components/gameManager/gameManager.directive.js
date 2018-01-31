@@ -269,7 +269,7 @@
             var npcSprite = room.createSprite(spriteInfo.startLeftX, spriteInfo.startLeftY);
             npcSprite.name = spriteName;//TODO here
             npcSprite.setCollider("rectangle", spriteInfo.colliderXoffset, spriteInfo.colliderYoffset, spriteInfo.colliderWidth, spriteInfo.colliderHeight);
-            addAnimations(animationData[spriteName.toLowerCase()], npcSprite);//TODO not sure if it is needed as upper anywhere else ? if not make it to lower when parsing instead of here 
+            addAnimations(animationData[spriteName.toLowerCase()], npcSprite);//TODO not sure if it is needed as upper anywhere else ? if not make it to lower when parsing instead of here
             if (spriteInfo.mirror) {
               npcSprite.mirrorX(-1);
             }
@@ -399,7 +399,9 @@
 
         function getDoorStatus() {
             angular.forEach(mappingService[mainInformationHandler.roomKey], function(linkingRoom, doorKey) {
-            var markDoor = false;
+            var markDoor = false; //this one sends in the wrong info ?//TODO check here
+            console.log("{{=====}}",linkingRoom); //gave me all rooms correct
+            console.log("{{{=====}}}",levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom));
             var roomDialogs = levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom);
             if (!mainInformationHandler.areDialogsCompleted(roomDialogs)) {//, mainInformationHandler.completedConvos
               markDoor = true;
@@ -411,6 +413,7 @@
   /*==================================  bubble functions    =========================================*/
 
         function drawBubble(characterSprite) {
+          console.log("-----> draw bubble was called");
           room.image(npcHasDialogBubble, characterSprite.position.x - 40, characterSprite.position.y - characterSprite.height - bubbleHeight);
         }
 
