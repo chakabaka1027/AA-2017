@@ -97,6 +97,11 @@
         console.log("in watch ",vm.dialogKey);
 
         if(vm.dialogKey){
+          // will be: (may need to wrap in a promise)
+          // vm.curTree = nodeDataService.dialogTress[vm.dialogKey];
+          // vm.curNode = vm.curTree.rootNode;
+          // setupForNode();
+
           nodeDataService.parseFromDialogTree(vm.dialogKey).then(function(curTree){
             console.log("-------- did this happen ",curTree);
             vm.curTree = curTree;

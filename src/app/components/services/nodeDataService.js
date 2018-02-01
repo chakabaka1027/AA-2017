@@ -13,12 +13,12 @@
 	        this.children = {};
 	        this.isRoot = true;
 	        this.score = 0;
-					this.currentScore = 0;
+			this.currentScore = 0;
 	        if (data != null) { //if it is not the root node then add all the properties
 				angular.extend(this, {
 		            pcText: data.PC_Text,
 		            npcText: data.NPC_Response,
-								animation: (userGameInfo.gameType.indexOf("positive") === 0 ? data.animationPositive:data.animationNegative)
+								animation: (userGameInfo.gameType.indexOf("positive") === 0 ? data.animationPositive : data.animationNegative)
 
 				});
 	          	this.isRoot = false;
