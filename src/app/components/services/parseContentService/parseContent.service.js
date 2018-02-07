@@ -5,14 +5,17 @@
 
   /** @ngInject */
   function parseAAContentService($log, xlsxService, $q) {
-    var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
+    // var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
+    var defaultUrl = 'assets/newFormatDialogs.xlsx';
+
+    // var testingNewSheets = 'assets/newFormatDialogs.xlsx';
     var templatesSample = [];
 
     var service = {
       parsedContent: {},
-      TemplateSheets:[],
-      levelDataInformation:{}, //test only 1
-      templateSampleForTestingOnly:{},
+      TemplateSheets: [],
+      levelDataInformation: {}, //test only 1
+      templateSampleForTestingOnly: {},
 
 
       parseContentFromGameType: parseContentFromGameType,
@@ -21,13 +24,28 @@
       // mostly internal; exposed for testing...
       parseAllSheets: parseAllSheets,
       parseSheet: parseSheet,
-      findSectionHeaders: findSectionHeaders,
-      testingNewTemplates:testingNewTemplates
-      // TestAndgetSampleTemplatValuewillchangename:TestAndgetSampleTemplatValuewillchangename
+      findSectionHeaders: findSectionHeaders      // TestAndgetSampleTemplatValuewillchangename:TestAndgetSampleTemplatValuewillchangename
       // templateSample: templateSample
     };
 
     return service;
+
+
+    ///updated section headers - ask if other is used
+    function findSectionHeaderswithTarger(sheet, targetValue) {
+      var hdrIndexes = [];
+      var numRows = xlsxService.findSheetSize(sheet).r;
+
+      for (var r = 0; r < numRows; r++) {
+        if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === targetValue) {
+          hdrIndexes.push(r);
+        }
+      }
+      return hdrIndexes;
+    } //end of findsectionHeaders
+
+
+
 
     function findSectionHeaders(sheet) {
       var hdrIndexes = [];
@@ -39,11 +57,14 @@
         }
       }
       return hdrIndexes;
-    }//end of findsectionHeaders
+    } //end of findsectionHeaders
 
     function utfClean(s) {
       return s.trim();
     }
+
+
+
 
     function createBlock(row, col, code, isLinear) {
 
@@ -69,7 +90,102 @@
       return d;
     }
 
-    function parseSheet(sheet, gameType) { //reached this poiint
+
+
+
+
+    function parseNewStyleSheet(sheet, gameType) {
+      console.log("-----> key", );
+
+      var hdrIndex = findSectionHeaderswithTarger(sheet, "code");
+      console.log("hdrIndex", hdrIndex.length); //or add another keyword to distinguish it
+
+      if (hdrIndex.length !== 1) { //oh for annie;s use got it but -
+        $log.warn("only include ONE \"code\" word - if you this error - there is either no code word or more than one word ");
+        return null;
+      }
+
+      //UGLY - FEELS REPEATED ...
+
+      var numRows = xlsxService.findSheetSize(sheet).r;
+      var startRow = 0,
+        r = 0;
+      var NewStructure = [];
+      var defaultScorePerSheet = { //shoud this be done this way ?
+        postiveScoreA: 0,
+        NegativeScoreA: 0,
+        postiveScoreB: 0,
+        NegativeScoreB: 0,
+        postiveScoreC: 0,
+        NegativeScoreC: 0,
+        postiveScoreD: 0,
+        NegativeScoreD: 0,
+        postiveSucsess: 0,
+        NegativeSucsess: 0
+      };
+
+      //first iteration --->
+      for (; r < numRows; r++) { //or manually add it in --- //such an UGLY PIECE OF CODE - but for now...
+        if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'outcome table') { //will only read this once
+          console.log(">>>>outcome table reached!!");
+          if (xlsxService.cellValue(sheet, 1, r + 1) !== " ") { // if a  code number is there then set this as the default
+            defaultScorePerSheet.postiveScoreA = xlsxService.cellValue(sheet, 1, r + 1); ///// hard coded in - ugly this way though ><
+            defaultScorePerSheet.NegativeScoreA = xlsxService.cellValue(sheet, 2, r + 1);
+            defaultScorePerSheet.postiveScoreB = xlsxService.cellValue(sheet, 1, r + 2);
+            defaultScorePerSheet.NegativeScoreB = xlsxService.cellValue(sheet, 2, r + 2);
+            defaultScorePerSheet.postiveScoreC = xlsxService.cellValue(sheet, 1, r + 3);
+            defaultScorePerSheet.NegativeScoreC = xlsxService.cellValue(sheet, 2, r + 3);
+            if (xlsxService.cellValue(sheet, 0, r + 4).toLowerCase() === "d") { //if it had D in it
+              defaultScorePerSheet.postiveScoreD = xlsxService.cellValue(sheet, 1, r + 4);
+              defaultScorePerSheet.NegativeScoreD = xlsxService.cellValue(sheet, 2, r + 4);
+              defaultScorePerSheet.postiveSucsess = xlsxService.cellValue(sheet, 1, r + 5);
+              defaultScorePerSheet.NegativeSucsess = xlsxService.cellValue(sheet, 2, r + 5); //if a d value exhists
+            } else { // ends at C
+              defaultScorePerSheet.postiveSucsess = xlsxService.cellValue(sheet, 1, r + 4);
+              defaultScorePerSheet.NegativeSucsess = xlsxService.cellValue(sheet, 2, r + 4);
+            }
+          } //end of if statment
+        }
+        if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'code') { //once we reach code have this as the starting point for convos
+          startRow = r + 1;
+        }
+      }
+      // or can borrow your header code - relized it a bit too late :)  Although should it be in its own method and used twice?
+      //second  iteration --->
+      for (; startRow < numRows; startRow++) { // r = 0
+        if (xlsxService.cellValue(sheet, 0, startRow) === " ") {
+          $log.warn("warning there is a missing code value! ")
+        } else {
+          var row = { //so it looks like the original ds
+            code: xlsxService.cellValue(sheet, 0, startRow),
+            PC_Text: xlsxService.cellValue(sheet, 1, startRow),
+            NPC_Response: xlsxService.cellValue(sheet, 2, startRow),
+            animationPositive: xlsxService.cellValue(sheet, 3, startRow),
+            animationNegative: xlsxService.cellValue(sheet, 4, startRow) //should we add values for score ...?
+            // if(defaultScorePerSheet.postiveScoreA!== " " ){  //   if it empty read in defaulr scores?   // }
+          };
+          NewStructure.push(row);
+        }
+      } //end of for loop
+
+      console.log("----> the new structure for this sheet ", NewStructure);
+      console.log("----->default scores: ", defaultScorePerSheet);
+
+      if (NewStructure.length > 1) {
+        return NewStructure;
+      }
+
+    }
+
+
+
+
+
+
+
+
+
+    function parseSheet(sheet, gameType) { //reached this poiint --- for the old style
 
       var hdrIndexes = findSectionHeaders(sheet);
 
@@ -161,12 +277,10 @@
         return xlsxService.sheetRow(sheet, rowIx);
       }
 
-    }// end of parseSheet
+    } // end of parseSheet
 
 
-    function   parseTemplateSheet (sheet, gameType){ //for the sake of testing - duplicated some aspects at this point
-      // console.log("sample values ", xlsxService.cellValue(sheet, 2, 11));
-
+    function parseTemplateSheet(sheet, gameType) {
 
       var levelData = {};
       var gameCaseData = {
@@ -176,26 +290,18 @@
       };
 
       var numRows = xlsxService.findSheetSize(sheet).r;
-      var startRow = 0, r = 0;
-
-      /*
-      for (var r = 0; r < numRows ; r++) { //or manually add it in ---
-        if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'level') {
-              startRow = r + 1;
-        }
-      }
-      */
-
+      var startRow = 0,
+        r = 0;
       var inHead = true;
-      while (r<numRows && inHead) {
+      while (r < numRows && inHead) {
         var rowKey = ('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase();
-        $log.log('Row Key "'+rowKey+'"');
+        // $log.log('Row Key "'+rowKey+'"');
         switch (rowKey) {
           case 'audio setting':
-            gameCaseData.audioSetting = xlsxService.cellValue(sheet, 1, r)==='on';
+            gameCaseData.audioSetting = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'display':
-            gameCaseData.display = xlsxService.cellValue(sheet, 1, r)==='on';
+            gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'level':
             inHead = false;
@@ -205,14 +311,14 @@
       }
 
       var templateRows = []; //works
-      for (; r < numRows ; r++){
-        if (xlsxService.cellValue(sheet, 0, r)!='') {//where 0,1,2,3,4 corresuponds to level - cahr ...etc in excel
+      for (; r < numRows; r++) {
+        if (xlsxService.cellValue(sheet, 0, r) != '') { //where 0,1,2,3,4 corresuponds to level - cahr ...etc in excel
           var templateRow = {
-            level : 'level_'+xlsxService.cellValue(sheet, 0, r),
-            character : xlsxService.cellValue(sheet, 1, r).toLowerCase(),
-            convo : xlsxService.cellValue(sheet, 2, r),
-            room : xlsxService.cellValue(sheet, 3, r),
-            room_pos : xlsxService.cellValue(sheet, 4, r)
+            level: 'level_' + xlsxService.cellValue(sheet, 0, r),
+            character: xlsxService.cellValue(sheet, 1, r).toLowerCase(),
+            convo: xlsxService.cellValue(sheet, 2, r),
+            room: xlsxService.cellValue(sheet, 3, r),
+            room_pos: xlsxService.cellValue(sheet, 4, r)
           };
 
           if (angular.isUndefined(levelData[templateRow.level])) {
@@ -229,7 +335,9 @@
 
           var roomData = roomsData[templateRow.room];
           if (angular.isUndefined(roomData[templateRow.character])) {
-            roomData[templateRow.character] = {dialogInfo: []};
+            roomData[templateRow.character] = {
+              dialogInfo: []
+            };
           }
 
           roomData[templateRow.character].dialogInfo.push({
@@ -243,8 +351,6 @@
 
         }
       }
-
-      // console.log(templateRows);
       return gameCaseData;
 
     }
@@ -344,77 +450,43 @@
 
     function parseAllSheets(book, gameType) {
       var parsed = {};
-      var parsedLevelData ={};
-
+      var parsedLevelData = {};
       var sheetNames = book.SheetNames;
+
       sheetNames.forEach(function(sheetName) {
-        if (sheetName !== 'Template') {
+        if (sheetName !== 'Template') { // parse anything if its not template
           var sheet = book.Sheets[sheetName];
-          var sheetParsed = parseSheet(sheet, gameType);
+          // var sheetParsed = parseSheet(sheet, gameType); OLD EXCEL
+          var sheetParsed = parseNewStyleSheet(sheet, gameType); //SheetParsing new excel
+          console.log("------>>>>sheetParsed", sheetParsed);
           if (sheetParsed) {
-
+            // nodeDataService.dialogTress[dialogKey] = nodeDataService.parseNewStructure(sheetParsed);
+            //something like this? but when used this way I get an error with circulator camt have node data structure here
+            // nodeDataService.dialogTress[sheetParsed] = nodeDataService.parseNewStructure(sheetParsed);
             parsed[sheetName] = sheetParsed;
-            // console.log("sheet being patsed  parsed[sheetName]", parsed[sheetName]);
-
-          } else {
-
-            if(sheetName.toLowerCase().includes("temp")){
+          } else { //Template parsing
+            if (sheetName.toLowerCase().includes("temp")) {
               $log.warn(sheetName + ': template file parsing ');
-              var sheetParsed = parseTemplateSheet(sheet, gameType);  //TODO-new  parsedLevelDatause this instead of json levels
+              var sheetParsed = parseTemplateSheet(sheet, gameType); //TODO-new  parsedLevelDatause this instead of json levels
               parsedLevelData[sheetName] = sheetParsed;
               service.levelDataInformation[sheetName] = sheetParsed;
               service.TemplateSheets.push(sheetName);
-
-            } else {
+            } else { //q about other types of sheets - if the first is not parsble how do we define it?
               $log.warn(sheetName + ': unparseable');
             }
-
           }
-
-        } else { // it is a template - maybe add this here later defind as tempkate then do this -
-          $log.log(sheetName + ': skipping');
         }
 
-      });
+      }); //end of foreach function
 
-      // console.log("parsed Levels ", parsedLevelData);
-      // console.log("levelData parser info :  ", service.levelDataInformation.template2.levelData);
-      if(service.levelDataInformation.template2.levelData != undefined){
+      if (service.levelDataInformation.template2.levelData != undefined) {
         service.templateSampleForTestingOnly = service.levelDataInformation.template2.levelData;
-        // console.log("hello world ",  service.templateSampleForTestingOnly);
       }
 
-
-      // console.log("parsed Sheets", service.TemplateSheets);
-      // orgnizeNamesWithContent(service.TemplateSheets, parsedLevelData);
       return parsed;
     }
 
-    function testingNewTemplates(){
-      var q = $q.defer();
-      if(service.levelDataInformation.template2.levelData!= undefined){
-        q.resolve(service.levelDataInformation.template2.levelData);
-      } else {
-        console.warn("promise failed to resolve");
-      }
-      return q.promise;
 
-        // return service.levelDataInformation; //returns a whole ds of parsed data
-    }
-    //
-    // function TestAndgetSampleTemplatValuewillchangename(){
-    //
-    //   // I know this is wrong but a temp fix --- tried it with another method written here but did not work - promises gha
-    //   return xlsxService.loadWorkbookFromUrl(defaultUrl)
-    //     .then(function(book) {
-    //       // service.parsedContent = parseAllSheets(book, gameType);
-    //       return service.levelDataInformation; //returns a whole ds of parsed data
-    //     });
-    //
-    // }
-
-    // function orgnizeNamesWithContent(namesArray, contentArrays){
-    // }
 
     function parseAllSheetsFromFile(book, fileObject) { //not being used
       var parsed = {};
@@ -446,9 +518,6 @@
         });
     }
 
-
-
-
     function parseContentFromFile(fileObject) {
       return xlsxService.loadWorkbookFromFile(fileObject)
         .then(function(book) {
@@ -460,3 +529,46 @@
   }
 
 })();
+
+/*
+
+testingNewTemplates: testingNewTemplates
+
+function testingNewTemplates() {
+  var q = $q.defer();
+  if (service.levelDataInformation.template2.levelData != undefined) {
+    q.resolve(service.levelDataInformation.template2.levelData);
+  } else {
+    console.warn("promise failed to resolve");
+  }
+  return q.promise;
+
+  // return service.levelDataInformation; //returns a whole ds of parsed data
+}
+*/
+
+//
+// function TestAndgetSampleTemplatValuewillchangename(){
+//
+//   // I know this is wrong but a temp fix --- tried it with another method written here but did not work - promises gha
+//   return xlsxService.loadWorkbookFromUrl(defaultUrl)
+//     .then(function(book) {
+//       // service.parsedContent = parseAllSheets(book, gameType);
+//       return service.levelDataInformation; //returns a whole ds of parsed data
+//     });
+//
+// }
+
+// function orgnizeNamesWithContent(namesArray, contentArrays){
+// }
+
+
+// if(row.code===" "){ //!(row.code.includes("A","B","C","D"))
+//   // console.log(row.code);
+//   $log.warn("code value was empty or not a legal entry");
+//   console.log(row.code);
+//
+// }else {
+//     NewStructure.push(row);
+//
+// }

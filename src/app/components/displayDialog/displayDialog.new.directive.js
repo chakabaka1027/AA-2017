@@ -5,8 +5,8 @@
     .directive('displayDialog', displayDialog);
 
   /** @ngInject */
-  function displayDialog($log, conversationP5Data, parseAAContentService, nodeDataService, dialogService, audioService, mainInformationHandler, dialogOptions, userDataService, levelDataHandler) {
-    return {
+  function displayDialog($log, conversationP5Data, parseAAContentService, dialogService, audioService, mainInformationHandler, dialogOptions, userDataService, levelDataHandler) {
+    return { //removed nodeDataService - injector issue
       restrict: 'E',
       controller: controller,
       scope: {
@@ -94,7 +94,7 @@
         if (angular.isUndefined(mainInformationHandler.failedConvos[vm.dialogKey])) {
      mainInformationHandler.failedConvos[vm.dialogKey] = 0;
    }
-        console.log("in watch ",vm.dialogKey);
+        console.log("in watch in displayD",vm.dialogKey);
 
         if(vm.dialogKey){
           // will be: (may need to wrap in a promise)
@@ -102,12 +102,13 @@
           // vm.curNode = vm.curTree.rootNode;
           // setupForNode();
 
-          nodeDataService.parseFromDialogTree(vm.dialogKey).then(function(curTree){
-            console.log("-------- did this happen ",curTree);
-            vm.curTree = curTree;
-            vm.curNode = vm.curTree.rootNode;
-            setupForNode();
-        });
+    ///////// old one
+       // nodeDataService.parseFromDialogTree(vm.dialogKey).then(function(curTree){
+       //      console.log("-------- did this happen ",curTree);
+       //      vm.curTree = curTree;
+       //      vm.curNode = vm.curTree.rootNode;
+       //      setupForNode();
+       //  });
       }
 
       });
