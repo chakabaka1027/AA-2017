@@ -98,9 +98,11 @@
 
         if(vm.dialogKey){
           // will be: (may need to wrap in a promise)
-          // vm.curTree = nodeDataService.dialogTress[vm.dialogKey];
-          // vm.curNode = vm.curTree.rootNode;
-          // setupForNode();
+          vm.curTree = parseAAContentService.parsedContent[vm.dialogKey].dialogTree ;
+
+          console.log("------>   vm.curTree",  vm.curTree);
+          vm.curNode = vm.curTree.rootNode;
+          setupForNode();
 
     ///////// old one
        // nodeDataService.parseFromDialogTree(vm.dialogKey).then(function(curTree){

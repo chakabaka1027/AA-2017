@@ -30,7 +30,7 @@
     return parseAAContentService.parseContentFromGameType().then(function(response){
       // service.level= Object.keys(parseAAContentService.levelDataInformation)[0].levelData;  --- something like this
       //can use object.keys somehow or make sure they use the rigth spelling for sheet name
-      service.levels = parseAAContentService.returnCorrecPath();
+      service.levels = parseAAContentService.getLevelDataForURL().levels;
       // service.levels = parseAAContentService.levelDataInformation.template_positive_set1.levelData;
       });
 

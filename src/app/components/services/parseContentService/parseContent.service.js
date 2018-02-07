@@ -4,7 +4,7 @@
     .service('parseAAContentService', parseAAContentService);
 
   /** @ngInject */
-  function parseAAContentService($log, xlsxService, $q, $location) {
+  function parseAAContentService($log, xlsxService, $q, $location, nodeDataService) {
     // var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
     var defaultUrl = 'assets/newFormatDialogs.xlsx';
 
@@ -12,17 +12,21 @@
     var templatesSample = [];
 
     var service = {
-      parsedContent: {},
-      TemplateSheets: [],
-      levelDataInformation: {}, //test only 1
-      templateSampleForTestingOnly: {},
+      parsedContent: {}, //dictionary kyed by dialog key - yeilding objects of the form
+                          // {scoring: < scoring data >, dialogTree: < tree of dailoug text> }
+      levelDataInformation: {}, //dictionary that inculdes template-  - yeilding objects of the form
+                                  //    {
+                                    //   levels: < structre of the whole level - based on templates
+                                    //   audioSetting: true,
+                                    //   display: true
+                                    // };
 
 
       parseContentFromGameType: parseContentFromGameType,
-      parseContentFromFile: parseContentFromFile,
-      returnCorrecPath:returnCorrecPath,
+      getLevelDataForURL:getLevelDataForURL,
 
       // mostly internal; exposed for testing...
+      parseContentFromFile: parseContentFromFile,
       parseAllSheets: parseAllSheets,
       parseSheet: parseSheet,
       findSectionHeaders: findSectionHeaders      // TestAndgetSampleTemplatValuewillchangename:TestAndgetSampleTemplatValuewillchangename
@@ -96,13 +100,12 @@
 
 
     function parseNewStyleSheet(sheet, gameType) {
-      console.log("-----> key", );
 
       var hdrIndex = findSectionHeaderswithTarger(sheet, "code");
-      console.log("hdrIndex", hdrIndex.length); //or add another keyword to distinguish it
+      // console.log("hdrIndex", hdrIndex.length); //or add another keyword to distinguish it
 
       if (hdrIndex.length !== 1) { //oh for annie;s use got it but -
-        $log.warn("only include ONE \"code\" word - if you this error - there is either no code word or more than one word ");
+        $log.warn(" thhis isn't a dialoug - only include ONE \"code\" word  for  a dailoug  ");
         return null;
       }
 
@@ -111,24 +114,24 @@
       var numRows = xlsxService.findSheetSize(sheet).r;
       var startRow = 0,
         r = 0;
-      var NewStructure = [];
+      var dialogTexts = [];
       var defaultScorePerSheet = { //shoud this be done this way ?
         postiveScoreA: 0,
-        NegativeScoreA: 0,
+        negativeScoreA: 0,
         postiveScoreB: 0,
-        NegativeScoreB: 0,
+        negativeScoreB: 0,
         postiveScoreC: 0,
-        NegativeScoreC: 0,
+        negativeScoreC: 0,
         postiveScoreD: 0,
-        NegativeScoreD: 0,
+        negativeScoreD: 0,
         postiveSucsess: 0,
-        NegativeSucsess: 0
+        negativeSucsess: 0
       };
 
       //first iteration --->
       for (; r < numRows; r++) { //or manually add it in --- //such an UGLY PIECE OF CODE - but for now...
         if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'outcome table') { //will only read this once
-          console.log(">>>>outcome table reached!!");
+          // console.log(">>>>outcome table reached!!");
           if (xlsxService.cellValue(sheet, 1, r + 1) !== " ") { // if a  code number is there then set this as the default
             defaultScorePerSheet.postiveScoreA = xlsxService.cellValue(sheet, 1, r + 1); ///// hard coded in - ugly this way though ><
             defaultScorePerSheet.NegativeScoreA = xlsxService.cellValue(sheet, 2, r + 1);
@@ -165,22 +168,24 @@
             animationNegative: xlsxService.cellValue(sheet, 4, startRow) //should we add values for score ...?
             // if(defaultScorePerSheet.postiveScoreA!== " " ){  //   if it empty read in defaulr scores?   // }
           };
-          NewStructure.push(row);
+          dialogTexts.push(row);
         }
       } //end of for loop
 
-      console.log("----> the new structure for this sheet ", NewStructure);
-      console.log("----->default scores: ", defaultScorePerSheet);
 
-      if (NewStructure.length > 1) {
-        return NewStructure;
+      // console.log("----> the new structure for this sheet ", dialogTexts);
+      // console.log("----->default scores: ", defaultScorePerSheet);
+
+      if (dialogTexts.length > 1) {
+        return { defaultScorePerSheet:defaultScorePerSheet, dialogTexts:dialogTexts } ;
       }
 
     }
 
 
 
-
+//get object that has those propoerties
+// collection[workseetname] =
 
 
 
@@ -283,9 +288,9 @@
 
     function parseTemplateSheet(sheet, gameType) {
 
-      var levelData = {};
+      var levels = {};
       var gameCaseData = {
-        levelData: levelData,
+        levels: levels,
         audioSetting: true,
         display: true
       };
@@ -322,14 +327,14 @@
             room_pos: xlsxService.cellValue(sheet, 4, r)
           };
 
-          if (angular.isUndefined(levelData[templateRow.level])) {
-            levelData[templateRow.level] = {
+          if (angular.isUndefined(levels[templateRow.level])) {
+            levels[templateRow.level] = {
               requiredConversations: [],
               rooms: {}
             };
           }
 
-          var roomsData = levelData[templateRow.level].rooms;
+          var roomsData = levels[templateRow.level].rooms;
           if (angular.isUndefined(roomsData[templateRow.room])) {
             roomsData[templateRow.room] = {};
           }
@@ -347,7 +352,7 @@
           });
 
           if (templateRow.convo !== '') {
-            levelData[templateRow.level].requiredConversations.push(templateRow.convo);
+            levels[templateRow.level].requiredConversations.push(templateRow.convo);
           }
 
         }
@@ -450,6 +455,8 @@
     }
 
     function parseAllSheets(book, gameType) {
+      console.log( "parsed all sheets called? <<<<<<<<<");
+
       var parsed = {};
       var parsedLevelData = {};
       var sheetNames = book.SheetNames;
@@ -457,22 +464,20 @@
       sheetNames.forEach(function(sheetName) {
         if (sheetName !== 'Template') { // parse anything if its not template
           var sheet = book.Sheets[sheetName];
-          // var sheetParsed = parseSheet(sheet, gameType); OLD EXCEL
           var sheetParsed = parseNewStyleSheet(sheet, gameType); //SheetParsing new excel
-          console.log("------>>>>sheetParsed", sheetParsed);
+          // console.log("------>>>>sheetParsed", sheetParsed);
           if (sheetParsed) {
-            // nodeDataService.dialogTress[dialogKey] = nodeDataService.parseNewStructure(sheetParsed);
-            //something like this? but when used this way I get an error with circulator camt have node data structure here
-            // nodeDataService.dialogTress[sheetParsed] = nodeDataService.parseNewStructure(sheetParsed);
-            parsed[sheetName] = sheetParsed;
+
+            parsed[sheetName]= {scoring:sheetParsed.defaultScorePerSheet, dialogTree:nodeDataService.parseNewStructure(sheetParsed.dialogTexts)};
+
           } else { //Template parsing
             if (sheetName.toLowerCase().includes("temp")) {
               $log.warn(sheetName + ': template file parsing ');
               var sheetParsed = parseTemplateSheet(sheet, gameType); //TODO-new  parsedLevelDatause this instead of json levels
               parsedLevelData[sheetName] = sheetParsed;
               service.levelDataInformation[sheetName] = sheetParsed;
-              service.TemplateSheets.push(sheetName);
-              console.log("mmmmmmm->",service.levelDataInformation );
+              // service.TemplateSheets.push(sheetName);
+              // console.log("mmmmmmm->",service.levelDataInformation );
               // returnCorrecPath();
             } else { //q about other types of sheets - if the first is not parsble how do we define it?
               $log.warn(sheetName + ': unparseable');
@@ -485,34 +490,25 @@
       // if (service.levelDataInformation.template2.levelData != undefined) {
       //   service.templateSampleForTestingOnly = service.levelDataInformation.template2.levelData;
       // }
+      console.log( "TT___TT parsed information <<<<<<<<<<<<<<",parsed);
 
       return parsed;
     }
 
 
-    function returnCorrecPath(){
+    function getLevelDataForURL(){
       //I KNOW THIS WAS  done another way but I'm not sure how to acsess levels since before was done though json - --
 
-      var url = $location.path();
-      console.log("ooooooo",url);
+      var levelKey = "template-"+$location.path().replace("/","");
+      var levelData = service.levelDataInformation[levelKey];
+        if(angular.isUndefined(levelData)){
+          $log.warn("undefined path - make sure you type it in correctly ")
+          return  service.levelDataInformation["template-positive"];
+        } else {
+          return levelData;
+        }
+        // leveldata = {sheetname: leveldata information: {}}
 
-      switch (url) { /// I knOW THERE should be an easy wau of going this - or this has been done before - location is wrong but just for testing
-        //substitue new method here
-        case '/positive-set1':  ///./or use object.keys insuead of hardcoded names
-          return service.levelDataInformation.template_positive_set1.levelData;
-        case '/positive-set3':  ///./or use object.keys insuead of hardcoded names
-          return service.levelDataInformation.template_positive_set3.levelData;
-        case '/negative-set4':  ///./or use object.keys insuead of hardcoded names
-          return service.levelDataInformation.template_negative_set4.levelData;
-        case '/negative-set2':  ///./or use object.keys insuead of hardcoded names
-          return service.levelDataInformation.template_negative_set2.levelData;
-        case '/positive':  ///./or use object.keys insuead of hardcoded names
-          return service.levelDataInformation.template_positive.levelData;
-
-        default:
-          return service.levelDataInformation.template_positive_set1.levelData;
-
-      }
 
     }
 

@@ -10,7 +10,7 @@
                                   conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler,dialogOptions) {
     var vm = this;
     vm.levelData = levelDataHandler.choiceScores;
-    vm.currentConversation = "fran_Linear";
+    vm.currentConversation = "FF.Linear";
     vm.talkingWith = "fran";
     vm.hasLoaded = false;
     vm.loadFromFile = loadFromFile;
@@ -38,7 +38,7 @@
         .map(function(dkey) {
           return {
             label: dkey + ' [' + dialogService.dialogWorksheetKeys[dkey] + ']',
-            key: dkey
+            key: dialogService.dialogWorksheetKeys[dkey]
           };
         });
       vm.displayCharacters = true;
@@ -47,8 +47,10 @@
 
       $scope.$watch(function() {return vm.currentConversation;}, function() {
 
-        vm.branchHistory = [];
-        vm.talkingWith = vm.currentConversation.split("_")[0];
+        vm.branchHistory = []; //temporary fix below
+        $log.warn("always talking to fran ");
+        vm.talkingWith = "fran";
+         // vm.talkingWith = vm.currentConversation.split("_")[0];
         vm.displayCharacters = false;
         mainInformationHandler.currentConversation = vm.currentConversation;
         dialogOptions.talkingWith = vm.talkingWith;

@@ -5,7 +5,7 @@
 		.service('nodeDataService', nodeDataService);
 
 	/** @ngInject */
-	function nodeDataService($log, dialogService, levelDataHandler, userGameInfo) {
+	function nodeDataService($log,   userGameInfo) {//levelDataHandler,
 		// console.log(testNewStructure);
 
 		function DialogNode(data){
@@ -18,7 +18,7 @@
 				angular.extend(this, {
 		            pcText: data.PC_Text,
 		            npcText: data.NPC_Response,
-								animation: (userGameInfo.gameType.indexOf("positive") === 0 ? data.animationPositive : data.animationNegative)
+								animation:  data.animationNegative //TODO userGameInfo.gameType.indexOf("positive") === 0 ? data.animationPositive : data.animationNegative
 
 				});
 	          	this.isRoot = false;
@@ -79,25 +79,26 @@
 	    	angular.forEach(this.nodeDict, function(node, nodeCode) {
 	    		if (Object.keys(node.children).length===0) {
 	    			// this is a leaf
-	    			$log.log('Node '+nodeCode+' is a leaf');
+	    			// $log.log('Node '+nodeCode+' is a leaf ');
+						// TODO $log.warn('Node '+nodeCode+' is a leaf '+'come back and fix me ');
 
 	    			node.score = 15; // actually, figure this out !!!!!!!!
-			        // for now, grab this from the existing parse via levelDataHandler
-							console.log("testing: ", levelDataHandler.successPaths.indexOf(nodeCode) ); //gives - 1  i.e. false - i.e. does not exusut in the sucsess paths - got it!
-			        if (levelDataHandler.successPaths.indexOf(nodeCode)>=0) { 								//liner will always be false ? because the new path is not a sucsess path ( xxxxxx)
-								console.log("this was true!");
-			        	node.success = true;
-			        } else {
-								node.success = false; // it is undefined but for testing purposes so I can see it better
-							}
-			        node.score = 0;
-			        for (var i=0; i<nodeCode.length; i++) {
-			        	node.score += levelDataHandler.choiceScores[nodeCode[i]]; // i sthis in place of scores
-								node.currentScore  += node.score ;
-								console.log("Valueees"+ node.currentScore);
-
-
-			        }
+			      //   // for now, grab this from the existing parse via levelDataHandler
+						// 	console.log("testing: ", levelDataHandler.successPaths.indexOf(nodeCode) ); //gives - 1  i.e. false - i.e. does not exusut in the sucsess paths - got it!
+			      //   if (levelDataHandler.successPaths.indexOf(nodeCode)>=0) { 								//liner will always be false ? because the new path is not a sucsess path ( xxxxxx)
+						// 		console.log("this was true!");
+			      //   	node.success = true;
+			      //   } else {
+						// 		node.success = false; // it is undefined but for testing purposes so I can see it better
+						// 	}
+			      //   node.score = 0;
+			      //   for (var i=0; i<nodeCode.length; i++) {
+			      //   	node.score += levelDataHandler.choiceScores[nodeCode[i]]; // i sthis in place of scores
+						// 		node.currentScore  += node.score ;
+						// 		console.log("Valueees"+ node.currentScore);
+            //
+            //
+			      //   }
 	    		}
 	    	});
 
