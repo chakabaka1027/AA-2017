@@ -25,19 +25,13 @@
     return service;
 
     function setUpForGameType(gameType) {//TODO!!!new change this into using the new levels structure
-      var levelsPath = "assets/LevelJson/levels.json";
-      var otherLevelsPath = "assets/LevelJson/otherlevels.json";
-      // service.templateSampleForTestingOnly
 
 
-
-//////////////////////////////////
     return parseAAContentService.parseContentFromGameType().then(function(response){
-
-         service.levels = parseAAContentService.templateSampleForTestingOnly;
-         //this is only a sample need to deferinate it here based on game type - set it to the right level - switch statment ? do we have a set list?
-
-         console.log(">>>> new levels inside  :",service.levels);
+      // service.level= Object.keys(parseAAContentService.levelDataInformation)[0].levelData;  --- something like this
+      //can use object.keys somehow or make sure they use the rigth spelling for sheet name
+      service.levels = parseAAContentService.returnCorrecPath();
+      // service.levels = parseAAContentService.levelDataInformation.template_positive_set1.levelData;
       });
 
 
@@ -46,42 +40,28 @@
 
 
     function getRoomDialogs(levelKey, roomKey) {
-      //got 1 and room name ( all room names ) ... room key is room name
+
       console.log("}}}}}}}>>>> testing getRoomDialougs   :",service.levels);
 
         var currentRoomCheck = service.levels[levelKey].rooms[roomKey];//TODO!!!new check if this changes as well
         var dialogs = [];
-        console.log("}}}}}}}>>>>  currentRoomCheck :",service.levels[levelKey].rooms[roomKey]);// retunrd charlu and luna //what was the key supposed to be here? - AH con
-//rooms get it right and level key gives right convo im not sure what jeys are or why they are an empty string
+        // console.log("}}}}}}}>>>>  currentRoomCheck :",service.levels[levelKey].rooms[roomKey]);// retunrd charlu and luna //what was the key supposed to be here? - AH con
 
         if (!currentRoomCheck)
-        {//never called
+        {
           return dialogs;
         }
 
         angular.forEach(currentRoomCheck, function(characterData) {// dialogInfo[key]
-                  //try and acsess the array here //fran ismNecer acconted 4...
-                  // console.log("TT___TT) currentRoomCheck in 4loop ||||||",currentRoomCheck); //characterData holds postion and key... was this the case before? but both empty
-
-          // console.log("}}}leangth of array convos a ||||||",characterData.dialogInfo.length); //characterData holds postion and key... was this the case before? but both empty
-
-          // console.log("}}}foreachacalled  characterData.dialogInfo ||||||",characterData.dialogInfo ); //characterData holds postion and key... was this the case before? but both empty
-          // if (characterData.dialogKey) { //current room is charly and luna no fran...
 
 
-//change 0 to index instead - maybe change to 4loop since need an index or add a var and add checks
           if (characterData.dialogInfo[0].key) { //current room is charly and luna no fran...
-              // console.log("{{------is thiis ever true ?",dialogs);
             dialogs.push(characterData.dialogInfo[0].key);
-            // console.log("{{------dialogs",dialogs);
-            // dialogs.push(characterData.dialogKey);
-            //TODO possible fix here
+
 
           }
-          // if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
           if (characterData.dialogInfo.length>1) { //i/e second convo
             dialogs.push(characterData.dialogInfo[1].key);
-            // console.log("{{------dialogs on >1 ",dialogs);
 
           }
         });
@@ -90,7 +70,23 @@
   } //end of controller
 })();
 
+//rooms get it right and level key gives right convo im not sure what jeys are or why they are an empty string
 
+// console.log("{{------is thiis ever true ?",dialogs);
+
+//try and acsess the array here //fran ismNecer acconted 4...
+// console.log("TT___TT) currentRoomCheck in 4loop ||||||",currentRoomCheck); //characterData holds postion and key... was this the case before? but both empty
+
+// console.log("}}}leangth of array convos a ||||||",characterData.dialogInfo.length); //characterData holds postion and key... was this the case before? but both empty
+
+// console.log("}}}foreachacalled  characterData.dialogInfo ||||||",characterData.dialogInfo ); //characterData holds postion and key... was this the case before? but both empty
+// if (characterData.dialogKey) { //current room is charly and luna no fran...
+//change 0 to index instead - maybe change to 4loop since need an index or add a var and add checks
+// console.log("{{------dialogs on >1 ",dialogs);
+// if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
+// console.log("{{------dialogs",dialogs);
+// dialogs.push(characterData.dialogKey);
+//TODO possible fix here
 
 
 /*** Old Code that was inside set up

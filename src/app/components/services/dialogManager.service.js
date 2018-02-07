@@ -73,6 +73,7 @@
                 .then(function() {
                     $log.log("Test Loaded from url '"+prefix+"'.");
                     $log.log('Success!');
+                    console.log("<<<<<------", parseAAContentService.parseContentFromGameType(prefix));//gives us array
 
                 })
                 .then(function(){
@@ -88,7 +89,7 @@
 
         }
 
-        function adjustDialogWorksheetKeys() {
+        function adjustDialogWorksheetKeys() { //TODO check if I can translate it here instead 
 
           var casedKeyMap = Object.keys(parseAAContentService.parsedContent)
                     .reduce(function(acc, wsKey) { acc[wsKey.toUpperCase()] = wsKey; return acc;}, {});
@@ -97,6 +98,7 @@
             adjustedKeys[dialogKey] = casedKeyMap[dialogWorksheetKeys[dialogKey].toUpperCase()];
           }
           service.dialogWorksheetKeys = dialogWorksheetKeys = adjustedKeys;
+          console.log(">>>>>>>>- ",  service.dialogWorksheetKeys ); //has dictionary of keys
 
   }
         function adjustNegativePositiveLinearKeys(gameType) {

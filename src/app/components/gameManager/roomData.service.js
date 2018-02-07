@@ -3,7 +3,7 @@
 
 	angular
 		.module('awkwardAnnie')
-		.service('roomData', roomData); //room data here - 
+		.service('roomData', roomData); //room data here -
 
 	/** @ngInject */
 	function roomData(){
@@ -347,6 +347,13 @@
 				}
 			}
 		};
+
+		function swapRooms(room1, room2 ){ //swap room 1 and 2 postions
+			var swapper = roomData.room1;
+			roomData.room1 = roomData.room2;
+			roomData.room2 = swapper;
+		}
+
 		return roomData;
 	}
 })();

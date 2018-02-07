@@ -4,7 +4,7 @@
     .service('parseAAContentService', parseAAContentService);
 
   /** @ngInject */
-  function parseAAContentService($log, xlsxService, $q) {
+  function parseAAContentService($log, xlsxService, $q, $location) {
     // var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
     var defaultUrl = 'assets/newFormatDialogs.xlsx';
 
@@ -20,6 +20,7 @@
 
       parseContentFromGameType: parseContentFromGameType,
       parseContentFromFile: parseContentFromFile,
+      returnCorrecPath:returnCorrecPath,
 
       // mostly internal; exposed for testing...
       parseAllSheets: parseAllSheets,
@@ -471,6 +472,8 @@
               parsedLevelData[sheetName] = sheetParsed;
               service.levelDataInformation[sheetName] = sheetParsed;
               service.TemplateSheets.push(sheetName);
+              console.log("mmmmmmm->",service.levelDataInformation );
+              // returnCorrecPath();
             } else { //q about other types of sheets - if the first is not parsble how do we define it?
               $log.warn(sheetName + ': unparseable');
             }
@@ -478,14 +481,40 @@
         }
 
       }); //end of foreach function
-
-      if (service.levelDataInformation.template2.levelData != undefined) {
-        service.templateSampleForTestingOnly = service.levelDataInformation.template2.levelData;
-      }
+      //
+      // if (service.levelDataInformation.template2.levelData != undefined) {
+      //   service.templateSampleForTestingOnly = service.levelDataInformation.template2.levelData;
+      // }
 
       return parsed;
     }
 
+
+    function returnCorrecPath(){
+      //I KNOW THIS WAS  done another way but I'm not sure how to acsess levels since before was done though json - --
+
+      var url = $location.path();
+      console.log("ooooooo",url);
+
+      switch (url) { /// I knOW THERE should be an easy wau of going this - or this has been done before - location is wrong but just for testing
+        //substitue new method here
+        case '/positive-set1':  ///./or use object.keys insuead of hardcoded names
+          return service.levelDataInformation.template_positive_set1.levelData;
+        case '/positive-set3':  ///./or use object.keys insuead of hardcoded names
+          return service.levelDataInformation.template_positive_set3.levelData;
+        case '/negative-set4':  ///./or use object.keys insuead of hardcoded names
+          return service.levelDataInformation.template_negative_set4.levelData;
+        case '/negative-set2':  ///./or use object.keys insuead of hardcoded names
+          return service.levelDataInformation.template_negative_set2.levelData;
+        case '/positive':  ///./or use object.keys insuead of hardcoded names
+          return service.levelDataInformation.template_positive.levelData;
+
+        default:
+          return service.levelDataInformation.template_positive_set1.levelData;
+
+      }
+
+    }
 
 
     function parseAllSheetsFromFile(book, fileObject) { //not being used
