@@ -226,7 +226,7 @@
 
     }
 
-    function parseAllSheets(book, gameType) {
+    function parseAllSheets(book) {
       
       var parsedDialogs = {};
       var parsedLevelData = {};
@@ -288,7 +288,15 @@
         });
     }
 
-
+    function parseContentFromFile(fileObject) {
+      service.parsedContent = {};
+      service.levelDataInformation = {};
+      return xlsxService.loadWorkbookFromFile(fileObject)
+        .then(function(book) {
+          service.parsedContent = parseAllSheets(book);
+          return service.parsedContent; //returns a whole ds of parsed data
+        });
+    }
 
     /////////////////////////////////
     /////////////////////////////////
@@ -546,7 +554,7 @@
 
     }
 
-    function parseContentFromFile(fileObject) {
+    function parseContentFromFileOldSTyle(fileObject) {
       return xlsxService.loadWorkbookFromFile(fileObject)
         .then(function(book) {
           service.parsedContent = parseAllSheetsFromFile(book, fileObject);
