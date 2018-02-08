@@ -18,7 +18,7 @@
                           //  dialogTree: < tree of dialog text> 
                           // }
 
-      levelDataInformation: {},   // dictionary that inculdes template-<game-name>  - yeilding objects of the form
+      levelDataInformation: {},   // dictionary that includes template-<game-name>  - yeilding objects of the form
                                   //  {
                                   //    levels: < structure of the whole level - based on templates >
                                   //    audioSetting: true,
@@ -58,15 +58,18 @@
       return s.trim();
     }
 
-    function parseDialogSheet(sheet) {
+    function parseDialogSheet(sheet, sheetName) {
 
+      /*
       var hdrIndex = findSectionHeaderswithTarget(sheet, "code");
       // console.log("hdrIndex", hdrIndex.length); //or add another keyword to distinguish it
 
       if (hdrIndex.length !== 1) { //oh for annie;s use got it but -
-        $log.warn(" this isn't a dialoug - only include ONE \"code\" word for a dialog  ");
+        $log.warn("'"+sheetName+"' isn't a dialog - only include ONE \"code\" word for a dialog  ");
+        $log.log(sheet);
         return null;
       }
+      */
 
       var numRows = xlsxService.findSheetSize(sheet).r;
       var startRow = 0,
@@ -86,7 +89,7 @@
       var parserState = 'inHeader';
 
       while (r<numRows) {
-        col0 = xlsxService.cellValue(sheet, 0, r).toLowerCase().split(' ')[0];
+        col0 = (xlsxService.cellValue(sheet, 0, r)+'').toLowerCase().split(' ')[0];
 
         switch(parserState) {
         
@@ -114,9 +117,9 @@
         
           case 'inDialogNodes':
             if (xlsxService.cellValue(sheet, 0, r).trim()==='') {
-              $log.warn('warning there is a missing code value! ');
+              // $log.warn('warning there is a missing code value! ');
             } else {
-              var row = { //so it looks like the original ds
+              var row = {
                 code: xlsxService.cellValue(sheet, 0, r),
                 PC_Text: xlsxService.cellValue(sheet, 1, r),
                 NPC_Response: xlsxService.cellValue(sheet, 2, r),
@@ -142,7 +145,7 @@
       if (dialogTexts.length > 1) {
         return { scoring:scoring, dialogTexts:dialogTexts } ;
       } else {
-        $log.warn(" thhis is a dialog - with no dialog text?????");
+        $log.warn("'"+sheetName+"' is a dialog - with no dialog text?????");
         return null;
       }
 
@@ -224,8 +227,7 @@
     }
 
     function parseAllSheets(book, gameType) {
-      console.log( "parsed all sheets called? <<<<<<<<<");
-
+      
       var parsedDialogs = {};
       var parsedLevelData = {};
       var sheetNames = book.SheetNames;
@@ -233,26 +235,26 @@
       sheetNames.forEach(function(sheetName) {
         if (sheetName !== 'Template') { // parse anything if its not template
           var sheet = book.Sheets[sheetName];
-          var sheetParsed = parseDialogSheet(sheet, gameType); //SheetParsing new excel
-          // console.log("------>>>>sheetParsed", sheetParsed);
-          if (sheetParsed) {
-
-            $log.log('sheetName', sheetName);
-
-            parsedDialogs[sheetName]= {
-              scoring: sheetParsed.scoring,
-              dialogTree: nodeDataService.parseNewStructure(sheetParsed.dialogTexts, sheetParsed.scoring)
-            };
-
-          } else { //Template parsing
-            if (sheetName.toLowerCase().includes("temp")) {
-              $log.warn(sheetName + ': template file parsing ');
-              var sheetParsed = parseGameCaseSheet(sheet, gameType); //TODO-new  parsedLevelDatause this instead of json levels
-              parsedLevelData[sheetName] = sheetParsed;
-              service.levelDataInformation[sheetName] = sheetParsed;
-            } else { //q about other types of sheets - if the first is not parsble how do we define it?
+          if (sheetName.indexOf('template-')<0) {
+            var sheetParsed = parseDialogSheet(sheet, sheetName); //SheetParsing new excel
+            // console.log("------>>>>sheetParsed", sheetParsed);
+            if (sheetParsed) {
+              parsedDialogs[sheetName]= {
+                scoring: sheetParsed.scoring,
+                dialogTree: nodeDataService.parseNewStructure(sheetParsed.dialogTexts, sheetParsed.scoring)
+              }
+            } else {
               $log.warn(sheetName + ': unparseable');
             }
+
+          } else { //Template parsing... ?
+              var sheetParsed = parseGameCaseSheet(sheet); //TODO-new  parsedLevelDatause this instead of json levels
+              if (sheetParsed) {
+                parsedLevelData[sheetName] = sheetParsed;
+                service.levelDataInformation[sheetName] = sheetParsed;
+              } else {
+                $log.warn(sheetName + ': unparseable');
+              }
           }
         }
 
@@ -298,7 +300,7 @@
     /////////////////////////////////
     /////////////////////////////////
     /////////////////////////////////
-    // BEGIN OLD STYLE PARSING CODE
+    // BEGIN OLD STYLE PARSING CODE, ALSO KNOWN AS 'CODE THAT WILL BE DELETED IN SHORT ORDER'
     /////////////////////////////////
 
     function findSectionHeaders(sheet) {

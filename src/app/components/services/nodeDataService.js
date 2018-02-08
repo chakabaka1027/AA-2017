@@ -26,8 +26,8 @@
 	          	this.isRoot = false;
 	          	this.code = data.code; //what we will use to triverse the tree
 	          	if (data.code==='CCCC') {
-	          		$log.log('CCCC node',this);
-	          		$log.log(userGameInfo.isGamePositive());
+	          		// $log.log('CCCC node',this);
+	          		// $log.log(userGameInfo.isGamePositive());
 	          	}
 	          	this.choiceCode = data.code[data.code.length - 1];
 	    	}
@@ -77,7 +77,7 @@
 
 	    	angular.forEach(this.nodeDict, function(node, nodeCode) {
 	    		if (node===that.rootNode) {
-	    			$log.log('parsing root node', that.findParent(node.code));
+	    			// $log.log('parsing root node', that.findParent(node.code));
 	    		}
 		        var parent = that.findParent(node.code);
 		        if (parent) {
@@ -110,9 +110,9 @@
 	    				}
 	    			}
     				if (nodeCode==='CCCC') {
-    					$log.log('CCCC-----');
-    					$log.log(node.positive);
-    					$log.log(node.negative);
+    					// $log.log('CCCC-----');
+    					// $log.log(node.positive);
+    					// $log.log(node.negative);
     				}
 	    			if (node.positive.success !== 0 && node.positive.success !== 1) {
 	    				node.positive.success = (node.positive.score/node.code.length>=scoringData.positive.successThreshold ? 1 : 0);

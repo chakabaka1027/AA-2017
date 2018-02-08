@@ -25,47 +25,35 @@
     return service;
 
     function setUpForGameType(gameType) {//TODO!!!new change this into using the new levels structure
-
-
-    return parseAAContentService.parseContentFromGameType().then(function(response){
-      // service.level= Object.keys(parseAAContentService.levelDataInformation)[0].levelData;  --- something like this
-      //can use object.keys somehow or make sure they use the rigth spelling for sheet name
-      service.levels = parseAAContentService.getLevelDataForURL().levels;
-      // service.levels = parseAAContentService.levelDataInformation.template_positive_set1.levelData;
-      });
-
-
-
-    } //end of setUp
-
+      return parseAAContentService.parseContentFromGameType().then(function(response){
+        service.levels = parseAAContentService.getLevelDataForURL().levels;
+        });
+    }
 
     function getRoomDialogs(levelKey, roomKey) {
 
-      console.log("}}}}}}}>>>> testing getRoomDialougs   :",service.levels);
+      // console.log("}}}}}}}>>>> testing getRoomDialougs   :",service.levels);
 
-        var currentRoomCheck = service.levels[levelKey].rooms[roomKey];//TODO!!!new check if this changes as well
-        var dialogs = [];
-        // console.log("}}}}}}}>>>>  currentRoomCheck :",service.levels[levelKey].rooms[roomKey]);// retunrd charlu and luna //what was the key supposed to be here? - AH con
+      var currentRoomCheck = service.levels[levelKey].rooms[roomKey];//TODO!!!new check if this changes as well
+      var dialogs = [];
 
-        if (!currentRoomCheck)
-        {
-          return dialogs;
-        }
+      // console.log("}}}}}}}>>>>  currentRoomCheck :",service.levels[levelKey].rooms[roomKey]);// retunrd charlu and luna //what was the key supposed to be here? - AH con
 
-        angular.forEach(currentRoomCheck, function(characterData) {// dialogInfo[key]
-
-
-          if (characterData.dialogInfo[0].key) { //current room is charly and luna no fran...
-            dialogs.push(characterData.dialogInfo[0].key);
-
-
-          }
-          if (characterData.dialogInfo.length>1) { //i/e second convo
-            dialogs.push(characterData.dialogInfo[1].key);
-
-          }
-        });
+      if (!currentRoomCheck) {
         return dialogs;
+      }
+
+      angular.forEach(currentRoomCheck, function(characterData) {// dialogInfo[key]
+        if (characterData.dialogInfo[0].key) { //current room is charly and luna no fran...
+          dialogs.push(characterData.dialogInfo[0].key);
+        }
+        if (characterData.dialogInfo.length>1) { //i/e second convo
+          dialogs.push(characterData.dialogInfo[1].key);
+        }
+      });
+
+      return dialogs;
+
     }
   } //end of controller
 })();
