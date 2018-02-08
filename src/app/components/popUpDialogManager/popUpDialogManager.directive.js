@@ -83,7 +83,6 @@
 				insetWindow.draw = function() {
 					insetWindow.background('#dae7b9');
 					// if sprite has animation for the choice, change it
-					$log.log('popUpDialog draw '+dialogOptions.animationTitle);
 					if (dialogOptions.animationTitle.trim() !== "") {
 						dialogSprite.changeAnimation(dialogOptions.animationTitle);
 						if (dialogOptions.animationTitle.indexOf("bold") > 0) {
