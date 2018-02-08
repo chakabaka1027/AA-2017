@@ -54,6 +54,7 @@
 
 
       function setupForNode() {
+        $log.log('setupForNode');
 
         if (vm.isTestBed) {
           // for extra feedback when using dialogTestBed...
@@ -100,6 +101,7 @@
 
           vm.curNode = vm.curTree.rootNode;
           setupForNode();
+          vm.npcResponse = vm.chosenAnnie = "";
           // console.log("------>   vm.curTree",  vm.curTree);
         }
 
@@ -122,7 +124,7 @@
           mainInformationHandler.totalConvoPoints = 0;
           console.log(mainInformationHandler.completedConvos);
         } else {
-          $log.warn('clickOnChoice: Player failed conversation - should this commented code be done here or in setupForNode?')
+          $log.warn('clickOnChoice: Player failed conversation - should this commented code be done here or in setupForNode?');
         //   // //TODO verify this - if move is ok
         //   // mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
         //   // mainInformationHandler.lastConversationSuccessful = false;
@@ -147,6 +149,7 @@
       }
 
       function clickContinue() { //move this ?
+        $log.log('clickContinue');
         dialogOptions.hideDialog = true;
         dialogOptions.animationTitle = "";
         vm.showContinue = false;
@@ -157,7 +160,16 @@
         //data tracking -
         if(!vm.isTestBed) {
           trackDataAtEndofConvo();
+        } else {
+          // for test bed, reset the dialog to the beginning...
+          vm.curTree = parseAAContentService.parsedContent[vm.dialogKey].dialogTree ;
+
+          vm.curNode = vm.curTree.rootNode;
+          setupForNode();
+          vm.npcResponse = vm.chosenAnnie = "";
+
         }
+
         // chooseDialogScript();
         // vm.main.branchHistory = [];
         // vm.main.currentChoiceInfo = {};

@@ -39,6 +39,10 @@
 	      this.children[childNode.choiceCode] = childNode;
 	    };
 
+	    pnt.isTerminal = function() {
+	    	return Object.keys(this.children).length===0;
+	    };
+
 	    function DialogTree(nodeArray, scoringData) {
       		// do some stuff...
       		this.setupTree(nodeArray, scoringData);

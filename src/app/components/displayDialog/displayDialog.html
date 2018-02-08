@@ -11,11 +11,13 @@
   <div class="blue-continue" ng-click="vm.clickContinue()" ng-if="vm.showContinue && vm.choiceDelay"></div>
 </div>
 
-<div class="pc-bubble">
-  <p id="pcBubbleText"> {{vm.curNode.pcText}}</p>
+<div class="pc-bubble" ng-if="vm.chosenAnnie">
+  <!-- p id="pcBubbleText"> {{vm.curNode.pcText}}</p -->
+  <p id="pcBubbleText"> {{vm.chosenAnnie}}</p>
 </div>
-<div class="npc-bubble" ng-if="vm.curNode.npcText">
-  <p id="npcBubbleText">{{vm.curNode.npcText}}</p>
+<div class="npc-bubble" ng-if="vm.npcResponse">
+  <!-- p id="npcBubbleText">{{vm.curNode.npcText}}</p -->
+  <p id="npcBubbleText">{{vm.npcResponse}}</p>
 </div>
 
 <!-- edit this!  -->

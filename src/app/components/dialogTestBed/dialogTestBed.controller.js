@@ -30,15 +30,23 @@
         activate();
       });
 
+    function characterFromDialogKey(dkey) {
+      var cmap = {
+        'FF': 'fran', 'MM': 'mike', 'CC': 'charlie', 'LL': 'luna'
+      };
+
+      return cmap[dkey.split('.')[0]];
+    }
+
     function activate() {
       vm.levelCount = 1;
       vm.levelUp = false;
       vm.failedConvos = [];
-      vm.dialogList = dialogService.getDialogKeys()
+      vm.dialogList = Object.keys(parseAAContentService.parsedContent)
         .map(function(dkey) {
           return {
-            label: dkey + ' [' + dialogService.dialogWorksheetKeys[dkey] + ']',
-            key: dialogService.dialogWorksheetKeys[dkey]
+            label: dkey,
+            key: dkey
           };
         });
       vm.displayCharacters = true;
@@ -48,9 +56,9 @@
       $scope.$watch(function() {return vm.currentConversation;}, function() {
 
         vm.branchHistory = []; //temporary fix below
-        $log.warn("always talking to fran ");
-        vm.talkingWith = "fran";
-         // vm.talkingWith = vm.currentConversation.split("_")[0];
+
+        vm.talkingWith = characterFromDialogKey(vm.currentConversation); // "fran";
+
         vm.displayCharacters = false;
         mainInformationHandler.currentConversation = vm.currentConversation;
         dialogOptions.talkingWith = vm.talkingWith;
