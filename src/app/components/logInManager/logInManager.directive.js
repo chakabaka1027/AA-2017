@@ -11,7 +11,7 @@
     var directive = {
       restrict: 'AE',
       controller: introController,
-      templateUrl: "app/components/logIn_Manager/introSpecs.html",
+      templateUrl: "app/components/logInManager/logInManager.html",
       scope: {
         main: "="
       },
