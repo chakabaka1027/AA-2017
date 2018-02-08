@@ -58,24 +58,24 @@
           vm.main.curNode = vm.curNode;
           vm.main.testValues = levelDataHandler.choiceScores;
           vm.main.count = 0;
-          console.log("~~~~~~~~~~~~~",vm.main.testValues );//[vm.main.curNode.choiceCode]
+          // console.log("~~~~~~~~~~~~~",vm.main.testValues );//[vm.main.curNode.choiceCode]
         }
 
         vm.currentNodeChoices = [];
         if (vm.curNode) {
           angular.forEach(vm.curNode.children, function(child) {
             vm.currentNodeChoices.push({choice:child.choiceCode, node: child});
-
           });
-         shuffle(vm.currentNodeChoices);
-         randomChoices =   shuffle(vm.currentNodeChoices); //TODO double check
-          vm.showContinue = vm.currentNodeChoices.length===0;
-            if (vm.showContinue) {
-              $log.log('---Success: '+vm.curNode.success+'; Score '+vm.curNode.score); //here calculate score
+          shuffle(vm.currentNodeChoices);
+          randomChoices = shuffle(vm.currentNodeChoices); //TODO double check
+          vm.showContinue = vm.currentNodeChoices.length===0; // length 0 means this is a leaf node
+          if (vm.showContinue) {
+            $log.log('---Success: '+vm.curNode.success+'; adding to toal score '+vm.curNode.score); //here calculate score
+            mainInformationHandler.totalConvoPoints += vm.curNode.score; 
             if(vm.curNode.success ){
-              mainInformationHandler.totalConvoPoints += vm.curNode.score; //TODO - mark as completed convo here
+              //TODO - mark as completed convo here
             } else {/////////~~~~~~~~~~~~~~~~~~~~~``
-              console.log("FAILED----- NEEDS TO GO HERE "); //TODO this is repeated on each node ( for each convo called per number of nodes should that be the case? or is it based off of a single convo ?)
+              console.log("FAILED----- NEEDS TO GO HERE ");
               mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
               mainInformationHandler.lastConversationSuccessful = false;
 
@@ -131,6 +131,7 @@
           //TODO MOVED THIS HERE - LOGICALLY WORKS BUT DOUBLE CHECK - as this happens once at the end of a convo ( old script in node 3 )
           mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation); // === where should htis one be ?
           mainInformationHandler.totalConvoPoints = 0;
+          console.log(mainInformationHandler.completedConvos);
         }
         //  else {
         //   // //TODO verify this - if move is ok

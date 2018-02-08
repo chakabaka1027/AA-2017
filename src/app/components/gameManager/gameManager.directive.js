@@ -262,7 +262,11 @@
             //charecters are capiral while here they need to be lower as sprite names
             $log.log("--------->", spriteName);
 
+            /////////////
+            // TODO add some code here to handle position info from dialogInfo
+            /////////////
             var spriteInfo = positionData[spriteName.toLowerCase()][currentRoomKey]; //is this for all other sprites
+
             if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
               mainInformationHandler.convoCounter[spriteName] = 0;
             }
@@ -629,7 +633,8 @@
             if(!characterDialog.dialogInfo[i].key){
               return "";
             }
-            if (mainInformationHandler.completedConvos.indexOf(characterDialog.dialogInfo[i].dialogKey)<0){
+            if (mainInformationHandler.completedConvos.indexOf(characterDialog.dialogInfo[i].key)<0){
+              // $log.log(character+' you need '+characterDialog.dialogInfo[i].dialogKey, i, characterDialog.dialogInfo[i]);
               return characterDialog.dialogInfo[i].key;
             }
           }//END of for loop

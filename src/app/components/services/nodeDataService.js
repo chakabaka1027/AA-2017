@@ -5,7 +5,7 @@
 		.service('nodeDataService', nodeDataService);
 
 	/** @ngInject */
-	function nodeDataService($log,   userGameInfo) {//levelDataHandler,
+	function nodeDataService($log, userGameInfo) {//levelDataHandler,
 		// console.log(testNewStructure);
 
 		function DialogNode(data){
@@ -18,11 +18,17 @@
 				angular.extend(this, {
 		            pcText: data.PC_Text,
 		            npcText: data.NPC_Response,
-								animation:  data.animationNegative //TODO userGameInfo.gameType.indexOf("positive") === 0 ? data.animationPositive : data.animationNegative
-
+		          	negative: data.negative,
+		          	positive: data.positive,
+					animation:  userGameInfo.isGamePositive() ? data.positive.animation : data.negative.animation
 				});
+
 	          	this.isRoot = false;
 	          	this.code = data.code; //what we will use to triverse the tree
+	          	if (data.code==='CCCC') {
+	          		$log.log('CCCC node',this);
+	          		$log.log(userGameInfo.isGamePositive());
+	          	}
 	          	this.choiceCode = data.code[data.code.length - 1];
 	    	}
 		}//end of constuctor
@@ -33,9 +39,9 @@
 	      this.children[childNode.choiceCode] = childNode;
 	    };
 
-	    function DialogTree(treeData, nodeArray) {
+	    function DialogTree(nodeArray, scoringData) {
       		// do some stuff...
-      		this.setupTree(nodeArray);
+      		this.setupTree(nodeArray, scoringData);
     	}
 
 		var pt = DialogTree.prototype;
@@ -48,7 +54,14 @@
 	    	}
     	};
 
-	    pt.setupTree = function(nodeArray) {
+	    pt.setupTree = function(nodeArray, scoringData) {
+	    	
+	    	function isNotANumb(n) {
+	    		if (typeof(n)==='string') {n=n.trim();}
+	    		return (n==='' || isNaN(n))
+	    	}
+
+	    	var i;
 	      	this.rootNode = new DialogNode(null);
 	      	this.rootNode.code = "";
 	      	this.nodeDict = {
@@ -68,10 +81,10 @@
 	    		}
 		        var parent = that.findParent(node.code);
 		        if (parent) {
-		          node.parent = parent;
-		          parent.addChild(node);
+			        node.parent = parent;
+			        parent.addChild(node);
 		        } else if (node !== that.rootNode) {
-		          $log.error('something is wrong!!! this implies that node has no parent (so probably an author error)');
+		        	$log.error('something is wrong!!! this implies that node "'+nodeCode+'" has no parent (so probably an author error)');
 		        }
 		    });
 
@@ -79,10 +92,42 @@
 	    	angular.forEach(this.nodeDict, function(node, nodeCode) {
 	    		if (Object.keys(node.children).length===0) {
 	    			// this is a leaf
-	    			// $log.log('Node '+nodeCode+' is a leaf ');
-						// TODO $log.warn('Node '+nodeCode+' is a leaf '+'come back and fix me ');
 
-	    			node.score = 15; // actually, figure this out !!!!!!!!
+	    			if (isNotANumb(node.negative.score)) {
+	    				node.negative.score = 0;
+	    				for (i=0; i<node.code.length; i++) {
+		    				node.negative.score+= scoringData.negative[node.code[i]];
+	    				}
+	    			}
+	    			if (node.negative.success !== 0 && node.negative.success !== 1) {
+	    				node.negative.success = (node.negative.score/node.code.length>=scoringData.negative.successThreshold ? 1 : 0);
+	    			}
+	    			
+	    			if (isNotANumb(node.positive.score)) {
+	    				node.positive.score = 0;
+	    				for (i=0; i<node.code.length; i++) {
+		    				node.positive.score+= scoringData.positive[node.code[i]];
+	    				}
+	    			}
+    				if (nodeCode==='CCCC') {
+    					$log.log('CCCC-----');
+    					$log.log(node.positive);
+    					$log.log(node.negative);
+    				}
+	    			if (node.positive.success !== 0 && node.positive.success !== 1) {
+	    				node.positive.success = (node.positive.score/node.code.length>=scoringData.positive.successThreshold ? 1 : 0);
+	    			}
+
+	    			if (userGameInfo.isGamePositive()) {
+	    				node.score = node.positive.score;
+	    				node.success = (node.positive.success==1);
+	    			} else {
+	    				node.score = node.negative.score;
+	    				node.success = (node.negative.success==1);
+	    			}
+
+
+
 			      //   // for now, grab this from the existing parse via levelDataHandler
 						// 	console.log("testing: ", levelDataHandler.successPaths.indexOf(nodeCode) ); //gives - 1  i.e. false - i.e. does not exusut in the sucsess paths - got it!
 			      //   if (levelDataHandler.successPaths.indexOf(nodeCode)>=0) { 								//liner will always be false ? because the new path is not a sucsess path ( xxxxxx)
@@ -122,8 +167,8 @@
 	        });
 	    }
 
-	    function parseNewStructure(nodeArray) {
-	        var testTree = new DialogTree([], nodeArray);
+	    function parseNewStructure(nodeArray, scoringData) {
+	        var testTree = new DialogTree(nodeArray, scoringData);
 
 	        return testTree;
 	    }

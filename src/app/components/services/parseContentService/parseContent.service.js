@@ -116,23 +116,86 @@
         r = 0;
       var dialogTexts = [];
       var defaultScorePerSheet = { //shoud this be done this way ?
-        postiveScoreA: 0,
-        negativeScoreA: 0,
-        postiveScoreB: 0,
-        negativeScoreB: 0,
-        postiveScoreC: 0,
-        negativeScoreC: 0,
-        postiveScoreD: 0,
-        negativeScoreD: 0,
-        postiveSucsess: 0,
-        negativeSucsess: 0
+        positive: {
+          A:5, B:3, C:10, D:0, successThreshold: 3.33
+        },
+        negative: {
+          A:0, B:3, C:5, D:0, successThreshold: 3.33
+        }
       };
+
+      var col0;
+
+      var parserState = 'inHeader';
+      while (r<numRows) {
+        col0 = xlsxService.cellValue(sheet, 0, r).toLowerCase().split(' ')[0];
+        switch(parserState) {
+          case 'inHeader':
+            if (col0==='outcome') {
+              parserState = 'inScoring';
+            } else if (col0==='code') {
+              parserState = 'inDialogNodes';
+            }
+            break;
+          case 'inScoring':
+            if (col0==='') {
+              // do nothing
+            } else if (col0==='success') {
+              defaultScorePerSheet.negative.successThreshold = xlsxService.cellValue(sheet, 1, r);
+              defaultScorePerSheet.positive.successThreshold = xlsxService.cellValue(sheet, 2, r);
+              parserState = 'inHeader';
+            } else {
+              col0 = col0.toUpperCase();
+              defaultScorePerSheet.negative[col0] = xlsxService.cellValue(sheet, 1, r);
+              defaultScorePerSheet.positive[col0] = xlsxService.cellValue(sheet, 2, r);
+            }
+            break;
+          case 'inDialogNodes':
+            if (xlsxService.cellValue(sheet, 0, r).trim()==='') {
+              $log.warn('warning there is a missing code value! ');
+            } else {
+              var row = { //so it looks like the original ds
+                code: xlsxService.cellValue(sheet, 0, r),
+                PC_Text: xlsxService.cellValue(sheet, 1, r),
+                NPC_Response: xlsxService.cellValue(sheet, 2, r),
+                negative: {
+                  animation: xlsxService.cellValue(sheet, 3, r),
+                  score: xlsxService.cellValue(sheet, 4, r),
+                  success: xlsxService.cellValue(sheet, 5, r)
+                },
+                positive: {
+                  animation: xlsxService.cellValue(sheet, 6, r),
+                  score: xlsxService.cellValue(sheet, 7, r),
+                  success: xlsxService.cellValue(sheet, 8, r)
+                }
+              };
+              dialogTexts.push(row);
+            }
+            break;
+          }
+
+          r+=1;
+
+      }
+
+      if (dialogTexts.length > 1) {
+        return { defaultScorePerSheet:defaultScorePerSheet, dialogTexts:dialogTexts } ;
+      } else {
+        $log.warn(" thhis is a dialog - with no dialog text?????");
+        return null;
+      }
+
+      // score += scoring[choice].positive;
 
       //first iteration --->
       for (; r < numRows; r++) { //or manually add it in --- //such an UGLY PIECE OF CODE - but for now...
         if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'outcome table') { //will only read this once
           // console.log(">>>>outcome table reached!!");
           if (xlsxService.cellValue(sheet, 1, r + 1) !== " ") { // if a  code number is there then set this as the default
+            var choiceChar = xlsxService.cellValue(sheet, 0, r + 1);
+            defaultScorePerSheet.negative[choiceChar] = xlsxService.cellValue(sheet, 1, r + 1);
+            defaultScorePerSheet.positive[choiceChar] = xlsxService.cellValue(sheet, 2, r + 1);
+
             defaultScorePerSheet.postiveScoreA = xlsxService.cellValue(sheet, 1, r + 1); ///// hard coded in - ugly this way though ><
             defaultScorePerSheet.NegativeScoreA = xlsxService.cellValue(sheet, 2, r + 1);
             defaultScorePerSheet.postiveScoreB = xlsxService.cellValue(sheet, 1, r + 2);
@@ -468,7 +531,12 @@
           // console.log("------>>>>sheetParsed", sheetParsed);
           if (sheetParsed) {
 
-            parsed[sheetName]= {scoring:sheetParsed.defaultScorePerSheet, dialogTree:nodeDataService.parseNewStructure(sheetParsed.dialogTexts)};
+            $log.log('sheetName', sheetName);
+
+            parsed[sheetName]= {
+              scoring: sheetParsed.defaultScorePerSheet,
+              dialogTree: nodeDataService.parseNewStructure(sheetParsed.dialogTexts, sheetParsed.defaultScorePerSheet)
+            };
 
           } else { //Template parsing
             if (sheetName.toLowerCase().includes("temp")) {
@@ -503,7 +571,7 @@
       var levelData = service.levelDataInformation[levelKey];
         if(angular.isUndefined(levelData)){
           $log.warn("undefined path - make sure you type it in correctly ")
-          return  service.levelDataInformation["template-positive"];
+          return  service.levelDataInformation["template-negative"];
         } else {
           return levelData;
         }

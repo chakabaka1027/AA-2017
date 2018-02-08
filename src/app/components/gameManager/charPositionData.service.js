@@ -88,7 +88,12 @@
 					startLeftX: 550, startLeftY: 250,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60
-				}
+				},
+				lobby:{
+					startLeftX: 465, startLeftY: 240,
+					colliderXoffset: 5, colliderYoffset: 40,
+					colliderWidth: 60, colliderHeight: 95
+				},
 			},
 			fran: {
 				lobby:{
