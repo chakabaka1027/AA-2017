@@ -55,6 +55,7 @@
 
       function setupForNode() {
         $log.log('setupForNode');
+        $log.log(vm.curNode);
 
         if (vm.isTestBed) {
           // for extra feedback when using dialogTestBed...
@@ -69,6 +70,7 @@
           angular.forEach(vm.curNode.children, function(child) {
             vm.currentNodeChoices.push({choice:child.choiceCode, node: child});
           });
+          vm.currentNodeChoices.sort(function(a,b){return (a.choice<b.choice ? -1 : 1)});
           shuffle(vm.currentNodeChoices);
           randomChoices = shuffle(vm.currentNodeChoices); //TODO double check
           vm.showContinue = vm.currentNodeChoices.length===0; // length 0 means this is a leaf node
@@ -153,7 +155,7 @@
         dialogOptions.hideDialog = true;
         dialogOptions.animationTitle = "";
         vm.showContinue = false;
-        vm.curNode.npcText = true; //added this
+        // vm.curNode.npcText = true; //added this
         // vm.showNPCbubbleText = true;
         // vm.NPC_responseHidden = true;
         

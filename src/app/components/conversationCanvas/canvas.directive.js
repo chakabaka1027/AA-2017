@@ -6,7 +6,7 @@
 		.directive('popUpDialogManager', popUpDialogManager);
 
 	/** @ngInject */
-	function popUpDialogManager(conversationP5Data, mainInformationHandler, dialogOptions) {// add this here - dialogOptions
+	function popUpDialogManager(conversationP5Data, mainInformationHandler, dialogOptions, $log) {// add this here - dialogOptions
 		var directive = {
 			restrict: "E",
 			controller: controller,
@@ -83,7 +83,8 @@
 				insetWindow.draw = function() {
 					insetWindow.background('#dae7b9');
 					// if sprite has animation for the choice, change it
-					if (dialogOptions.animationTitle !== "") {
+					$log.log('popUpDialog draw '+dialogOptions.animationTitle);
+					if (dialogOptions.animationTitle.trim() !== "") {
 						dialogSprite.changeAnimation(dialogOptions.animationTitle);
 						if (dialogOptions.animationTitle.indexOf("bold") > 0) {
 							if (dialogSprite.animation.getFrame() === dialogSprite.animation.getLastFrame()) {

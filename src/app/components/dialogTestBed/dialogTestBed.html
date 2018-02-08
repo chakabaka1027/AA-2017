@@ -32,7 +32,7 @@
 
 
 		<div>Currently at node {{dialogTest.curNode.code ? dialogTest.curNode.code : 'root'}}</div>
-		<div>PC options : <span ng-repeat="node in dialogTest.curNode.children">{{node.code}} </span></div>
+		<div>PC options : {{dialogTest.pcOptions}}</span></div>
 
 		<div ng-if="dialogTest.curNode.isTerminal()">
 			Done; Outcome:

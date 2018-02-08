@@ -30,6 +30,15 @@
         activate();
       });
 
+    $scope.$watch(function(){return vm.curNode;}, function() {
+      var opts = [];
+      if (vm.curNode) {
+        angular.forEach(vm.curNode.children, function(v,k) {opts.push(v.code);});
+        opts.sort();
+      };
+      vm.pcOptions = opts.join(', ');
+    });
+
     function characterFromDialogKey(dkey) {
       var cmap = {
         'FF': 'fran', 'MM': 'mike', 'CC': 'charlie', 'LL': 'luna'
