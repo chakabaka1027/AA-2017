@@ -5,7 +5,7 @@
     .directive('simpleTutorial', simpleTutorial);
 
 
-  function simpleTutorial($log, $timeout, audioService, $http, TutorialService) {
+  function simpleTutorial($log, $timeout, audioService, $http, tutorialService) {
 
     return {
       restrict: 'E',

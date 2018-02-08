@@ -1,146 +1,263 @@
 (function() {
-  'use strict';
+  'use strict'; //add to this
 
-  angular
-    .module('awkwardAnnie')
-    .directive('displayDialogOld', displayDialog);
+  angular.module('awkwardAnnie')
+    .directive('displayDialog', displayDialog);
 
   /** @ngInject */
-  function displayDialog(dialogService, userDataService, audioService, $log, conversationP5Data, levelDataHandler, mainInformationHandler, dialogOptions) {
-// need to move - services:  userDataService for tracking action
-//audioService for audio - also note ths may or maynot be used as is because of the audio should be toggled on and off for emotions
-////conversationP5Data - for animations
-//levelDataHandler for scoring - will this be used  the same or are indivisua scores calcuated
-//mainInformationHandler for convo points
-/// need to fix countune so it actually moves on
-//dialogOptions
-
-    var directive = {
+  function displayDialog($log, conversationP5Data, parseAAContentService, dialogService, 
+                  audioService, mainInformationHandler, dialogOptions, userDataService, levelDataHandler) {
+    return { //removed nodeDataService - injector issue
       restrict: 'E',
-      templateUrl: 'app/components/displayDialog/displayDialog.html',
-      controller: displayDialogController,
+      controller: controller,
       scope: {
         main: "=",
         isTestBed: "="
       },
       controllerAs: 'vm',
-      bindToController: true
+      bindToController:true,
+      templateUrl: 'app/components/displayDialog/displayDialog.html'
     };
-    return directive;
 
-    /** @ngInject */
-    function displayDialogController($scope, $timeout) {
-      var vm = this;
-      var dialogRoot;
+//TODO   //do animations- done - timers - done - tracking on my way
+// done - score ( mini is done - done - but one issue remains-  level progression needed ! next
+//remove redundency
 
-      //all of these timers ----
+    function controller($scope, $timeout) {
+      var vm = this; //positive gives true negative gives false
+      vm.choiceDelay = true;
+      vm.dialogKey = vm.main.currentConversation;
+      vm.curNode = undefined;
+      vm.showNode = vm.clickOnChoice = clickOnChoice; // same as saying public funcitn click on choice
+      vm.clickContinue = clickContinue;
+      vm.chosenAnnie = "";
+      vm.npcResponse = "";
+
       var pc_Text_Timer = 350;
       var pc_npc_timer = pc_Text_Timer + 400;
       var mild_Animation_Timer = 1000;
       var noExpression_Timer = 700;
 
       var decisionPath = "";
-      var randomChoices = [];
-      var successfulConvos;
+      // var successfulConvos; not needed
       var scores = levelDataHandler.choiceScores;
-      vm.choiceDelay = true;
       mainInformationHandler.totalConvoPoints = 0;
-      vm.showContinue = false;
-      vm.chosenAnnie = "";
-      vm.npcResponse = "";
-      vm.currentNodeIndex = 1;
-      vm.currentNodeChoices = [];
-      vm.node3Response = true;
 
-      vm.clickContinue = clickContinue;
-      vm.showNode = showNode;
-      vm.showNode3Response = showNode3Response;
 
+
+      //for data tracking - not sure if really required by ETS or for keepsaking somehwere
       vm.main.branchHistory = [];
-      vm.main.currentChoiceInfo = {};
+      var randomChoices = [];
 
-      $scope.$watch(function() {return mainInformationHandler.currentConversation;}, function() {
-        resetDialog();
-        chooseDialogScript();
-      });
 
-      function resetDialog() {
-        decisionPath = "";
-        randomChoices = [];
-        successfulConvos;
-        scores = levelDataHandler.choiceScores;
-        vm.choiceDelay = true;
-        mainInformationHandler.totalConvoPoints = 0;
-        vm.showContinue = false;
-        vm.chosenAnnie = "";
-        vm.npcResponse = "";
-        vm.node3Response = true;
-      }
+      setupForNode();
 
-      function chooseDialogScript() {
-        dialogOptions.animationTitle = "";
-        var dialog = mainInformationHandler.currentConversation;
-        dialogService.getDialogs(dialog).then(function(data) {//not needed as far as i can see ( or most of it - check getDailigs )
-          $log.log('dialogRoot', data);
-          dialogRoot = data;
-          var originalNodeOne = dialogRoot.node1;
-          randomChoices = shuffle(originalNodeOne);
-          vm.choice = originalNodeOne;
-          vm.choice2 = dialogRoot.node2;
-          vm.choice3 = dialogRoot.node3;
-          vm.main.isLinearDialog = vm.choice.length === 1; //specfic case - fixed for now by adding it to the dailoug scuscess paths
-          vm.currentNodeIndex = 1;
-          vm.currentNodeChoices = vm.choice;
 
-        });
-        //wull beed tgis
-        if (angular.isUndefined(mainInformationHandler.failedConvos[mainInformationHandler.currentConversation])) {
-          mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] = 0;
+      function setupForNode() {
+        $log.log('setupForNode');
+        $log.log(vm.curNode);
+
+        if (vm.isTestBed) {
+          // for extra feedback when using dialogTestBed...
+          vm.main.curNode = vm.curNode;
+          vm.main.testValues = levelDataHandler.choiceScores;
+          vm.main.count = 0;
+          // console.log("~~~~~~~~~~~~~",vm.main.testValues );//[vm.main.curNode.choiceCode]
         }
-      }
-      /*=============== Button operations =================*/
 
-      function showNode3Response(choice) {
-        audioService.playAudio("UIbuttonclick-option2.wav");
-        vm.node3Hidden = true;
-        vm.npcResponse = "";
-        loadResponses(choice);
-        vm.showContinue = true;
+        vm.currentNodeChoices = [];
+        if (vm.curNode) {
+          angular.forEach(vm.curNode.children, function(child) {
+            vm.currentNodeChoices.push({choice:child.choiceCode, node: child});
+          });
+          vm.currentNodeChoices.sort(function(a,b){return (a.choice<b.choice ? -1 : 1)});
+          shuffle(vm.currentNodeChoices);
+          randomChoices = shuffle(vm.currentNodeChoices); //TODO double check
+          vm.showContinue = vm.currentNodeChoices.length===0; // length 0 means this is a leaf node
+          if (vm.showContinue) {
+            $log.log('---Success: '+vm.curNode.success+'; adding to toal score '+vm.curNode.score); //here calculate score
+            mainInformationHandler.totalConvoPoints += vm.curNode.score; 
+            if(vm.curNode.success ){
+              //TODO - mark as completed convo here
+            } else {/////////~~~~~~~~~~~~~~~~~~~~~``
+              console.log("FAILED----- NEEDS TO GO HERE ");
+              mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
+              mainInformationHandler.lastConversationSuccessful = false;
 
-        if (!vm.isTestBed) {
-          if (levelDataHandler.successPaths.indexOf(choice.code) >= 0) { //TODO this is missing --- this is done inside node code now
-            mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation); // === where should htis one be ?
-            mainInformationHandler.totalConvoPoints = 0;
-            for (var i in choice.code) {
-              mainInformationHandler.totalConvoPoints += scores[choice.code[i]]; ////score is also there --- :/
             }
-            mainInformationHandler.lastConversationSuccessful = true;
-          } else {
-            mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1;
-            mainInformationHandler.lastConversationSuccessful = false;
           }
         }
-        var currenBranch = choice.code.charAt(2); // subce ut us a tree we wob't need any of this fake  branch :P
-        trackBranches(currenBranch);
-        dataTracking(currenBranch, choice, 3);
-        decisionPath = choice.code;
       }
 
-      function trackBranches(currentBranch) {
-        vm.main.branchHistory.push(currentBranch);
+      $scope.$watch(function(){return vm.main.currentConversation;}, function() {
+        vm.dialogKey = vm.main.currentConversation;
+        
+        if (angular.isUndefined(mainInformationHandler.failedConvos[vm.dialogKey])) {
+          mainInformationHandler.failedConvos[vm.dialogKey] = 0;
+        }
+
+        // console.log("in watch in displayD",vm.dialogKey);
+
+        if(vm.dialogKey){
+          vm.curTree = parseAAContentService.parsedContent[vm.dialogKey].dialogTree ;
+
+          vm.curNode = vm.curTree.rootNode;
+          setupForNode();
+          vm.npcResponse = vm.chosenAnnie = "";
+          // console.log("------>   vm.curTree",  vm.curTree);
+        }
+
+      });
+
+      function clickOnChoice(choice) {
+        // scoring, tracking etc. happens; then...
+    		var chosenNode = vm.curNode.children[choice];
+    		vm.curNode = chosenNode;
+
+        console.log("clicked on a choice!", chosenNode.code);
+        audioService.playAudio("UIbuttonclick-option2.wav");
+        decisionPath = chosenNode.code; //have to reset this later 0 this will be wrong - how can i acsess the node itself - NOICE 0 got it 'chosenNode' do bot forget  - gotta love 2 am coding and talking to myself :)
+        
+        if(vm.curNode.success && !vm.isTestBed){         //sucsess or failure -
+          console.log("WOOT");
+          mainInformationHandler.lastConversationSuccessful = true;
+          //TODO MOVED THIS HERE - LOGICALLY WORKS BUT DOUBLE CHECK - as this happens once at the end of a convo ( old script in node 3 )
+          mainInformationHandler.completedConvos.push(mainInformationHandler.currentConversation); // === where should htis one be ?
+          mainInformationHandler.totalConvoPoints = 0;
+          console.log(mainInformationHandler.completedConvos);
+        } else {
+          $log.warn('clickOnChoice: Player failed conversation - should this commented code be done here or in setupForNode?');
+        //   // //TODO verify this - if move is ok
+        //   // mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
+        //   // mainInformationHandler.lastConversationSuccessful = false;
+        }
+
+
+        loadResponses(chosenNode);
+        setupForNode();
+        if(!vm.main.isTestBed){
+          trackBranches(chosenNode.code);
+          // console.log("testing values for data tracking " + chosenNode.code + " " +chosenNode +" " + chosenNode.code.length );
+          dataTracking(chosenNode.code, chosenNode,chosenNode.code.length+1 );
+        }
+
+    	}//end of clickOnChoicechoice
+
+
+      function setUpDelayChoiceDisplay(choice) {
+        audioService.playAudio("UIbuttonclick-option1.wav");
+        vm.npcResponse = choice.npcText;
+        delayChoiceDisplay();
       }
 
       function clickContinue() { //move this ?
+        $log.log('clickContinue');
         dialogOptions.hideDialog = true;
-        vm.chosenAnnie = "";
-        vm.npcResponse = "";
-        vm.showNPCbubbleText = true;
-        vm.NPC_responseHidden = true;
-        vm.node3Response = true;
-        vm.showContinue = false; //reset it ok -
         dialogOptions.animationTitle = "";
+        vm.showContinue = false;
+        // vm.curNode.npcText = true; //added this
+        // vm.showNPCbubbleText = true;
+        // vm.NPC_responseHidden = true;
+        
+        //data tracking -
+        if(!vm.isTestBed) {
+          trackDataAtEndofConvo();
+        } else {
+          // for test bed, reset the dialog to the beginning...
+          vm.curTree = parseAAContentService.parsedContent[vm.dialogKey].dialogTree ;
 
-        if (!vm.isTestBed) {
+          vm.curNode = vm.curTree.rootNode;
+          setupForNode();
+          vm.npcResponse = vm.chosenAnnie = "";
+
+        }
+
+        // chooseDialogScript();
+        // vm.main.branchHistory = [];
+        // vm.main.currentChoiceInfo = {};
+
+      } // end of click countue
+
+      //to use uf needed : npcText
+      //TO ADD -> decisionPath = chosenNode.code;
+
+
+      //        pcText
+      //get game type and do it for postive andnegative --- below just for testing fow now - pr another way?
+
+      function loadResponses(choice) { //log way of doing this not sure if We should do it this way? as they are seprate now and not a single animaiton property of node
+          vm.main.currentChoiceInfo = choice;
+          vm.npcResponse = "";
+          vm.choiceDelay = false;
+
+          $timeout(function() {
+            vm.chosenAnnie = choice.pcText;
+          }, pc_Text_Timer);
+
+          $timeout(function() {
+            if (choice.animation === '' || conversationP5Data[dialogOptions.talkingWith].animations[choice.animation]) {
+              dialogOptions.animationTitle = choice.animation;
+            } else {
+              $log.warn('there is no animation "' + choice.animation + '" for character ' + dialogOptions.talkingWith);
+              dialogOptions.animationTitle = '';
+            }
+            if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("bold") >= 0) {
+              var watchPromise = $scope.$watch(function() {return dialogOptions.animationDone;}, function() { 
+                if (dialogOptions.animationDone) {
+                  audioService.playAudio("UIbuttonclick-option1.wav");
+                  vm.npcResponse = choice.npcText;
+                  delayChoiceDisplay();
+                  watchPromise();
+                }
+              });
+
+              if (vm.isTestBed) {
+                setUpDelayChoiceDisplay(choice);
+                watchPromise();
+              }
+              dialogOptions.animationDone = false; //reset
+
+            } else if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("mild") >= 0) {
+              employSpecficTimeOut (mild_Animation_Timer, choice);
+            } else { //if no animation
+               employSpecficTimeOut (noExpression_Timer, choice);
+             }
+          }, pc_npc_timer);
+
+          vm.chosenAnnie = "";
+          vm.npcResponse = "";
+        } //end of loadResponses
+
+        function employSpecficTimeOut(timeOut, choice) {
+          $timeout(function() {
+            setUpDelayChoiceDisplay(choice);
+          }, timeOut); 
+        }
+
+        function delayChoiceDisplay() {
+          $timeout(function() {
+            vm.choiceDelay = true;
+          }, 1200);
+        }
+
+        function shuffle(choices) {
+          if (!vm.isTestBed) {
+            for (var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
+          }
+          return choices;
+        }
+
+        function resetDialog() {
+          decisionPath = "";
+          randomChoices = [];
+          var successfulConvos;
+          scores = levelDataHandler.choiceScores;
+          vm.choiceDelay = true;
+          mainInformationHandler.totalConvoPoints = 0;
+          vm.showContinue = false;
+        }
+
+        function trackDataAtEndofConvo() {           //UGLY
           if (mainInformationHandler.lastConversationSuccessful) {
             userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_result", mainInformationHandler.totalConvoPoints, decisionPath);
             userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_end", mainInformationHandler.currentConversation, "Success");
@@ -148,131 +265,38 @@
             userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_result", mainInformationHandler.totalConvoPoints, decisionPath);
             userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_end", mainInformationHandler.currentConversation, "Fail");
           }
+
           userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_state", dialogOptions.talkingWith);
           var progressBarInfo = Math.round((mainInformationHandler.completedConvos.length / mainInformationHandler.totalConvosAvailable) * 100);
-
           userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Player_State", mainInformationHandler.playerScore + mainInformationHandler.totalConvoPoints, progressBarInfo);
-///this
-          successfulConvos = mainInformationHandler.completedConvos.length;
+          var successfulConvos = mainInformationHandler.completedConvos.length; //remove var and define above
           userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_convo", successfulConvos, mainInformationHandler.convoAttemptsTotal);
           userDataService.postData(); //Post data after convo is over
-          chooseDialogScript();
         }
-        vm.main.branchHistory = [];
-        vm.main.currentChoiceInfo = {};
-      }
 
-      /*=============== Functions =================*/
-      function shuffle(choices) {
-        if (!vm.isTestBed) {
-          for (var j, x, i = choices.length; i; j = Math.floor(Math.random() * i), x = choices[--i], choices[i] = choices[j], choices[j] = x);
+        function trackBranches(currentBranch) {
+          vm.main.branchHistory.push(currentBranch);
         }
-        return choices;
-      }
 
-      function loadResponses(choice) {
-        vm.main.currentChoiceInfo = choice;
-        vm.npcResponse = "";
-        vm.choiceDelay = false;
+        function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed -
+          var num = number.toString();
+          var str = ["convo_state","convo_user","convo_system","convo_NPC"];
+          var pram3 = [num,Branch,scores[Branch],choice.animation];
+          var pram4 = [mainInformationHandler.failedConvos[mainInformationHandler.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
+          setTrackAction(str, pram3, pram4);
+        }
 
-        $timeout(function() {
-          vm.chosenAnnie = choice.PC_Text;
-        }, pc_Text_Timer);
-
-        $timeout(function() {
-          if (choice.animation === '' || conversationP5Data[dialogOptions.talkingWith].animations[choice.animation]) {
-            dialogOptions.animationTitle = choice.animation;
-          } else {
-            $log.warn('there is no animation "' + choice.animation + '" for character ' + dialogOptions.talkingWith);
-            dialogOptions.animationTitle = '';
-          }
-          if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("bold") >= 0) {
-            var watchPromise = $scope.$watch(function() {
-                  return dialogOptions.animationDone;
-                }, function() { if (dialogOptions.animationDone) {
-                audioService.playAudio("UIbuttonclick-option1.wav");
-                vm.npcResponse = choice.NPC_Response;
-                delayChoiceDisplay();
-                watchPromise();
-              }
-            });
-            if (vm.isTestBed) {
-              setUpDelayChoiceDisplay(choice);
-              watchPromise();
-            }
-            dialogOptions.animationDone = false; //reset
-          } else if (dialogOptions.animationTitle && dialogOptions.animationTitle.indexOf("mild") >= 0) {
-            employSpecficTimeOut (mild_Animation_Timer, choice);
-          }
-           else { //if no animation
-             employSpecficTimeOut (noExpression_Timer, choice);
-           }
-          // return;
-        }, pc_npc_timer);
-        vm.chosenAnnie = "";
-        vm.npcResponse = "";
-      }//end of load responces
-
-      function employSpecficTimeOut(timeOut, choice) {
-        $timeout(function() {
-          setUpDelayChoiceDisplay(choice);
-        }, timeOut); }
-
-      function delayChoiceDisplay() {
-        $timeout(function() {
-          vm.choiceDelay = true;
-        }, 1200);
-      }
-
-      function showNode(choice) {
-            audioService.playAudio("UIbuttonclick-option2.wav");
-            var codeNode = choice.code;
-            var currenBranch;
-            if (vm.currentNodeIndex == 3) {
-              showNode3Response(choice);
-              return;
-            }
-            if (vm.currentNodeIndex == 1) {
-              vm.npcResponse = "";
-              vm.choice2  = dialogRoot.node2[codeNode];
-              currenBranch =  choice.code.charAt(0);
-              dataTracking(currenBranch, choice, 1);
-
-            } else if (vm.currentNodeIndex == 2) {
-              vm.choice3  = dialogRoot.node3[codeNode];
-              currenBranch =  choice.code.charAt(1);
-              dataTracking(currenBranch, choice, 2);
-            }
-            vm.currentNodeIndex += 1;
-            vm.currentNodeChoices = shuffle(vm['choice'+vm.currentNodeIndex]);
-            loadResponses(choice);
-            trackBranches(currenBranch);
-          }
-
-          //TODO combine methods -
-          function dataTracking(Branch, choice, number) { //need to checj older versions if "strings" changed -
-            var num = number.toString();
-            var str = ["convo_state","convo_user","convo_system","convo_NPC"];
-            var pram3 = [num,Branch,scores[Branch],choice.animation];
-            var pram4 = [mainInformationHandler.failedConvos[mainInformationHandler.currentConversation],choice.PC_Text,randomChoices.indexOf(choice) + 1,choice.NPC_Response];
-            setTrackAction(str, pram3, pram4);
-
-          }
-
-          function setTrackAction(strings, parm3, parm4){
-            var stringArr = strings;
-            var thirdParmValues = parm3;
-            var forthPramValues = parm4;
-            for (var i = 0; i < stringArr.length; i++){
-              userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
+        function setTrackAction(strings, parm3, parm4){
+          var stringArr = strings;
+          var thirdParmValues = parm3;
+          var forthPramValues = parm4;
+          for (var i = 0; i < stringArr.length; i++){
+            userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, stringArr[i] , thirdParmValues[i], forthPramValues[i]);  //text_position
           }
         }
 
-          function setUpDelayChoiceDisplay(choice) {
-            audioService.playAudio("UIbuttonclick-option1.wav");
-            vm.npcResponse = choice.NPC_Response;
-            delayChoiceDisplay();
-          }
-        } //end of controller
-      }
-    })();
+
+    }//end of controller
+
+  }
+})();

@@ -3,11 +3,11 @@
 
   angular
     .module('awkwardAnnie')
-    .service('TutorialService', TutorialService);
+    .service('tutorialService', tutorialService);
 
 
   /** @ngInject */
-  function TutorialService($log, $stateParams, $http, $location, $q, userGameInfo) {
+  function tutorialService($log, $stateParams, $http, $location, $q, userGameInfo) {
     var service = {
       loadTutorialData: loadTutorialData
     };
@@ -18,7 +18,7 @@
       var negativePath = "assets/tutorialJson/negativeIntro.json";
       var path;
 
-      if (userGameInfo.gameType.indexOf("positive") === 0) {
+      if (userGameInfo.isGamePositive()) {
         path = positivePath;
       } else {
         path = negativePath;
