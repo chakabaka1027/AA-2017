@@ -99,6 +99,13 @@
         // console.log("in watch in displayD",vm.dialogKey);
 
         if(vm.dialogKey){
+          if (angular.isUndefined(parseAAContentService.parsedContent[vm.dialogKey])) {
+            alert('There is no dialog information for dialog "'+vm.dialogKey+'"!!!. Check your spelling and especially capitalization.');
+            dialogOptions.hideDialog = true;
+            dialogOptions.animationTitle = "";
+            vm.showContinue = false;
+            return;
+          }
           vm.curTree = parseAAContentService.parsedContent[vm.dialogKey].dialogTree ;
 
           vm.curNode = vm.curTree.rootNode;
