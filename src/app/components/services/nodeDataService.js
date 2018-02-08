@@ -125,25 +125,6 @@
 	    				node.score = node.negative.score;
 	    				node.success = (node.negative.success==1);
 	    			}
-
-
-
-			      //   // for now, grab this from the existing parse via levelDataHandler
-						// 	console.log("testing: ", levelDataHandler.successPaths.indexOf(nodeCode) ); //gives - 1  i.e. false - i.e. does not exusut in the sucsess paths - got it!
-			      //   if (levelDataHandler.successPaths.indexOf(nodeCode)>=0) { 								//liner will always be false ? because the new path is not a sucsess path ( xxxxxx)
-						// 		console.log("this was true!");
-			      //   	node.success = true;
-			      //   } else {
-						// 		node.success = false; // it is undefined but for testing purposes so I can see it better
-						// 	}
-			      //   node.score = 0;
-			      //   for (var i=0; i<nodeCode.length; i++) {
-			      //   	node.score += levelDataHandler.choiceScores[nodeCode[i]]; // i sthis in place of scores
-						// 		node.currentScore  += node.score ;
-						// 		console.log("Valueees"+ node.currentScore);
-            //
-            //
-			      //   }
 	    		}
 	    	});
 
@@ -151,21 +132,10 @@
 
 		var service = {
 	       dialogTrees : {},
-	       parseNewStructure: parseNewStructure,
-	       parseFromDialogTree: parseFromDialogTree
+	       parseNewStructure: parseNewStructure
 		};
 
 	    return service;
-
-	    function parseFromDialogTree(dialogKey) {
-	        return dialogService.getDialogs(dialogKey).then(function(oldStyleContent){
-	          // console.log(oldStyleContent);
-	          var newStyleContent = changeIntoArray(oldStyleContent);
-	          // console.log(newStyleContent);
-	          console.log(parseNewStructure(newStyleContent));
-	          return parseNewStructure(newStyleContent);
-	        });
-	    }
 
 	    function parseNewStructure(nodeArray, scoringData) {
 	        var testTree = new DialogTree(nodeArray, scoringData);
