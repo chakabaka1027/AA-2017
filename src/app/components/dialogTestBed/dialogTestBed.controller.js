@@ -112,6 +112,13 @@
           vm.status = "Loaded from file '" + fileObject.name + "'.";
           vm.lastFileObject = fileObject;
           vm.hasLoaded = true;
+          vm.dialogList = Object.keys(parseAAContentService.parsedContent)
+            .map(function(dkey) {
+              return {
+                label: dkey,
+                key: dkey
+              };
+            });
         });
     }
 
