@@ -54,7 +54,7 @@
         'FF': 'fran', 'MM': 'mike', 'CC': 'charlie', 'LL': 'luna'
       };
 
-      return cmap[dkey.split('.')[0]];
+      return cmap[dkey.split('.')[0]] || 'luna';
     }
 
     function activate() {
