@@ -9,12 +9,23 @@
 	    	<label for="input-file">Choose local xlsx file...</label>
 	    </div>
 	</div>
-<!-- dialogTest is the controller - foudn in index -  cool  -->
+
 	<div ng-if="!dialogTest.hasLoaded">
 		Loading...
 	</div>
 
 	<div ng-if="dialogTest.hasLoaded">
+		<div>
+			View animations and scoring for :
+			<label>
+                <input type="radio" name="gameType" value="negative" ng-model="dialogTest.localGameType">
+                Negative
+            </label>
+			<label>
+                <input type="radio" name="gameType" value="positive" ng-model="dialogTest.localGameType">
+                Positive
+            </label>
+		</div>
 		<select ng-options="item.key as item.label for item in dialogTest.dialogList"
 				ng-model = "dialogTest.currentConversation">
 		</select>
@@ -43,8 +54,6 @@
 		<div ng-if="!dialogTest.curNode.isTerminal()">
 			<br/><br/>
 		</div>
-
-
 		
 	</div>
 
@@ -57,7 +66,7 @@
 
 		<div class="conversationContainer testbed-cc">
 
-			<display-dialog main = "dialogTest" is-test-bed = "true"> </display-dialog>
+			<display-dialog main="dialogTest" is-test-bed="true"></display-dialog>
 
 			<pop-up-dialog-manager
 				ng-if="dialogTest.displayCharacters"

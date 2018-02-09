@@ -260,7 +260,7 @@
 
       }); //end of forEach function
 
-      console.log( "TT___TT parsed information <<<<<<<<<<<<<<",parsedDialogs);
+      $log.warn( "TT___TT parsed information <<<<<<<<<<<<<<",parsedDialogs);
 
       return parsedDialogs;
     }
@@ -272,7 +272,9 @@
       var levelData = service.levelDataInformation[levelKey];
 
       if(angular.isUndefined(levelData)){
-        $log.warn("undefined url path - make sure you typed it in correctly")
+        if ($location.path()!=='/') {
+          $log.warn("undefined url path - make sure you typed it in correctly")
+        }
         return  service.levelDataInformation["template-negative"];
       } else {
         return levelData;
@@ -544,10 +546,10 @@
             parsed[sheetName] = sheetParsed;
 
           } else {
-            $log.warn(sheetName + ':is this being used or the other  unparseable');
+            $log.warn(sheetName + ':is this being used or the other; unparseable');
           }
         } else {
-          $log.log(sheetName + ':is this being used or the other   skipping');
+          $log.log(sheetName + ':is this being used or the other; skipping');
         }
       });
       return parsed;

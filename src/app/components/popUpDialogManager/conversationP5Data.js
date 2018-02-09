@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('awkwardAnnie')
-	.service('conversationP5Data', conversationP5Data);
+		.service('conversationP5Data', conversationP5Data);
 
 	/** @ngInject */
 	function conversationP5Data(){

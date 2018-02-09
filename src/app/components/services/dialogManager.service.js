@@ -67,20 +67,10 @@
 
       gameType = gameType || "negative";
       var prefix = gameType.split("-")[0];
-      $log.log("Loading from url '" + prefix + "' ...");
 
       return parseAAContentService.parseContentFromGameType(prefix)
         .then(function() {
           $log.log("Test Loaded from url '" + prefix + "'.");
-          $log.log('Success!');
-          console.log("<<<<<------", parseAAContentService.parseContentFromGameType(prefix)); //gives us array
-
-        })
-        .then(function() {
-          $log.log("Take a look at me now!!!");
-          // adjustDialogWorksheetKeys();
-          // adjustNegativePositiveLinearKeys(gameType);
-          // adjustFeedbackAnimations(gameType);
           service.deferred.resolve();
 
         })
@@ -102,7 +92,6 @@
         adjustedKeys[dialogKey] = casedKeyMap[dialogWorksheetKeys[dialogKey].toUpperCase()];
       }
       service.dialogWorksheetKeys = dialogWorksheetKeys = adjustedKeys;
-      console.log(">>>>>>>>- ", service.dialogWorksheetKeys); //has dictionary of keys
 
     }
 

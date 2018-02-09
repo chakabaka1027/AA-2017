@@ -39,6 +39,7 @@
       var noExpression_Timer = 700;
 
       var decisionPath = "";
+      
       // var successfulConvos; not needed
       var scores = levelDataHandler.choiceScores;
       mainInformationHandler.totalConvoPoints = 0;
@@ -48,7 +49,6 @@
       //for data tracking - not sure if really required by ETS or for keepsaking somehwere
       vm.main.branchHistory = [];
       var randomChoices = [];
-
 
       setupForNode();
 
@@ -133,10 +133,11 @@
           mainInformationHandler.totalConvoPoints = 0;
           console.log(mainInformationHandler.completedConvos);
         } else {
-          $log.warn('clickOnChoice: Player failed conversation - should this commented code be done here or in setupForNode?');
-        //   // //TODO verify this - if move is ok
-        //   // mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
-        //   // mainInformationHandler.lastConversationSuccessful = false;
+          
+          //   // //TODO verify this - if move is ok
+          //   // mainInformationHandler.failedConvos[mainInformationHandler.currentConversation] += 1; //or betrer to check this with leaf node?
+          //   // mainInformationHandler.lastConversationSuccessful = false;
+          
         }
 
 

@@ -134,6 +134,31 @@
 
 	    };
 
+	    pt.setGameType = function(gameType) {
+	    	angular.forEach(this.nodeDict, function(node, nodeCode) {
+	    		if (!node.code) {
+	    			// this is a root node, so skip it...
+	    			return;
+	    		}
+	    		if (gameType==='positive') {
+    				node.animation = node.positive.animation;
+	    		} else {
+    				node.animation = node.negative.animation;
+	    		}
+	    		if (Object.keys(node.children).length===0) {
+	    			if (gameType==='positive') {
+	    				// $log.log('set '+node.code+' to positive');
+	    				node.score = node.positive.score;
+	    				node.success = (node.positive.success==1);
+	    			} else {
+	    				// $log.log('set '+node.code+' to negative');
+	    				node.score = node.negative.score;
+	    				node.success = (node.negative.success==1);
+	    			}
+	    		}
+	    	});
+	    };
+
 		var service = {
 	       dialogTrees : {},
 	       parseNewStructure: parseNewStructure
