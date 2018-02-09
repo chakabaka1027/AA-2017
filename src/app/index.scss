@@ -7,9 +7,21 @@
 // font-family: 'Amatic SC', cursive;
 
 @font-face{
-  font-family: marker-felt;
+  font-family: ttf-marker-felt;
   src: url(../assets/fonts/marker-felt-thin.ttf);
 }
+
+@font-face {
+  font-family: marker-felt;
+    src:  url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.ttf.woff') format('woff'),
+    url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.ttf.svg#Marker-Felt') format('svg'),
+    url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.ttf.eot'),
+    url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.eot?#iefix') format('embedded-opentype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* =========
    Resets
 ============*/
