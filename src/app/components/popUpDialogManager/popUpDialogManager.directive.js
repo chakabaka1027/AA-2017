@@ -124,7 +124,7 @@
 									break;
 							}
 						});
-					~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  */
+			//		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  */
 
 			// Add animation to character sprite from p5 sketck
 			function addAnimationsToChar(characterDefinition, characterSprite) { //Char deffinition is from ConversationP5Data service

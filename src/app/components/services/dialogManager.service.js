@@ -82,7 +82,7 @@
 
     function adjustDialogWorksheetKeys() { //TODO check if I can translate it here instead
 
-      var casedKeyMap = Object.keys(parseAAContentService.parsedContent)
+      var casedKeyMap = Object.keys(parseAAContentService.parsedDialogContent)
         .reduce(function(acc, wsKey) {
           acc[wsKey.toUpperCase()] = wsKey;
           return acc;
@@ -125,7 +125,7 @@
           })
         }
       }
-      chaseTree(parseAAContentService.parsedContent);
+      chaseTree(parseAAContentService.parsedDialogContent);
     }
 
 
@@ -141,12 +141,12 @@
       $log.log('getDialogs "' + dialogKey + '"');
       return service.loadedPromise
         .then(function() {
-          var spreadsheetContent = parseAAContentService.parsedContent[dialogWorksheetKeys[dialogKey]];
+          var spreadsheetContent = parseAAContentService.parsedDialogContent[dialogWorksheetKeys[dialogKey]];
           if (spreadsheetContent) {
             return spreadsheetContent;
           } else {
             $log.warn(':::try raw key "' + dialogKey + '"');
-            spreadsheetContent = parseAAContentService.parsedContent[dialogKey];
+            spreadsheetContent = parseAAContentService.parsedDialogContent[dialogKey];
             if (spreadsheetContent) {
               return spreadsheetContent;
             }

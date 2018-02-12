@@ -16,9 +16,9 @@
 // 			/*
 // 			parseAAContentService.parseContentFromGameType('positive')
 // 				.then(function() {
-// 					$log.log(parseAAContentService.parsedContent);
+// 					$log.log(parseAAContentService.parsedDialogContent);
 //
-// 					$log.log(angular.toJson(parseAAContentService.parsedContent['FF.RQ.01'], 4));
+// 					$log.log(angular.toJson(parseAAContentService.parsedDialogContent['FF.RQ.01'], 4));
 //
 // 					var a = new DialogNode('A', false);
 // 					a.addChild(new DialogNode('AB', true))

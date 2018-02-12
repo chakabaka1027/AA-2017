@@ -44,9 +44,10 @@
 
     function setupForLocalGameType() {
       $log.log('setupForGameType '+vm.localGameType);
-      angular.forEach(parseAAContentService.parsedContent, function(dialogData, dialogKey) {
+      angular.forEach(parseAAContentService.parsedDialogContent, function(dialogData, dialogKey) {
         dialogData.dialogTree.setGameType(vm.localGameType);
       });
+      $log.log(vm.curNode);
     }
 
     function characterFromDialogKey(dkey) {
@@ -61,7 +62,7 @@
       vm.levelCount = 1;
       vm.levelUp = false;
       vm.failedConvos = [];
-      vm.dialogList = Object.keys(parseAAContentService.parsedContent)
+      vm.dialogList = Object.keys(parseAAContentService.parsedDialogContent)
         .map(function(dkey) {
           return {
             label: dkey,
@@ -112,7 +113,7 @@
           vm.status = "Loaded from file '" + fileObject.name + "'.";
           vm.lastFileObject = fileObject;
           vm.hasLoaded = true;
-          vm.dialogList = Object.keys(parseAAContentService.parsedContent)
+          vm.dialogList = Object.keys(parseAAContentService.parsedDialogContent)
             .map(function(dkey) {
               return {
                 label: dkey,

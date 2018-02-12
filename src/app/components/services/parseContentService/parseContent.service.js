@@ -12,7 +12,7 @@
     var templatesSample = [];
 
     var service = {
-      parsedContent: {},  //dictionary keyed by dialog key - yeilding objects of the form:
+      parsedDialogContent: {},  //dictionary keyed by dialog key - yeilding objects of the form:
                           // {
                           //  scoring: < scoring data >, 
                           //  dialogTree: < tree of dialog text> 
@@ -34,9 +34,6 @@
 
       parseContentFromFile: parseContentFromFile
 
-      // findSectionHeaders: findSectionHeaders,
-      // templateSample: templateSample
-      // parseSheet: parseSheet,
     };
 
     return service;
@@ -64,7 +61,7 @@
       var startRow = 0,
         r = 0;
       var dialogTexts = [];
-      var scoring = { //shoud this be done this way ?
+      var scoring = {
         positive: {
           A:5, B:3, C:10, D:0, successThreshold: 3.33
         },
@@ -106,7 +103,7 @@
         
           case 'inDialogNodes':
             if (xlsxService.cellValue(sheet, 0, r).trim()==='') {
-              // $log.warn('warning there is a missing code value! ');
+              // skip any empty rows
             } else {
               var row = {
                 code: xlsxService.cellValue(sheet, 0, r),
@@ -222,9 +219,9 @@
       var sheetNames = book.SheetNames;
 
       sheetNames.forEach(function(sheetName) {
-        if (sheetName !== 'Template') { // parse anything if its not template
+        if (sheetName !== 'Template') { // parse anything if it's not called "Template"
           var sheet = book.Sheets[sheetName];
-          if (sheetName.indexOf('template-')<0) {
+          if (sheetName.indexOf('game-')<0) {
             var sheetParsed = parseDialogSheet(sheet, sheetName); //SheetParsing new excel
             // console.log("------>>>>sheetParsed", sheetParsed);
             if (sheetParsed) {
@@ -257,14 +254,14 @@
     function getLevelDataForURL(){
       //I KNOW THIS WAS  done another way but I'm not sure how to acsess levels since before was done though json - --
 
-      var levelKey = "template-"+$location.path().replace("/","");
+      var levelKey = "game-"+$location.path().replace("/","");
       var levelData = service.levelDataInformation[levelKey];
 
       if(angular.isUndefined(levelData)){
         if ($location.path()!=='/') {
           $log.warn("undefined url path - make sure you typed it in correctly")
         }
-        return  service.levelDataInformation["template-negative"];
+        return  service.levelDataInformation["game-negative"];
       } else {
         return levelData;
       }
@@ -274,18 +271,18 @@
     function parseContentFromGameType(gameType) { //!reached
       return xlsxService.loadWorkbookFromUrl(defaultUrl)
         .then(function(book) {
-          service.parsedContent = parseAllSheets(book, gameType);
-          return service.parsedContent; //returns a whole ds of parsed data
+          service.parsedDialogContent = parseAllSheets(book, gameType);
+          return service.parsedDialogContent; //returns a whole ds of parsed data
         });
     }
 
     function parseContentFromFile(fileObject) {
-      service.parsedContent = {};
+      service.parsedDialogContent = {};
       service.levelDataInformation = {};
       return xlsxService.loadWorkbookFromFile(fileObject)
         .then(function(book) {
-          service.parsedContent = parseAllSheets(book);
-          return service.parsedContent; //returns a whole ds of parsed data
+          service.parsedDialogContent = parseAllSheets(book);
+          return service.parsedDialogContent; //returns a whole ds of parsed data
         });
     }
 
