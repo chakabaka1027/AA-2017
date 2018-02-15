@@ -47,6 +47,12 @@
 					"talking": ["assets/images/Characters/Luna/Luna-Stand-Angle-Right.png"]
 					//, "showNPCArrow": []
 				}
+			},
+			stu: {
+				animations: {
+					"talking": ["assets/images/Characters/Stu/Stu.png"]
+					//, "showNPCArrow": []
+				}
 			}
 		}
 		return gameCharacterData;

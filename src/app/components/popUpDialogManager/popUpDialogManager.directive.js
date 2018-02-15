@@ -71,8 +71,8 @@
 
 					annieDialogSprite = insetWindow.createSprite(conversationP5Data.annie.positionX, conversationP5Data.annie.positionY);
 					addAnimationsToChar(conversationP5Data.annie, annieDialogSprite);
-
 					dialogSprite = insetWindow.createSprite(conversationP5Data[dialogOptions.talkingWith].positionX, conversationP5Data[dialogOptions.talkingWith].positionY);
+					// console.log("dialogSprite", dialogSprite);
 					addAnimationsToChar(conversationP5Data[dialogOptions.talkingWith], dialogSprite);
 				};
 				/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

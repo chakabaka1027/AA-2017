@@ -130,7 +130,20 @@
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60
 				}
-			}
+			},
+			stu: { //for now only - will change later
+				lobby:{
+					startLeftX: 465, startLeftY: 240,
+					colliderXoffset: 5, colliderYoffset: 40,
+					colliderWidth: 60, colliderHeight: 95
+				},
+				breakRoom:{
+					startLeftX: 330, startLeftY: 380, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				}
+
+			},
 		};
 
 		return gameCharacterData;

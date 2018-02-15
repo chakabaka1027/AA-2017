@@ -17,7 +17,7 @@
 			fran:{
 				positionX: 155,
 				positionY: 325,
-				animations:{ //TODO !!!new Add other emotions here 
+				animations:{ //TODO !!!new Add other emotions here
 					"normal": ["assets/images/Characters/Fran/Fran-Inset-Final.png"],
 
 					//negative emotes
@@ -118,7 +118,34 @@
 					"agree_bold": ["assets/images/Characters/Luna/Luna_Agreement_Mild.png"]
 
 				}
-			}
+			},
+			stu:{
+				positionX: 150,
+				positionY: 315,
+				animations:{
+					"normal": ["assets/images/Characters/Stu/Stu_inset.png"],
+
+					"annoyed_mild": ["assets/images/Characters/Stu/Stu_annoyed_mild.png"],
+					"annoyed_bold": ["assets/images/Characters/Stu/Stu_annoyed_bold.png"],
+
+					"confused_mild": ["assets/images/Characters/Stu/Stu_confused_mild.png"],
+					"confused_bold": ["assets/images/Characters/Stu/Stu_confused_bold.png"],
+
+					"surprised_mild": ["assets/images/Characters/Stu/Stu_surprised_mild.png"],
+					"surprised_bold": ["assets/images/Characters/Stu/Stu_surprised_bold.png"],
+
+					"amused_mild": ["assets/images/Characters/Stu/Stu_amused_mild.png"],
+					"amused_bold": ["assets/images/Characters/Stu/Stu_amused_bold.png"],
+
+					"satisfied_mild": ["assets/images/Characters/Stu/Stu_satisfied_mild.png"],
+					"satisfied_bold": ["assets/images/Characters/Stu/Stu_satisfied_boldpng"],
+          //
+					"agree_mild": ["assets/images/Characters/Stu/Stu_agree_mild.png"],
+					"agree_bold": ["assets/images/Characters/Stu/Stu_agree_bold.png"]
+
+
+				}
+			},
 		};
 		return conversationP5;
 	}
