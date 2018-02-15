@@ -7,33 +7,98 @@
 
 	/** @ngInject */
 	function roomData(){
-		var roomData = {
-			anniesOffice: { //Annie's Office
+		var roomData = { //for now changing this
+
+
+			// anniesOffice: { //Annie's Office commented out for now
+			// 	bg: "assets/images/rooms/Annie-Room-Bkgd.jpg",
+			// 	furniture:{
+			// 		plant_1:{
+			// 			posX: 865, posY: 360,
+			// 			collider_width: 64, collider_height: 154,
+			// 			collider_X_offset: 0, collider_Y_offset: 15
+			// 		},
+			// 		bookshelf:{
+			// 			posX: 618.5, posY: 108.5,
+			// 			collider_width: 135, collider_height: 209,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		},
+			// 		left_door:{
+			// 			posX: 20.5, posY: 289.5,
+			// 			collider_width: 31, collider_height: 289,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		},
+			// 		top_right_door:{
+			// 			posX: 770, posY: 88,
+			// 			collider_width: 142, collider_height: 172,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		},
+			// 		tall_cabinet:{
+			// 			posX: 106.5, posY: 145,
+			// 			collider_width: 99, collider_height: 224,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		},
+			// 		clock:{
+			// 			posX: 876.5, posY: 52,
+			// 			collider_width: 67, collider_height: 52,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		},
+			// 		annies_whiteBoard:{
+			// 			posX: 451, posY: 69,
+			// 			collider_width: 148, collider_height: 94,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		},
+			// 		anniesRoomDesk:{
+			// 			posX: 304.5, posY: 171,
+			// 			collider_width: 257, collider_height: 154,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		},
+			// 		blueChair_1:{
+			// 			posX: 480.5, posY: 191,
+			// 			collider_width: 95, collider_height: 140,
+			// 			collider_X_offset: 0, collider_Y_offset: 0,
+			// 			mirror:"yes"
+			// 		},
+			// 		blueChair_2:{
+			// 			posX: 275.5, posY: 254.5,
+			// 			collider_width: 91, collider_height: 141,
+			// 			collider_X_offset: 0, collider_Y_offset: 0
+			// 		}
+			// 	}
+			// },
+
+			anniesOffice: { // New Classroom --
 				bg: "assets/images/rooms/Annie-Room-Bkgd.jpg",
 				furniture:{
-					plant_1:{
-						posX: 865, posY: 360,
-						collider_width: 64, collider_height: 154,
+					wallBlackboard:{
+						posX: 920, posY: 250,
+						collider_width: 64, collider_height: 250,
 						collider_X_offset: 0, collider_Y_offset: 15
 					},
-					bookshelf:{
-						posX: 618.5, posY: 108.5,
-						collider_width: 135, collider_height: 209,
+					wallCat:{
+						posX: 750.5, posY: 60,
+						collider_width: 67, collider_height: 52,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
+
 					left_door:{
 						posX: 20.5, posY: 289.5,
-						collider_width: 31, collider_height: 289,
+						collider_width: 22, collider_height: 289,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
-					top_right_door:{
-						posX: 770, posY: 88,
-						collider_width: 142, collider_height: 172,
+					wallMap:{
+						posX: 500, posY: 80.5,
+						collider_width: 148, collider_height: 94,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
-					tall_cabinet:{
-						posX: 106.5, posY: 145,
-						collider_width: 99, collider_height: 224,
+					wallSuccess:{
+						posX: 225, posY: 70.5,
+						collider_width: 148, collider_height: 94,
+						collider_X_offset: 0, collider_Y_offset: 0
+					},
+					sharpener:{
+						posX: 876.5, posY: 135,
+						collider_width: 67, collider_height: 52,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
 					clock:{
@@ -41,77 +106,112 @@
 						collider_width: 67, collider_height: 52,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
-					annies_whiteBoard:{
-						posX: 451, posY: 69,
-						collider_width: 148, collider_height: 94,
+					labTableRight:{
+						posX: 630.5, posY: 280,
+						collider_width: 200, collider_height: 200,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
-					anniesRoomDesk:{
-						posX: 304.5, posY: 171,
-						collider_width: 257, collider_height: 154,
+					labTableLeft:{
+						posX: 320.5, posY: 280,
+						collider_width: 200, collider_height: 200,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
-					blueChair_1:{
-						posX: 480.5, posY: 191,
-						collider_width: 95, collider_height: 140,
-						collider_X_offset: 0, collider_Y_offset: 0,
-						mirror:"yes"
-					},
-					blueChair_2:{
-						posX: 275.5, posY: 254.5,
-						collider_width: 91, collider_height: 141,
-						collider_X_offset: 0, collider_Y_offset: 0
-					}
+					garbageCan:{
+							posX: 60.5, posY: 180,
+							collider_width: 67, collider_height: 52,
+							collider_X_offset: 0, collider_Y_offset: 0
+						},
+
+
 				}
 			},
-			mikesOffice: {   //mike's office
+
+
+
+			mikesOffice: {   //new princiapsl office!
 				bg: "assets/images/rooms/Mike-Room-Bkgd.jpg",
 				furniture:{
 					small_plant:{
-						posX: 87, posY: 160,
+						posX: 880, posY: 160,
 						collider_width: 60, collider_height: 120,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
-					small_cabinet:{
-						posX: 303.5, posY: 140,
-						collider_width: 100, collider_height: 150,
-						collider_X_offset: 0, collider_Y_offset: 0
-					},
-					whiteBoard:{
-						posX: 725, posY: 74,
-						collider_width: 148, collider_height: 94,
-						collider_X_offset: 0, collider_Y_offset: 0
-					},
-					lamp:{
-						posX: 867, posY: 120.5,
-						collider_width: 40, collider_height: 218,
-						collider_X_offset: 0, collider_Y_offset: 0
-					},
-					computerDesk_1:{
-						posX: 499.5, posY: 155.5,
-						collider_width: 257, collider_height: 180,
-						collider_X_offset: 0, collider_Y_offset: 0
-					},
+
 					right_door:{
 						posX: 927.5, posY: 260,
 						collider_width: 31, collider_height: 150,
 						collider_X_offset: 0, collider_Y_offset: 50
 					},
+					Bookshelf2:{
+						posX: 650, posY: 90,
+						collider_width: 80, collider_height: 150,
+						collider_X_offset: 0, collider_Y_offset: 0,
+						mirror: "yes"
+
+					},
+					tableNew:{
+						posX: 450, posY: 90,
+						collider_width: 80, collider_height: 170,
+						collider_X_offset: 0, collider_Y_offset: 0,
+					},
+					bookshelf:{
+						posX: 250, posY: 90,
+						collider_width: 80, collider_height: 150,
+						collider_X_offset: 0, collider_Y_offset: 0,
+					},
 					blueChair_1:{
-						posX: 353.5, posY: 252,
-						collider_width: 85, collider_height: 100,
-						collider_X_offset: 0, collider_Y_offset: -2
+						posX: 350, posY: 350,
+						collider_width: 60, collider_height: 120,
+						collider_X_offset: 0, collider_Y_offset: 0,
+						mirror:"yes"
 					},
-					blueChair_2:{
-						posX: 461.5, posY: 240.5,
-						collider_width: 81, collider_height: 90,
-						collider_X_offset: 0, collider_Y_offset: -5
+					blueChair_3:{
+						posX: 350, posY: 450,
+						collider_width: 60, collider_height: 120,
+						collider_X_offset: 0, collider_Y_offset: 0,
+						mirror:"yes"
 					},
-					couch2:{
-						posX: 73.5, posY: 360.5,
-						collider_width: 123, collider_height: 213,
-						collider_X_offset: 0, collider_Y_offset: 0
+					bossDesk:{
+						posX: 200, posY: 400,
+						collider_width: 120, collider_height: 190,
+						collider_X_offset: 0, collider_Y_offset: 0,
 					}
+
+
+					// blueChair_3:{
+					// 	posX: 350, posY: 300,
+					// 	collider_width: 60, collider_height: 120,
+					// 	collider_X_offset: 0, collider_Y_offset: 0,
+					// 	mirror:"yes"
+					// }
+					// bossDesk:{
+					// 	posX: 87, posY: 160,
+					// 	collider_width: 60, collider_height: 120,
+					// 	collider_X_offset: 0, collider_Y_offset: 0
+					// },
+					// Bookshelf:{
+					// 	posX: 87, posY: 160,
+					// 	collider_width: 60, collider_height: 120,
+					// 	collider_X_offset: 0, collider_Y_offset: 0
+					// },
+					// Bookshelf2:{
+					// 	posX: 87, posY: 160,
+					// 	collider_width: 60, collider_height: 120,
+					// 	collider_X_offset: 0, collider_Y_offset: 0
+          //
+					// },
+					// tableNew:{
+					// 	posX: 87, posY: 160,
+					// 	collider_width: 60, collider_height: 120,
+					// 	collider_X_offset: 0, collider_Y_offset: 0
+					// },
+					// blueChair_1:{
+					// 	posX: 87, posY: 160,
+					// 	collider_width: 60, collider_height: 120,
+					// 	collider_X_offset: 0, collider_Y_offset: 0
+					// 	// mirror: "yes"
+					// }
+
 				}
 			},
 			fransOffice: {   //fran's Office
@@ -346,6 +446,58 @@
 					}
 				}
 			}
+
+            //
+						// mikesOffice: {   //mike's office - old
+						// 	bg: "assets/images/rooms/Mike-Room-Bkgd.jpg",
+						// 	furniture:{
+						// 		small_plant:{
+						// 			posX: 87, posY: 160,
+						// 			collider_width: 60, collider_height: 120,
+						// 			collider_X_offset: 0, collider_Y_offset: 0
+						// 		},
+						// 		small_cabinet:{
+						// 			posX: 303.5, posY: 140,
+						// 			collider_width: 100, collider_height: 150,
+						// 			collider_X_offset: 0, collider_Y_offset: 0
+						// 		},
+						// 		whiteBoard:{
+						// 			posX: 725, posY: 74,
+						// 			collider_width: 148, collider_height: 94,
+						// 			collider_X_offset: 0, collider_Y_offset: 0
+						// 		},
+						// 		lamp:{
+						// 			posX: 867, posY: 120.5,
+						// 			collider_width: 40, collider_height: 218,
+						// 			collider_X_offset: 0, collider_Y_offset: 0
+						// 		},
+						// 		computerDesk_1:{
+						// 			posX: 499.5, posY: 155.5,
+						// 			collider_width: 257, collider_height: 180,
+						// 			collider_X_offset: 0, collider_Y_offset: 0
+						// 		},
+						// 		right_door:{
+						// 			posX: 927.5, posY: 260,
+						// 			collider_width: 31, collider_height: 150,
+						// 			collider_X_offset: 0, collider_Y_offset: 50
+						// 		},
+						// 		blueChair_1:{
+						// 			posX: 353.5, posY: 252,
+						// 			collider_width: 85, collider_height: 100,
+						// 			collider_X_offset: 0, collider_Y_offset: -2
+						// 		},
+						// 		blueChair_2:{
+						// 			posX: 461.5, posY: 240.5,
+						// 			collider_width: 81, collider_height: 90,
+						// 			collider_X_offset: 0, collider_Y_offset: -5
+						// 		},
+						// 		couch2:{
+						// 			posX: 73.5, posY: 360.5,
+						// 			collider_width: 123, collider_height: 213,
+						// 			collider_X_offset: 0, collider_Y_offset: 0
+						// 		}
+						// 	}
+						// },
 		};
 
 		function swapRooms(room1, room2 ){ //swap room 1 and 2 postions

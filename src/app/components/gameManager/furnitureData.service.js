@@ -18,6 +18,7 @@
 				beige_chair_back2: "assets/images/rooms/Room_Items/Beige-Chair3.png",
 				blueChair_1: "assets/images/rooms/Room_Items/Blue-Chair1.png",
 				blueChair_2: "assets/images/rooms/Room_Items/Blue-Chair2.png",
+				blueChair_3:"assets/images/rooms/Room_Items/Blue-Chair3.png",
 				breakRoom_Poster1: "assets/images/rooms/Room_Items/Break-Room-Poster1.png",
 				bookshelf: "assets/images/rooms/Room_Items/Bookshelf.png",
 				breakRoom_Poster2: "assets/images/rooms/Room_Items/Break-Room-Poster2.png",
@@ -45,7 +46,19 @@
 				small_cabinet: "assets/images/rooms/Room_Items/Cabinet2.png",
 				small_cabinet2: "assets/images/rooms/Room_Items/Cabinet2.png",
 				waterCooler: "assets/images/rooms/Room_Items/Water-Cooler.png",
-				whiteBoard: "assets/images/rooms/Room_Items/Whiteboard.png"
+				whiteBoard: "assets/images/rooms/Room_Items/Whiteboard.png",
+				wallCat: "assets/images/rooms/Room_Items/wallCat.png",
+				tableNew: "assets/images/rooms/Room_Items/tableNew.png",
+				wallBlackboard: "assets/images/rooms/Room_Items/wallBlackboard.png",
+				sharpener: "assets/images/rooms/Room_Items/sharpener.png",
+				wallSuccess: "assets/images/rooms/Room_Items/wallSuccess.png",
+				wallMap: "assets/images/rooms/Room_Items/wallMap.png",
+				garbageCan: "assets/images/rooms/Room_Items/garbageCan.png",
+				labTableRight: "assets/images/rooms/Room_Items/labTableRight.png",
+				labTableLeft: "assets/images/rooms/Room_Items/labTableLeft.png",
+				bossDesk: "assets/images/rooms/Room_Items/bossDesk.png",
+				Bookshelf2:"assets/images/rooms/Room_Items/Bookshelf.png"
+
 			};
 			return furnitureData;
 		}

@@ -141,6 +141,11 @@
 					startLeftX: 330, startLeftY: 380, //was 330
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
+				},
+				anniesOffice:{
+					startLeftX: 480, startLeftY: 260, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
 				}
 
 			},
