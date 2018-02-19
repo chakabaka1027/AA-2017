@@ -6,7 +6,8 @@
   /** @ngInject */
   function parseAAContentService($log, xlsxService, $q, $location, nodeDataService) {
     // var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
-    var defaultUrl = 'assets/newFormatDialogs.xlsx';
+    // var defaultUrl = 'assets/newFormatDialogs.xlsx'; //TODO change the name
+    var defaultUrl = 'assets/ETS-ConfigSys.xlsx'; //TODO change the name 
 
     // var testingNewSheets = 'assets/newFormatDialogs.xlsx';
     var templatesSample = [];
@@ -14,8 +15,8 @@
     var service = {
       parsedDialogContent: {},  //dictionary keyed by dialog key - yeilding objects of the form:
                           // {
-                          //  scoring: < scoring data >, 
-                          //  dialogTree: < tree of dialog text> 
+                          //  scoring: < scoring data >,
+                          //  dialogTree: < tree of dialog text>
                           // }
 
       levelDataInformation: {},   // dictionary that includes template-<game-name>  - yeilding objects of the form
@@ -78,7 +79,7 @@
         col0 = (xlsxService.cellValue(sheet, 0, r)+'').toLowerCase().split(' ')[0];
 
         switch(parserState) {
-        
+
           case 'inHeader':
             if (col0==='outcome') {
               parserState = 'inScoring';
@@ -86,7 +87,7 @@
               parserState = 'inDialogNodes';
             }
             break;
-        
+
           case 'inScoring':
             if (col0==='') {
               // do nothing
@@ -100,7 +101,7 @@
               scoring.positive[col0] = xlsxService.cellValue(sheet, 2, r);
             }
             break;
-        
+
           case 'inDialogNodes':
             if (xlsxService.cellValue(sheet, 0, r).trim()==='') {
               // skip any empty rows
@@ -213,7 +214,7 @@
     }
 
     function parseAllSheets(book) {
-      
+
       var parsedDialogs = {};
       var parsedLevelData = {};
       var sheetNames = book.SheetNames;
@@ -289,4 +290,3 @@
   }
 
 })();
-
