@@ -73,7 +73,7 @@
 					"normal": ["assets/images/Characters/Charlie/Charlie-Inset-Angle-Right.png"],
 
 					"annoyed_mild": ["assets/images/Characters/Charlie/New/Charlie_Annoyed_Mild.png"],
-					"annoyed__med":["assets/images/Characters/Charlie/New/Charlie_Annoyed_Med.png"],
+					"annoyed_med":["assets/images/Characters/Charlie/New/Charlie_Annoyed_Med.png"],
 					"annoyed_bold": ["assets/images/Characters/Charlie/New/Charlie_Annoyed_Med.png"],
 
 					"confused_mild": ["assets/images/Characters/Charlie/New/Charlie_Confused_Mild.png"],
