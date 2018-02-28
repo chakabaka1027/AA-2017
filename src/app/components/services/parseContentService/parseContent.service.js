@@ -7,7 +7,7 @@
   function parseAAContentService($log, xlsxService, $q, $location, nodeDataService) {
     // var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
     // var defaultUrl = 'assets/newFormatDialogs.xlsx';
-    var defaultUrl = 'assets/ETS-ConfigSys.xlsx'; 
+    var defaultUrl = 'assets/ETS-ConfigSys.xlsx';
     // var testingNewSheets = 'assets/newFormatDialogs.xlsx';
     var templatesSample = [];
 
@@ -25,6 +25,7 @@
                                   //    display: true
                                   //  };
 
+      parsedLevelNames:[],
 
       parseContentFromGameType: parseContentFromGameType,
       getLevelDataForURL:getLevelDataForURL,
@@ -143,7 +144,8 @@
       var gameCaseData = {
         levels: levels,
         audioSetting: true,
-        display: true
+        display: true,
+        tutorial:true
       };
 
       var numRows = xlsxService.findSheetSize(sheet).r;
@@ -159,6 +161,9 @@
             break;
           case 'display':
             gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
+          case 'tutorial':
+            gameCaseData.tutorial = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'level':
             inHead = false;
@@ -238,6 +243,8 @@
               if (sheetParsed) {
                 parsedLevelData[sheetName] = sheetParsed;
                 service.levelDataInformation[sheetName] = sheetParsed;
+                var legalSheetName = sheetName.replace("game-",'');
+                service.parsedLevelNames.push(legalSheetName);
               } else {
                 $log.warn(sheetName + ': unparseable');
               }
@@ -259,7 +266,7 @@
 
       if(angular.isUndefined(levelData)){
         if ($location.path()!=='/') {
-          $log.warn("undefined url path - make sure you typed it in correctly")
+          $log.warn("undefined url path - make sure you typed it in correctly"); //or just use it here
         }
         return  service.levelDataInformation["game-negative"];
       } else {

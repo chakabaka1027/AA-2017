@@ -58,8 +58,13 @@
 	    	}
     	};
 
+			pt.checkForErrors = function (){
+				//look throgh tree
+				//look for -
+			}
+
 	    pt.setupTree = function(nodeArray, scoringData) {
-	    	
+
 	    	function isNotANumb(n) {
 	    		if (typeof(n)==='string') {n=n.trim();}
 	    		return (n==='' || isNaN(n))
@@ -93,9 +98,11 @@
 		    });
 
 	    	// now can find the 'leaves' of the tree... //// this right here image refrence!
+				//if i cencountred empty  ---  => 1
+				//if i incountred a score that is not empty =>1
 	    	angular.forEach(this.nodeDict, function(node, nodeCode) {
 	    		if (Object.keys(node.children).length===0) {
-	    			// this is a leaf
+	    			// this is a leaf //construct error string -- for new issue 
 
 	    			if (isNotANumb(node.negative.score)) {
 	    				node.negative.score = 0;
@@ -106,7 +113,7 @@
 	    			if (node.negative.success !== 0 && node.negative.success !== 1) {
 	    				node.negative.success = (node.negative.score/node.code.length>=scoringData.negative.successThreshold ? 1 : 0);
 	    			}
-	    			
+
 	    			if (isNotANumb(node.positive.score)) {
 	    				node.positive.score = 0;
 	    				for (i=0; i<node.code.length; i++) {

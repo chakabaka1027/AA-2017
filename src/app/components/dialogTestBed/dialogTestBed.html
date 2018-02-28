@@ -27,8 +27,13 @@
             </label>
 		</div>
 		<select ng-options="item.key as item.label for item in dialogTest.dialogList"
-				ng-model = "dialogTest.currentConversation">
+				<!-- ng-model = "dialogTest.currentConversation"> -->
 		</select>
+
+		<select ng-options=" item for item in dialogTest.charSelections"
+				ng-model = "dialogTest.talkingWith">
+		</select>
+
 
 		<div class="flip-input">
 			<input type="checkbox" ng-model="dialogTest.flipDialog" id="flipDialog">
@@ -54,7 +59,7 @@
 		<div ng-if="!dialogTest.curNode.isTerminal()">
 			<br/><br/>
 		</div>
-		
+
 	</div>
 
 </div>

@@ -15,17 +15,18 @@
         C: 5
       },
       successPaths: ["ACC", "CAC", "CCA", "BBC", "BCB", "CBB", "BCC", "CBC", "CCB", "CCC","CCCC"], //QUICK FIX FOR LINER
-      legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
-      maxLevel: 7,
+      // legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
+      legalLevels : parseAAContentService.parsedLevelNames,
+      maxLevel: 7, //would this be per sheet - above is genral while this is specfic :$
       setUpForGameType: setUpForGameType,
       getRoomDialogs: getRoomDialogs,
       lastlevel: false
     };
-
     return service;
 
     function setUpForGameType(gameType) {//TODO!!!new change this into using the new levels structure
       return parseAAContentService.parseContentFromGameType().then(function(response){
+        service.legalLevels.push("")
         service.levels = parseAAContentService.getLevelDataForURL().levels;
         });
     }

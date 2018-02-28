@@ -21,11 +21,20 @@
         .then(function() {
 
           gameType = $stateParams.gameType || 'negative';
+          // if (levelDataHandler.legalLevels.indexOf(gameType) < 0) {
+          //   alert("not a legal level, please type in a legal level");
+          //   return;
+          // }
 
-          if (levelDataHandler.legalLevels.indexOf(gameType) < 0) {
-            alert("not a legal level, please type in a legal level");
-            return;
-          }
+          levelDataHandler.setUpForGameType().then(function(response){
+            var currentURL  =  $location.path().split('#')[0].replace("/",'');
+            console.log(currentURL);
+            if (!levelDataHandler.legalLevels.includes(currentURL)){
+                alert("not a legal level, please type in a legal level");
+                return; }
+            });
+
+
           userGameInfo.gameType = gameType;
 
           var userID = $location.search().userID; //user ID is a qury param -  (--rul > key=value)
@@ -49,9 +58,10 @@
               userDataService.trackAction(0, "Start", "Game_Start", "Game Start");
               $state.go('instructions');
             } else {
+
               $state.go('GameStart');
             }
-            
+
           });//TODO !!!new
 
 

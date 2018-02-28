@@ -19,6 +19,7 @@
     vm.animationValid = true;
     vm.successPaths = [];
     vm.flipDialog = true;
+    vm.charSelections = ['fran', 'mike',  'charlie', 'luna', 'stu'] ;
     // $scope.main = mainInformationHandler;
 
     $log.log('Ensure dialog service is loaded...');
@@ -52,7 +53,7 @@
 
     function characterFromDialogKey(dkey) {
       var cmap = {
-        'FF': 'fran', 'MM': 'mike', 'CC': 'charlie', 'LL': 'luna'
+        'FF': 'fran', 'MM': 'mike', 'CC': 'charlie', 'LL': 'luna', 'ss':'stu'
       };
 
       return cmap[dkey.split('.')[0]] || 'luna';
@@ -77,11 +78,12 @@
 
         vm.branchHistory = []; //temporary fix below
 
-        vm.talkingWith = characterFromDialogKey(vm.currentConversation); // "fran";
+        // vm.talkingWith = characterFromDialogKey(vm.currentConversation); // "fran";
 
         vm.displayCharacters = false;
         mainInformationHandler.currentConversation = vm.currentConversation;
         dialogOptions.talkingWith = vm.talkingWith;
+        console.log("talking with",dialogOptions.talkingWith);
         $timeout(function() {
           vm.displayCharacters = true;
         }, 0);
