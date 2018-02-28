@@ -84,7 +84,7 @@
 
 					left_door:{
 						posX: 20.5, posY: 289.5,
-						collider_width: 22, collider_height: 289,
+						collider_width: 30, collider_height: 320,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
 					wallMap:{
@@ -126,10 +126,9 @@
 
 				}
 			},
-			mikesOffice:{
-
-			},
-
+			// mikesOffice:{
+			//
+			// },
 
 			mikesOffice2: {   //new princiapsl office!
 				bg: "assets/images/rooms/Mike-Room-Bkgd.jpg",
@@ -179,41 +178,6 @@
 						collider_width: 120, collider_height: 190,
 						collider_X_offset: 0, collider_Y_offset: 0,
 					}
-
-
-					// blueChair_3:{
-					// 	posX: 350, posY: 300,
-					// 	collider_width: 60, collider_height: 120,
-					// 	collider_X_offset: 0, collider_Y_offset: 0,
-					// 	mirror:"yes"
-					// }
-					// bossDesk:{
-					// 	posX: 87, posY: 160,
-					// 	collider_width: 60, collider_height: 120,
-					// 	collider_X_offset: 0, collider_Y_offset: 0
-					// },
-					// Bookshelf:{
-					// 	posX: 87, posY: 160,
-					// 	collider_width: 60, collider_height: 120,
-					// 	collider_X_offset: 0, collider_Y_offset: 0
-					// },
-					// Bookshelf2:{
-					// 	posX: 87, posY: 160,
-					// 	collider_width: 60, collider_height: 120,
-					// 	collider_X_offset: 0, collider_Y_offset: 0
-          //
-					// },
-					// tableNew:{
-					// 	posX: 87, posY: 160,
-					// 	collider_width: 60, collider_height: 120,
-					// 	collider_X_offset: 0, collider_Y_offset: 0
-					// },
-					// blueChair_1:{
-					// 	posX: 87, posY: 160,
-					// 	collider_width: 60, collider_height: 120,
-					// 	collider_X_offset: 0, collider_Y_offset: 0
-					// 	// mirror: "yes"
-					// }
 
 				}
 			},
@@ -505,15 +469,14 @@
 		};
 
 		console.log("when does this get called");
-		if(parseAAContentService.getLevelDataForURL().school){ //change this to school setting
-			roomData.anniesOffice = roomData.anniesOffice2; //swap annies office with schoolversion
+		if(parseAAContentService.getLevelDataForURL().school){
+			roomData.anniesOffice = roomData.anniesOffice2;
 			roomData.mikesOffice = roomData.mikesOffice2;
 		}
 		else {
 			roomData.anniesOffice = roomData.anniesOffice1;
 			roomData.mikesOffice = roomData.mikesOffice1;
 		}
-		// if(parseAAContentService.levelDataInformation.SchoolVersion)
 		function swapRooms(room1, room2 ){ //swap room 1 and 2 postions
 			var swapper = roomData.room1;
 			roomData.room1 = roomData.room2;
