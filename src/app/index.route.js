@@ -38,7 +38,7 @@
           controllerAs: "dialogTest"
         });
 
-      
+
 
 
     $stateProvider

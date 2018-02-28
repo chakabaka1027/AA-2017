@@ -6,7 +6,7 @@
 		.directive('popUpDialogManager', popUpDialogManager);
 
 	/** @ngInject */
-	function popUpDialogManager(conversationP5Data, mainInformationHandler, dialogOptions, $log) {// add this here - dialogOptions
+	function popUpDialogManager(conversationP5Data, mainInformationHandler, dialogOptions, $log, parseAAContentService) {// add this here - dialogOptions
 		var directive = {
 			restrict: "E",
 			controller: controller,
@@ -35,9 +35,9 @@
 			var dialogSprite;
 			var annieDialogSprite;
 			var newDialogCanvas;
-			// var universalSurprised,
-			//   universalConfused,
-			//   universalAnnoyed;
+			var universalSurprised, //comment this later
+			  universalConfused,
+			  universalAnnoyed;
 
 			$scope.$on('$destroy', function() {
 				newDialogCanvas.remove();
@@ -52,9 +52,12 @@
 					 the watch section  below if you want to have sounds inside dialougs
 				~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 				insetWindow.preload = function() {
-					// universalSurprised =""//insetWindow.loadSound("assets/sounds/UniversalSurpriseCartoon-option1.wav");
-					// universalConfused = ""//insetWindow.loadSound("assets/sounds/UniversalConfusedCartoon-option1.wav");
-					// universalAnnoyed =  ""//insetWindow.loadSound("assets/sounds/UniversalAnnoyed.wav");
+					if(parseAAContentService.getLevelDataForURL().audioSetting){
+						universalSurprised =insetWindow.loadSound("assets/sounds/UniversalSurpriseCartoon-option1.wav");
+						universalConfused = insetWindow.loadSound("assets/sounds/UniversalConfusedCartoon-option1.wav");
+						universalAnnoyed =  insetWindow.loadSound("assets/sounds/UniversalAnnoyed.wav");
+					}
+
 				};
 				/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 					SETUP
@@ -106,9 +109,11 @@
 			newDialogCanvas = new p5(dialogCanvas);
 
 			/*     uncomment this section if you want to have sounds inside dialougs      */
-			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-						Only called when title changes, not every draw
+						// Only called when title changes, not every draw
+
 						$scope.$watch(function() {return dialogOptions.animationTitle}, function(newVal, oldVal) {
+							if(parseAAContentService.getLevelDataForURL().audioSetting){
+
 							switch (dialogOptions.animationTitle) {
 								case "surprised_bold":
 									universalSurprised.play();
@@ -122,9 +127,8 @@
 									universalAnnoyed.play();
 									universalAnnoyed.setVolume(0.2);
 									break;
-							}
+							}}
 						});
-			//		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  */
 
 			// Add animation to character sprite from p5 sketck
 			function addAnimationsToChar(characterDefinition, characterSprite) { //Char deffinition is from ConversationP5Data service
