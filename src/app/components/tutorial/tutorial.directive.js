@@ -29,7 +29,7 @@
       vm.resetState = resetState;
       delayDialog();
 
-      TutorialService.loadTutorialData().then(function() {
+      tutorialService.loadTutorialData().then(function() {
         vm.resetState();
       });
       $scope.$on("$destroy", onDestroy);
@@ -41,7 +41,7 @@
           pcText: pcOption.text
         });
         vm.curStateName = pcOption.nextState;
-        vm.curState = TutorialService.data[vm.curStateName];
+        vm.curState = tutorialService.data[vm.curStateName];
         delayDialog();
         vm.showingNPCtext = false;
         vm.showingDialogOptions = false;
@@ -57,7 +57,7 @@
       } //end of method
 
       function resetState() {
-        vm.curState = TutorialService.data.start;
+        vm.curState = tutorialService.data.start;
         vm.curStateName = 'start';
       }
 
