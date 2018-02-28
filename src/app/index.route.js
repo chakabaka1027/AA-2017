@@ -38,7 +38,11 @@
           controllerAs: "dialogTest"
         });
 
-      
+    $stateProvider
+      .state('tutorial', {
+        url: '/tutorial/',
+        template: '<simple-tutorial></simple-tutorial>'
+      });
 
 
     $stateProvider
@@ -84,11 +88,6 @@
         });
 
 
-    $stateProvider
-      .state('tutorial', {
-        url: '/tutorial',
-        template: '<simple-tutorial></simple-tutorial>'
-      })
 
     $urlRouterProvider.otherwise('/');
   }
