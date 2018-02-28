@@ -27,7 +27,7 @@
             </label>
 		</div>
 		<select ng-options="item.key as item.label for item in dialogTest.dialogList"
-				<!-- ng-model = "dialogTest.currentConversation"> -->
+				ng-model = "dialogTest.currentConversation">
 		</select>
 
 		<select ng-options=" item for item in dialogTest.charSelections"

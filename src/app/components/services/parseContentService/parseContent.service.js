@@ -22,7 +22,7 @@
                                   //  {
                                   //    levels: < structure of the whole level - based on templates >
                                   //    audioSetting: true,
-                                  //    display: true
+                                  //    display: true ...etc
                                   //  };
 
       parsedLevelNames:[],
@@ -145,6 +145,7 @@
         levels: levels,
         audioSetting: true,
         display: true,
+        school:true,
         tutorial:true
       };
 
@@ -162,6 +163,9 @@
           case 'display':
             gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
+          case 'school':
+            gameCaseData.school = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
           case 'tutorial':
             gameCaseData.tutorial = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
@@ -171,6 +175,7 @@
         }
         r += 1;
       }
+
 
       var templateRows = []; //works
       for (; r < numRows; r++) {
@@ -274,6 +279,8 @@
       }
 
     }
+
+
 
     function parseContentFromGameType(gameType) { //!reached
       return xlsxService.loadWorkbookFromUrl(defaultUrl)
