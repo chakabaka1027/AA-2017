@@ -6,7 +6,7 @@
 		.service('roomData', roomData); //room data here -
 
 	/** @ngInject */
-	function roomData(parseAAContentService){
+	function roomData(parseAAContentService, $location){ //proabbaly save url someplace as it is being use in a lot of places - coppied it for now
 		var roomData = { //for now changing this
 
 
@@ -467,31 +467,47 @@
             //
 
 		};
-
-		console.log("when does this get called");
+		var currentGame  = "game-"+ $location.path().split('#')[0].replace("/",'');
+		// console.log("currentURL", roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room2]);
 		if(parseAAContentService.getLevelDataForURL().school){
-			roomData.anniesOffice = roomData.anniesOffice2;
-			roomData.mikesOffice = roomData.mikesOffice2;
+			// console.log("000000000",typeof(parseAAContentService.levelDataInformation[currentGame].roomSelection[room1]); //gave me tje rppm name as a string
+			// var temp =  parseAAContentService.levelDataInformation[currentGame].roomSelection.room1;
+			roomData.mikesOffice = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room1];
+			roomData.conferenceRoom = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room2];
+			roomData.fransOffice = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room3];
+			roomData.anniesOffice = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room4];
+			roomData.breakRoom = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room5];
 		}
-		else {
-			roomData.anniesOffice = roomData.anniesOffice1;
-			roomData.mikesOffice = roomData.mikesOffice1;
-		}
-		function swapRooms(room1, room2 ){ //swap room 1 and 2 postions
-			var swapper = roomData.room1;
-			roomData.room1 = roomData.room2;
-			roomData.room2 = swapper;
-		}
+		// else {
+		// 	roomData.anniesOffice = roomData.anniesOffice1; //use original rooms
+		// 	roomData.mikesOffice = roomData.mikesOffice1; //use original rooms
+		// }
 
 		return roomData;
 	}
 })();
 /*
 	Rooms:
-		conferenceRoom
-		anniesOffice
-		mikesOffice
-		fransOffice
-		lobby
-		breakRoom
+		conferenceRoom -----2
+		anniesOffice ---- 4
+		mikesOffice ------1
+		fransOffice -----3
+		lobby   -- no room number
+		breakRoom -- 5
 */
+
+
+//old method of schoool selection
+// if(parseAAContentService.getLevelDataForURL().school){
+// 	roomData.anniesOffice = roomData.anniesOffice2;
+// 	roomData.mikesOffice = roomData.mikesOffice2;
+// }
+// else {
+// 	roomData.anniesOffice = roomData.anniesOffice1;
+// 	roomData.mikesOffice = roomData.mikesOffice1;
+// }
+// function swapRooms(room1, room2 ){ //swap room 1 and 2 postions
+// 	var swapper = roomData.room1;
+// 	roomData.room1 = roomData.room2;
+// 	roomData.room2 = swapper;
+// }

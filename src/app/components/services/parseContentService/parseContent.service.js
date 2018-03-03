@@ -5,10 +5,8 @@
 
   /** @ngInject */
   function parseAAContentService($log, xlsxService, $q, $location, nodeDataService) {
-    // var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
-    // var defaultUrl = 'assets/newFormatDialogs.xlsx';
+
     var defaultUrl = 'assets/ETS-ConfigSys.xlsx';
-    // var testingNewSheets = 'assets/newFormatDialogs.xlsx';
     var templatesSample = [];
 
     var service = {
@@ -140,13 +138,15 @@
 
     function parseGameCaseSheet(sheet) {
 
+      var reachedENDselection = false;
       var levels = {};
       var gameCaseData = {
         levels: levels,
         audioSetting: true,
         display: true,
         school:true,
-        tutorial:true
+        tutorial:true,
+        roomSelection:{room1:"test1",room2:"test2",room3:"",room4:"",room5:""}
       };
 
       var numRows = xlsxService.findSheetSize(sheet).r;
@@ -165,6 +165,14 @@
             break;
           case 'school':
             gameCaseData.school = xlsxService.cellValue(sheet, 1, r) === 'on';
+            if(!reachedENDselection){
+              gameCaseData.roomSelection.room1 = xlsxService.cellValue(sheet, 1, r+1);
+              gameCaseData.roomSelection.room2 = xlsxService.cellValue(sheet, 1, r+2) ;
+              gameCaseData.roomSelection.room3 = xlsxService.cellValue(sheet, 1, r+3);
+              gameCaseData.roomSelection.room4 = xlsxService.cellValue(sheet, 1, r+4) ;
+              gameCaseData.roomSelection.room5 = xlsxService.cellValue(sheet, 1, r+5) ;
+              reachedENDselection = true;
+            }
             break;
           case 'tutorial':
             gameCaseData.tutorial = xlsxService.cellValue(sheet, 1, r) === 'on';
@@ -175,6 +183,7 @@
         }
         r += 1;
       }
+
 
 
       var templateRows = []; //works
@@ -303,3 +312,11 @@
   }
 
 })();
+
+
+
+            // var roomNumbers = Object.keys(obj.roomSelection).length
+            // for(i = 0 ; i< roomNumbers; i++){
+            //   var tempString = "room"+i;
+            //   gameCaseData.roomSelection.tempString = xlsxService.cellValue(sheet, 1, r+i) === 'on';
+            //   }
