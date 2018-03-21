@@ -66,7 +66,6 @@
 					}
 				}
 			},
-			anniesOffice:{},
 
 			anniesOffice2: { // New Classroom --
 				bg: "assets/images/rooms/Annie-Room-Bkgd.jpg",
@@ -126,9 +125,6 @@
 
 				}
 			},
-			// mikesOffice:{
-			//
-			// },
 
 			mikesOffice2: {   //new princiapsl office!
 				bg: "assets/images/rooms/Mike-Room-Bkgd.jpg",
@@ -467,21 +463,30 @@
             //
 
 		};
+
+		var roomNameMapping = {};
+		var i;
 		var currentGame  = "game-"+ $location.path().split('#')[0].replace("/",'');
 		// console.log("currentURL", roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room2]);
 		if(parseAAContentService.getLevelDataForURL().school){
-			// console.log("000000000",typeof(parseAAContentService.levelDataInformation[currentGame].roomSelection[room1]); //gave me tje rppm name as a string
-			// var temp =  parseAAContentService.levelDataInformation[currentGame].roomSelection.room1;
-			roomData.mikesOffice = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room1];
-			roomData.conferenceRoom = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room2];
-			roomData.fransOffice = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room3];
-			roomData.anniesOffice = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room4];
-			roomData.breakRoom = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room5];
+
+			for(  i = 0 ; i < 5 ; i ++){
+				roomData["room" + (i+1)] = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection["room" + (i+1)]];
+				var roomName = parseAAContentService.levelDataInformation[currentGame].roomSelection["room" + (i+1)];
+				roomNameMapping["room" + (i+1)] = roomName;
+			}
+			roomData.room6 = roomData.lobby ; //room data.lobby is never chanding
+			roomNameMapping.room6 = "lobby";
+
 		}
-		// else {
-		// 	roomData.anniesOffice = roomData.anniesOffice1; //use original rooms
-		// 	roomData.mikesOffice = roomData.mikesOffice1; //use original rooms
-		// }
+		else {
+			var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","anniesOffice1","breakRoom","lobby"];
+			for(  i = 0; i < 6 ; i++){
+				roomData["room" + (i+1)] = roomData[roomNames[i]];
+				roomNameMapping["room" + (i+1)] = roomNames[i];
+			}
+		}
+
 
 		return roomData;
 	}
@@ -495,19 +500,3 @@
 		lobby   -- no room number
 		breakRoom -- 5
 */
-
-
-//old method of schoool selection
-// if(parseAAContentService.getLevelDataForURL().school){
-// 	roomData.anniesOffice = roomData.anniesOffice2;
-// 	roomData.mikesOffice = roomData.mikesOffice2;
-// }
-// else {
-// 	roomData.anniesOffice = roomData.anniesOffice1;
-// 	roomData.mikesOffice = roomData.mikesOffice1;
-// }
-// function swapRooms(room1, room2 ){ //swap room 1 and 2 postions
-// 	var swapper = roomData.room1;
-// 	roomData.room1 = roomData.room2;
-// 	roomData.room2 = swapper;
-// }

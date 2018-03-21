@@ -307,12 +307,12 @@
           for (var i in npcSprites) {
             annieSprite.collide(npcSprites[i], handleCharacterCollision);
           }
-          if (currentRoomKey === "mikesOffice" || currentRoomKey === "conferenceRoom" || currentRoomKey === "lobby") {
+          if (currentRoomKey === "room1" || currentRoomKey === "room2" || currentRoomKey === "room6") {
             if (annieSprite.position.x >= 700 && annieSprite.position.x <= 840 && annieSprite.position.y > 419) {
               handleDoorCollision("lower_right_door");
             }
           }
-          if (currentRoomKey === "conferenceRoom") {
+          if (currentRoomKey === "room2") {
             if (annieSprite.position.x >= 125 && annieSprite.position.x <= 180 && annieSprite.position.y > 419) {
               handleDoorCollision("lower_left_door");
             }

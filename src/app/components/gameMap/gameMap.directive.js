@@ -6,7 +6,7 @@
     .directive('gameMap', gameMap);
 
   /** @ngInject */
-  function gameMap($log, levelDataHandler) {
+  function gameMap($log, levelDataHandler, roomData) {
     return {
       restrict: 'E',
       controller: controller,
@@ -16,7 +16,7 @@
 
     function controller($scope) {
       var vm = this;
-      vm.roomKeys = ['lobby', 'conferenceRoom', 'anniesOffice', 'mikesOffice', 'fransOffice', 'breakRoom'];
+      vm.roomKeys = ['room6', 'room2', 'room4', 'room1', 'room3', 'room5'];
       vm.roomHasConversation = roomHasConversation;
       vm.show = false;
 
@@ -63,7 +63,7 @@
           return;
         }
 
-        var nextLevel = levelDataHandler.levels["level_" + $scope.main.levelCount];////TODO !!! NEW CHANGE HERE 
+        var nextLevel = levelDataHandler.levels["level_" + $scope.main.levelCount];////TODO !!! NEW CHANGE HERE
         if (!nextLevel) {
           $log.log('reached end of levels...');
           return;
