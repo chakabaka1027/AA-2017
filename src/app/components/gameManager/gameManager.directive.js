@@ -143,6 +143,9 @@
       var annie_Talking = false;
       var annieFaceOtherWay = false;
       var currentRoomData = roomData[currentRoomKey];
+      $log.log('Current Room Data', currentRoomData);
+      $log.log('main roomData', mainInformationHandler.roomData);
+
       var previousRoom = currentRoomKey;
       var newRoom = "";
       var annieSprite,
@@ -265,7 +268,7 @@
             /////////////
             // TODO add some code here to handle position info from dialogInfo
             /////////////
-            var spriteInfo = positionData[spriteName.toLowerCase()][currentRoomKey]; //is this for all other sprites
+            var spriteInfo = positionData[spriteName.toLowerCase()][roomData.roomNameMapping[currentRoomKey]]; //is this for all other sprites
 
             if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
               mainInformationHandler.convoCounter[spriteName] = 0;
@@ -286,7 +289,9 @@
           annieSprite.position.x = positionData.annie.startingX;
           annieSprite.position.y = positionData.annie.startingY;
           if (newRoom && newRoom != previousRoom) {
-            var roomEntrance = charPositionData.annie[previousRoom][newRoom];
+            var roomEntrance = charPositionData.annie[roomData.roomNameMapping[previousRoom]][roomData.roomNameMapping[newRoom]];
+            $log.log('At new room for annie', previousRoom, roomData.roomNameMapping[previousRoom], newRoom, roomData.roomNameMapping[newRoom]);
+            $log.log(charPositionData.annie[roomData.roomNameMapping[previousRoom]]);
             annieSprite.position.x = roomEntrance.x;
             annieSprite.position.y = roomEntrance.y;
             annieSprite.changeAnimation(roomEntrance.animationState);
@@ -403,10 +408,14 @@
 
         function getDoorStatus() {
             angular.forEach(mappingService[mainInformationHandler.roomKey], function(linkingRoom, doorKey) {
+            
             var markDoor = false; //this one sends in the wrong info ?//TODO check here
+            
             // console.log("{{=====}}",linkingRoom); //gave me all rooms correct
             // console.log("{{{=====}}}",levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom));
-            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom);
+
+            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, roomData.roomNameMapping[linkingRoom]);
+
             if (!mainInformationHandler.areDialogsCompleted(roomDialogs)) {//, mainInformationHandler.completedConvos
               markDoor = true;
             }

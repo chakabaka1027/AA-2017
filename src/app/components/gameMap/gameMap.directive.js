@@ -33,8 +33,11 @@
       });
 
       function roomHasConversation(roomKey) {
-        var room = vm.rooms[roomKey];
+
+        var room = vm.rooms[roomData.roomNameMapping[roomKey]];
         var main = $scope.main;
+
+        $log.log('rooms: ',vm.rooms, roomKey, room);
 
         if (!room) {
           return false;
@@ -42,17 +45,20 @@
 
         for (var personName in room) {
           if (room[personName]) {
+
             var personInfo = room[personName];
-            if (personInfo.dialogKey || personInfo.successPaths) {
-              if (main.completedConvos.indexOf(personInfo.dialogKey) < 0) {
-                return true;
+            var hasConvo = false;
+            
+            personInfo.dialogInfo.forEach(function(dInfo) {
+              if (dInfo.key && main.completedConvos.indexOf(dInfo.key) < 0) {
+                hasConvo = true;
               }
+            });
+
+            if (hasConvo) { 
+              return true;
             }
-            if (personInfo.secondConvo) {
-              if (main.completedConvos.indexOf(personInfo.secondConvo.dialogKey) < 0) {
-                return true;
-              }
-            }
+
           }
         }
         return false;

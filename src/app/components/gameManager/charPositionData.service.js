@@ -52,17 +52,25 @@
 				colliderWidth: 60, colliderHeight: 35,
 				lobby: {
 					conferenceRoom: startLocations.lowerL,
-					anniesOffice: startLocations.sideL,
+					anniesOffice1: startLocations.sideL,
+					anniesOffice2: startLocations.sideL,
 					breakRoom: startLocations.upperR,
 					fransOffice: startLocations.sideR,
-					mikesOffice: startLocations.lowerR
+					mikesOffice1: startLocations.lowerR,
+					mikesOffice2: startLocations.lowerR
 				},
 				conferenceRoom: {
 					lobby: startLocations.upperR,
-					anniesOffice: startLocations.upperR,
-					mikesOffice: startLocations.sideR
+					anniesOffice1: startLocations.upperR,
+					anniesOffice2: startLocations.upperR,
+					mikesOffice1: startLocations.sideR,
+					mikesOffice2: startLocations.sideR
 				},
-				anniesOffice: {
+				anniesOffice1: {
+					lobby: startLocations.sideR,
+					conferenceRoom: startLocations.lowerR
+				},
+				anniesOffice2: {
 					lobby: startLocations.sideR,
 					conferenceRoom: startLocations.lowerR
 				},
@@ -72,7 +80,11 @@
 				fransOffice: {
 					lobby: startLocations.sideL
 				},
-				mikesOffice: {
+				mikesOffice1: {
+					lobby: startLocations.upperL,
+					conferenceRoom:  startLocations.sideL
+				},
+				mikesOffice2: {
 					lobby: startLocations.upperL,
 					conferenceRoom:  startLocations.sideL
 				}
@@ -84,7 +96,12 @@
 					colliderWidth: 60, colliderHeight: 60,
 					mirror:"yes"
 				},
-				mikesOffice:{
+				mikesOffice1:{
+					startLeftX: 550, startLeftY: 250,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60
+				},
+				mikesOffice2:{
 					startLeftX: 550, startLeftY: 250,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60
@@ -142,12 +159,16 @@
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 				},
-				anniesOffice:{
+				anniesOffice1:{
+					startLeftX: 480, startLeftY: 260, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				anniesOffice2:{
 					startLeftX: 480, startLeftY: 260, //was 330
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 				}
-
 			},
 		};
 

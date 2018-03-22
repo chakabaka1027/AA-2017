@@ -8,6 +8,34 @@
   function mappingService() {
     // var userID;
     var map = {
+      room1: {
+        right_door: "room2",
+        lower_right_door: "room6"
+      },
+      room2: {
+        left_door: "room1",
+        lower_left_door: "room6",
+        lower_right_door: "room4"
+      },
+      room3: {
+        right_door: "room6"
+      },
+      room4: {
+        left_door: "room6",
+        top_right_door: "room2"
+      },
+      room5: {
+        top_right_door: "room6"
+      },
+      room6: {
+        left_door: "room3",
+        top_left_door: "room1",
+        top_right_door: "room2",
+        right_door: "room4",
+        lower_right_door: "room5"
+      }
+
+      /*
       anniesOffice: {
         left_door: "lobby",
         top_right_door: "conferenceRoom"
@@ -34,6 +62,9 @@
         lower_left_door: "lobby",
         lower_right_door: "anniesOffice"
       }
+
+      */
+
     };
     return map;
   }

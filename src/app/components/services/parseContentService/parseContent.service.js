@@ -4,7 +4,7 @@
     .service('parseAAContentService', parseAAContentService);
 
   /** @ngInject */
-  function parseAAContentService($log, xlsxService, $q, $location, nodeDataService) {
+  function parseAAContentService($log, xlsxService, $q, $location, nodeDataService, roomData) {
 
     var defaultUrl = 'assets/ETS-ConfigSys.xlsx';
     var templatesSample = [];
@@ -269,6 +269,14 @@
 
       $log.warn( "TT___TT parsed information <<<<<<<<<<<<<<",parsedDialogs);
 
+      // parseAAContentService.levelDataInformation[currentGame].roomSelection["room" + (i+1)]];
+
+      if (getLevelDataForURL().school) {
+        roomData.setupRoomMapping(getLevelDataForURL().roomSelection);
+      } else {
+        roomData.setupRoomMapping(null);
+      }
+      
       return parsedDialogs;
     }
 
@@ -288,8 +296,6 @@
       }
 
     }
-
-
 
     function parseContentFromGameType(gameType) { //!reached
       return xlsxService.loadWorkbookFromUrl(defaultUrl)

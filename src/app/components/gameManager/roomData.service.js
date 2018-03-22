@@ -6,9 +6,10 @@
 		.service('roomData', roomData); //room data here -
 
 	/** @ngInject */
-	function roomData(parseAAContentService, $location){ //proabbaly save url someplace as it is being use in a lot of places - coppied it for now
-		var roomData = { //for now changing this
-
+	function roomData($location){ //proabbaly save url someplace as it is being use in a lot of places - coppied it for now
+		var service = { //for now changing this
+			roomNameMapping: {},
+			setupRoomMapping: setupRoomMapping,
 
 			anniesOffice1: { //Annie's Office commented out for now
 				bg: "assets/images/rooms/Annie-Room-Bkgd.jpg",
@@ -84,6 +85,11 @@
 					left_door:{
 						posX: 20.5, posY: 289.5,
 						collider_width: 30, collider_height: 320,
+						collider_X_offset: 0, collider_Y_offset: 0
+					},
+					top_right_door:{
+						posX: 770, posY: 88,
+						collider_width: 142, collider_height: 172,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},
 					wallMap:{
@@ -464,31 +470,41 @@
 
 		};
 
-		var roomNameMapping = {};
-		var i;
-		var currentGame  = "game-"+ $location.path().split('#')[0].replace("/",'');
-		// console.log("currentURL", roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection.room2]);
-		if(parseAAContentService.getLevelDataForURL().school){
+		service.roomNameMapping = {};
 
-			for(  i = 0 ; i < 5 ; i ++){
-				roomData["room" + (i+1)] = roomData[parseAAContentService.levelDataInformation[currentGame].roomSelection["room" + (i+1)]];
-				var roomName = parseAAContentService.levelDataInformation[currentGame].roomSelection["room" + (i+1)];
-				roomNameMapping["room" + (i+1)] = roomName;
-			}
-			roomData.room6 = roomData.lobby ; //room data.lobby is never chanding
-			roomNameMapping.room6 = "lobby";
-
-		}
-		else {
-			var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","anniesOffice1","breakRoom","lobby"];
-			for(  i = 0; i < 6 ; i++){
-				roomData["room" + (i+1)] = roomData[roomNames[i]];
-				roomNameMapping["room" + (i+1)] = roomNames[i];
-			}
+		var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","anniesOffice1","breakRoom","lobby"];
+		for (var i = 0; i < 6 ; i++) {
+			service["room" + (i+1)] = service[roomNames[i]];
+			service.roomNameMapping["room" + (i+1)] = roomNames[i];
 		}
 
+		return service;
 
-		return roomData;
+		function setupRoomMapping(roomSelections) {
+			var i;
+			var currentGame  = "game-"+ $location.path().split('#')[0].replace("/",'');
+
+			if(roomSelections){
+
+				for(  i = 0 ; i < 5 ; i ++){
+					var roomName = roomSelections["room" + (i+1)];
+					service["room" + (i+1)] = service[roomName];
+					service.roomNameMapping["room" + (i+1)] = roomName;
+				}
+				service.room6 = service.lobby ; //room data.lobby is never chanding
+				service.roomNameMapping.room6 = "lobby";
+
+			}
+			else {
+				var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","anniesOffice1","breakRoom","lobby"];
+				for(  i = 0; i < 6 ; i++){
+					service["room" + (i+1)] = service[roomNames[i]];
+					service.roomNameMapping["room" + (i+1)] = roomNames[i];
+				}
+			}
+
+		}
+
 	}
 })();
 /*

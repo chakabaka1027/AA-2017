@@ -5,7 +5,7 @@
   .service('mainInformationHandler', mainInformationHandler);
 
   /** @ngInject */
-  function mainInformationHandler( levelDataHandler, dialogOptions ){
+  function mainInformationHandler($log, levelDataHandler, dialogOptions, roomData){
 
     var service ={
       nextLevelData:nextLevelData,
@@ -23,7 +23,8 @@
           levelCount:1,
           playerScore:0,
           lastConversationSuccessful:false,
-          roomKey: "lobby",
+          // roomKey: "lobby",
+          roomKey: "room6",
           totalConvoPoints:0,
           completedConvos:[],
           failedConvos  :{},
@@ -38,14 +39,19 @@
 
     //TODO move this to datalevel hanler =====
     function nextLevelData(){ //is the problem for single rooms that it increases the counter - but that wasnt an issue before
-      var currentLevel = "level_"+service.levelCount;
-      service.levelConvosNeeded = levelDataHandler.levels[currentLevel].requiredConversations;//TODO !!! NEW CHANGE HERE FOR LEVELS
-      service.roomData = levelDataHandler.levels[currentLevel].rooms[service.roomKey];////TODO !!! NEW CHANGE HERE FOR LEVELS
+      $log.log('mainInfoHandler.nextLevelData');
+      setRoomData(service.roomKey);
     }//  vm.roomData
 
     function setRoomData(roomKey){
+        $log.log('mainInfoHandler.setRoomData');
         var currentLevel = "level_"+service.levelCount;
-        service.roomData = levelDataHandler.levels[currentLevel].rooms[roomKey]; ////TODO !!! NEW CHANGE HERE
+        service.levelConvosNeeded = levelDataHandler.levels[currentLevel].requiredConversations;
+        service.roomData = levelDataHandler.levels[currentLevel].rooms[roomData.roomNameMapping[roomKey]]; ////TODO !!! NEW CHANGE HERE
+
+        $log.log('roomKey '+roomKey);
+        $log.log(levelDataHandler.levels[currentLevel].rooms);
+        $log.log(service.roomData);
     }
 
     function areDialogsCompleted(possibleConvos){//, completedConvos
