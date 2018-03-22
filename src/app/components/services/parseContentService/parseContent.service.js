@@ -161,6 +161,7 @@
             gameCaseData.audioSetting = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'display':
+          case 'display score':
             gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'school':
@@ -276,7 +277,7 @@
       } else {
         roomData.setupRoomMapping(null);
       }
-      
+
       return parsedDialogs;
     }
 

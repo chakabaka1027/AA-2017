@@ -30,7 +30,7 @@
 		};
 
 		//just for testing
-		var costumePosSet ={
+		var costumePosSet = {
 			pos1:{
 				startLeftX: 430, startLeftY: 190,
 				colliderXoffset: -2, colliderYoffset: 60,
@@ -45,7 +45,7 @@
 			}
 		};
 
-		var gameCharacterData = {
+		var service = {
 			annie: {
 				startingX: 750, startingY: 260,
 				colliderXoffset: -2, colliderYoffset: 75,
@@ -170,8 +170,14 @@
 					colliderWidth: 60, colliderHeight: 60,
 				}
 			},
+
+			getCharLoc: getCharLoc
 		};
 
-		return gameCharacterData;
+		return service;
+
+		function getCharLoc(characterName, roomName, position) {
+			return service[characterName][roomName];
+		}
 	}
 })();
