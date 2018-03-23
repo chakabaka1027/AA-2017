@@ -182,6 +182,12 @@
           case 'level':
             inHead = false;
             break;
+          case 'instructions':
+            gameCaseData.instructions = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
+          case 'introduction':
+            gameCaseData.introduction = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
         }
         r += 1;
       }

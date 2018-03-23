@@ -1,0 +1,10 @@
+<div ng-if="vm.state==='loading'" class="loading-block">...Loading...</div>
+
+<div class="intro1" ng-if="vm.state==='introduction'">
+	<simple-tutorial></simple-tutorial>
+</div>
+
+<div ng-class= "vm.gameIsPositive() ? 'intro2' : 'intro3' " ng-if="vm.state==='instructions'" >
+	<div class="continue diffRight" ng-click="vm.nextClicked()"></div>
+</div>
+
