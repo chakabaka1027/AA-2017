@@ -143,8 +143,6 @@
       var annie_Talking = false;
       var annieFaceOtherWay = false;
       var currentRoomData = roomData[currentRoomKey];
-      $log.log('Current Room Data', currentRoomData);
-      $log.log('main roomData', mainInformationHandler.roomData);
 
       var previousRoom = currentRoomKey;
       var newRoom = "";

@@ -37,8 +37,6 @@
         var room = vm.rooms[roomData.roomNameMapping[roomKey]];
         var main = $scope.main;
 
-        $log.log('rooms: ',vm.rooms, roomKey, room);
-
         if (!room) {
           return false;
         }

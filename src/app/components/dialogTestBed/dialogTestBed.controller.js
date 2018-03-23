@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function displayDialogTestBed($log, $scope, $timeout, dialogService, parseAAContentService, userGameInfo,
-                                  conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler, dialogOptions) {
+                                  conversationP5Data, levelDataHandler, $stateParams, mainInformationHandler, dialogOptions, $sce) {
     var vm = this;
     vm.levelData = levelDataHandler.choiceScores;
     vm.currentConversation = "FF.Linear";
@@ -20,6 +20,8 @@
     vm.successPaths = [];
     vm.flipDialog = true;
     vm.charSelections = ['fran', 'mike',  'charlie', 'luna', 'stu'] ;
+
+    vm.displayErrors = displayErrors;
     // $scope.main = mainInformationHandler;
 
     $log.log('Ensure dialog service is loaded...');
@@ -33,6 +35,10 @@
         $scope.$watch(function(){return vm.localGameType;}, setupForLocalGameType);
         $scope.$watch(function(){return vm.curNode;}, updateNodeOptions);
       });
+
+    function displayErrors() {
+      alert(vm.errorList.length+' Errors:\n'+vm.errorList.join('\n'));
+    }
 
     function updateNodeOptions() {
       var opts = [];
@@ -66,7 +72,7 @@
       vm.dialogList = Object.keys(parseAAContentService.parsedDialogContent)
         .map(function(dkey) {
           return {
-            label: dkey,
+            label: dkey+(parseAAContentService.parsedDialogContent[dkey].dialogTree.errorList.length>0 ? ' [errors]' : ''),
             key: dkey
           };
         });
@@ -78,12 +84,23 @@
 
         vm.branchHistory = []; //temporary fix below
 
-        // vm.talkingWith = characterFromDialogKey(vm.currentConversation); // "fran";
+        vm.talkingWith = characterFromDialogKey(vm.currentConversation); // "fran";
 
         vm.displayCharacters = false;
         mainInformationHandler.currentConversation = vm.currentConversation;
         dialogOptions.talkingWith = vm.talkingWith;
-        console.log("talking with",dialogOptions.talkingWith);
+
+        var dialogTree = parseAAContentService.parsedDialogContent[vm.currentConversation].dialogTree;
+        vm.errorList = dialogTree.errorList;
+
+        $timeout(function() {
+          vm.displayCharacters = true;
+        }, 0);
+      });
+
+      $scope.$watch(function(){return vm.talkingWith;}, function() {
+        vm.displayCharacters = false;
+        dialogOptions.talkingWith = vm.talkingWith;
         $timeout(function() {
           vm.displayCharacters = true;
         }, 0);
@@ -118,7 +135,7 @@
           vm.dialogList = Object.keys(parseAAContentService.parsedDialogContent)
             .map(function(dkey) {
               return {
-                label: dkey,
+                label: dkey+(parseAAContentService.parsedDialogContent[dKey].dialogTree.errorList.length>0 ? ' !!!' : ''),
                 key: dkey
               };
             });

@@ -20,7 +20,8 @@
 		            npcText: data.NPC_Response,
 		          	negative: data.negative,
 		          	positive: data.positive,
-					animation:  userGameInfo.isGamePositive() ? data.positive.animation : data.negative.animation
+					animation:  userGameInfo.isGamePositive() ? data.positive.animation : data.negative.animation,
+					rowNumber: data.rowNumber 
 				});
 
 	          	this.isRoot = false;
@@ -45,6 +46,7 @@
 
 	    function DialogTree(nodeArray, scoringData) {
       		// do some stuff...
+      		this.errorList = [];
       		this.setupTree(nodeArray, scoringData);
     	}
 
@@ -58,10 +60,9 @@
 	    	}
     	};
 
-			pt.checkForErrors = function (){
-				//look throgh tree
-				//look for -
-			}
+		pt.logError = function (errString){
+			this.errorList.push(errString);
+		}
 
 	    pt.setupTree = function(nodeArray, scoringData) {
 
@@ -94,12 +95,25 @@
 			        parent.addChild(node);
 		        } else if (node !== that.rootNode) {
 		        	$log.error('something is wrong!!! this implies that node "'+nodeCode+'" has no parent (so probably an author error)');
+		        	this.logError('row '+node.rowNumber+': "'+node.code+'"" cannot be reached (has no parent)');
 		        }
 		    });
 
-	    	// now can find the 'leaves' of the tree... //// this right here image refrence!
-				//if i cencountred empty  ---  => 1
-				//if i incountred a score that is not empty =>1
+	    	// now let us scan the 'leaves' of the tree... 
+
+			// for tedious error reporting... 
+			var leafScoring = {
+				negative: {
+					manual: [], auto: []
+				},
+				positive: {
+					manual: [], auto: []
+				},
+			}
+			function addToSet(arr, val) {
+				if (arr.indexOf(val)<0) { arr.push(val);}
+			}
+
 	    	angular.forEach(this.nodeDict, function(node, nodeCode) {
 	    		if (Object.keys(node.children).length===0) {
 	    			// this is a leaf //construct error string -- for new issue 
@@ -109,7 +123,11 @@
 	    				for (i=0; i<node.code.length; i++) {
 		    				node.negative.score+= scoringData.negative[node.code[i]];
 	    				}
+	    				addToSet(leafScoring.negative.auto, node.rowNumber);
+	    			} else {
+	    				addToSet(leafScoring.negative.manual, node.rowNumber);
 	    			}
+
 	    			if (node.negative.success !== 0 && node.negative.success !== 1) {
 	    				node.negative.success = (node.negative.score/node.code.length>=scoringData.negative.successThreshold ? 1 : 0);
 	    			}
@@ -119,7 +137,11 @@
 	    				for (i=0; i<node.code.length; i++) {
 		    				node.positive.score+= scoringData.positive[node.code[i]];
 	    				}
+	    				addToSet(leafScoring.positive.auto, node.rowNumber);
+	    			} else {
+	    				addToSet(leafScoring.positive.manual, node.rowNumber);
 	    			}
+
     				if (nodeCode==='CCCC') {
     					// $log.log('CCCC-----');
     					// $log.log(node.positive);
@@ -136,9 +158,33 @@
 	    				node.score = node.negative.score;
 	    				node.success = (node.negative.success==1);
 	    			}
+	    		} else {
+	    			// not a leaf...
+	    			if (!node.isRoot) {
+	    				if (!isNotANumb(node.negative.score) || !isNotANumb(node.positive.score)) {
+			        		this.logError('row '+node.rowNumber+': "'+node.code+'"" is not the end of a dialog but has a score.');
+			        	} else if (node.negative.success===0 || node.positive.success===0 || node.negative.success===1 || node.positive.success===1) {
+			        		this.logError('row '+node.rowNumber+': "'+node.code+'"" is not the end of a dialog but is marked up for success.');
+			        	}
+			        }
 	    		}
 	    	});
 
+			if (leafScoring.positive.auto.length > 0 && leafScoring.positive.manual.length > 0) {
+				if (leafScoring.positive.manual.length>leafScoring.positive.auto.length) {
+	        		this.logError('Dialog.positive should be all manually scored; but has auto scoring for rows '+leafScoring.positive.auto.join(', '));
+				} else  {
+	        		this.logError('Dialog.positive should be all auto scored; but has manual scoring for rows '+leafScoring.positive.manual.join(', '));
+				}
+			}
+
+			if (leafScoring.negative.auto.length > 0 && leafScoring.negative.manual.length > 0) {
+				if (leafScoring.negative.manual.length>leafScoring.negative.auto.length) {
+	        		this.logError('Dialog.positive should be all manually scored; but has auto scoring for rows '+leafScoring.negative.auto.join(', '));
+				} else  {
+	        		this.logError('Dialog.positive should be all auto scored; but has manual scoring for rows '+leafScoring.negative.manual.join(', '));
+				}
+			}
 	    };
 
 	    pt.setGameType = function(gameType) {

@@ -117,7 +117,8 @@
                   animation: xlsxService.cellValue(sheet, 6, r),
                   score: xlsxService.cellValue(sheet, 7, r),
                   success: xlsxService.cellValue(sheet, 8, r)
-                }
+                },
+                rowNumber: r+1
               };
               dialogTexts.push(row);
             }
@@ -245,9 +246,14 @@
             var sheetParsed = parseDialogSheet(sheet, sheetName); //SheetParsing new excel
             // console.log("------>>>>sheetParsed", sheetParsed);
             if (sheetParsed) {
+              var dialogTree = nodeDataService.parseNewStructure(sheetParsed.dialogTexts, sheetParsed.scoring);
               parsedDialogs[sheetName]= {
                 scoring: sheetParsed.scoring,
-                dialogTree: nodeDataService.parseNewStructure(sheetParsed.dialogTexts, sheetParsed.scoring)
+                dialogTree: dialogTree
+              };
+              if (dialogTree.errorList.length>0) {
+                $log.warn(sheetName+' has Errors');
+                $log.log(dialogTree.errorList.join('\n'));
               }
             } else {
               $log.warn(sheetName + ': unparseable');
@@ -270,8 +276,6 @@
 
       $log.warn( "TT___TT parsed information <<<<<<<<<<<<<<",parsedDialogs);
 
-      // parseAAContentService.levelDataInformation[currentGame].roomSelection["room" + (i+1)]];
-
       if (getLevelDataForURL().school) {
         roomData.setupRoomMapping(getLevelDataForURL().roomSelection);
       } else {
@@ -284,12 +288,15 @@
     function getLevelDataForURL(){
       //I KNOW THIS WAS  done another way but I'm not sure how to acsess levels since before was done though json - --
 
-      var levelKey = "game-"+$location.path().replace("/","");
+      var pathComponents = $location.path().split('/');
+      var trailingComponent = pathComponents[pathComponents.length-1];
+      var levelKey = "game-"+trailingComponent;
+
       var levelData = service.levelDataInformation[levelKey];
 
       if(angular.isUndefined(levelData)){
-        if ($location.path()!=='/') {
-          $log.warn("undefined url path - make sure you typed it in correctly"); //or just use it here
+        if (trailingComponent && trailingComponent!=='dialogTestBed') {
+          $log.warn('undefined url path "'+$location.path()+'" - make sure you typed it in correctly'); //or just use it here
         }
         return  service.levelDataInformation["game-negative"];
       } else {
