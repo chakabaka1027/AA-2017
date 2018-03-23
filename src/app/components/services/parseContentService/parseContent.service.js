@@ -145,8 +145,9 @@
         levels: levels,
         audioSetting: true,
         display: true,
-        school:true,
-        tutorial:true,
+        remapRooms: false,
+        introduction:false,
+        tutorial:false,
         roomSelection:{room1:"test1",room2:"test2",room3:"",room4:"",room5:""}
       };
 
@@ -158,6 +159,7 @@
         var rowKey = ('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase();
         // $log.log('Row Key "'+rowKey+'"');
         switch (rowKey) {
+          case 'audio':
           case 'audio setting':
             gameCaseData.audioSetting = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
@@ -166,18 +168,21 @@
             gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'school':
-            gameCaseData.school = xlsxService.cellValue(sheet, 1, r) === 'on';
+            gameCaseData.remapRooms = xlsxService.cellValue(sheet, 1, r) === 'on';
             if(!reachedENDselection){
+              for (var i=0; i<5; i++) {
+                gameCaseData.roomSelection['room'+(i+1)] = xlsxService.cellValue(sheet, 1, r+i+1);
+              }
+              /*
               gameCaseData.roomSelection.room1 = xlsxService.cellValue(sheet, 1, r+1);
-              gameCaseData.roomSelection.room2 = xlsxService.cellValue(sheet, 1, r+2) ;
+              gameCaseData.roomSelection.room2 = xlsxService.cellValue(sheet, 1, r+2);
               gameCaseData.roomSelection.room3 = xlsxService.cellValue(sheet, 1, r+3);
-              gameCaseData.roomSelection.room4 = xlsxService.cellValue(sheet, 1, r+4) ;
-              gameCaseData.roomSelection.room5 = xlsxService.cellValue(sheet, 1, r+5) ;
+              gameCaseData.roomSelection.room4 = xlsxService.cellValue(sheet, 1, r+4);
+              gameCaseData.roomSelection.room5 = xlsxService.cellValue(sheet, 1, r+5);
+              */
               reachedENDselection = true;
             }
-            break;
-          case 'tutorial':
-            gameCaseData.tutorial = xlsxService.cellValue(sheet, 1, r) === 'on';
+            r += 5;
             break;
           case 'level':
             inHead = false;
@@ -185,8 +190,9 @@
           case 'instructions':
             gameCaseData.instructions = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
+          case 'tutorial':
           case 'introduction':
-            gameCaseData.introduction = xlsxService.cellValue(sheet, 1, r) === 'on';
+            gameCaseData.tutorial = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
         }
         r += 1;
@@ -282,7 +288,7 @@
 
       $log.warn( "TT___TT parsed information <<<<<<<<<<<<<<",parsedDialogs);
 
-      if (getLevelDataForURL().school) {
+      if (getLevelDataForURL().remapRooms) {
         roomData.setupRoomMapping(getLevelDataForURL().roomSelection);
       } else {
         roomData.setupRoomMapping(null);

@@ -36,14 +36,14 @@
         gameCaseData = parseAAContentService.getLevelDataForURL();
         $log.log(gameCaseData);
 
-        if (!gameCaseData.introduction && !gameCaseData.instructions) {
+        if (!gameCaseData.tutorial && !gameCaseData.instructions) {
           $log.log('instructionPage: skipping instructions and intro');
           $state.go("awkwardAnnieGame");
           return;
         }
 
-        if (gameCaseData.introduction) {
-          vm.state = 'introduction';
+        if (gameCaseData.tutorial) {
+          vm.state = 'tutorial';
         } else {
           vm.state = 'instructions';
         }
