@@ -33,7 +33,7 @@
 
       vm.dialogKey = "";
       vm.dialogKeyOptions = Object.keys(dialogService.dialogWorksheetKeys);
-      $log.log(vm.dialogKeyOptions);
+      // $log.log(vm.dialogKeyOptions);
 
       // console.log(Nodeservice.dialogTrees.test);//.test will be ['fran_GR_01']
       vm.curNode = Nodeservice.dialogTrees.test.rootNode;
