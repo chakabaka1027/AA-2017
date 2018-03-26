@@ -29,10 +29,11 @@
 			}
 		};
 
-		//just for testing - defaulr postions
-		var costumePosSet = { //to use if they all have the same thing but since postions iwll be diffrent might be better to have hardcoded specfic ones for all ?
+		var costumePosSet = {
 
-			//lobby postions
+			///~~~~~~~~~~~~~~~~~~~~~~~~~~~~first set of postions def~~~~~~~~~~~~~~~~~~~~~~///
+
+			positionsSet1 :{
 			lobby:{
 				pos1L: {
 					startLeftX: 465, startLeftY: 240,
@@ -176,97 +177,62 @@
 					colliderWidth: 60, colliderHeight: 60,
 					mirror:"yes"	},
 					}
+				},
+				///~~~~~~~~~~~~~~~~~~~~~~~~~~~~annie postion def~~~~~~~~~~~~~~~~~~~~~~///
+				postionSetAnnie:{
+					startingX: 750, startingY: 260,
+					colliderXoffset: -2, colliderYoffset: 75,
+					colliderWidth: 60, colliderHeight: 35,
+					lobby: {
+						conferenceRoom: startLocations.lowerL,
+						anniesOffice1: startLocations.sideL,
+						anniesOffice2: startLocations.sideL,
+						breakRoom: startLocations.upperR,
+						fransOffice: startLocations.sideR,
+						mikesOffice1: startLocations.lowerR,
+						mikesOffice2: startLocations.lowerR
+					},
+					conferenceRoom: {
+						lobby: startLocations.upperR,
+						anniesOffice1: startLocations.upperR,
+						anniesOffice2: startLocations.upperR,
+						mikesOffice1: startLocations.sideR,
+						mikesOffice2: startLocations.sideR
+					},
+					anniesOffice1: {
+						lobby: startLocations.sideR,
+						conferenceRoom: startLocations.lowerR
+					},
+					anniesOffice2: {
+						lobby: startLocations.sideR,
+						conferenceRoom: startLocations.lowerR
+					},
+					breakRoom: {
+						lobby: startLocations.lowerR
+					},
+					fransOffice: {
+						lobby: startLocations.sideL
+					},
+					mikesOffice1: {
+						lobby: startLocations.upperL,
+						conferenceRoom:  startLocations.sideL
+					},
+					mikesOffice2: {
+						lobby: startLocations.upperL,
+						conferenceRoom:  startLocations.sideL
+					}
+
+				}
 		};
 
 		var service = {
 
-			annie: {
-				startingX: 750, startingY: 260,
-				colliderXoffset: -2, colliderYoffset: 75,
-				colliderWidth: 60, colliderHeight: 35,
-				lobby: {
-					conferenceRoom: startLocations.lowerL,
-					anniesOffice1: startLocations.sideL,
-					anniesOffice2: startLocations.sideL,
-					breakRoom: startLocations.upperR,
-					fransOffice: startLocations.sideR,
-					mikesOffice1: startLocations.lowerR,
-					mikesOffice2: startLocations.lowerR
-				},
-				conferenceRoom: {
-					lobby: startLocations.upperR,
-					anniesOffice1: startLocations.upperR,
-					anniesOffice2: startLocations.upperR,
-					mikesOffice1: startLocations.sideR,
-					mikesOffice2: startLocations.sideR
-				},
-				anniesOffice1: {
-					lobby: startLocations.sideR,
-					conferenceRoom: startLocations.lowerR
-				},
-				anniesOffice2: {
-					lobby: startLocations.sideR,
-					conferenceRoom: startLocations.lowerR
-				},
-				breakRoom: {
-					lobby: startLocations.lowerR
-				},
-				fransOffice: {
-					lobby: startLocations.sideL
-				},
-				mikesOffice1: {
-					lobby: startLocations.upperL,
-					conferenceRoom:  startLocations.sideL
-				},
-				mikesOffice2: {
-					lobby: startLocations.upperL,
-					conferenceRoom:  startLocations.sideL
-				}
-			},
-
-			mike:{costumePosSet }
-			,
-
-			fran: {
-				conferenceRoom:costumePosSet.conferenceRoom,
-				anniesOffice1:costumePosSet.anniesOffice1,
-				anniesOffice2:costumePosSet.anniesOffice2,
-				mikesOffice1:costumePosSet.mikesOffice1,
-				mikesOffice2:costumePosSet.mikesOffice2,
-				lobby:costumePosSet.lobby,
-				breakRoom: costumePosSet.breakRoom,
-				fransOffice: costumePosSet.fransOffice
-			},
-			charlie: {
-				conferenceRoom:costumePosSet.conferenceRoom,
-				anniesOffice1:costumePosSet.anniesOffice1,
-				anniesOffice2:costumePosSet.anniesOffice2,
-				mikesOffice1:costumePosSet.mikesOffice1,
-				mikesOffice2:costumePosSet.mikesOffice2,
-				lobby:costumePosSet.lobby,
-				breakRoom: costumePosSet.breakRoom,
-				fransOffice: costumePosSet.fransOffice
-			},
-		luna: {
-			conferenceRoom:costumePosSet.conferenceRoom,
-			anniesOffice1:costumePosSet.anniesOffice1,
-			anniesOffice2:costumePosSet.anniesOffice2,
-			mikesOffice1:costumePosSet.mikesOffice1,
-			mikesOffice2:costumePosSet.mikesOffice2,
-			lobby:costumePosSet.lobby,
-			breakRoom: costumePosSet.breakRoom,
-			fransOffice: costumePosSet.fransOffice
-			},
-			stu: {
-				conferenceRoom:costumePosSet.conferenceRoom,
-				anniesOffice1:costumePosSet.anniesOffice1,
-				anniesOffice2:costumePosSet.anniesOffice2,
-				mikesOffice1:costumePosSet.mikesOffice1,
-				mikesOffice2:costumePosSet.mikesOffice2,
-				lobby:costumePosSet.lobby,
-				breakRoom: costumePosSet.breakRoom,
-				fransOffice: costumePosSet.fransOffice
-			},
+			annie:costumePosSet.postionSetAnnie,
+			mike: costumePosSet.positionsSet1 ,
+			fran: costumePosSet.positionsSet1,
+			charlie: costumePosSet.positionsSet1,
+			luna: costumePosSet.positionsSet1,
+			stu: costumePosSet.positionsSet1,
 
 			getCharLoc: getCharLoc
 		};
@@ -279,203 +245,4 @@
 
 		}
 	}
-})();
-//update this
-
-
-
-// service. stu. room . postion
-/*
-//or room charecter and then postion ? for now using baove because its what was written as code
-stu {
-			lobby {
-				position a {
-
-					}
-					position b {
-					}
-					position c {
-					}
-}
-}
-
-...et
-
-old strucrue
-from here untill getcharloc
-var service = {
-	annie: {
-		startingX: 750, startingY: 260,
-		colliderXoffset: -2, colliderYoffset: 75,
-		colliderWidth: 60, colliderHeight: 35,
-		lobby: {
-			conferenceRoom: startLocations.lowerL,
-			anniesOffice1: startLocations.sideL,
-			anniesOffice2: startLocations.sideL,
-			breakRoom: startLocations.upperR,
-			fransOffice: startLocations.sideR,
-			mikesOffice1: startLocations.lowerR,
-			mikesOffice2: startLocations.lowerR
-		},
-		conferenceRoom: {
-			lobby: startLocations.upperR,
-			anniesOffice1: startLocations.upperR,
-			anniesOffice2: startLocations.upperR,
-			mikesOffice1: startLocations.sideR,
-			mikesOffice2: startLocations.sideR
-		},
-		anniesOffice1: {
-			lobby: startLocations.sideR,
-			conferenceRoom: startLocations.lowerR
-		},
-		anniesOffice2: {
-			lobby: startLocations.sideR,
-			conferenceRoom: startLocations.lowerR
-		},
-		breakRoom: {
-			lobby: startLocations.lowerR
-		},
-		fransOffice: {
-			lobby: startLocations.sideL
-		},
-		mikesOffice1: {
-			lobby: startLocations.upperL,
-			conferenceRoom:  startLocations.sideL
-		},
-		mikesOffice2: {
-			lobby: startLocations.upperL,
-			conferenceRoom:  startLocations.sideL
-		}
-	},
-	mike:{
-		conferenceRoom:{
-			startLeftX: 430, startLeftY: 190,
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60,
-			mirror:"yes"
-		},
-		mikesOffice1:{
-			startLeftX: 550, startLeftY: 250,
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60
-		},
-		mikesOffice2:{
-			startLeftX: 550, startLeftY: 250,
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60
-		},
-		lobby:{
-			startLeftX: 465, startLeftY: 240,
-			colliderXoffset: 5, colliderYoffset: 40,
-			colliderWidth: 60, colliderHeight: 95
-		},
-	},
-	fran: {
-		lobby:{
-			startLeftX: 465, startLeftY: 240,
-			colliderXoffset: 5, colliderYoffset: 40,
-			colliderWidth: 60, colliderHeight: 95,
-			mirror: "yes"
-		},
-		fransOffice:{
-			startLeftX: 570, startLeftY: 190,
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60,
-			mirror: "yes"
-		},
-		breakRoom:{
-			startLeftX: 570, startLeftY: 190,
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60,
-			mirror: "yes"
-		}
-	},
-	charlie: {
-		breakRoom:{
-			startLeftX: 330, startLeftY: 380, //was 330
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60,
-			mirror: "yes"
-		}
-
-	},
-	luna: {
-		breakRoom:{
-			startLeftX: 440, startLeftY: 240,
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60
-		}
-	},
-	stu: { //for now only - will change later
-		lobby:{
-			startLeftX: 465, startLeftY: 240,
-			colliderXoffset: 5, colliderYoffset: 40,
-			colliderWidth: 60, colliderHeight: 95
-		},
-		breakRoom:{
-			startLeftX: 330, startLeftY: 380, //was 330
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60,
-		},
-		anniesOffice1:{
-			startLeftX: 480, startLeftY: 260, //was 330
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60,
-		},
-		anniesOffice2:{
-			startLeftX: 480, startLeftY: 260, //was 330
-			colliderXoffset: -2, colliderYoffset: 60,
-			colliderWidth: 60, colliderHeight: 60,
-		}
-	},
-
-
-
-
-
-
-
-
-
-
-
-	mike:{ //remove this ater and have it via methodjust once
-		conferenceRoom:costumePosSet.conferenceRoom,
-		anniesOffice1:costumePosSet.anniesOffice1,
-		anniesOffice2:costumePosSet.anniesOffice2,
-		mikesOffice1:costumePosSet.mikesOffice1,
-		mikesOffice2:costumePosSet.mikesOffice2,
-		lobby:costumePosSet.lobby,
-		breakRoom: costumePosSet.breakRoom,
-		fransOffice: costumePosSet.fransOffice
-		//or something like this for eahc one  -- alternate thing
-
-		// lobby:{
-		// 	pos1L: {
-		// 		startLeftX: 465, startLeftY: 240,
-		// 		colliderXoffset: 5, colliderYoffset: 40,
-		// 		colliderWidth: 60, colliderHeight: 95,
-		//
-		// 	},
-		// 	pos1R: {
-		// 		startLeftX: 465, startLeftY: 240,
-		// 		colliderXoffset: 5, colliderYoffset: 40,
-		// 		colliderWidth: 60, colliderHeight: 95,
-		// 		mirror:"no"	},
-		// 	pos2L: {
-		// 		startLeftX: 500, startLeftY: 400,
-		// 		colliderXoffset: 5, colliderYoffset: 40,
-		// 		colliderWidth: 60, colliderHeight: 95,
-		// 		mirror:"no"
-		// 	},
-		// 	pos2R: {
-		// 		startLeftX: 500, startLeftY: 400,
-		// 		colliderXoffset: 5, colliderYoffset: 40,
-		// 		colliderWidth: 60, colliderHeight: 95,
-		// 		}
-		// },
- */
-
-
-
-//
+	})();
