@@ -29,147 +29,210 @@
 			}
 		};
 
-		//just for testing
 		var costumePosSet = {
-			pos1:{
-				startLeftX: 430, startLeftY: 190,
-				colliderXoffset: -2, colliderYoffset: 60,
-				colliderWidth: 60, colliderHeight: 60,
-				mirror:"yes"
-			},
-			pos2:{
-				startLeftX: 400, startLeftY: 160,
-				colliderXoffset: -2, colliderYoffset: 60,
-				colliderWidth: 60, colliderHeight: 60,
-				mirror:"no"
-			}
-		};
 
-		var service = {
-			annie: {
-				startingX: 750, startingY: 260,
-				colliderXoffset: -2, colliderYoffset: 75,
-				colliderWidth: 60, colliderHeight: 35,
-				lobby: {
-					conferenceRoom: startLocations.lowerL,
-					anniesOffice1: startLocations.sideL,
-					anniesOffice2: startLocations.sideL,
-					breakRoom: startLocations.upperR,
-					fransOffice: startLocations.sideR,
-					mikesOffice1: startLocations.lowerR,
-					mikesOffice2: startLocations.lowerR
-				},
-				conferenceRoom: {
-					lobby: startLocations.upperR,
-					anniesOffice1: startLocations.upperR,
-					anniesOffice2: startLocations.upperR,
-					mikesOffice1: startLocations.sideR,
-					mikesOffice2: startLocations.sideR
-				},
-				anniesOffice1: {
-					lobby: startLocations.sideR,
-					conferenceRoom: startLocations.lowerR
-				},
-				anniesOffice2: {
-					lobby: startLocations.sideR,
-					conferenceRoom: startLocations.lowerR
-				},
-				breakRoom: {
-					lobby: startLocations.lowerR
-				},
-				fransOffice: {
-					lobby: startLocations.sideL
-				},
-				mikesOffice1: {
-					lobby: startLocations.upperL,
-					conferenceRoom:  startLocations.sideL
-				},
-				mikesOffice2: {
-					lobby: startLocations.upperL,
-					conferenceRoom:  startLocations.sideL
-				}
-			},
-			mike:{
-				conferenceRoom:{
-					startLeftX: 430, startLeftY: 190,
-					colliderXoffset: -2, colliderYoffset: 60,
-					colliderWidth: 60, colliderHeight: 60,
-					mirror:"yes"
-				},
-				mikesOffice1:{
-					startLeftX: 550, startLeftY: 250,
-					colliderXoffset: -2, colliderYoffset: 60,
-					colliderWidth: 60, colliderHeight: 60
-				},
-				mikesOffice2:{
-					startLeftX: 550, startLeftY: 250,
-					colliderXoffset: -2, colliderYoffset: 60,
-					colliderWidth: 60, colliderHeight: 60
-				},
-				lobby:{
-					startLeftX: 465, startLeftY: 240,
-					colliderXoffset: 5, colliderYoffset: 40,
-					colliderWidth: 60, colliderHeight: 95
-				},
-			},
-			fran: {
-				lobby:{
+			///~~~~~~~~~~~~~~~~~~~~~~~~~~~~first set of postions def~~~~~~~~~~~~~~~~~~~~~~///
+
+			positionsSet1 :{
+			lobby:{
+				pos1L: {
 					startLeftX: 465, startLeftY: 240,
 					colliderXoffset: 5, colliderYoffset: 40,
 					colliderWidth: 60, colliderHeight: 95,
-					mirror: "yes"
 				},
-				fransOffice:{
-					startLeftX: 570, startLeftY: 190,
-					colliderXoffset: -2, colliderYoffset: 60,
-					colliderWidth: 60, colliderHeight: 60,
-					mirror: "yes"
+				pos1R: {
+					startLeftX: 465, startLeftY: 240,
+					colliderXoffset: 5, colliderYoffset: 40,
+					colliderWidth: 60, colliderHeight: 95,
+					mirror:"no"	},
+				pos2L: {
+					startLeftX: 500, startLeftY: 400,
+					colliderXoffset: 5, colliderYoffset: 40,
+					colliderWidth: 60, colliderHeight: 95,
+					mirror:"no"
 				},
-				breakRoom:{
-					startLeftX: 570, startLeftY: 190,
-					colliderXoffset: -2, colliderYoffset: 60,
-					colliderWidth: 60, colliderHeight: 60,
-					mirror: "yes"
-				}
+				pos2R: {
+					startLeftX: 500, startLeftY: 400,
+					colliderXoffset: 5, colliderYoffset: 40,
+					colliderWidth: 60, colliderHeight: 95,
+					}
 			},
-			charlie: {
-				breakRoom:{
+			conferenceRoom:{
+				pos1L: {
+					startLeftX: 430, startLeftY: 190,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				pos1R: {
+					startLeftX: 465, startLeftY: 240,
+					colliderXoffset: 5, colliderYoffset: 40,
+					colliderWidth: 60, colliderHeight: 95,
+					mirror:"yes"	},
+				pos2L: {
+					startLeftX: 430, startLeftY: 190,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				pos2R: {
+					startLeftX: 465, startLeftY: 240,
+					colliderXoffset: 5, colliderYoffset: 40,
+					colliderWidth: 60, colliderHeight: 95,
+					mirror:"yes"	}
+			},
+
+			anniesOffice1:{
+				pos1L: {
+					startLeftX: 480, startLeftY: 260, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				pos1R: {
+					startLeftX: 480, startLeftY: 260, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+					mirror:"no"	},
+		},
+			anniesOffice2:{
+				pos1L: {
+					startLeftX: 480, startLeftY: 260, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				pos1R: {
+					startLeftX: 480, startLeftY: 260, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+					},
+			},
+			fransOffice:{
+				pos1L: {
+					startLeftX: 570, startLeftY: 190,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				pos1R: {
+					startLeftX: 570, startLeftY: 190,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+					mirror:"no"	},
+
+			},
+			breakRoom:{
+				pos1L: {
+					startLeftX: 570, startLeftY: 190,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				pos1R: {
+					startLeftX: 570, startLeftY: 190,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+					mirror:"no"	},
+				pos2L: {
 					startLeftX: 330, startLeftY: 380, //was 330
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
-					mirror: "yes"
-				}
-
-			},
-			luna: {
-				breakRoom:{
+					mirror:"no"
+				},
+				pos2R: {
+					startLeftX: 330, startLeftY: 380, //was 330
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+				},
+				pos3L: {
+					startLeftX: 440, startLeftY: 240,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+					mirror:"no"
+				},
+				pos3R: {
 					startLeftX: 440, startLeftY: 240,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60
+					}
+
+			},
+			mikesOffice1:{
+				pos1L: {
+					startLeftX: 550, startLeftY: 250,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60
+				},
+				pos1R: {
+					startLeftX: 550, startLeftY: 250,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60,
+					mirror:"yes"
 				}
 			},
-			stu: { //for now only - will change later
-				lobby:{
-					startLeftX: 465, startLeftY: 240,
-					colliderXoffset: 5, colliderYoffset: 40,
-					colliderWidth: 60, colliderHeight: 95
+			mikesOffice2:{
+				pos1L: {
+					startLeftX: 550, startLeftY: 250,
+					colliderXoffset: -2, colliderYoffset: 60,
+					colliderWidth: 60, colliderHeight: 60
 				},
-				breakRoom:{
-					startLeftX: 330, startLeftY: 380, //was 330
+				pos1R: {
+					startLeftX: 550, startLeftY: 250,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
+					mirror:"yes"	},
+					}
 				},
-				anniesOffice1:{
-					startLeftX: 480, startLeftY: 260, //was 330
-					colliderXoffset: -2, colliderYoffset: 60,
-					colliderWidth: 60, colliderHeight: 60,
-				},
-				anniesOffice2:{
-					startLeftX: 480, startLeftY: 260, //was 330
-					colliderXoffset: -2, colliderYoffset: 60,
-					colliderWidth: 60, colliderHeight: 60,
+				///~~~~~~~~~~~~~~~~~~~~~~~~~~~~annie postion def~~~~~~~~~~~~~~~~~~~~~~///
+				postionSetAnnie:{
+					startingX: 750, startingY: 260,
+					colliderXoffset: -2, colliderYoffset: 75,
+					colliderWidth: 60, colliderHeight: 35,
+					lobby: {
+						conferenceRoom: startLocations.lowerL,
+						anniesOffice1: startLocations.sideL,
+						anniesOffice2: startLocations.sideL,
+						breakRoom: startLocations.upperR,
+						fransOffice: startLocations.sideR,
+						mikesOffice1: startLocations.lowerR,
+						mikesOffice2: startLocations.lowerR
+					},
+					conferenceRoom: {
+						lobby: startLocations.upperR,
+						anniesOffice1: startLocations.upperR,
+						anniesOffice2: startLocations.upperR,
+						mikesOffice1: startLocations.sideR,
+						mikesOffice2: startLocations.sideR
+					},
+					anniesOffice1: {
+						lobby: startLocations.sideR,
+						conferenceRoom: startLocations.lowerR
+					},
+					anniesOffice2: {
+						lobby: startLocations.sideR,
+						conferenceRoom: startLocations.lowerR
+					},
+					breakRoom: {
+						lobby: startLocations.lowerR
+					},
+					fransOffice: {
+						lobby: startLocations.sideL
+					},
+					mikesOffice1: {
+						lobby: startLocations.upperL,
+						conferenceRoom:  startLocations.sideL
+					},
+					mikesOffice2: {
+						lobby: startLocations.upperL,
+						conferenceRoom:  startLocations.sideL
+					}
+
 				}
-			},
+		};
+
+		var service = {
+
+			annie:costumePosSet.postionSetAnnie,
+			mike: costumePosSet.positionsSet1 ,
+			fran: costumePosSet.positionsSet1,
+			charlie: costumePosSet.positionsSet1,
+			luna: costumePosSet.positionsSet1,
+			stu: costumePosSet.positionsSet1,
 
 			getCharLoc: getCharLoc
 		};
@@ -177,7 +240,9 @@
 		return service;
 
 		function getCharLoc(characterName, roomName, position) {
-			return service[characterName][roomName];
+			return service[characterName][roomName][position];
+
+
 		}
 	}
-})();
+	})();

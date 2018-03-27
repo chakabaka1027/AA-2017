@@ -199,7 +199,7 @@
         r += 1;
       }
 
-
+//here
 
       var templateRows = []; //works
       for (; r < numRows; r++) {
@@ -242,6 +242,7 @@
 
         }
       }
+
       return gameCaseData;
 
     }

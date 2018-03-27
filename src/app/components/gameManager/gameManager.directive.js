@@ -258,16 +258,14 @@
           resetArrowTimer();
           //Create characters and add animations
           npcSprites = [];
-        $log.log("--------->",positionData['fran']['lobby']);
+        // $log.log("--------->",positionData['fran']['lobby']);
           for (var spriteName in mainInformationHandler.roomData) { //TODO this whole issue was because it is was capital letter smh- seriosly!!!
             //charecters are capiral while here they need to be lower as sprite names
-            $log.log("--------->", spriteName);
+            // $log.log("--------->", spriteName);
 
-            /////////////
-            // TODO add some code here to handle position info from dialogInfo
-            /////////////
-            var spriteInfo = positionData[spriteName.toLowerCase()][roomData.roomNameMapping[currentRoomKey]]; //is this for all other sprites
-
+            //><HERE><
+            var spriteInfo = positionData[spriteName.toLowerCase()][roomData.roomNameMapping[currentRoomKey]]["pos2L"];
+            console.log("mmmmmm",spriteInfo);
             if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
               mainInformationHandler.convoCounter[spriteName] = 0;
             }
@@ -275,7 +273,10 @@
             npcSprite.name = spriteName;//TODO here
             npcSprite.setCollider("rectangle", spriteInfo.colliderXoffset, spriteInfo.colliderYoffset, spriteInfo.colliderWidth, spriteInfo.colliderHeight);
             addAnimations(animationData[spriteName.toLowerCase()], npcSprite);//TODO not sure if it is needed as upper anywhere else ? if not make it to lower when parsing instead of here
+            console.log(">>>nnnn",spriteInfo.mirror);
             if (spriteInfo.mirror) {
+              console.log(">>>THIS WAS TRUE ");
+
               npcSprite.mirrorX(-1);
             }
             npcSprites.push(npcSprite);
@@ -289,7 +290,9 @@
           if (newRoom && newRoom != previousRoom) {
             var roomEntrance = charPositionData.annie[roomData.roomNameMapping[previousRoom]][roomData.roomNameMapping[newRoom]];
             $log.log('At new room for annie', previousRoom, roomData.roomNameMapping[previousRoom], newRoom, roomData.roomNameMapping[newRoom]);
-            $log.log(charPositionData.annie[roomData.roomNameMapping[previousRoom]]);
+
+
+            // $log.log(charPositionData.annie[roomData.roomNameMapping[previousRoom]]);
             annieSprite.position.x = roomEntrance.x;
             annieSprite.position.y = roomEntrance.y;
             annieSprite.changeAnimation(roomEntrance.animationState);
@@ -406,9 +409,9 @@
 
         function getDoorStatus() {
             angular.forEach(mappingService[mainInformationHandler.roomKey], function(linkingRoom, doorKey) {
-            
+
             var markDoor = false; //this one sends in the wrong info ?//TODO check here
-            
+
             // console.log("{{=====}}",linkingRoom); //gave me all rooms correct
             // console.log("{{{=====}}}",levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom));
 
