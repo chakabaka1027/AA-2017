@@ -168,6 +168,7 @@
             gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'school':
+          case 'roomset':
             gameCaseData.remapRooms = xlsxService.cellValue(sheet, 1, r) === 'on';
             if(!reachedENDselection){
               for (var i=0; i<5; i++) {
