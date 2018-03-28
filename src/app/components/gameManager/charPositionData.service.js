@@ -6,7 +6,7 @@
 		.service('charPositionData', charPositionData);
 
 	/** @ngInject */
-	function charPositionData(){
+	function charPositionData(parseAAContentService){
 
 		var startLocations = {
 			upperL:{ //if you make the y too low or too high she'll collide with the door

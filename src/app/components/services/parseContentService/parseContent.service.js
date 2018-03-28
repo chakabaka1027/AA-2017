@@ -277,6 +277,7 @@
               if (sheetParsed) {
                 parsedLevelData[sheetName] = sheetParsed;
                 service.levelDataInformation[sheetName] = sheetParsed;
+                console.log(".............",service.levelDataInformation[sheetName]);
                 var legalSheetName = sheetName.replace("game-",'');
                 service.parsedLevelNames.push(legalSheetName);
               } else {

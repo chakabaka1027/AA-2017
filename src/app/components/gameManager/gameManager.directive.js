@@ -260,12 +260,13 @@
           npcSprites = [];
         // $log.log("--------->",positionData['fran']['lobby']);
           for (var spriteName in mainInformationHandler.roomData) { //TODO this whole issue was because it is was capital letter smh- seriosly!!!
-            //charecters are capiral while here they need to be lower as sprite names
-            // $log.log("--------->", spriteName);
 
             //><HERE><
-            var spriteInfo = positionData[spriteName.toLowerCase()][roomData.roomNameMapping[currentRoomKey]]["pos2L"];
-            console.log("mmmmmm",spriteInfo);
+            var newPos = "pos".concat(newPos);
+            
+            // var spriteInfo = positionData[spriteName.toLowerCase()][roomData.roomNameMapping[currentRoomKey]]["pos2L"];
+            var spriteInfo = charPositionData.getCharLoc(spriteName.toLowerCase(),roomData.roomNameMapping[currentRoomKey], "pos2L"); //isnt the method redundant as it does the same thing?
+
             if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
               mainInformationHandler.convoCounter[spriteName] = 0;
             }
@@ -273,9 +274,7 @@
             npcSprite.name = spriteName;//TODO here
             npcSprite.setCollider("rectangle", spriteInfo.colliderXoffset, spriteInfo.colliderYoffset, spriteInfo.colliderWidth, spriteInfo.colliderHeight);
             addAnimations(animationData[spriteName.toLowerCase()], npcSprite);//TODO not sure if it is needed as upper anywhere else ? if not make it to lower when parsing instead of here
-            console.log(">>>nnnn",spriteInfo.mirror);
             if (spriteInfo.mirror) {
-              console.log(">>>THIS WAS TRUE ");
 
               npcSprite.mirrorX(-1);
             }
