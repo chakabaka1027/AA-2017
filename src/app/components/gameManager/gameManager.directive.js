@@ -208,7 +208,7 @@
         var bg;
         currentRoom.getDoorStatus = getDoorStatus;
         currentRoom.drawPointsBubble = drawPointsBubble;
-        var positionData = charPositionData;
+        // var positionData = charPositionData;
         var walking_Speed = 7;
         vm.annie_Walking = false;
         var furniture = [];
@@ -262,10 +262,17 @@
           for (var spriteName in mainInformationHandler.roomData) { //TODO this whole issue was because it is was capital letter smh- seriosly!!!
 
             //><HERE><
-            var newPos = "pos".concat(newPos);
-            
-            // var spriteInfo = positionData[spriteName.toLowerCase()][roomData.roomNameMapping[currentRoomKey]]["pos2L"];
-            var spriteInfo = charPositionData.getCharLoc(spriteName.toLowerCase(),roomData.roomNameMapping[currentRoomKey], "pos2L"); //isnt the method redundant as it does the same thing?
+            // parserPostion = parseAAContentService.service
+            var charInfo = mainInformationHandler.roomData[spriteName];
+
+            var charPosition ;
+            if(charInfo.dialogInfo && Array.isArray(charInfo.dialogInfo) && charInfo.dialogInfo.length > 0){
+                 charPosition = charInfo.dialogInfo[0].position;
+            } else {
+                 charPosition = "";
+            }
+
+            var spriteInfo = charPositionData.getCharLoc(spriteName.toLowerCase(),roomData.roomNameMapping[currentRoomKey],charPosition ); //isnt the method redundant as it does the same thing?
 
             if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
               mainInformationHandler.convoCounter[spriteName] = 0;
@@ -282,16 +289,15 @@
           }
           //Create Annie
           annieSprite = room.createSprite(annieStartX, annieStartY);
-          annieSprite.setCollider("rectangle", positionData.annie.colliderXoffset, positionData.annie.colliderYoffset, positionData.annie.colliderWidth, positionData.annie.colliderHeight);
+          annieSprite.setCollider("rectangle", charPositionData.anniePositions.colliderXoffset,charPositionData.anniePositions.colliderYoffset, charPositionData.anniePositions.colliderWidth, charPositionData.anniePositions.colliderHeight);
           addAnimations(animationData.annie, annieSprite);
-          annieSprite.position.x = positionData.annie.startingX;
-          annieSprite.position.y = positionData.annie.startingY;
+          annieSprite.position.x = charPositionData.anniePositions.startingX;
+          annieSprite.position.y = charPositionData.anniePositions.startingY;
           if (newRoom && newRoom != previousRoom) {
-            var roomEntrance = charPositionData.annie[roomData.roomNameMapping[previousRoom]][roomData.roomNameMapping[newRoom]];
-            $log.log('At new room for annie', previousRoom, roomData.roomNameMapping[previousRoom], newRoom, roomData.roomNameMapping[newRoom]);
+            var roomEntrance = charPositionData.getAnnieLocation(roomData.roomNameMapping[previousRoom],roomData.roomNameMapping[newRoom]);
+            // $log.log('At new room for annie', previousRoom, roomData.roomNameMapping[previousRoom], newRoom, roomData.roomNameMapping[newRoom]);
 
 
-            // $log.log(charPositionData.annie[roomData.roomNameMapping[previousRoom]]);
             annieSprite.position.x = roomEntrance.x;
             annieSprite.position.y = roomEntrance.y;
             annieSprite.changeAnimation(roomEntrance.animationState);

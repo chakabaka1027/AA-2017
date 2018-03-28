@@ -30,14 +30,14 @@
 			},
 			fran: {
 					animations: {
-						"talking": ["assets/images/Characters/Fran/Fran-Angle-Left.png"]
+						"talking": ["assets/images/Characters/Fran/Fran-Angle-Right.png"]
 					// ,"showNPCArrow": []
 
 					}
 			},
 			charlie: {
 				animations: {
-					"talking": ["assets/images/Characters/Charlie/Charlie-Stand-Angle-Left.png"]
+					"talking": ["assets/images/Characters/Charlie/Charlie-Stand-Angle-Right.png"]
 					//, "showNPCArrow": []
 
 				}
