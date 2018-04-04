@@ -412,13 +412,13 @@
 						collider_X_offset: 0, collider_Y_offset: -5
 					},
 					beige_chair_sideways:{ //right
-						posX: 717.5, posY: 366,
+						posX: 660.5, posY: 366,
 						collider_width: 80, collider_height: 100,
 						collider_X_offset: 0, collider_Y_offset: -5,
 						mirror: "yes"
 					},
 					beige_chair_sideways2:{ //left
-						posX: 251.5, posY: 374,
+						posX: 300.5, posY: 374,
 						collider_width: 80, collider_height: 100,
 						collider_X_offset: 0, collider_Y_offset: 0
 					},

@@ -58,13 +58,13 @@
 			},
 			conferenceRoom:{
 				pos1L: {
-					startLeftX: 430, startLeftY: 190,
+					startLeftX: 465, startLeftY: 220,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 					mirror:true
 				},
 				pos1R: {
-					startLeftX: 465, startLeftY: 240,
+					startLeftX: 465, startLeftY: 220,
 					colliderXoffset: 5, colliderYoffset: 40,
 					colliderWidth: 60, colliderHeight: 95,
 							},
@@ -160,13 +160,13 @@
 			},
 			mikesOffice1:{
 				pos1L: {
-					startLeftX: 550, startLeftY: 250,
+					startLeftX: 550, startLeftY: 340,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 					mirror:true
 				},
 				pos1R: {
-					startLeftX: 550, startLeftY: 250,
+					startLeftX: 550, startLeftY: 340,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 
@@ -174,13 +174,13 @@
 			},
 			mikesOffice2:{
 				pos1L: {
-					startLeftX: 550, startLeftY: 250,
+					startLeftX: 550, startLeftY: 340,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 					mirror:true
 				},
 				pos1R: {
-					startLeftX: 550, startLeftY: 250,
+					startLeftX: 550, startLeftY: 340,
 					colliderXoffset: -2, colliderYoffset: 60,
 					colliderWidth: 60, colliderHeight: 60,
 						},
