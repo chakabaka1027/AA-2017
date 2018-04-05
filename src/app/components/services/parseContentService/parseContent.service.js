@@ -150,7 +150,7 @@
         tutorial:false,
         roomSelection:{room1:"test1",room2:"test2",room3:"",room4:"",room5:""}
       };
-
+//schoolRoomsHardCoded  workRoomsHardCoded
       var workRoomsHardCoded = {room1:"mikesOffice1",room2:"conferenceRoom",room3:"fransOffice",room4:"lobby",room5:"anniesOffice1",room6:"breakRoom"};
       var schoolRoomsHardCoded = {room1:"mikesOffice2",room2:"conferenceRoom",room3:"fransOffice",room4:"lobby",room5:"anniesOffice2",room6:"breakRoom"};
 
@@ -177,10 +177,14 @@
             // gameCaseData.remapRooms = xlsxService.cellValue(sheet, 1, r) === 'on';
             //for now unitll we know if numbers are needed or will use hard coded values -  misscomunivation via email - verify with chas
             //confused as numbers are still required in email - so left it as configurable for now undless empty
-            if(xlsxService.cellValue(sheet, 1, r) === 'work'){//TODO if(xlsxService.cellValue(sheet, 1, r) === 'school'){
+            if(xlsxService.cellValue(sheet, 1, r) === 'school'){//TODO if(xlsxService.cellValue(sheet, 1, r) === 'school'){
               for ( i=0; i<6; i++) {
-                gameCaseData.roomSelection['room'+(i+1)] =workRoomsHardCoded['room'+(i+1)];
+                gameCaseData.roomSelection['room'+(i+1)] =schoolRoomsHardCoded['room'+(i+1)];
+                // console.log("schoolRoomsHardCoded['room'+(i+1)]",gameCaseData.roomSelection['room'+(i+1)]);
+
               }
+              gameCaseData.remapRooms= true;
+
               //add hard coded values
               // gameCaseData.remapRooms= false ; --- becuase it is missing in the other tmplaye
             }
