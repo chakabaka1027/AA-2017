@@ -16,7 +16,7 @@
 
     function controller($scope) {
       var vm = this;
-      vm.roomKeys = ['room6', 'room2', 'room4', 'room1', 'room3', 'room5'];
+      vm.roomKeys = ['room4', 'room2', 'room5', 'room1', 'room3', 'room6'];
       vm.roomHasConversation = roomHasConversation;
       vm.show = false;
 
@@ -46,14 +46,14 @@
 
             var personInfo = room[personName];
             var hasConvo = false;
-            
+
             personInfo.dialogInfo.forEach(function(dInfo) {
               if (dInfo.key && main.completedConvos.indexOf(dInfo.key) < 0) {
                 hasConvo = true;
               }
             });
 
-            if (hasConvo) { 
+            if (hasConvo) {
               return true;
             }
 

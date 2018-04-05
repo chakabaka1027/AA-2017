@@ -24,7 +24,7 @@
           playerScore:0,
           lastConversationSuccessful:false,
           // roomKey: "lobby",
-          roomKey: "room6",
+          roomKey: "room4",
           totalConvoPoints:0,
           completedConvos:[],
           failedConvos  :{},

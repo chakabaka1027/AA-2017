@@ -472,7 +472,7 @@
 
 		service.roomNameMapping = {};
 
-		var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","anniesOffice1","breakRoom","lobby"];
+		var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","lobby","anniesOffice1","breakRoom"];
 		for (var i = 0; i < 6 ; i++) {
 			service["room" + (i+1)] = service[roomNames[i]];
 			service.roomNameMapping["room" + (i+1)] = roomNames[i];
@@ -486,17 +486,17 @@
 
 			if(roomSelections){
 
-				for(  i = 0 ; i < 5 ; i ++){
+				for(  i = 0 ; i < 6 ; i ++){
 					var roomName = roomSelections["room" + (i+1)];
 					service["room" + (i+1)] = service[roomName];
 					service.roomNameMapping["room" + (i+1)] = roomName;
 				}
-				service.room6 = service.lobby ; //room data.lobby is never chanding
-				service.roomNameMapping.room6 = "lobby";
+				// service.room6 = service.lobby ; //room data.lobby is never chanding
+				// service.roomNameMapping.room6 = "lobby";
 
 			}
 			else {
-				var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","anniesOffice1","breakRoom","lobby"];
+				var roomNames = ["mikesOffice1","conferenceRoom","fransOffice","lobby","anniesOffice1","breakRoom"];
 				for(  i = 0; i < 6 ; i++){
 					service["room" + (i+1)] = service[roomNames[i]];
 					service.roomNameMapping["room" + (i+1)] = roomNames[i];
