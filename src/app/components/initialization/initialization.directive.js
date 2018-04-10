@@ -10,7 +10,7 @@
     return {
       restrict: 'E',
       controller: controller,
-      template: '<div><h1>I am initializing!!!!</h1><div ng-click="clickMe()">Click me!!!</div></div>'
+      template: '<div><h1>initializing! please stand by </h1></div>'
     };
 
     function controller() {
