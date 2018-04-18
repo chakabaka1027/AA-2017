@@ -172,7 +172,7 @@
             gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
             break;
           case 'school':
-          case 'roomset':
+          case 'roomSet':
           case'model':
             // gameCaseData.remapRooms = xlsxService.cellValue(sheet, 1, r) === 'on';
             //for now unitll we know if numbers are needed or will use hard coded values -  misscomunivation via email - verify with chas
@@ -181,24 +181,18 @@
               for ( i=0; i<6; i++) {
                 gameCaseData.roomSelection['room'+(i+1)] =schoolRoomsHardCoded['room'+(i+1)];
                 // console.log("schoolRoomsHardCoded['room'+(i+1)]",gameCaseData.roomSelection['room'+(i+1)]);
-
               }
-              gameCaseData.remapRooms= true;
-
               //add hard coded values
               // gameCaseData.remapRooms= false ; --- becuase it is missing in the other tmplaye
             }
             else {
-              gameCaseData.remapRooms= true;
-              console.log();
-              if(!reachedENDselection){
-                    for ( i=0; i<6; i++) {
-                      gameCaseData.roomSelection['room'+(i+1)] = xlsxService.cellValue(sheet, 1, r+i+1);
-                    }
-                    reachedENDselection = true;
-                  }
-                  r += 5;
+              for ( i=0; i<6; i++) {
+                gameCaseData.roomSelection['room'+(i+1)] =workRoomsHardCoded['room'+(i+1)];
+                // console.log("schoolRoomsHardCoded['room'+(i+1)]",gameCaseData.roomSelection['room'+(i+1)]);
               }
+              }
+              gameCaseData.remapRooms= true;
+
             // gameCaseData.remapRooms = xlsxService.cellValue(sheet, 1, r) === 'on';
           console.log();
 
