@@ -4,309 +4,299 @@
     .service('parseAAContentService', parseAAContentService);
 
   /** @ngInject */
-  function parseAAContentService($log, xlsxService) {
-    var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
+  function parseAAContentService($log, xlsxService, $q, $location, nodeDataService) {
+    // var defaultUrl = 'assets/AwkwardAnnieDialogContent_all.xlsx';
+    // var defaultUrl = 'assets/newFormatDialogs.xlsx';
+    var defaultUrl = 'assets/ETS-ConfigSys.xlsx';
+    // var testingNewSheets = 'assets/newFormatDialogs.xlsx';
+    var templatesSample = [];
 
-    var localBoolean;
     var service = {
-      parsedContent: {},
+      parsedDialogContent: {},  //dictionary keyed by dialog key - yeilding objects of the form:
+                          // {
+                          //  scoring: < scoring data >,
+                          //  dialogTree: < tree of dialog text>
+                          // }
+
+      levelDataInformation: {},   // dictionary that includes template-<game-name>  - yeilding objects of the form
+                                  //  {
+                                  //    levels: < structure of the whole level - based on templates >
+                                  //    audioSetting: true,
+                                  //    display: true ...etc
+                                  //  };
+
+      parsedLevelNames:[],
 
       parseContentFromGameType: parseContentFromGameType,
-      parseContentFromFile: parseContentFromFile,
+      getLevelDataForURL:getLevelDataForURL,
 
       // mostly internal; exposed for testing...
       parseAllSheets: parseAllSheets,
-      parseSheet: parseSheet,
-      findSectionHeaders: findSectionHeaders
+
+      parseContentFromFile: parseContentFromFile
 
     };
 
     return service;
 
-    function findSectionHeaders(sheet) {
+    ///updated section headers - ask if other is used
+    function findSectionHeaderswithTarget(sheet, targetValue) {
       var hdrIndexes = [];
       var numRows = xlsxService.findSheetSize(sheet).r;
 
       for (var r = 0; r < numRows; r++) {
-        if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === 'annie') {
+        if (('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase() === targetValue) {
           hdrIndexes.push(r);
         }
       }
       return hdrIndexes;
-    }
+    } //end of findsectionHeaders
 
     function utfClean(s) {
       return s.trim();
     }
 
-    function createBlock(row, col, code, isLinear) {
+    function parseDialogSheet(sheet, sheetName) {
 
-      var d = {
-        'code': code,
-        'PC_Text': utfClean(row[col]),
-        'NPC_Response': utfClean(row[col + 2]),
-
+      var numRows = xlsxService.findSheetSize(sheet).r;
+      var startRow = 0,
+        r = 0;
+      var dialogTexts = [];
+      var scoring = {
+        positive: {
+          A:5, B:3, C:10, D:0, successThreshold: 3.33
+        },
+        negative: {
+          A:0, B:3, C:5, D:0, successThreshold: 3.33
+        }
       };
-      if (!isLinear) { //check line 53 -
 
-        d.animationNegative = row[col + 4].toLowerCase();
-        d.animationPositive = row[col + 5].toLowerCase();
-        d.animationNegative = (d.animationNegative === 'neutral' ? '' : d.animationNegative);
-        d.animationNegative = d.animationNegative.replace('surprise_', 'surprised_');
-        d.animationPositive = (d.animationPositive === 'neutral' ? '' : d.animationPositive);
-        d.animationPositive = d.animationPositive.replace('surprise_', 'surprised_');
+      var col0;
+
+      var parserState = 'inHeader';
+
+      while (r<numRows) {
+        col0 = (xlsxService.cellValue(sheet, 0, r)+'').toLowerCase().split(' ')[0];
+
+        switch(parserState) {
+
+          case 'inHeader':
+            if (col0==='outcome') {
+              parserState = 'inScoring';
+            } else if (col0==='code') {
+              parserState = 'inDialogNodes';
+            }
+            break;
+
+          case 'inScoring':
+            if (col0==='') {
+              // do nothing
+            } else if (col0==='success') {
+              scoring.negative.successThreshold = xlsxService.cellValue(sheet, 1, r);
+              scoring.positive.successThreshold = xlsxService.cellValue(sheet, 2, r);
+              parserState = 'inHeader';
+            } else {
+              col0 = col0.toUpperCase();
+              scoring.negative[col0] = xlsxService.cellValue(sheet, 1, r);
+              scoring.positive[col0] = xlsxService.cellValue(sheet, 2, r);
+            }
+            break;
+
+          case 'inDialogNodes':
+            if (xlsxService.cellValue(sheet, 0, r).trim()==='') {
+              // skip any empty rows
+            } else {
+              var row = {
+                code: xlsxService.cellValue(sheet, 0, r),
+                PC_Text: xlsxService.cellValue(sheet, 1, r),
+                NPC_Response: xlsxService.cellValue(sheet, 2, r),
+                negative: {
+                  animation: xlsxService.cellValue(sheet, 3, r),
+                  score: xlsxService.cellValue(sheet, 4, r),
+                  success: xlsxService.cellValue(sheet, 5, r)
+                },
+                positive: {
+                  animation: xlsxService.cellValue(sheet, 6, r),
+                  score: xlsxService.cellValue(sheet, 7, r),
+                  success: xlsxService.cellValue(sheet, 8, r)
+                }
+              };
+              dialogTexts.push(row);
+            }
+            break;
+          }
+
+          r+=1;
+      }
+
+      if (dialogTexts.length > 1) {
+        return { scoring:scoring, dialogTexts:dialogTexts } ;
       } else {
-        d.animation = row[col + 4].toLowerCase();
-        d.animation = (d.animation === 'neutral' ? '' : d.animation);
-        d.animation = d.animation.replace('surprise_', 'surprised_');
-      }
-      return d;
-    }
-
-    function parseSheet(sheet, gameType) {
-
-      var hdrIndexes = findSectionHeaders(sheet);
-
-      if (hdrIndexes.length !== 1 && hdrIndexes.length !== 3) {
+        $log.warn("'"+sheetName+"' is a dialog - with no dialog text?????");
         return null;
       }
 
-      var parsed = {};
-      var row, i, j, code;
-      var hdrIndex, hdrOffset;
-      var choice1, choice2;
+    }
+
+    function parseGameCaseSheet(sheet) {
+
+      var levels = {};
+      var gameCaseData = {
+        levels: levels,
+        audioSetting: true,
+        display: true,
+        school:true,
+        tutorial:true
+      };
+
+      var numRows = xlsxService.findSheetSize(sheet).r;
+      var startRow = 0,
+        r = 0;
+      var inHead = true;
+      while (r < numRows && inHead) {
+        var rowKey = ('' + xlsxService.cellValue(sheet, 0, r)).toLowerCase();
+        // $log.log('Row Key "'+rowKey+'"');
+        switch (rowKey) {
+          case 'audio setting':
+            gameCaseData.audioSetting = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
+          case 'display':
+            gameCaseData.display = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
+          case 'school':
+            gameCaseData.school = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
+          case 'tutorial':
+            gameCaseData.tutorial = xlsxService.cellValue(sheet, 1, r) === 'on';
+            break;
+          case 'level':
+            inHead = false;
+            break;
+        }
+        r += 1;
+      }
 
 
-      if (hdrIndexes.length === 1) {
+      var templateRows = []; //works
+      for (; r < numRows; r++) {
+        if (xlsxService.cellValue(sheet, 0, r) != '') { //where 0,1,2,3,4 corresuponds to level - cahr ...etc in excel
+          var templateRow = {
+            level: 'level_' + xlsxService.cellValue(sheet, 0, r),
+            character: xlsxService.cellValue(sheet, 1, r).toLowerCase(),
+            convo: xlsxService.cellValue(sheet, 2, r),
+            room: xlsxService.cellValue(sheet, 3, r),
+            room_pos: xlsxService.cellValue(sheet, 4, r)
+          };
 
-        row = sheetRow(hdrIndexes[0] + 1);
-
-
-        if (gameType === "negative") {
-          for (i = 0, code = 'C'; i < 4; i++, code += 'C') {
-            if (i === 0) {
-              parsed['node' + (i + 1)] = [createBlock(row, 5 * i, code, true)];
-            } else {
-              parsed['node' + (i + 1)] = {}
-              parsed['node' + (i + 1)][code.substr(1)] = [createBlock(row, 5 * i, code, true)];
-
-            }
-
+          if (angular.isUndefined(levels[templateRow.level])) {
+            levels[templateRow.level] = {
+              requiredConversations: [],
+              rooms: {}
+            };
           }
-        } else {
 
-          for (i = 0, code = 'A'; i < 4; i++, code += 'A') {
-            if (i === 0) {
-              parsed['node' + (i + 1)] = [createBlock(row, 5 * i, code, true)];
-            } else {
-              parsed['node' + (i + 1)] = {}
-              parsed['node' + (i + 1)][code.substr(1)] = [createBlock(row, 5 * i, code, true)];
-
-            }
+          var roomsData = levels[templateRow.level].rooms;
+          if (angular.isUndefined(roomsData[templateRow.room])) {
+            roomsData[templateRow.room] = {};
           }
 
+          var roomData = roomsData[templateRow.room];
+          if (angular.isUndefined(roomData[templateRow.character])) {
+            roomData[templateRow.character] = {
+              dialogInfo: []
+            };
+          }
+
+          roomData[templateRow.character].dialogInfo.push({
+            position: templateRow.room_pos,
+            key: templateRow.convo
+          });
+
+          if (templateRow.convo !== '') {
+            levels[templateRow.level].requiredConversations.push(templateRow.convo);
+          }
 
         }
-
-        return parsed;
       }
-
-      // it's not 'linear', so (hopefully!) it fits the following ad-hoc pattern...
-
-      parsed['node1'] = [
-        createBlock(sheetRow(hdrIndexes[0] + 1), 0, 'A'),
-        createBlock(sheetRow(hdrIndexes[1] + 1), 0, 'B'),
-        createBlock(sheetRow(hdrIndexes[2] + 1), 0, 'C')
-      ];
-
-      var node2 = {};
-      for (i = 0; i < 3; i++) {
-        hdrIndex = hdrIndexes[i];
-        choice1 = 'ABC' [i];
-        node2[choice1] = [
-          createBlock(sheetRow(hdrIndex + 1), 6, choice1 + 'A'),
-          createBlock(sheetRow(hdrIndex + 5), 6, choice1 + 'B'),
-          createBlock(sheetRow(hdrIndex + 9), 6, choice1 + 'C')
-        ];
-      }
-      parsed['node2'] = node2;
-
-      var node3 = {};
-      for (i = 0; i < 3; i++) {
-        hdrIndex = hdrIndexes[i];
-        choice1 = 'ABC' [i];
-        for (j = 0; j < 3; j++) {
-          hdrOffset = [0, 4, 8][j];
-          choice2 = 'ABC' [j];
-          var pfx = choice1 + choice2;
-          var rowOffset = hdrIndex + hdrOffset;
-          node3[pfx] = [
-            createBlock(sheetRow(rowOffset + 1), 12, pfx + 'A'),
-            createBlock(sheetRow(rowOffset + 2), 12, pfx + 'B'),
-            createBlock(sheetRow(rowOffset + 3), 12, pfx + 'C')
-          ];
-        }
-      }
-      parsed['node3'] = node3;
-
-      return parsed;
-
-
-      function sheetRow(rowIx) {
-        return xlsxService.sheetRow(sheet, rowIx);
-      }
+      return gameCaseData;
 
     }
 
+    function parseAllSheets(book) {
 
-    function parseSheetFromFile(sheet, fileObject) {
-
-      var hdrIndexes = findSectionHeaders(sheet);
-
-      if (hdrIndexes.length !== 1 && hdrIndexes.length !== 3) {
-        return null;
-      }
-
-      var parsed = {};
-      var row, i, j, code;
-      var hdrIndex, hdrOffset;
-      var choice1, choice2;
-
-
-      if (hdrIndexes.length === 1) {
-        // it's a 'linear' exchange...
-        row = sheetRow(hdrIndexes[0] + 1);
-
-        if (fileObject[0] = "q") {
-          for (i = 0, code = 'C'; i < 4; i++, code += 'C') {
-            if (i === 0) {
-              parsed['node' + (i + 1)] = [createBlock(row, 5 * i, code)];
-            } else {
-              parsed['node' + (i + 1)] = {}
-              parsed['node' + (i + 1)][code.substr(1)] = [createBlock(row, 5 * i, code)];
-
-            }
-          }
-        }
-        if (fileObject[0] = "assets/AwkwardAnnieDialogContent_positive.xlsx") {
-          for (i = 0, code = 'A'; i < 4; i++, code += 'A') {
-            if (i === 0) {
-              parsed['node' + (i + 1)] = [createBlock(row, 5 * i, code)];
-            } else {
-              parsed['node' + (i + 1)] = {}
-              parsed['node' + (i + 1)][code.substr(1)] = [createBlock(row, 5 * i, code)];
-
-            }
-          }
-        }
-
-        return parsed;
-      }
-
-      // it's not 'linear', so (hopefully!) it fits the following ad-hoc pattern...
-
-      parsed['node1'] = [
-        createBlock(sheetRow(hdrIndexes[0] + 1), 0, 'A'),
-        createBlock(sheetRow(hdrIndexes[1] + 1), 0, 'B'),
-        createBlock(sheetRow(hdrIndexes[2] + 1), 0, 'C')
-      ];
-
-      var node2 = {};
-      for (i = 0; i < 3; i++) {
-        hdrIndex = hdrIndexes[i];
-        choice1 = 'ABC' [i];
-        node2[choice1] = [
-          createBlock(sheetRow(hdrIndex + 1), 5, choice1 + 'A'),
-          createBlock(sheetRow(hdrIndex + 5), 5, choice1 + 'B'),
-          createBlock(sheetRow(hdrIndex + 9), 5, choice1 + 'C')
-        ];
-      }
-      parsed['node2'] = node2
-
-      var node3 = {};
-      for (i = 0; i < 3; i++) {
-        hdrIndex = hdrIndexes[i];
-        choice1 = 'ABC' [i];
-        for (j = 0; j < 3; j++) {
-          hdrOffset = [0, 4, 8][j];
-          choice2 = 'ABC' [j];
-          var pfx = choice1 + choice2
-          var rowOffset = hdrIndex + hdrOffset
-          node3[pfx] = [
-            createBlock(sheetRow(rowOffset + 1), 10, pfx + 'A'),
-            createBlock(sheetRow(rowOffset + 2), 10, pfx + 'B'),
-            createBlock(sheetRow(rowOffset + 3), 10, pfx + 'C')
-          ];
-        }
-      }
-      parsed['node3'] = node3;
-
-      return parsed;
-
-
-      function sheetRow(rowIx) {
-        return xlsxService.sheetRow(sheet, rowIx);
-      }
-
-    }
-
-    function parseAllSheets(book, gameType) {
-      var parsed = {};
+      var parsedDialogs = {};
+      var parsedLevelData = {};
       var sheetNames = book.SheetNames;
+
       sheetNames.forEach(function(sheetName) {
-        if (sheetName !== 'Template') {
+        if (sheetName !== 'Template') { // parse anything if it's not called "Template"
           var sheet = book.Sheets[sheetName];
-          var sheetParsed = parseSheet(sheet, gameType);
-          if (sheetParsed) {
-            parsed[sheetName] = sheetParsed;
+          if (sheetName.indexOf('game-')<0) {
+            var sheetParsed = parseDialogSheet(sheet, sheetName); //SheetParsing new excel
+            // console.log("------>>>>sheetParsed", sheetParsed);
+            if (sheetParsed) {
+              parsedDialogs[sheetName]= {
+                scoring: sheetParsed.scoring,
+                dialogTree: nodeDataService.parseNewStructure(sheetParsed.dialogTexts, sheetParsed.scoring)
+              }
+            } else {
+              $log.warn(sheetName + ': unparseable');
+            }
 
-          } else {
-            $log.warn(sheetName + ': unparseable');
+          } else { //Template parsing... ?
+              var sheetParsed = parseGameCaseSheet(sheet); //TODO-new  parsedLevelDatause this instead of json levels
+              if (sheetParsed) {
+                parsedLevelData[sheetName] = sheetParsed;
+                service.levelDataInformation[sheetName] = sheetParsed;
+                var legalSheetName = sheetName.replace("game-",'');
+                service.parsedLevelNames.push(legalSheetName);
+              } else {
+                $log.warn(sheetName + ': unparseable');
+              }
           }
-        } else {
-          $log.log(sheetName + ': skipping');
         }
-      });
 
-      return parsed;
+      }); //end of forEach function
+
+      $log.warn( "TT___TT parsed information <<<<<<<<<<<<<<",parsedDialogs);
+
+      return parsedDialogs;
     }
 
-    function parseAllSheetsFromFile(book, fileObject) {
-      var parsed = {};
-      var sheetNames = book.SheetNames;
-      sheetNames.forEach(function(sheetName) {
-        if (sheetName !== 'Template') {
-          var sheet = book.Sheets[sheetName];
-          var sheetParsed = parseSheetFromFile(sheet, fileObject);
-          if (sheetParsed) {
-            parsed[sheetName] = sheetParsed;
+    function getLevelDataForURL(){
+      //I KNOW THIS WAS  done another way but I'm not sure how to acsess levels since before was done though json - --
 
-          } else {
-            $log.warn(sheetName + ': unparseable');
-          }
-        } else {
-          $log.log(sheetName + ': skipping');
+      var levelKey = "game-"+$location.path().replace("/","");
+      var levelData = service.levelDataInformation[levelKey];
+
+      if(angular.isUndefined(levelData)){
+        if ($location.path()!=='/') {
+          $log.warn("undefined url path - make sure you typed it in correctly"); //or just use it here
         }
-      });
-      return parsed;
+        return  service.levelDataInformation["game-negative"];
+      } else {
+        return levelData;
+      }
 
     }
+
 
 
     function parseContentFromGameType(gameType) { //!reached
       return xlsxService.loadWorkbookFromUrl(defaultUrl)
         .then(function(book) {
-          service.parsedContent = parseAllSheets(book, gameType);
-          return service.parsedContent; //returns a whole ds of parsed data
+          service.parsedDialogContent = parseAllSheets(book, gameType);
+          return service.parsedDialogContent; //returns a whole ds of parsed data
         });
     }
 
-
     function parseContentFromFile(fileObject) {
+      service.parsedDialogContent = {};
+      service.levelDataInformation = {};
       return xlsxService.loadWorkbookFromFile(fileObject)
         .then(function(book) {
-          service.parsedContent = parseAllSheetsFromFile(book, fileObject);
-          return service.parsedContent;
+          service.parsedDialogContent = parseAllSheets(book);
+          return service.parsedDialogContent; //returns a whole ds of parsed data
         });
     }
 

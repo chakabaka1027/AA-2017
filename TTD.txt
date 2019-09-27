@@ -1,0 +1,23 @@
+
+/**** currently *****/
+
+parseContentService opens 'AwkwardAnnieBBBBBBB.xlsx'
+	reads each sheet
+	if sheetname has 'temp' in it: read it as a level template
+	else read it as old style dialog content.
+
+When a dialog happens, calls nodeDataService to parse that old style dialog content into new style content.
+
+/***** next task *****/
+
+parseContentService opens 'newFormatAASheet.xlsx'
+	reads each sheet
+	if sheetname has 'temp' in it: read it as a level template
+	else read it as array of rows; and parse as new style content using nodeDataService.parseNewStructure(theArrays of rows);
+		(By 'Array of rows', we mean array of objects {code: row[0], PC_Text: row[1], NPC_Response: row[2], animationNegative: row[3], animationPositive: row[4]})
+
+	say your array is parsedRows; then you'll do:
+		nodeDataService.dialogTress[dialogKey] = nodeDataService.parseNewStructure(parsedRows);
+
+When a dialog happens, calls nodeDataService to fetch new style tree (see notes at line 100 in dialogDisplay.new.service.js).
+	

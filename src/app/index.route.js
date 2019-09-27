@@ -13,18 +13,38 @@
 //or add it as a new state? ---
 
     $stateProvider
+      .state('test', {
+        url: '/test',
+        template: '<chastest></chastest>'
+      });
+      $stateProvider
+        .state('newTest', {
+          url: '/newTest',
+          template: '<rjtest></rjtest>'
+        });
+
+    $stateProvider
       .state('initialization', {
         url: '/{gameType}',
         template: '<initialize-game></initialize-game>'
       });
 
+
+      $stateProvider
+        .state('dialogTestBed', {
+          url: '/dialogTestBed/:gameType?',//
+          templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
+          controller: 'displayDialogTestBed', //throws away old main and recreates it
+          controllerAs: "dialogTest"
+        });
+
     $stateProvider
-      .state('dialogTestBed', {
-        url: '/dialogTestBed/:gameType?',//
-        templateUrl: 'app/components/dialogTestBed/dialogTestBed.html',
-        controller: 'displayDialogTestBed', //throws away old main and recreates it
-        controllerAs: "dialogTest"
+      .state('tutorial', {
+        url: '/tutorial/',
+        template: '<simple-tutorial></simple-tutorial>'
       });
+
+
 
     $stateProvider
       .state('GameStart', {
@@ -33,19 +53,20 @@
       });
 
     $stateProvider
+                  //TODO put those in the main ( score / level count --- but service things / model things ---- have a cotnroller but it si a simple controller -- put in a directive )
       .state('instructions', {
         //url: '/instructions',
-        template: "<div class='gameContainer'><nav-bar player-score='main.playerScore' level-count='main.levelCount'></nav-bar><instruction_page click-sound></instruction_page></div>",
-        controller: 'MainController', //throws away old main and recreates it
-        controllerAs: 'main'
+        template: "<div class='gameContainer'><nav-bar></nav-bar><instruction_page click-sound></instruction_page></div>"
+        // controller: 'MainController', //throws away old main and recreates it
+        // controllerAs: 'main'
       });
     $stateProvider
       .state('awkwardAnnieGame', {
         // url: '/awkwardAnnieGame',
         // url: '/{gameType}',
-        template: '<awkward-annie-game></awkward-annie-game>',
-        controller: 'MainController', //throws away old main and recreates it
-        controllerAs: 'main'
+        template: '<awkward-annie-game></awkward-annie-game>'
+        // controller: 'MainController', //throws away old main and recreates it
+        // controllerAs: 'main'
       });
 
 
@@ -61,11 +82,13 @@
         templateUrl: 'app/components/endScreenManager/endScreen.html'
       });
 
-    $stateProvider
-      .state('tutorial', {
-        url: '/tutorial',
-        template: '<simple-tutorial></simple-tutorial>'
-      })
+      $stateProvider
+        .state('templateTest', {
+          url: '/templateTest',
+          template: '<A></A>'
+        });
+
+
 
     $urlRouterProvider.otherwise('/');
   }

@@ -1,6 +1,6 @@
 {"positive-set":{
   "level_1":{
-  "requiredConversations": ["mike_SmallTk_02", "fran_RQ_02", "charlie_01", "Luna_RQ_01"],
+  "requiredConversations": ["mike_ST_02", "fran_RQ_02", "charlie_STwGR_01", "Luna_RQ_01"],
     "startingRoom": "lobby",
     "rooms":{
       "lobby":{
@@ -21,7 +21,7 @@
         "characters": {
           "mike":{
             "successPaths": ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-            "dialogKey": "mike_SmallTk_02"
+            "dialogKey": "mike_ST_02"
           }
         }
       },
@@ -33,7 +33,7 @@
         "characters":{
         "charlie":{
             "successPaths": ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],
-            "dialogKey": "charlie_01"
+            "dialogKey": "charlie_STwGR_01"
           },
           "luna":{
           "successPaths": ["ACC","CAC","CCA","BBC","BCB","CBB","BCC","CBC","CCB","CCC"],

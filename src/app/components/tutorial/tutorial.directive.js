@@ -5,7 +5,7 @@
     .directive('simpleTutorial', simpleTutorial);
 
 
-  function simpleTutorial($log, $timeout, audioService, $http, TutorialService, userGameInfo) {
+  function simpleTutorial($log, $timeout, audioService, $http, tutorialService) {
 
     return {
       restrict: 'E',
@@ -15,7 +15,7 @@
       templateUrl: 'app/components/tutorial/tutorial.html'
     };
 
-    function controller($scope, $stateParams) {
+    function controller($scope) {
       var vm = this;
       var scrollTimer;
       var showTimer;
@@ -29,19 +29,19 @@
       vm.resetState = resetState;
       delayDialog();
 
-      TutorialService.loadTutorialData().then(function() {
+      tutorialService.loadTutorialData().then(function() {
         vm.resetState();
       });
       $scope.$on("$destroy", onDestroy);
 
-      function gotoState (pcOption) {
+      function gotoState(pcOption) {
         audioService.playAudio("UIbuttonclick-option2.wav");
         vm.textRows.push({
           npcText: vm.curState.npcText,
           pcText: pcOption.text
         });
         vm.curStateName = pcOption.nextState;
-        vm.curState = TutorialService.data[vm.curStateName];
+        vm.curState = tutorialService.data[vm.curStateName];
         delayDialog();
         vm.showingNPCtext = false;
         vm.showingDialogOptions = false;
@@ -57,13 +57,11 @@
       } //end of method
 
       function resetState() {
-        vm.curState = TutorialService.data.start;
+        vm.curState = tutorialService.data.start;
         vm.curStateName = 'start';
       }
 
-
       function delayDialog() {
-
         $timeout.cancel(showTimer);
         showTimer = $timeout(function() {
           vm.showingNPCtext = true;
@@ -74,7 +72,6 @@
         hideTimer = $timeout(function() {
           vm.showingDialogOptions = true;
         }, 2500);
-
       }
 
       function onDestroy() {

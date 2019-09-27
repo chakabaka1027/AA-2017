@@ -5,7 +5,7 @@
 		.directive('awkwardAnnieGame', awkwardAnnieGame);
 
 	/** @ngInject */
-	function awkwardAnnieGame($log) {
+	function awkwardAnnieGame() {
 		return {
 			restrict: 'E',
 			controller: controller,
@@ -14,8 +14,11 @@
 
 	}
 
-	function controller($log) {
+	function controller($scope, mainInformationHandler, dialogOptions ) {
 
+		$scope.main = mainInformationHandler;
+
+		$scope.dialogOptions = dialogOptions;
 	}
-	
+
 })();

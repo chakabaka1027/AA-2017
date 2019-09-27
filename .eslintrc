@@ -3,7 +3,8 @@
   "plugins": ["angular"],
   "env": {
     "browser": true,
-    "jasmine": true
+    "jasmine": true,
+    "es6": true    
   },
   "globals": {
     "angular": true,
@@ -15,6 +16,14 @@
     "moment": true
   },
   "rules":{
-    "no-unused-vars": 1
+    "no-mixed-spaces-and-tabs": 1,
+    "no-unused-vars": 1,
+    "no-cond-assign": 1,
+    "no-constant-condition": 0,
+    "comma-dangle": 1,
+    "no-undef": 1,
+    "angular/controller-name": 0,
+    "angular/typecheck-array": 0,
+    "angular/angularelement": 0
   }
 }

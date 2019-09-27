@@ -22,17 +22,13 @@
 
       updateConversations();
 
-      $scope.$watch(function() {
-        return $scope.main.completedConvos.join(",")
-      }, function() {
+      $scope.$watch(function() {return $scope.main.completedConvos.join(",")}, function() {
         if (Array.isArray($scope.main.completedConvos)) {
           updateConversations();
         }
       });
 
-      $scope.$watch(function() {
-        return $scope.main.levelCount
-      }, function() {
+      $scope.$watch(function() {return $scope.main.levelCount}, function() {
         updateConversations();
       });
 
@@ -57,35 +53,29 @@
                 return true;
               }
             }
-
-
           }
-
         }
         return false;
-
       }
 
       function updateConversations() {
         if (!$scope.main.levelCount) {
           return;
         }
+
+        var nextLevel = levelDataHandler.levels["level_" + $scope.main.levelCount];////TODO !!! NEW CHANGE HERE 
+        if (!nextLevel) {
+          $log.log('reached end of levels...');
+          return;
+        }
+        vm.level = nextLevel;
         vm.roomConversations = {};
-        vm.level = levelDataHandler.levels["level_" + $scope.main.levelCount];
         vm.rooms = vm.level.rooms;
         angular.forEach(vm.roomKeys, function(roomKey) {
           vm.roomConversations[roomKey] = roomHasConversation(roomKey);
         });
       }
-
     }
-
-
   }
-
-
-
-
-
 
 })();

@@ -8,7 +8,6 @@
   function audioService($log, $window) {
 
     var audioFolder = 'assets/sounds/';
-
     var service = {
       audioTags: {},
       playAudio: function(fname) {
@@ -23,9 +22,7 @@
         }
       }
     };
-
     return service;
-
   }
 
 })();

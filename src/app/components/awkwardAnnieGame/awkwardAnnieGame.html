@@ -1,25 +1,15 @@
 <!-- Called awkwardAnnieGame.html -->
-<div class="gameContainer" ng-class="{'chas-flipped': main.flipDialogs}">
-	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
-	<div class="main-pane" click-sound>
+<div class="gameContainer" ng-class="{'chas-flipped': dialogOptions.flipDialogs}">
+  <nav-bar></nav-bar>
+  <div class="main-pane" click-sound>
 
-		<game-manager main="main" room="main.roomKey">
-			<!--
-			<div class="debugContainer">
-				<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Hold</input>
-			</div>
-			-->
+    <game-manager main="main"></game-manager>
 
-		</game-manager>
+    <game-map name="{{ 'level_'+ main.levelCount }}"> {{ gameMap.levels }} </game-map>
 
-		<game-map name="{{ 'level_'+ main.levelCount }}" > {{ gameMap.levels }} </game-map>
-
-
-		<div ng-if="!main.hideDialog" class="conversationContainer">
-			<display-dialog main="main"></display-dialog>
-			<pop-up-dialog-manager main="main"></pop-up-dialog-manager>
-		</div>
-	</div>
+    <div ng-if="!dialogOptions.hideDialog" class="conversationContainer"> 
+      <display-dialog main="main"></display-dialog>
+      <pop-up-dialog-manager main="main"></pop-up-dialog-manager>
+    </div>
+  </div>
 </div>
-
-<!--ng-class="{'chas-flipped': main.flipDialogs}"-->

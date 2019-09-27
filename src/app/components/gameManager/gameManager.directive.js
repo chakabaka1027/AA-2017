@@ -7,22 +7,17 @@
   /** @ngInject */
   function gameManager(charPositionData, animationData, roomData, furnitureData,
     levelDataHandler, mappingService, arrowData, audioService, userDataService, userGameInfo,
-    $location, $log) {
+    $location, $log, mainInformationHandler, dialogOptions) {
 
     var directive = {
       restrict: 'E',
-      // templateUrl: defined in index.route.js file
-      // link: link,
       scope: {
         main: "="
       },
-      controller: controller, //controller for this directive
+      controller: controller,
       controllerAs: 'vm',
       bindToController: true,
       link: link,
-      //template: ['<div class="debugContainer">',
-      //				'<input type="checkbox" ng-model="vm.walkingInfo.allowMouseHold">Allow Mouse Click</input>',
-      //			'</div>'].join("")
       template: ''
     };
     return directive;
@@ -39,14 +34,13 @@
 
       $('html').on('keydown', trackKeys);
 
-      scope.$watch(function() {
-        return ctlr.walkingInfo.walking;
-      }, function() {
+      scope.$watch(function() {return ctlr.walkingInfo.walking;  }, function() {
         if (!ctlr.walkingInfo.walking) {
           elm.off("mousemove", mouseMove);
         }
       })
-
+      mainInformationHandler.reset();
+      mainInformationHandler.nextLevelData();
       scope.$on('$destroy', releaseBindings);
 
       function trackKeys(e) {
@@ -54,7 +48,7 @@
         //    up key        down key         right key    left key
         if (code === 38 || code === 40 || code === 39 || code === 37) {
           ctlr.walkingInfo.wasMouseTriggered = false;
-          ctlr.annie_Walking = true; //set to true when we press on the key - sets to false if off of key ?
+          ctlr.annie_Walking = true;
           ctlr.walkingInfo.walking = true;
           switch (code) {
             case 38:
@@ -70,10 +64,6 @@
               ctlr.walkingInfo.direction = "left";
               break;
           }
-
-          // showArrows = false; //Uncomment if ETS changes mind
-          //annieWalkingCode = code;
-
         }
       }
 
@@ -82,26 +72,18 @@
         if (!ctlr.walkingInfo.allowMouseHold) {
           elm.on("mousemove", mouseMove);
         }
-
         mouseAnchorX = evt.offsetX;
         mouseAnchorY = evt.offsetY;
-
         ctlr.walkingInfo.walking = true;
         ctlr.walkingInfo.wasMouseTriggered = true;
-
         updateWalkDirection();
-
       }
 
-      function mouseUp(evt) {
-
+      function mouseUp() {
         elm.off("mousemove", mouseMove);
-
         if (!ctlr.walkingInfo.allowMouseHold) {
           ctlr.walkingInfo.walking = false;
         }
-
-
       }
 
       function mouseMove(evt) {
@@ -125,13 +107,10 @@
             ctlr.walkingInfo.walking = false;
             return;
           }
-
           var b1 = ya - xa;
           var b2 = ya + xa;
-
           var isAboveLine1 = (ym < xm + b1);
           var isAboveLine2 = (ym < -xm + b2);
-
 
           var udrl;
           if (isAboveLine1 && isAboveLine2) {
@@ -143,10 +122,7 @@
           } else if (!isAboveLine1 && !isAboveLine2) {
             udrl = "down";
           }
-
           ctlr.walkingInfo.direction = udrl;
-
-
         }
       }
 
@@ -156,14 +132,13 @@
         $('html').off("mouseup", mouseUp);
         $('html').off('keydown', trackKeys);
       }
-    }
+    }//end of link
 
     /** @ngInject */
-    function controller($state, $scope, $timeout, $window) { //needs to be inside gameManager and have inject before
+    function controller($state, $scope, $timeout) {
       var vm = this;
-
       var myCanvas;
-      var currentRoomKey = vm.main.roomKey;
+      var currentRoomKey = mainInformationHandler.roomKey;
       var arrowDelay = 1250;
       var annie_Talking = false;
       var annieFaceOtherWay = false;
@@ -175,21 +150,14 @@
         annieStartY;
       var showArrows = false;
       var timerPromise;
-      var showNPCDialogBubble = false;
       var bubbleHeight = 150;
       var conversationResetBubble;
       var lastCharCollidedInto = null;
       var pointsBubble;
       var showPointsBubble = false;
-      // Data
-      var levelRequiredConvos,
-        convoMean,
-        convoCounter;
-      // sounds
-      var doorTransitionSound,
-        successfulConvo,
-        unsuccessfulConvo;
-
+      var roomEntryCount = 0;
+      var levelRequiredConvos;
+      var doorTransitionSound;
       vm.anniePosition = {
         x: 0,
         y: 0
@@ -201,51 +169,15 @@
         wasMouseTriggered: false,
         allowMouseHold: true
       };
-
-
       vm.flipDialogs = (userDataService.userID === 'flip');
 
-
-      // vm.main.beginingOfLevel2 = false; //used for ets's level transition comment
-
-      //window.keyUp
-
-
       $scope.$on('$destroy', function() {
-        $('html').off('keydown'); //removes event listeners for key down
+        $('html').off('keydown');
         myp5.remove();
-        if (timerPromise) { //make sure timer is destroyed with the room
+        if (timerPromise) {
           $timeout.cancel(timerPromise);
         }
       });
-
-      $scope.$watch(function() {
-        return vm.main.levelCount;
-      }, function(newVal, oldVal) { // need to redraw arrows after each convo
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_Setup", vm.main.levelCount, "0/3/5");
-        levelRequiredConvos = vm.main.arrayToString(vm.main.levelConvosNeeded);
-        userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Game_State", levelRequiredConvos);
-
-        if (vm.main.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/
-          userDataService.trackAction("Game end", vm.main.roomKey, "Game_End", vm.main.playerScore, "0");
-          userDataService.postData(); //end game post data, after conversation is done
-          userGameInfo.playerScore = vm.main.playerScore;
-          userGameInfo.totalConvos = vm.main.completedConvos.length;
-          $timeout(function() {
-            $state.go("endScreen");
-            //$location.path("/endScreen");
-          }, 1000);
-        }
-        if (currentRoom && newVal != oldVal) { //make sure there's a room before you check and draw the appropriate guiding arrows
-          currentRoom.getDoorStatus();
-        }
-      });
-
-
-
-      /*===================================================================
-      	Controller Functions
-      ===================================================================*/
 
       function resetArrowTimer() {
         if (timerPromise) {
@@ -257,26 +189,19 @@
       }
 
       function trackRoomEntry() {
-          /*========== Tracking Room Enter ===================================*/
           var talkingNPCs = [], npcNames = [];
-          for (var spriteName in vm.main.roomData) {
-            console.log("--"+spriteName);
+          for (var spriteName in mainInformationHandler.roomData) {
             if (checkRoomDialogs(spriteName)) {
               talkingNPCs.push(spriteName);
               npcNames.push(spriteName);
             }
           }
-          userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "Room_Enter", npcNames, talkingNPCs.join(' '));
+          userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Room_Enter", npcNames, talkingNPCs.join(' '));
           userDataService.postData(); //room change, post data
       }
-
-      //scope. wtach (watch what - i this case new val and old val ){}
-
-
-
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      	P5 SKETCH STARTS HERE:
-      	creates a room with the appropriate characters, furniture and npcs
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        P5 SKETCH STARTS HERE:
+        creates a room with the appropriate characters, furniture and npcs
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       var currentRoom = function(room) { //room is just myp5
         var bg;
@@ -291,65 +216,19 @@
           maxWidth = 905,
           minHeight = 100,
           maxHeight = 420;
-        //UI
-        var dialogUpArrow, dialogDownArrow, dialogLeftArrow, dialogRightArrow;
-        var upArrow, downArrow, leftArrow, rightArrow;
         var npcHasDialogBubble;
-        var emptyBubble;
         var arrowImages;
-        var thoughtBubbleImages;
         var doorArrows = {};
         var npcSprites = [];
-
         levelRequiredConvos = "";
         showArrows = false;
 
+        $log.log('ROOM ENTRY (currentRoom constructor)', roomEntryCount);
 
-
-
-        //
-        // $scope.$watch(function(){ return vm.main.hideDialog;}, function(newVal, oldVal) {
-        //   $log.log( "is annie talking?"+ annie_Talking);
-        //
-        //   if (newVal && !oldVal) {
-        //     $log.log("new value is "+ newVal +"and not old val"+ !oldVal);
-        //     if (annie_Talking) {
-        //       showArrows = false;
-        //       if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
-        //         $timeout(function() {
-        //           conversationResetBubble.visible = false;
-        //           resetArrowTimer();
-        //         }, 2000);
-        //         //inside the ifSttetment - resetBubble is inside createroom
-        //         resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
-        //
-        //       } else { //if convo was successful
-        //         showPointsBubble = true;
-        //         $timeout(function() {
-        //           showPointsBubble = false;
-        //
-        //           /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-        //           if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
-        //             vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
-        //             vm.main.nextLevelData();
-        //           }
-        //
-        //         }, 2000);
-        //         resetArrowTimer();
-        //       }
-        //     }
-        //      annie_Talking = false;
-        //   }
-        // });
-
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	Preload
-        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.preload = function() {
-          bg = room.loadImage(currentRoomData.bg); //Background changes based on room
-          // Sounds
+          $log.log('ROOM ENTRY (room.preload)', roomEntryCount);
+          bg = room.loadImage(currentRoomData.bg);
           doorTransitionSound = room.loadSound("assets/sounds/SceneTransition.wav");
-          // ui images
           arrowImages = {
             dialogUpArrow: room.loadImage("assets/images/UI/arrow-up-conv.png"),
             dialogDownArrow: room.loadImage("assets/images/UI/arrow-dn-conv.png"),
@@ -364,57 +243,48 @@
           pointsBubble = room.loadImage("assets/images/UI/PointsBubble.png");
 
         };
-
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	Setup
-        		creates canvas
-        		sets up all appropriate chracters in the room for the current level
-        		adds animations after creating a character sprite
-        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             Setup - creates canvas - sets up all appropriate chracters in the room for the current level
+                        - adds animations after creating a character sprite
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         room.setup = function() {
-
+          roomEntryCount += 1;
+          $log.log('ROOM ENTRY (room.setup)', roomEntryCount);
           room.frameRate(30);
           myCanvas = room.createCanvas(950, 500);
-
-          // ************* this is where the canvas element gets attached to the DOM
-          myCanvas.parent(angular.element.find("game-manager")[0]); // equivalent of $($element)[0]);
-          // *************
-
-          setFurniture(currentRoomData); //Set up furniture based on
+          myCanvas.parent(angular.element.find("game-manager")[0]);
+          setFurniture(currentRoomData);
           resetArrowTimer();
-
-          /*==================================================================================
-          	Create characters and add animations
-          ==================================================================================*/
-
+          //Create characters and add animations
           npcSprites = [];
-          for (var spriteName in vm.main.roomData) {
-            var spriteInfo = positionData[spriteName][currentRoomKey];
-            if (angular.isUndefined(vm.main.convoCounter[spriteName])) {
-              vm.main.convoCounter[spriteName] = 0;
+        $log.log("--------->",positionData['fran']['lobby']);
+          for (var spriteName in mainInformationHandler.roomData) { //TODO this whole issue was because it is was capital letter smh- seriosly!!!
+            //charecters are capiral while here they need to be lower as sprite names
+            $log.log("--------->", spriteName);
+
+            /////////////
+            // TODO add some code here to handle position info from dialogInfo
+            /////////////
+            var spriteInfo = positionData[spriteName.toLowerCase()][currentRoomKey]; //is this for all other sprites
+
+            if (angular.isUndefined(mainInformationHandler.convoCounter[spriteName])) {
+              mainInformationHandler.convoCounter[spriteName] = 0;
             }
             var npcSprite = room.createSprite(spriteInfo.startLeftX, spriteInfo.startLeftY);
-            npcSprite.name = spriteName;
+            npcSprite.name = spriteName;//TODO here
             npcSprite.setCollider("rectangle", spriteInfo.colliderXoffset, spriteInfo.colliderYoffset, spriteInfo.colliderWidth, spriteInfo.colliderHeight);
-            addAnimations(animationData[spriteName], npcSprite);
+            addAnimations(animationData[spriteName.toLowerCase()], npcSprite);//TODO not sure if it is needed as upper anywhere else ? if not make it to lower when parsing instead of here
             if (spriteInfo.mirror) {
               npcSprite.mirrorX(-1);
             }
             npcSprites.push(npcSprite);
-            // npcSprite.debug = true; //show collider box
           }
-
-          /*====================
-          		Create Annie
-          ======================*/
+          //Create Annie
           annieSprite = room.createSprite(annieStartX, annieStartY);
           annieSprite.setCollider("rectangle", positionData.annie.colliderXoffset, positionData.annie.colliderYoffset, positionData.annie.colliderWidth, positionData.annie.colliderHeight);
-          // annieSprite.debug = true;
           addAnimations(animationData.annie, annieSprite);
           annieSprite.position.x = positionData.annie.startingX;
           annieSprite.position.y = positionData.annie.startingY;
-
-          //fix annie's position after she goes through a door
           if (newRoom && newRoom != previousRoom) {
             var roomEntrance = charPositionData.annie[previousRoom][newRoom];
             annieSprite.position.x = roomEntrance.x;
@@ -424,71 +294,24 @@
               annieSprite.mirrorX(-1);
             }
           }
-
           conversationResetBubble = room.createSprite(annieSprite.position.x, annieSprite.position.y);
           conversationResetBubble.addAnimation("reset", "assets/images/ResetBubbleAnimations/ResetAnimation01.png", "assets/images/ResetBubbleAnimations/ResetAnimation12.png");
           conversationResetBubble.visible = false;
-          /*does next room have dialog, need this data whenever a door is entered*/
-
           getDoorStatus();
-          //doorTransitionSound.setVolume(0.05);
-
           doorTransitionSound.play();
-
         }; //end of setup
-
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        	Draw
-        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            /*~~~~~~~~~~~~~~~~~~~~~~~~ main draw loop ~~~~~~~~~~~~~~~~~~~~~~*/
         room.draw = function() {
-
           room.background(bg);
-
           collisionswithFurniture(annieSprite, furniture);
-          // Set door collision checks seperately
           for (var i in npcSprites) {
-            annieSprite.collide(npcSprites[i], dialogTriggered);
+            annieSprite.collide(npcSprites[i], handleCharacterCollision);
           }
-
-          // Big step
-          // replace with something like...
-
-          if (vm.main.hideDialog) { //annie not talking
-            if (annie_Talking) {
-              showArrows = false;
-              if (!vm.main.lastConversationSuccessful) { //make reset sprite visible
-                $timeout(function() {
-                  conversationResetBubble.visible = false;
-                  resetArrowTimer();
-                }, 2000);
-                //inside the ifSttetment
-                resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
-
-              } else { //if convo was successful
-                showPointsBubble = true;
-                $timeout(function() {
-                  showPointsBubble = false;
-
-                  /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-                  if (vm.main.areDialogsCompleted(vm.main.levelConvosNeeded, vm.main.completedConvos)) { //is player done with all convos in the level
-                    vm.main.levelCount += 1; /* if(vm.main.levelCount === 2){ vm.main.beginingOfLevel2  = true; } Uncomment if ets wants transition to conference room*/
-                    vm.main.nextLevelData();
-                  }
-
-                }, 2000);
-                resetArrowTimer();
-              }
-            }
-            annie_Talking = false;
-          }
-
-          // if there's a room on the lower right
           if (currentRoomKey === "mikesOffice" || currentRoomKey === "conferenceRoom" || currentRoomKey === "lobby") {
             if (annieSprite.position.x >= 700 && annieSprite.position.x <= 840 && annieSprite.position.y > 419) {
               handleDoorCollision("lower_right_door");
             }
           }
-
           if (currentRoomKey === "conferenceRoom") {
             if (annieSprite.position.x >= 125 && annieSprite.position.x <= 180 && annieSprite.position.y > 419) {
               handleDoorCollision("lower_left_door");
@@ -496,65 +319,28 @@
           }
           AnnieController();
           drawFurnitureBehind();
-          drawNPCs();
-
-          // drawNPCsBehind();
-
-          /*=================== Draw UI elements ===============================================*/
-          //If annie is !walking, !talking, start timer
+          drawNPCsBehind();
           if (showArrows) {
             drawDoorArrows();
           }
-          /*=================== Draw NPC dialog bubble===============================================*/
-          npcSprites.forEach(function(character) {
-            console.log("charecter inside for each "+character.name );
-            if (checkRoomDialogs(character.name)) {
-              if (character !== lastCharCollidedInto && !showPointsBubble) { //always draw bubble
-                drawBubble(character);
-              } else if (character === lastCharCollidedInto && !conversationResetBubble.visible && !showPointsBubble) { //if bubble is already drawn, skip bubble
-                drawBubble(character);
-              }
-            }
-          });
-          if (showPointsBubble) { // draw bubble
-            drawPointsBubble(vm.main.totalConvoPoints, lastCharCollidedInto); //lastCharCollidedInto
-          }
-
-          room.drawSprite(annieSprite); //Put annie at z-index 100, draw sprites after to make them apear above Annie
-
-          // drawNPCsInFront();
+          manageBubble();
+          room.drawSprite(annieSprite);
+          drawNPCsInFront();
           drawFurnitureInFront();
           if (conversationResetBubble.visible) {
             room.drawSprite(conversationResetBubble);
           }
-
           vm.anniePosition = annieSprite.position;
           vm.updateWalkDirection();
+        }; //end of main draw loop
 
-        }; //end of draw function
 
-
-        function resetBubble(xVal, yVal, boolVal){
-          conversationResetBubble.position.x =xVal + 5;
-          conversationResetBubble.position.y = yVal - 140;
-          conversationResetBubble.visible = boolVal;
-
-        }
-
-        /*=================== Check when key is released and stop walking ===============================================*/
-        room.keyReleased = function(event) {
+        room.keyReleased = function() {
           vm.annie_Walking = false;
           vm.walkingInfo.walking = false;
         };
 
-        function AnnieController(){          //rename it - testing
-
-          moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ); //declared it out of scope hence sending them - also no need for set up ? works without it ( left it in incase it breaks anything )
-          moveAnnie(walking_Speed);
-
-        }
-
-
+      /*==================================  bubble functions    =========================================*/
         function drawFurnitureInFront() {
           furniture.forEach(function(item) {
             if (item.data.position.y > annieSprite.position.y && item.canDrawOnTop) {
@@ -568,12 +354,6 @@
             if (item.data.position.y < annieSprite.position.y || !item.canDrawOnTop) {
               room.drawSprite(item.data);
             }
-          });
-        }
-
-        function drawNPCs() {
-          npcSprites.forEach(function(sprite) {
-            room.drawSprite(sprite);
           });
         }
 
@@ -592,37 +372,6 @@
             }
           });
         }
-
-        //position and create furniture, need to use room so function has to be in a different scope
-        function setFurniture(currentRoom) {
-          for (var item in currentRoom.furniture) {
-            var currentObj = currentRoom.furniture[item];
-            var furnitureSprite = {}; //object to hold name as well as collision info
-            furnitureSprite.canDrawOnTop = currentObj.canDrawOnTop;
-            furnitureSprite.name = item; //Add a name to the furniture object to make it easier when checking for collisions
-            // Add sprite data
-            furnitureSprite.data = room.createSprite(currentObj.posX, currentObj.posY);
-            furnitureSprite.data.setCollider("rectangle", currentObj.collider_X_offset, currentObj.collider_Y_offset, currentObj.collider_width, currentObj.collider_height);
-            furnitureSprite.data.addAnimation(item, furnitureData[item]); //gets image here
-            if (currentObj.mirror) {
-              furnitureSprite.data.mirrorX(-1);
-            }
-            // furnitureSprite.data.debug = true;
-            furniture.push(furnitureSprite);
-          }
-        }
-
-        function getDoorStatus() {
-          angular.forEach(mappingService[vm.main.roomKey], function(linkingRoom, doorKey) {
-            var markDoor = false;
-            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + vm.main.levelCount, linkingRoom);
-            if (!vm.main.areDialogsCompleted(roomDialogs, vm.main.completedConvos)) {
-              markDoor = true;
-            }
-            doorArrows[doorKey] = markDoor;
-          });
-        }
-
         function drawDoorArrows() {
           for (var doorKey in doorArrows) {
             var arrowType;
@@ -634,8 +383,41 @@
             room.image(arrowImages[arrowType], arrowData[doorKey].x, arrowData[doorKey].y);
           }
         }
+            /*  ~~~~~~~~~~~~~~ set up ~~~~~~~~~~~~~~~~*/
+        function setFurniture(currentRoom) {
+          for (var item in currentRoom.furniture) {
+            var currentObj = currentRoom.furniture[item];
+            var furnitureSprite = {};
+            furnitureSprite.canDrawOnTop = currentObj.canDrawOnTop;
+            furnitureSprite.name = item;
+            furnitureSprite.data = room.createSprite(currentObj.posX, currentObj.posY);
+            furnitureSprite.data.setCollider("rectangle", currentObj.collider_X_offset, currentObj.collider_Y_offset, currentObj.collider_width, currentObj.collider_height);
+            furnitureSprite.data.addAnimation(item, furnitureData[item]);
+            if (currentObj.mirror) {
+              furnitureSprite.data.mirrorX(-1);
+            }
+            furniture.push(furnitureSprite);
+          }
+        }
+        /*  ~~~~~~~~~~~~~~ get status  ~~~~~~~~~~~~~~~~*/
 
-        function drawBubble(characterSprite) { //draw NPC has dialog image bubble
+        function getDoorStatus() {
+            angular.forEach(mappingService[mainInformationHandler.roomKey], function(linkingRoom, doorKey) {
+            var markDoor = false; //this one sends in the wrong info ?//TODO check here
+            // console.log("{{=====}}",linkingRoom); //gave me all rooms correct
+            // console.log("{{{=====}}}",levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom));
+            var roomDialogs = levelDataHandler.getRoomDialogs("level_" + mainInformationHandler.levelCount, linkingRoom);
+            if (!mainInformationHandler.areDialogsCompleted(roomDialogs)) {//, mainInformationHandler.completedConvos
+              markDoor = true;
+            }
+            doorArrows[doorKey] = markDoor;
+          });
+
+        }
+  /*==================================  bubble functions    =========================================*/
+
+        function drawBubble(characterSprite) {
+          // console.log("-----> draw bubble was called");
           room.image(npcHasDialogBubble, characterSprite.position.x - 40, characterSprite.position.y - characterSprite.height - bubbleHeight);
         }
 
@@ -648,177 +430,38 @@
           room.fill(0, 102, 153); //color for text
           room.text(points + " Points", x, y, 95, 90);
         }
+
+        function manageBubble(){
+          npcSprites.forEach(function(character) {
+            if (checkRoomDialogs(character.name)) {
+              if (character !== lastCharCollidedInto && !showPointsBubble) {
+                drawBubble(character);
+              } else if (character === lastCharCollidedInto && !conversationResetBubble.visible && !showPointsBubble) {
+                drawBubble(character);
+              }
+            }
+          });
+          if (showPointsBubble) {
+            drawPointsBubble(mainInformationHandler.totalConvoPoints, lastCharCollidedInto);
+          }
+        }
+
+        function AnnieController(){
+          moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth );
+          moveAnnie(walking_Speed);
+        }
+
       }; //end of current room object
 
       var lastGoodAnniePos = {x:0,y:0};
 
-      var myp5 = new p5(currentRoom); // Create p5 object
+      var myp5 = new p5(currentRoom);
       trackRoomEntry();
 
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      	No room/p5 dependencies but need to happen after the p5 object is defined ^
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-      /*=============== add all animations: Parameters(character definition from the char animation service, global characterSprite) ============== */
-      function addAnimations(characterDefinition, characterSprite) {
-        for (var animationKey in characterDefinition.animations) {
-          var frames = [animationKey];
-          frames = frames.concat(characterDefinition.animations[animationKey]);
-          characterSprite.addAnimation.apply(characterSprite, frames);
-        }
-      }
-      /*================================== Check for collisions with furniture =========================================*/
-      function collisionswithFurniture(sprite, furnitureList) {
-        var hasCollidedWithNonDoor = false;
-        angular.forEach(furnitureList, function(furnitureItem) {
-          sprite.collide(furnitureItem.data, function() {
-            $log.log('bump '+furnitureItem.name);
-            vm.walkingInfo.walking = false;
-            if (furnitureItem.name.indexOf('_door')>=0) {
-              handleDoorCollision(furnitureItem.name);
-            } else {
-              hasCollidedWithNonDoor = true;
-            }
-          }); //collide(sprite,function)
-        });
-        if (!hasCollidedWithNonDoor) {
-          lastGoodAnniePos.x = annieSprite.position.x;
-          lastGoodAnniePos.y = annieSprite.position.y;
-        } else {
-          annieSprite.position.x = lastGoodAnniePos.x;
-          annieSprite.position.y = lastGoodAnniePos.y;
-        }
-      }
-      /*================================== If collided with a door =========================================*/
-      // If collided with a door, then load level and check game stats
-      function handleDoorCollision(furnitureItem) {
-          console.log("collided with "+ furnitureItem);
-          var getNextRoom = mappingService[currentRoomKey][furnitureItem];
-          previousRoom = currentRoomKey;
-          createRoom(getNextRoom);
-      }
-      /*================================== Create Room Function =========================================*/
-      function createRoom(roomKey) {
-        myp5.remove(); //this is the culprit, moving this into a timer creates more than 1 canvas
-        $timeout(function() {
-          // currentRoomKey = vm.main.roomKey; //To be set by the level manager
-          vm.walkingInfo.walking = false;
-          newRoom = roomKey;
-          currentRoomKey = vm.main.roomKey = roomKey;
-          currentRoomData = roomData[roomKey];
-          vm.main.setRoomData(roomKey);
-          myp5 = new p5(currentRoom);
-          trackRoomEntry();
-        }, 500);
-        vm.main.beginingOfLevel2 = false;
-      }
 
-      // Show dialog
-      function dialogTriggered(spriteA, spriteB) {
-        vm.walkingInfo.walking = false;
+        /*================================== Annie helper functions   =========================================*/
 
-        var characters = vm.main.roomData;
-        lastCharCollidedInto = spriteB;
-        if (conversationResetBubble.visible) { //&& spriteB === lastCharCollidedInto
-          return;
-        }
-        if (characters && characters[spriteB.name]) { // if character exists
-          var character = characters[spriteB.name];
-
-          //flip annie and npc inset position depending on the direction annie talks to npc
-          if (annieSprite.position.x > spriteB.position.x) {
-            vm.main.flipDialogs = false;
-
-          } else {
-            vm.main.flipDialogs = true;
-
-          }
-
-          if (character.dialogKey && !annie_Talking) {
-            var numOfNPCConvos = vm.main.convoCounter[spriteB.name] += 1;
-            vm.main.convoAttemptsTotal += 1;
-            if (vm.main.completedConvos.indexOf(character.dialogKey) >= 0) { //if already completed a convo
-              if (character.secondConvo && vm.main.completedConvos.indexOf(character.secondConvo.dialogKey) < 0) { // if there's a second conversation and hasn't been completed
-                vm.main.currentConversation = character.secondConvo.dialogKey;
-                vm.main.talkingWith = spriteB.name;
-                vm.main.hideDialog = false;
-                annie_Talking = true;
-                //EXAMPLE DATA TRACK
-                userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "NPC_State", spriteB.name); //vm.main.convoCounter[spriteB.name]
-                userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_start", vm.main.currentConversation);
-              }
-            } else { //if first convo
-              vm.main.setConversation(spriteB.name);
-              vm.main.hideDialog = false;
-              annie_Talking = true;
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "NPC_State", spriteB.name); //vm.main.convoCounter[spriteB.name]
-              userDataService.trackAction(vm.main.levelCount, vm.main.roomKey, "convo_start", vm.main.currentConversation);
-            }
-          }
-        } else { //if character doesn't exist doesn't don't do anything
-          return;
-        }
-        if (annie_Talking) {
-          if (timerPromise) {
-            $timeout.cancel(timerPromise);
-          }
-        }
-
-        vm.main.setRoomData(currentRoomKey);
-        $scope.$apply(); //In case html isn't updating and variable is
-      }
-//issue happens here
-      function checkRoomDialogs(character) {
-        var characterDialog = vm.main.roomData[character]; //charecter send is undefined .fran is undefined
-        // console.log("charecter is "+ character );     //gives error but game is incridibly slow
-        if (characterDialog && characterDialog.dialogKey) {
-          if (vm.main.completedConvos.indexOf(characterDialog.dialogKey) >= 0) {
-            if (characterDialog.secondConvo && vm.main.completedConvos.indexOf(characterDialog.secondConvo.dialogKey) < 0) {
-              showNPCDialogBubble = true;
-              return true;
-            }
-          } else { //if first convo
-            showNPCDialogBubble = true;
-            return true;
-          }
-        } else {
-          return false;
-        }
-      }
-
-      $scope.$watch(function() {
-        return showPointsBubble;
-      }, function(newVal, oldVal) {
-        if (newVal != oldVal) {
-          currentRoom.drawPointsBubble(vm.main.totalConvoPoints, lastCharCollidedInto);
-        }
-      });
-      // Want to play correct sounds after the player clicks coninue, so it doesn't play over animation sounds
-      // It works for the first conversation, and then gives me an error for the rest
-      $scope.$watch(function() {
-        return vm.main.hideDialog
-      }, function(newVal, oldVal) { //except for initialization
-        if (currentRoom) {
-          if (vm.main.hideDialog !== oldVal && newVal) { //don't play when it opens
-            vm.main.playerScore += vm.main.totalConvoPoints; //update score
-
-            switch (vm.main.lastConversationSuccessful) {
-              case true:
-                audioService.playAudio("UIrightanswer.wav");
-                break;
-              case false:
-                audioService.playAudio("UIwronganswer.wav");
-                break;
-
-            }
-          }
-        }
-      });
-//////*****************************  new functions     *************************************/////////
-//////*****************************  &helper functions  ************************************/////////
-//////******************************** related to annie only - *****************************************************/////////
-
-      //new helper functions - to declutter
-      function moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ){  //commented doesnt look like its being needed - but if it is used and setUpWALLKING BOOLIAN IS NT ON - stops annie from moving
+      function moveAnnieSetUp(minHeight, maxHeight, minWidth, maxWidth ){
 
         if (annieSprite.position.y < minHeight) {
             annieSprite.position.y += 3;
@@ -833,32 +476,29 @@
             annieSprite.position.x -= 3;
             setupAnnieWalkingBoolian();
         }
-        //since this happens in evry statmen why not add them in the end - logical error doesn't work // vm.annie_Walking = false;  // vm.walkingInfo.walking = false;// coppying this here stops annie from moving - is something setting it to true ?
-    }//end of move annie
-
-      function setupAnnieWalkingBoolian(){//would refactor this but it would create more conditions to be checked  - not sure if it would benifit us //      function setupAnnieWalkingBoolian(xValue, yValue, isWalking){//would refactor this but it would create more conditions to be checked  - not sure if it would benifit us
+    }
+      function setupAnnieWalkingBoolian(){
         vm.annie_Walking = false;
         vm.walkingInfo.walking = false;
       }
 
-      function moveAnnie(walking_Speed){ //this is still ugly -- check if it is being called anywhere else( maybe where we check left.right/up --- ) -
+      function moveAnnie(walking_Speed){
         if (vm.walkingInfo.walking && !annie_Talking) {
           resetArrowTimer();
-
-          if (vm.walkingInfo.direction === "left") { //walk left //paramaters - animation, mirrot value - x vel and y vel
-              moveAnnieManagment( "walkingSide",  1, -walking_Speed, 0 ); //odd sending a -v value like this didnt give me an error ? js...
+          if (vm.walkingInfo.direction === "left") { //walk left
+              moveAnnieManagment( "walkingSide",  1, -walking_Speed, 0 );
           } else if (vm.walkingInfo.direction === "right") { //walk right
               moveAnnieManagment( "walkingSide",  -1, walking_Speed, 0 );
-          } else if (vm.walkingInfo.direction === "up") { //walk up, away from the player
+          } else if (vm.walkingInfo.direction === "up") { //walk up
               moveAnnieManagment( "walkingUp",  0, 0, -walking_Speed );
-          } else if (vm.walkingInfo.direction === "down") { //walk down, towards the player
+          } else if (vm.walkingInfo.direction === "down") { //walk down
               moveAnnieManagment( "walkingDown",  0, 0, walking_Speed );
           }
-        } else if (!vm.walkingInfo.walking) { //if not walking or out of bounds, draw standing image
+        } else if (!vm.walkingInfo.walking) {
 
             if (vm.walkingInfo.direction === "left") {
-                moveAnnieManagment( "standingSide",  1, 0, 0 ); //not sure if this is a better way or not - adds more lines but it is written - or add a new funciton that does just this-
-            } else if (vm.walkingInfo.direction === "right") {//os this being called anywhere else - ?
+                moveAnnieManagment( "standingSide",  1, 0, 0 );
+            } else if (vm.walkingInfo.direction === "right") {
                 moveAnnieManagment( "standingSide",  -1, 0, 0 );
             } else if (vm.walkingInfo.direction === "up") {
                 moveAnnieManagment( "standingUp",  0, 0, 0 );
@@ -870,7 +510,7 @@
                 annieSprite.mirrorX(-1);
               }
             }
-        }//end of else if
+        }
       }
 
       function moveAnnieManagment( animation,  mirrorValue, Xvelocity, yVelocity ){
@@ -881,6 +521,219 @@
         annieSprite.velocity.x = Xvelocity;
         annieSprite.velocity.y = yVelocity;
       }
+      /*=============== add all animations: Parameters(character definition from the char animation service, global characterSprite) ============== */
+      function addAnimations(characterDefinition, characterSprite) {
+        //characterDefinition undefined
+        // console.log("-----> characterDefinition ",characterDefinition );
+        for (var animationKey in characterDefinition.animations) {
+          // console.log("-----> animaion key",animationKey );
+          var frames = [animationKey];
+          frames = frames.concat(characterDefinition.animations[animationKey]);
+          characterSprite.addAnimation.apply(characterSprite, frames);
+        }
+      }
+
+      /*================================== collision functions   =========================================*/
+      function collisionswithFurniture(sprite, furnitureList) {
+        var hasCollidedWithNonDoor = false;
+        angular.forEach(furnitureList, function(furnitureItem) {
+          sprite.collide(furnitureItem.data, function() {
+            vm.walkingInfo.walking = false;
+            if (furnitureItem.name.indexOf('_door')>=0) {
+              handleDoorCollision(furnitureItem.name);
+            } else {
+              hasCollidedWithNonDoor = true;
+            }
+          });
+        });
+        if (!hasCollidedWithNonDoor) {
+          lastGoodAnniePos.x = annieSprite.position.x;
+          lastGoodAnniePos.y = annieSprite.position.y;
+        } else {
+          annieSprite.position.x = lastGoodAnniePos.x;
+          annieSprite.position.y = lastGoodAnniePos.y;
+        }
+      }
+
+      function handleDoorCollision(furnitureItem) {
+          var getNextRoom = mappingService[currentRoomKey][furnitureItem];
+          previousRoom = currentRoomKey;
+          createRoom(getNextRoom);
+      }
+      /*================================== Create Room Function =========================================*/
+      function createRoom(roomKey) {
+        myp5.remove();
+        myp5 = null;
+        $timeout(function() {
+          vm.walkingInfo.walking = false;
+          newRoom = roomKey;
+          currentRoomKey = mainInformationHandler.roomKey = roomKey;
+          currentRoomData = roomData[roomKey];
+          mainInformationHandler.setRoomData(roomKey);
+          myp5 = new p5(currentRoom);
+          trackRoomEntry();
+        }, 500);
+        // vm.main.beginingOfLevel2 = false;
+      }
+
+      /*================================== dialog functions   =========================================*/
+
+      function handleCharacterCollision(spriteA, spriteB) {
+        vm.walkingInfo.walking = false;
+        var characters = mainInformationHandler.roomData;
+        if (!characters) { return; }
+        lastCharCollidedInto = spriteB;
+        if (conversationResetBubble.visible) {
+          return;
+        }
+        var dialogKey =  getNextConversationKey(spriteB.name);
+        // console.log("(===========annie_Talking)",annie_Talking);
+        var character = characters[spriteB.name];
+        if (!character || !dialogKey) { return; }
+
+        if (dialogKey && !annie_Talking) {
+          mainInformationHandler.convoAttemptsTotal += 1;
+          mainInformationHandler.currentConversation = dialogKey;
+          dialogOptions.talkingWith = spriteB.name;
+          dialogOptions.hideDialog = false;
+        }
+
+        $log.log('I think we\'re talking');
+
+        annie_Talking = true;
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "NPC_State", spriteB.name); //mainInformationHandler.convoCounter[spriteB.name]
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "convo_start", mainInformationHandler.currentConversation);
+
+        if (annieSprite.position.x > spriteB.position.x) {
+          vm.main.flipDialogs = false;
+        } else {
+          vm.main.flipDialogs = true;
+        }
+
+        if (annie_Talking) {
+          if (timerPromise) {
+            $timeout.cancel(timerPromise);
+          }
+        }
+
+        mainInformationHandler.setRoomData(currentRoomKey);
+        $scope.$apply();
+      }
+
+      function getNextConversationKey(character){
+        // console.log("(===========)",character);
+
+        if(angular.isUndefined(mainInformationHandler.roomData)){
+          return "";
+        }
+        var characterDialog = mainInformationHandler.roomData[character];
+          if (characterDialog && characterDialog.dialogInfo) {
+
+          for(var i = 0; i < characterDialog.dialogInfo.length ; i++ ){
+            if(!characterDialog.dialogInfo[i].key){
+              return "";
+            }
+            if (mainInformationHandler.completedConvos.indexOf(characterDialog.dialogInfo[i].key)<0){
+              // $log.log(character+' you need '+characterDialog.dialogInfo[i].dialogKey, i, characterDialog.dialogInfo[i]);
+              return characterDialog.dialogInfo[i].key;
+            }
+          }//END of for loop
+        }
+        return "";
+
+
+      }
+
+      function checkRoomDialogs(character) {
+        // console.log("(==== New getNextConversationKey)",getNextConversationKey(character));
+        // console.log("(==== New character)",character);
+
+        return (getNextConversationKey(character)!=="");
+      }
+
+      function resetBubble(xVal, yVal, boolVal){
+        conversationResetBubble.position.x =xVal + 5;
+        conversationResetBubble.position.y = yVal - 140;
+        conversationResetBubble.visible = boolVal;
+
+      }
+
+
+      $log.log('controller adding watches...', roomEntryCount);
+
+      /*================================== watchers  =========================================*/
+
+      $scope.$watch(function() {return showPointsBubble;  }, function(newVal, oldVal) {
+        if (newVal != oldVal) {
+          currentRoom.drawPointsBubble(mainInformationHandler.totalConvoPoints, lastCharCollidedInto);
+        }
+      });
+      $scope.$watch(function() {return dialogOptions.hideDialog;  }, function(newVal, oldVal) {
+        if (currentRoom) {
+          if (dialogOptions.hideDialog !== oldVal && newVal) {
+            mainInformationHandler.playerScore += mainInformationHandler.totalConvoPoints;
+            switch (mainInformationHandler.lastConversationSuccessful) {
+              case true:
+                audioService.playAudio("UIrightanswer.wav");
+                break;
+              case false:
+                audioService.playAudio("UIwronganswer.wav");
+                break;
+            }
+          }
+        }
+      });//end of watch
+
+      $scope.$watch(function(){ return dialogOptions.hideDialog;}, function(newVal, oldVal) {
+        if (newVal && !oldVal) {
+          if (annie_Talking) {
+            showArrows = false;
+            if (!mainInformationHandler.lastConversationSuccessful) {
+              $timeout(function() {
+                conversationResetBubble.visible = false;
+                resetArrowTimer();
+              }, 2000);
+              resetBubble(lastCharCollidedInto.position.x,lastCharCollidedInto.position.y , true );
+            } else {
+              showPointsBubble = true;
+              $timeout(function() {
+                showPointsBubble = false;
+                /* ~~~~~~~~~~~~~~~~~~~~~~ LEVEL CHECK ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+                if (mainInformationHandler.areDialogsCompleted(mainInformationHandler.levelConvosNeeded)) {//, mainInformationHandler.completedConvos
+                      mainInformationHandler.levelCount += 1;
+                  if(  mainInformationHandler.levelCount <= levelDataHandler.maxLevel ){
+                    mainInformationHandler.nextLevelData();
+                  }
+                }
+              }, 2000);
+              resetArrowTimer();
+            }
+          }
+           annie_Talking = false;
+        }
+      });
+
+//TODO is it ok to move this here - ? from what I can see there isnt anything much but a small delay after winning the game --
+      $scope.$watch(function() { return mainInformationHandler.levelCount;}, function(newVal, oldVal) {
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_Setup", mainInformationHandler.levelCount, "0/3/5");
+        // levelRequiredConvos = vm.main.arrayToString(mainInformationHandler.levelConvosNeeded);
+        levelRequiredConvos = mainInformationHandler.levelConvosNeeded;
+        levelRequiredConvos.toString();
+        userDataService.trackAction(mainInformationHandler.levelCount, mainInformationHandler.roomKey, "Game_State", levelRequiredConvos);
+        if (mainInformationHandler.levelCount > levelDataHandler.maxLevel) { /* END GAME CHECK*/
+          userDataService.trackAction("Game end", mainInformationHandler.roomKey, "Game_End", mainInformationHandler.playerScore, "0");
+          userDataService.postData();
+          userGameInfo.playerScore = mainInformationHandler.playerScore;
+          userGameInfo.totalConvos = mainInformationHandler.completedConvos.length;
+          $timeout(function() {
+            $state.go("endScreen");
+          }, 1000);
+          return;
+        }
+        if (currentRoom && newVal != oldVal) {
+          currentRoom.getDoorStatus();
+        }
+      });
     } //end of controller
   } //end of game manager/file
 })();

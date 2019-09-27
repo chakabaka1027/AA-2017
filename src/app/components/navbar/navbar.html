@@ -1,7 +1,10 @@
 <nav class="navbar">
 	<div style="padding-left: 20px;"> Awkward Annie</div>
+	<div ng-if="vm.displayScore">
+
 	<ul>
 		<li>Score: {{vm.playerScore}} points</li>
 		<li>Level: {{vm.levelCount}}</li>
 	</ul>
+</div>
 </nav>

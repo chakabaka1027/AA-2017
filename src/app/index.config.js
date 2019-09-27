@@ -6,9 +6,8 @@
     .config(config); //not a router
 
   /** @ngInject */
-  function config($logProvider, $locationProvider) {
+  function config($logProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
-    //$locationProvider.html5Mode(true);
   }
 })();

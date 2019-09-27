@@ -6,7 +6,7 @@
     .directive('instructionPage', instructionPage);
 
   /** @ngInject */
-  function instructionPage($location, userDataService, $log, $state, dialogService) { //$log parameter goes in here
+  function instructionPage($location, userDataService, $log, $state, dialogService, userGameInfo) { //$log parameter goes in here
     var directive = {
       restrict: 'E',
       templateUrl: "app/components/instruction_Page/instruction_Page.html",
@@ -26,23 +26,21 @@
       vm.clickCounter = 0;
       vm.getVersion = getVersion;
 
-      //setting promice flasg to ttru e
       vm.isLoading = true;
       dialogService.loadedPromise.then(function() { //if thi swas sesolved vmloading = true else false immeditly
         vm.isLoading = false;
+
+        $log.warn('auto skipping intro!!!');
+        $state.go("awkwardAnnieGame");
+
       });
 
       function getVersion() {
-        var path = $location.path();
-        var p = path.toString();
-        if (p.includes("negative")) {
-
-          return 10;
+        if (userGameInfo.gameType.indexOf("positive") === 0) {
+          return false;
         } else {
-
-          return -10;
-        }
-      }
+          return true;
+        }    }
 
       function next() {
         vm.clickCounter += 1;
@@ -52,6 +50,6 @@
           $state.go("awkwardAnnieGame");
         }
       }
-    } //introController
+    } // end of introController
   }
 })();

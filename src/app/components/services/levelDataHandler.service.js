@@ -7,112 +7,125 @@
 
 
   /** @ngInject */
-  function levelDataHandler($log, $stateParams, $http) {
+  function levelDataHandler($log, $stateParams, $http, parseAAContentService, $q) {
     var service = {
       choiceScores: {
         A: 0,
         B: 3,
         C: 5
       },
-      successPaths: ["ACC", "CAC", "CCA", "BBC", "BCB", "CBB", "BCC", "CBC", "CCB", "CCC"],
-      legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
-      maxLevel: 7,
-
-      //FULL GAME POS AND NEG
-      //dealing with a rpomice - intilization needs to say wait intull promice has been resolved - how httlp works a little bit
+      successPaths: ["ACC", "CAC", "CCA", "BBC", "BCB", "CBB", "BCC", "CBC", "CCB", "CCC","CCCC"], //QUICK FIX FOR LINER
+      // legalLevels: ['negative', 'negative-set1', 'negative-set4', 'positive', 'positive-set1', 'positive-set3'],
+      legalLevels : parseAAContentService.parsedLevelNames,
+      maxLevel: 7, //would this be per sheet - above is genral while this is specfic :$
       setUpForGameType: setUpForGameType,
-      getRoomDialogs: getRoomDialogs
+      getRoomDialogs: getRoomDialogs,
+      lastlevel: false
     };
-
-    // return $http.get(dialogJsonPaths[dialogKey]).then(function(response){
-    // 	return response.data;
-
     return service;
-    //get the right file
-    //then do ** that is currenly in the function
 
-
-    // $http.get(levelsPath)
-
-    //evrything here is under the .then of the promise
-    function setUpForGameType(gameType) { //adding return genearates a promise and then we say .then it also genrates a promise - maybe in initlization code - maybe ( not for this one) - go get these configuration files then there are some decg i need to make
-
-      var levelsPath = "assets/LevelJson/levels.json";
-      var otherLevelsPath = "assets/LevelJson/otherlevels.json";
-
-      if (gameType.indexOf("positive") === 0) {
-        service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];
-        service.choiceScores = {
-          A: 5,
-          B: 3,
-          C: 0
-        };
-      }
-
-      if (gameType === "negative" || gameType === "positive") {
-        return $http.get(levelsPath).then(function(response) {
-          service.levels = response.data; //parsed
-        })
-      } else {
-        service.maxLevel = 1;
-        return $http.get(otherLevelsPath).then(function(response) {
-          service.levels = response.data[gameType];
-          //service.levels.level_1 - to acsess
+    function setUpForGameType(gameType) {//TODO!!!new change this into using the new levels structure
+      return parseAAContentService.parseContentFromGameType().then(function(response){
+        service.legalLevels.push("")
+        service.levels = parseAAContentService.getLevelDataForURL().levels;
         });
-      }
-    } //end of setUp
+    }
 
-
-    //Is there any dialog in this room, if yes, what are they.
-    //Later on check if they've been completed
     function getRoomDialogs(levelKey, roomKey) {
-      var currentRoomCheck = service.levels[levelKey].rooms[roomKey];
+
+      // console.log("}}}}}}}>>>> testing getRoomDialougs   :",service.levels);
+
+      var currentRoomCheck = service.levels[levelKey].rooms[roomKey];//TODO!!!new check if this changes as well
       var dialogs = [];
-      if (!currentRoomCheck) // not{
-      {
+
+      // console.log("}}}}}}}>>>>  currentRoomCheck :",service.levels[levelKey].rooms[roomKey]);// retunrd charlu and luna //what was the key supposed to be here? - AH con
+
+      if (!currentRoomCheck) {
         return dialogs;
       }
 
-      angular.forEach(currentRoomCheck, function(characterData, characterName) {
-        if (characterData.dialogKey) {
-          dialogs.push(characterData.dialogKey);
+      angular.forEach(currentRoomCheck, function(characterData) {// dialogInfo[key]
+        if (characterData.dialogInfo[0].key) { //current room is charly and luna no fran...
+          dialogs.push(characterData.dialogInfo[0].key);
         }
-        //second convo - come back  if we chaneg this later
-        if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
-          dialogs.push(characterData.secondConvo.dialogKey);
+        if (characterData.dialogInfo.length>1) { //i/e second convo
+          dialogs.push(characterData.dialogInfo[1].key);
         }
       });
+
       return dialogs;
+
     }
-
-    function getSuccessPaths(dialogKey) {
-      $log.error("are you sure you wanna be using this - should not return paths ");
-      for (var levelKey in service) {
-        if (levelKey.indexOf('level_') === 0) {
-          var levelInfo = service[levelKey];
-          for (var roomKey in levelInfo.rooms) {
-            var roomInfo = levelInfo.rooms[roomKey];
-            for (var charKey in roomInfo.characters) {
-              var charInfo = roomInfo.characters[charKey];
-
-              if (charInfo.dialogKey === dialogKey) {
-                return charInfo.successPaths;
-              }
-
-              if (charInfo.secondConvo && charInfo.secondConvo.dialogKey === dialogKey) {
-                return charInfo.secondConvo.successPaths;
-              }
-
-            }
-          }
-        }
-      }
-
-      // not found!
-      return [];
-    }
-
-
-
   } //end of controller
 })();
+
+//rooms get it right and level key gives right convo im not sure what jeys are or why they are an empty string
+
+// console.log("{{------is thiis ever true ?",dialogs);
+
+//try and acsess the array here //fran ismNecer acconted 4...
+// console.log("TT___TT) currentRoomCheck in 4loop ||||||",currentRoomCheck); //characterData holds postion and key... was this the case before? but both empty
+
+// console.log("}}}leangth of array convos a ||||||",characterData.dialogInfo.length); //characterData holds postion and key... was this the case before? but both empty
+
+// console.log("}}}foreachacalled  characterData.dialogInfo ||||||",characterData.dialogInfo ); //characterData holds postion and key... was this the case before? but both empty
+// if (characterData.dialogKey) { //current room is charly and luna no fran...
+//change 0 to index instead - maybe change to 4loop since need an index or add a var and add checks
+// console.log("{{------dialogs on >1 ",dialogs);
+// if (characterData.secondConvo && characterData.secondConvo.dialogKey) {
+// console.log("{{------dialogs",dialogs);
+// dialogs.push(characterData.dialogKey);
+//TODO possible fix here
+
+
+/*** Old Code that was inside set up
+// var p = $q.defer();
+// // if(parseAAContentService.levelDataInformation.template2.levelData!= undefined){
+// if(!angular.equals( parseAAContentService.templateSampleForTestingOnly, {})){ //is not empty
+//   p.resolve(parseAAContentService.levelDataInformation.template2.levelData);
+// } else {
+//   p.reject("undefined still")
+//   console.warn("promise failed to resolve");
+// }
+// p.then(function(response){
+//   service.testingNewLevels = response;
+//   console.log(">>>> new levelstesting promise  :",response);
+//   console.log("<<<<testing", )
+// });
+// return q.promise;
+//
+// // console.log(">>>> new levels OUTSIDE:",service.testingNewLevels);
+//
+// // console.log(">>>>>>> : parseAAContentService.levelDataInformation  inside set up :",
+// //  parseAAContentService.templateSampleForTestingOnly); //value belo wwas just evaluated now - not an error but what shows up --  this evaluates before parser - ODD
+//
+// if (gameType.indexOf("positive") === 0) {
+//   service.successPaths = ["CAA", "ACA", "AAC", "BBA", "BAB", "ABB", "BAA", "ABA", "AAB", "AAA"];
+//   service.choiceScores = {
+//     A: 5,
+//     B: 3,
+//     C: 0
+//   };
+// }
+//
+// if (gameType === "negative" || gameType === "positive") {
+//   return $http.get(levelsPath).then(function(response) {
+//     // parseAAContentService.levelDataInformation
+//     service.levels = response.data; //TODO!!!new change this into using the new levels structure
+//   // console.log("||||||| : parseAAContentService.levelDataInformation :", parseAAContentService.levelDataInformation.template2);
+//     // console.log("^^^ : service.levelsn :" , service.levels);
+//
+//     //set up for main levels trmplate
+//   })
+// } else {
+//   // console.log("^^^ : parseAAContentService.levelDataInformation :", parseAAContentService.levelDataInformation);
+//
+//   service.maxLevel = 1;
+//   return $http.get(otherLevelsPath).then(function(response) { //TODO!!!new change this into using the new levels structure
+//     //set up for other levels template
+//     service.levels = response.data[gameType];
+//     //service.levels.level_1 - to acsess data
+//   });
+// }
+
+*/

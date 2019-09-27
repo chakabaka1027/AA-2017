@@ -13,27 +13,26 @@
       scope: {
         main: "="
       },
-      controller: controller, //controller for this directive
+      controller: controller,
       controllerAs: 'vm',
       bindToController: true
     };
     return directive;
 
     /** @ngInject */
-    function controller($scope, $log, $location) {
+    function controller() {//scope
       var vm = this;
-      vm.quit = quit; //this is it what happens when we click
+      vm.quit = quit;
       vm.userID = userDataService.userID;
       vm.playerScore = userGameInfo.playerScore;
       vm.totalConvos = userGameInfo.totalConvos;
 
       function quit() { //make sure ID is a number and assign it to the data service
         if (userGameInfo.userForwarded) {
-          $window.open(userGameInfo.redirectURL(), '_self'); // let global game info tell us what url we are sending -
+          $window.open(userGameInfo.redirectURL(), '_self');
         } else {
           userDataService.userID = "";
           $state.go("GameStart");
-          // $location.path("/");
         }
       }
     }

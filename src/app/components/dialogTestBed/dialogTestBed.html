@@ -3,7 +3,7 @@
 	<div class="tb-row1">
 		<div><b>Viewing Content from: </b>{{ dialogTest.currentSource }}</div>
 	    <div class="select-source">
-	    	<div class="util-button" ng-click= "dialogTest.loadFromFile(dialogTest.lastFileObject)" 
+	    	<div class="util-button" ng-click= "dialogTest.loadFromFile(dialogTest.lastFileObject)"
 	    		ng-if="dialogTest.lastFileObject">Reload xlsx file</div>
 	    	<input class="input-file" name="input-file" id="input-file" type="file" load-xlsx-file="dialogTest.loadFromFile(fileObject)"/>
 	    	<label for="input-file">Choose local xlsx file...</label>
@@ -15,9 +15,25 @@
 	</div>
 
 	<div ng-if="dialogTest.hasLoaded">
-		<select ng-options="item.key as item.label for item in dialogTest.dialogList" 
+		<div>
+			View animations and scoring for :
+			<label>
+                <input type="radio" name="gameType" value="negative" ng-model="dialogTest.localGameType">
+                Negative
+            </label>
+			<label>
+                <input type="radio" name="gameType" value="positive" ng-model="dialogTest.localGameType">
+                Positive
+            </label>
+		</div>
+		<select ng-options="item.key as item.label for item in dialogTest.dialogList"
 				ng-model = "dialogTest.currentConversation">
 		</select>
+
+		<select ng-options=" item for item in dialogTest.charSelections"
+				ng-model = "dialogTest.talkingWith">
+		</select>
+
 
 		<div class="flip-input">
 			<input type="checkbox" ng-model="dialogTest.flipDialog" id="flipDialog">
@@ -25,49 +41,42 @@
 		</div>
 
 		<div class="animation-indicator" ng-class="{'invalid-animation': !dialogTest.animationValid, 'chas-flipped': dialogTest.flipDialog}">
-			{{(!dialogTest.animationValid ? 
+			NPC animation: {{(!dialogTest.animationValid?
 					'No emotion "' + dialogTest.currentChoiceInfo.animation+ '" for '+dialogTest.talkingWith
-					: dialogTest.currentChoiceInfo.animation)}}&nbsp;
+					: (!dialogTest.curNode.animation ? 'None' : dialogTest.currentChoiceInfo.animation))}}&nbsp;
 		</div>
 
-		<div ng-if="dialogTest.branchHistory.length<3">
-			Node{{(dialogTest.branchHistory.length+1)}} PC options :
+
+		<div>Currently at node {{dialogTest.curNode.code ? dialogTest.curNode.code : 'root'}}</div>
+		<div>PC options : {{dialogTest.pcOptions}}</span></div>
+
+		<div ng-if="dialogTest.curNode.isTerminal()">
+			Done; Outcome:
+			<span ng-if="dialogTest.curNode.success" style="color: green"><b>Success</b></span>
+			<span ng-if="!dialogTest.curNode.success" style="color: red"><b>Failure</b></span>
+			<div>Score: {{dialogTest.curNode.score}}</div>
 		</div>
-		<div ng-if="dialogTest.branchHistory.length>=3">
-			Done; Outcome: 
-			<span ng-if="dialogTest.isSuccessfulPath" style="color: green"><b>Success</b></span>
-			<span ng-if="!dialogTest.isSuccessfulPath" style="color: red"><b>Failure</b></span>
+		<div ng-if="!dialogTest.curNode.isTerminal()">
+			<br/><br/>
 		</div>
 
-		<div class="navigation-hints" ng-class="{'chas-flipped': dialogTest.flipDialog}">
-			<div class="pc-options"
-				ng-if="dialogTest.branchHistory.length<3">
-				<span ng-if="!dialogTest.isLinearDialog">
-				{{dialogTest.branchHistory.join('')+'A-PC'}},
-				{{dialogTest.branchHistory.join('')+'B-PC'}},</span>
-				{{dialogTest.branchHistory.join('')+'C-PC'}}
-			</div>
-			
-			<div class="npc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-NPC'}}</div>
-			<div class="pc-label" ng-if="dialogTest.branchHistory.length>0">{{dialogTest.branchHistory.join('')+'-PC'}}</div>
-
-		</div>
 	</div>
 
 </div>
 
-<div class="gameContainer" ng-class="{'chas-flipped': dialogTest.flipDialog}" ng-if="dialogTest.hasLoaded"> 
-	
-	<nav-bar player-score="main.playerScore" level-count="main.levelCount"></nav-bar>
+<div class="gameContainer" ng-class="{'chas-flipped': dialogTest.flipDialog}" ng-if="dialogTest.hasLoaded">
+
+	<nav-bar></nav-bar>
 	<div class="main-pane">
 
-		<div class="conversationContainer testbed-cc"> 
+		<div class="conversationContainer testbed-cc">
 
-			<display-dialog main = "dialogTest" is-test-bed = "true"> </display-dialog>
+			<display-dialog main="dialogTest" is-test-bed="true"></display-dialog>
 
-			<pop-up-dialog-manager 
+			<pop-up-dialog-manager
 				ng-if="dialogTest.displayCharacters"
-				main="dialogTest">
+				main="dialogTest"
+				>
 			</pop-up-dialog-manager>
 
 
@@ -76,5 +85,3 @@
 	</div>
 
 </div>
-
-

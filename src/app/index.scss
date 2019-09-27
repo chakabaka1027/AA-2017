@@ -7,11 +7,23 @@
 // font-family: 'Amatic SC', cursive;
 
 @font-face{
-  font-family: marker-felt;
+  font-family: ttf-marker-felt;
   src: url(../assets/fonts/marker-felt-thin.ttf);
 }
+
+@font-face {
+  font-family: marker-felt;
+    src:  url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.ttf.woff') format('woff'),
+    url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.ttf.svg#Marker-Felt') format('svg'),
+    url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.ttf.eot'),
+    url('../assets/fonts/webfonts_Marker-Felt/Marker-Felt.eot?#iefix') format('embedded-opentype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* =========
-   Resets 
+   Resets
 ============*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -22,8 +34,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   margin: 0;
@@ -34,7 +46,7 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
@@ -58,7 +70,7 @@ table {
   border-spacing: 0;
 }
 /* =========
-   End of Resets 
+   End of Resets
 ============*/
 
 .browsehappy {

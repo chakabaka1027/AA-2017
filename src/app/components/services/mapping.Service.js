@@ -6,7 +6,7 @@
 
   /** @ngInject */
   function mappingService() {
-    var userID;
+    // var userID;
     var map = {
       anniesOffice: {
         left_door: "lobby",

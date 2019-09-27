@@ -1,0 +1,84 @@
+
+class Tree() {
+
+	constructor(treeData, nodeArray) {
+		// do some stuff...
+
+		this.setupTree(nodeArray);
+	}
+
+	findParent(code) {
+		return this.nodeDict(code.substr(0,code.length-1));
+	}
+
+	setupTree(nodeArray) {
+
+		this.nodeDict = {'': rootNode};
+
+		nodeArray.forEach(function(data) {
+			var node = new NodeTest(data);
+			this.nodeDict[node.code] = node;
+		});
+
+		angular.forEach(this.nodeDict, function(node, nodeCode) {
+			var parent = this.findParent(node.code);
+			if (parent) {
+				node.parent = node;
+				parent.addChild(node);
+			} else if (node !== rootNode) {
+				$log.error('something is wrong!!!');
+			}
+		});
+	}
+
+}
+
+function controller() {
+	var vm = this;
+
+	vm.curNode = null;
+	vm.clickOnChoice = clickOnChoice;
+
+	enterDialog(dialogService.dialogs['fran_GR_01']);
+
+	function enterDialog(dialogTree) {
+		curNode = dialogTree.rootNode;
+	}
+
+	function setupForNode() {
+		vm.options = [];
+		angular.forEach(curNode.children, function(child) {
+			vm.options.push({choice:child.code[child.code.length-1], node: child);
+		});
+
+		// vm.options = [{choice:'A', node: optionA}, ...]
+
+	}
+
+	function clickOnChoice(choice) {
+		var chosenNode = curNode.children[choice];
+
+		// maybe some scoring....
+
+		curNode = chosenNode;
+	}
+}
+
+/* html for dialog */
+
+<div class="choice" ng-repeat="option in dm.options" ng-click="dm.clickOnChoice(option.choice)">{{option.node.PC_Text}}</div>
+<div class="NPCText">{{dm.curNode.NPC_Text}}</div>
+<div class="PCText">{{dm.curNode.PC_Text}}</div>
+
+
+
+/* */
+
+var dialogTrees = {};
+
+dialogTrees['fran_GR_01'] = new DialogTree({
+	convoTitle: 'fran_GR_01',
+	description: '',
+	scoringMatrix: [[1,4,5]],
+	rootNode: undefined
+}, arrayOfNodesThatWePutTogetherSomehow);

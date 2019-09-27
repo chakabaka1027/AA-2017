@@ -13,49 +13,58 @@
       template: '<div><h1>I am initializing!!!!</h1><div ng-click="clickMe()">Click me!!!</div></div>'
     };
 
-    function controller($scope) {
-      var configData;
-
+    function controller() {
+      // var configData;
       var gameType;
 
       gameConfig.fetchConfig()
         .then(function() {
 
-
           gameType = $stateParams.gameType || 'negative';
+          // if (levelDataHandler.legalLevels.indexOf(gameType) < 0) {
+          //   alert("not a legal level, please type in a legal level");
+          //   return;
+          // }
 
-          if (levelDataHandler.legalLevels.indexOf(gameType) < 0) {
-            alert("not a legal level, please type in a legal level");
-            return;
-          }
+          levelDataHandler.setUpForGameType().then(function(response){
+            var currentURL  =  $location.path().split('#')[0].replace("/",'');
+            console.log(currentURL);
+            if (!levelDataHandler.legalLevels.includes(currentURL)){
+                alert("not a legal level, please type in a legal level");
+                return; }
+            });
+
+
           userGameInfo.gameType = gameType;
 
           var userID = $location.search().userID; //user ID is a qury param -  (--rul > key=value)
 
-          if (userID) { //if it is in the dictionary
+          if (userID) {
             userGameInfo.userForwarded = true;
             userGameInfo.userID = userID;
           } else {
             userGameInfo.userForwarded = false;
           }
-          levelDataHandler.setUpForGameType(gameType);//.then ()///dialougservice.loadfromservice
-          //
-          //this may take time - consider moving elsewhere...
-          dialogService.loadFromServer(gameType);
+          levelDataHandler.setUpForGameType(gameType);
 
-          //  .then(function(){$state.go('awkwardAnnieGame')});
-          // return;
-          // uncomment above to skip intro stuff....
+          dialogService.loadFromServer(gameType).then(function(){
 
-          // other stuff.....
+            ///TODO - check this with chas fix for slow in chrome - not cpu tho
+            localStorage.clear();
+            sessionStorage.clear();
 
-          if (userGameInfo.userForwarded) {
-            userDataService.resetData();
-            userDataService.trackAction(0, "Start", "Game_Start", "Game Start");
-            $state.go('instructions');
-          } else {
-            $state.go('GameStart');
-          }
+            if (userGameInfo.userForwarded) {
+              userDataService.resetData();
+              userDataService.trackAction(0, "Start", "Game_Start", "Game Start");
+              $state.go('instructions');
+            } else {
+
+              $state.go('GameStart');
+            }
+
+          });//TODO !!!new
+
+
         })
 
 
